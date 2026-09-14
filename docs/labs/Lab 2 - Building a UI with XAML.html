@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 2: XAML Layouts – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 2: XAML Layouts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="week-2-lab-building-a-ui-with-xaml" class="level1">
+<h1>Week 2 Lab – Building a UI with XAML</h1>
+<p>This lab is an introduction to building user interfaces using <strong>XAML</strong> in .NET MAUI.</p>
+<p>The aim is to become comfortable reading and writing XAML, particularly:</p>
+<ul>
+<li>creating controls</li>
+<li>setting properties</li>
+<li>nesting controls</li>
+<li>using layouts</li>
+<li>using <code>Grid</code></li>
+<li>controlling spacing and alignment</li>
+<li>using common MAUI controls</li>
+<li>building a UI that adapts to different screen sizes</li>
+</ul>
+<section id="important" class="level2">
+<h2 class="anchored" data-anchor-id="important">Important</h2>
+<p>For this lab, <strong>do not write any code in <code>MainPage.xaml.cs</code> apart from the existing constructor</strong>.</p>
+<p>We are concentrating on the XAML side of .NET MAUI.</p>
+<p>The buttons and other controls do not need to do anything yet. We will deal with events and interaction in a later lab.</p>
+<hr>
+</section>
+</section>
+<section id="part-1-create-and-prepare-the-project" class="level1">
+<h1>Part 1 – Create and Prepare the Project</h1>
+<section id="create-a-new-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-project">1. Create a new project</h2>
+<p>Open <strong>Visual Studio</strong> and create a new:</p>
+<p><strong>.NET MAUI App</strong></p>
+<p>Give the project a suitable name, for example:</p>
+<p><strong>XamlLab</strong></p>
+<p>Keep your project path reasonably short. Very long paths can cause problems when Visual Studio creates all of the files needed to build a MAUI application. Especially be aware of this if using OneDrive to save your files.</p>
+<p>Use the current .NET version installed on the lab machines.</p>
+<p>For this module, this should be <strong>.NET 10</strong>.</p>
+<hr>
+</section>
+<section id="run-the-template-project" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-template-project">2. Run the template project</h2>
+<p>Before making any changes to the project, <strong>run the application</strong>.</p>
+<p>Check that the template application starts successfully and that you can see the default MAUI page.</p>
+<p>This is important.</p>
+<p>If the template application does not run correctly, tell your lecturer before making any changes.</p>
+<p>We want to know that the project was working <strong>before</strong> we start changing the XAML.</p>
+<hr>
+</section>
+<section id="clear-out-the-template-project" class="level2">
+<h2 class="anchored" data-anchor-id="clear-out-the-template-project">3. Clear out the template project</h2>
+<p>We are now going to remove the example content provided by the MAUI template.</p>
+<section id="mainpage.xaml.cs" class="level3">
+<h3 class="anchored" data-anchor-id="mainpage.xaml.cs"><code>MainPage.xaml.cs</code></h3>
+<p>Open:</p>
+<p><strong><code>MainPage.xaml.cs</code></strong></p>
+<p>Remove everything except the constructor.</p>
+<p>Your file should contain the basic structure of the class and the constructor, but <strong>no event handlers or other template code</strong>.</p>
+<p>You should have something equivalent to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> XamlLab<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your namespace may be different depending on the name you gave your project.</p>
+<p><strong>Do not change the namespace to <code>XamlLab</code> if Visual Studio created a different namespace for your project.</strong></p>
+<hr>
+</section>
+<section id="mainpage.xaml" class="level3">
+<h3 class="anchored" data-anchor-id="mainpage.xaml"><code>MainPage.xaml</code></h3>
+<p>Now open:</p>
+<p><strong><code>MainPage.xaml</code></strong></p>
+<p>We want to remove the controls provided by the template.</p>
+<p>Remove everything <strong>between the opening and closing <code>ContentPage</code> tags</strong>.</p>
+<blockquote class="blockquote">
+<p><strong>⚠️ WARNING – BE CAREFUL</strong></p>
+<p>Do <strong>not</strong> delete or overwrite the opening <code>ContentPage</code> information at the top of the file.</p>
+<p>In particular, leave the first line(s) of the file alone.</p>
+<p>The <code>ContentPage</code> declaration contains important information such as the XML namespaces and the <code>x:Class</code> that connects the XAML to <code>MainPage.xaml.cs</code>.</p>
+<p>If you accidentally overwrite this information, the project may stop working.</p>
+<p><strong>Only remove the content inside the <code>ContentPage</code>.</strong></p>
+</blockquote>
+<p>After removing the template controls, your file should look approximately like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"utf-8"</span> <span class="fu">?&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">x:Class=</span><span class="st">"XamlLab.MainPage"</span>&gt;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your <code>x:Class</code> value may be different because it will use your project namespace.</p>
+</section>
+<section id="add-the-layout-back" class="level3">
+<h3 class="anchored" data-anchor-id="add-the-layout-back">Add the layout back</h3>
+<p>We now need to put our own layout inside the <code>ContentPage</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ScrollView</span>&gt;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="ot">Text=</span><span class="st">"My First XAML Page"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="ot">FontSize=</span><span class="st">"28"</span> /&gt;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ScrollView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The important structure is:</p>
+<pre class="text"><code>ContentPage
+└── ScrollView
+    └── VerticalStackLayout
+        └── Label</code></pre>
+<p>You will build the rest of the interface inside this layout.</p>
+<blockquote class="blockquote">
+<p><strong>Remember:</strong> <code>ContentPage</code> is already provided by the template. We are adding the content <strong>inside</strong> it.</p>
+</blockquote>
+<p>Run the application again.</p>
+<p>You should now see your own Label rather than the original template content.</p>
+<p>If this works, you are ready to begin.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-2-a-first-xaml-page" class="level1">
+<h1>Part 2 – A First XAML Page</h1>
+<p>We are going to build a simple page before creating a larger interface.</p>
+<p>Inside your <code>VerticalStackLayout</code>, add:</p>
+<ul>
+<li>a <code>Label</code> saying <code>"My First XAML Page"</code></li>
+<li>a <code>Label</code> saying <code>"I am learning .NET MAUI"</code></li>
+<li>a <code>Button</code> saying <code>"This button does nothing yet"</code></li>
+</ul>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"My First XAML Page"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">FontSize=</span><span class="st">"28"</span> /&gt;</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"I am learning .NET MAUI"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">FontSize=</span><span class="st">"18"</span> /&gt;</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"This button does nothing yet"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the application.</p>
+<p>Notice that the Button does nothing.</p>
+<p><strong>That is intentional.</strong></p>
+<p>We are concentrating on creating the user interface. We will deal with events later.</p>
+<section id="exercise" class="level3">
+<h3 class="anchored" data-anchor-id="exercise">Exercise</h3>
+<p>Experiment with the following properties:</p>
+<ul>
+<li><code>FontSize</code></li>
+<li><code>TextColor</code></li>
+<li><code>HorizontalOptions</code></li>
+<li><code>VerticalOptions</code></li>
+<li><code>Spacing</code></li>
+<li><code>Padding</code></li>
+</ul>
+<p>Change the values and run the application again.</p>
+<p>Try to predict what each change will do before running the application.</p>
+<hr>
+</section>
+</section>
+<section id="part-3-building-a-simple-layout" class="level1">
+<h1>Part 3 – Building a Simple Layout</h1>
+<p>We are going to build a more useful page.</p>
+<p>Imagine that you are creating a <strong>Student Profile</strong> page.</p>
+<p>The page should eventually contain:</p>
+<pre class="text"><code>Student Profile
+
+Name
+[________________________]
+
+Email
+[________________________]
+
+Course
+[________________________]
+
+Date of birth
+[________________________]
+
+Study mode
+[________________________]
+
+Receive newsletter       [ ON ]
+
+Year of study              [- 1 +]
+
+Programming confidence
+[-------------------------]
+
+Additional information
+[________________________]
+[________________________]
+
+              [ Save Profile ]</code></pre>
+<p>We will build this one section at a time.</p>
+<hr>
+</section>
+<section id="part-4-labels-and-text-input" class="level1">
+<h1>Part 4 – Labels and Text Input</h1>
+<p>Inside your <code>VerticalStackLayout</code>, add:</p>
+<ul>
+<li>a <code>Label</code> containing <code>"Name"</code></li>
+<li>an <code>Entry</code> with a suitable placeholder</li>
+<li>a <code>Label</code> containing <code>"Email"</code></li>
+<li>another <code>Entry</code></li>
+</ul>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"Name"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">FontSize=</span><span class="st">"18"</span> /&gt;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Entry</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Placeholder=</span><span class="st">"Enter your name"</span> /&gt;</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"Email"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="ot">FontSize=</span><span class="st">"18"</span> /&gt;</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Entry</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Placeholder=</span><span class="st">"Enter your email"</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Keyboard=</span><span class="st">"Email"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise</h3>
+<p>Add another field for:</p>
+<p><strong>Course</strong></p>
+<p>Use an appropriate placeholder.</p>
+<p>Then add another field for:</p>
+<p><strong>Student ID</strong></p>
+<p>Think about whether the <code>Keyboard</code> property could be useful here.</p>
+<p>You can look at the MAUI documentation if you are unsure what values are available.</p>
+<hr>
+</section>
+</section>
+<section id="part-5-using-a-grid" class="level1">
+<h1>Part 5 – Using a Grid</h1>
+<p>The layout is starting to become quite long.</p>
+<p>Instead of putting every label above its corresponding control, we can use a <code>Grid</code>.</p>
+<p>Create a Grid containing two columns:</p>
+<pre class="text"><code>             Column 0          Column 1
+
+Row 0        Name:             [ Entry          ]
+
+Row 1        Email:            [ Entry          ]
+
+Row 2        Course:           [ Entry          ]
+
+Row 3        Student ID:       [ Entry          ]</code></pre>
+<p>Start with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,Auto"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">RowSpacing=</span><span class="st">"10"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">ColumnSpacing=</span><span class="st">"10"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Put the controls into the appropriate cells.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"Name:"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Grid.Row=</span><span class="st">"0"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Grid.Column=</span><span class="st">"0"</span> /&gt;</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Entry</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Placeholder=</span><span class="st">"Enter your name"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Grid.Row=</span><span class="st">"0"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Grid.Column=</span><span class="st">"1"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise</h3>
+<p>Complete the Grid so that it contains:</p>
+<ul>
+<li>Name</li>
+<li>Email</li>
+<li>Course</li>
+<li>Student ID</li>
+</ul>
+<p>Each label should be in column 0.</p>
+<p>Each corresponding <code>Entry</code> should be in column 1.</p>
+<hr>
+</section>
+</section>
+<section id="part-6-experiment-with-grid-sizing" class="level1">
+<h1>Part 6 – Experiment with Grid Sizing</h1>
+<p>Change the Grid so that the first column uses <code>Auto</code> and the second uses <code>*</code>.</p>
+<p>Think about what this means:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise</h3>
+<p>Try changing the columns to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"*,*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the application.</p>
+<p>Then try:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"*,2*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run it again.</p>
+</section>
+<section id="think-about-it" class="level3">
+<h3 class="anchored" data-anchor-id="think-about-it">Think about it</h3>
+<p>Why might:</p>
+<pre class="text"><code>Auto,*</code></pre>
+<p>be more useful for a form than:</p>
+<pre class="text"><code>*,*</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>auto does use more processing than * as the system has to resize and calculate more often</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-7-more-controls" class="level1">
+<h1>Part 7 – More Controls</h1>
+<p>Continue building your Student Profile page.</p>
+<p>Add a <code>DatePicker</code> for the student’s date of birth.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">DatePicker</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Format=</span><span class="st">"dd/MM/yyyy"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add a <code>Picker</code> for the student’s study mode.</p>
+<p>It should contain:</p>
+<ul>
+<li>Full-time</li>
+<li>Part-time</li>
+<li>Online</li>
+</ul>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Picker</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Title=</span><span class="st">"Study mode"</span>&gt;</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Picker.Items</span>&gt;</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">x:String</span>&gt;Full-time&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">x:String</span>&gt;Part-time&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">x:String</span>&gt;Online&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Picker.Items</span>&gt;</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Picker</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4">Exercise</h3>
+<p>Add a <code>Switch</code> asking whether the student wants to receive the newsletter.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Switch</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">IsToggled=</span><span class="st">"True"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add an appropriate label beside it.</p>
+<hr>
+</section>
+</section>
+<section id="part-8-horizontalstacklayout" class="level1">
+<h1>Part 8 – HorizontalStackLayout</h1>
+<p>The newsletter section would look better if the label and switch appeared beside each other.</p>
+<p>Use a <code>HorizontalStackLayout</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">HorizontalStackLayout</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Spacing=</span><span class="st">"10"</span>&gt;</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Label</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Text=</span><span class="st">"Receive newsletter"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="ot">VerticalOptions=</span><span class="st">"Center"</span> /&gt;</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Switch</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="ot">IsToggled=</span><span class="st">"True"</span> /&gt;</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5">Exercise</h3>
+<p>Create another horizontal layout containing:</p>
+<ul>
+<li>a label saying <code>"Preferred contact:"</code></li>
+<li>a button saying <code>"Email"</code></li>
+<li>a button saying <code>"Phone"</code></li>
+</ul>
+<p>Remember that the buttons do not need to do anything yet.</p>
+<hr>
+</section>
+</section>
+<section id="part-9-border" class="level1">
+<h1>Part 9 – Border</h1>
+<p>Let’s make the main student information section visually distinct.</p>
+<p>Wrap the Grid inside a <code>Border</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Border</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Stroke=</span><span class="st">"Black"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">StrokeThickness=</span><span class="st">"2"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Padding=</span><span class="st">"15"</span>&gt;</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,Auto"</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="ot">RowSpacing=</span><span class="st">"10"</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        <span class="ot">ColumnSpacing=</span><span class="st">"10"</span>&gt;</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Grid contents --&gt;</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Border</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-6" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6">Exercise</h3>
+<p>Experiment with:</p>
+<ul>
+<li><code>Stroke</code></li>
+<li><code>StrokeThickness</code></li>
+<li><code>Padding</code></li>
+</ul>
+<p>Try changing the padding without changing the Grid.</p>
+<p>What happens?</p>
+<p>Remember:</p>
+<blockquote class="blockquote">
+<p><strong>Padding = space inside the Border.</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-10-more-input" class="level1">
+<h1>Part 10 – More Input</h1>
+<p>Add an <code>Editor</code> for the student to enter some additional information.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Editor</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Placeholder=</span><span class="st">"Tell us something about yourself..."</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">AutoSize=</span><span class="st">"TextChanges"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add a <code>Stepper</code> for the student’s year of study.</p>
+<p>It should allow values from 1 to 4:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Stepper</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Minimum=</span><span class="st">"1"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Maximum=</span><span class="st">"4"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Increment=</span><span class="st">"1"</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Value=</span><span class="st">"1"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add a <code>Slider</code> representing the student’s confidence with programming.</p>
+<p>Use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Slider</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Minimum=</span><span class="st">"0"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Maximum=</span><span class="st">"100"</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Value=</span><span class="st">"50"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add a <code>ProgressBar</code> showing the same initial value:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ProgressBar</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Progress=</span><span class="st">"0.5"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="important-1" class="level3">
+<h3 class="anchored" data-anchor-id="important-1">Important</h3>
+<p>The Slider and ProgressBar are <strong>not connected</strong>.</p>
+<p>Changing the Slider will not change the ProgressBar.</p>
+<p>We are not using C# or data binding yet.</p>
+<p>For this lab, we are simply learning how to create and configure the controls.</p>
+<hr>
+</section>
+</section>
+<section id="part-11-alignment" class="level1">
+<h1>Part 11 – Alignment</h1>
+<p>Look at your page.</p>
+<p>Some controls may not be aligned in a way that looks good.</p>
+<p>Experiment with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>HorizontalOptions="Start"</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>HorizontalOptions="Center"</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>HorizontalOptions="End"</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>HorizontalOptions="Fill"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>VerticalOptions="Start"</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>VerticalOptions="Center"</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>VerticalOptions="End"</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>VerticalOptions="Fill"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-7" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-7">Exercise</h3>
+<p>Make the main heading:</p>
+<ul>
+<li>horizontally centred</li>
+<li>vertically centred within the space available to it</li>
+</ul>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"Student Profile"</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">FontSize=</span><span class="st">"28"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">VerticalOptions=</span><span class="st">"Center"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Try changing the alignment and observe the result.</p>
+<hr>
+</section>
+</section>
+<section id="part-12-margin-vs-padding" class="level1">
+<h1>Part 12 – Margin vs Padding</h1>
+<p>Add some space around your Save button:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"Save Profile"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Margin=</span><span class="st">"20"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now try changing the <code>Margin</code>.</p>
+<p>Then put the button inside a <code>Border</code> and experiment with <code>Padding</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Border</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Padding=</span><span class="st">"20"</span>&gt;</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Button</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Text=</span><span class="st">"Save Profile"</span> /&gt;</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Border</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="think-about-the-difference" class="level3">
+<h3 class="anchored" data-anchor-id="think-about-the-difference">Think about the difference</h3>
+<p><strong>Margin</strong></p>
+<p>→ space outside an element</p>
+<p><strong>Padding</strong></p>
+<p>→ space inside an element</p>
+<p>Try changing each one and observe which part of the layout changes.</p>
+<hr>
+</section>
+</section>
+<section id="part-13-make-the-page-scroll" class="level1">
+<h1>Part 13 – Make the Page Scroll</h1>
+<p>At this point your page may be getting quite tall.</p>
+<p>On a phone, some of the controls may no longer fit on the screen.</p>
+<p>A <code>ScrollView</code> allows the user to scroll through content that is larger than the available screen.</p>
+<p>Your main layout should be inside the <code>ScrollView</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ScrollView</span>&gt;</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">VerticalStackLayout</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Padding=</span><span class="st">"20"</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Spacing=</span><span class="st">"15"</span>&gt;</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Your page contents --&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ScrollView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the application again.</p>
+<p>Try resizing the Windows application to make it smaller.</p>
+<section id="exercise-8" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-8">Exercise</h3>
+<p>Check that:</p>
+<ul>
+<li>the contents can be scrolled vertically</li>
+<li>the page still works when the window is small</li>
+<li>you have not added unnecessary fixed heights</li>
+</ul>
+</section>
+<section id="important-2" class="level3">
+<h3 class="anchored" data-anchor-id="important-2">Important</h3>
+<p>A <code>ScrollView</code> is a <strong>container</strong> for content that may be larger than the available space.</p>
+<p>It is not normally something you put around every individual control.</p>
+<hr>
+</section>
+</section>
+<section id="part-14-put-it-all-together" class="level1">
+<h1>Part 14 – Put It All Together</h1>
+<p>Your completed page should now contain a mixture of:</p>
+<ul>
+<li><code>VerticalStackLayout</code></li>
+<li><code>HorizontalStackLayout</code></li>
+<li><code>Grid</code></li>
+<li><code>Border</code></li>
+<li><code>Label</code></li>
+<li><code>Entry</code></li>
+<li><code>Editor</code></li>
+<li><code>Button</code></li>
+<li><code>Switch</code></li>
+<li><code>Slider</code></li>
+<li><code>Stepper</code></li>
+<li><code>Picker</code></li>
+<li><code>DatePicker</code></li>
+<li><code>ProgressBar</code></li>
+<li><code>ScrollView</code></li>
+</ul>
+<p>Arrange these into a coherent Student Profile page.</p>
+<p>It should look like a real application rather than simply being a list of controls.</p>
+<p>For example, you might structure the page as:</p>
+<pre class="text"><code>ContentPage
+└── ScrollView
+    └── VerticalStackLayout
+        ├── Heading
+        ├── Border
+        │   └── Grid
+        │       ├── Name
+        │       ├── Email
+        │       ├── Course
+        │       └── Student ID
+        │
+        ├── Border
+        │   └── Grid
+        │       ├── Date of birth
+        │       ├── Study mode
+        │       ├── Newsletter
+        │       └── Year
+        │
+        ├── Label
+        ├── Editor
+        ├── Label
+        ├── Slider
+        ├── ProgressBar
+        └── Button</code></pre>
+<p>You do not have to use exactly this structure.</p>
+<p>The important thing is that you make sensible use of the layouts you have learned.</p>
+<hr>
+</section>
+<section id="part-15-make-it-look-better" class="level1">
+<h1>Part 15 – Make It Look Better</h1>
+<p>Now that the page works, improve its appearance.</p>
+<p>Experiment with:</p>
+<ul>
+<li><code>FontSize</code></li>
+<li><code>TextColor</code></li>
+<li><code>BackgroundColor</code></li>
+<li><code>Padding</code></li>
+<li><code>Margin</code></li>
+<li><code>Spacing</code></li>
+<li><code>CornerRadius</code></li>
+<li><code>StrokeThickness</code></li>
+<li><code>HorizontalOptions</code></li>
+<li><code>VerticalOptions</code></li>
+</ul>
+<p>Try to create a clear visual hierarchy.</p>
+<p>For example:</p>
+<ul>
+<li>make the page title larger</li>
+<li>make section headings stand out</li>
+<li>give sections some padding</li>
+<li>use consistent spacing</li>
+<li>make the form fields line up</li>
+<li>make the Save button visually obvious</li>
+</ul>
+<section id="challenge" class="level3">
+<h3 class="anchored" data-anchor-id="challenge">Challenge</h3>
+<p>Make your page look like something that could actually be used in a real application.</p>
+<p>There is no single correct design.</p>
+<hr>
+</section>
+</section>
+<section id="part-16---add-a-grid" class="level1">
+<h1>Part 16 - Add a Grid</h1>
+<p>This is not really related to the earlier parts, but I have a reason for this that will be clearer in a couple weeks.</p>
+<p>Add a Grid to the page, put it at the bottom of the main layout</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span> <span class="ot">x:Name=</span><span class="st">"GameGrid"</span> <span class="ot">RowDefinitions=</span><span class="st">"*,*,*"</span> <span class="ot">ColumnDefinitions=</span><span class="st">"*,*,*"</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">BackgroundColor=</span><span class="st">"CornflowerBlue"</span> <span class="ot">HeightRequest=</span><span class="st">"300"</span> <span class="ot">WidthRequest=</span><span class="st">"300"</span>&gt;</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Grid</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This will create a 3x3 grid on the page.</p>
+<p>If you run it, it will just be a blue box, it does not look like it is separated into 3 rows and 3 columns - something needs to be done visually to see this.</p>
+<p>Here’s the code for a border</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Border</span> <span class="ot">BackgroundColor=</span><span class="st">"Red"</span> <span class="ot">Padding=</span><span class="st">"10"</span> <span class="ot">Stroke=</span><span class="st">"Black"</span> <span class="ot">StrokeThickness=</span><span class="st">"5"</span>/&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>I want you to add that in so it appears in the 9 different positions of the grid.</p>
+</section>
+<section id="stretch-goal-design-your-own-page" class="level1">
+<h1>Stretch Goal – Design Your Own Page</h1>
+<p>If you have everything finished and are bored, have a go at this.</p>
+<p>If you have completed the Student Profile page, create a second page design <strong>without copying the structure above</strong>.</p>
+<p>Choose something such as:</p>
+<ul>
+<li>a recipe</li>
+<li>a game character</li>
+<li>a travel booking form</li>
+<li>a fitness profile</li>
+<li>a movie information page</li>
+<li>a student registration form</li>
+<li>a product information page</li>
+</ul>
+<p>Your page must contain at least:</p>
+<ul>
+<li>one <code>Grid</code></li>
+<li>one <code>VerticalStackLayout</code></li>
+<li>one <code>HorizontalStackLayout</code></li>
+<li>one <code>Border</code></li>
+<li>three different input/control types</li>
+<li>sensible use of <code>Margin</code> and <code>Padding</code></li>
+<li>appropriate alignment</li>
+<li>a <code>ScrollView</code> if the content requires it</li>
+</ul>
+<section id="remember" class="level3">
+<h3 class="anchored" data-anchor-id="remember">Remember</h3>
+<p>The controls do not need to do anything.</p>
+<p>For this lab, we are concentrating on <strong>describing the UI in XAML</strong>.</p>
+<p>We will start making the controls actually do something in a later lab.</p>
+<hr>
+<p>The important thing is not to memorise every property.</p>
+<p>You should become comfortable looking at a XAML example, understanding what it is doing, and using the documentation to find the properties you need.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

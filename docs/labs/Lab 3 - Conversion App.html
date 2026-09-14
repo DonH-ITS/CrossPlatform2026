@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 3: Events with XAML – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 3: Events with XAML</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-3-first-.net-maui-application" class="level1">
+<h1>Lab 3 — First .NET MAUI Application</h1>
+<section id="aim" class="level2">
+<h2 class="anchored" data-anchor-id="aim">Aim</h2>
+<p>In the previous lab you worked with XAML and created user interfaces using different layouts and controls.</p>
+<p>In this lab we are going to put those pieces together to create a small working .NET MAUI application.</p>
+<p>The application will be a <strong>unit conversion application</strong>.</p>
+<p>It does not need to look particularly impressive. The important thing at this stage is getting the application working.</p>
+<section id="some-important-advice" class="level3">
+<h3 class="anchored">Some Important Advice</h3>
+<ul>
+<li>Compile often. After completing one section, make sure it works before moving on.</li>
+<li>Don’t just copy and paste code. You will not learn much from doing that.</li>
+<li>You are expected to write the code yourself.</li>
+<li>If you are stuck, call me over for help.</li>
+<li>If you finish the main game, move on to the stretch goals.</li>
+<li><h2 id="you-do-not-need-to-complete-every-stretch-goal." class="anchored" data-anchor-id="some-important-advice">You do not need to complete every stretch goal.</h2></li>
+</ul>
+</section>
+</section>
+<section id="create-the-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-project">1. Create the Project</h2>
+<p>Open Visual Studio and create a new project.</p>
+<p>Select:</p>
+<p><strong>.NET MAUI App</strong></p>
+<p>Give the project a sensible name, such as:</p>
+<p><code>ConversionApp</code></p>
+<p>Use <strong>.NET 10.0</strong>.</p>
+<p>If .NET 10.0 is not available, you may need to update Visual Studio or install the appropriate .NET MAUI workload.</p>
+<blockquote class="blockquote">
+<p><strong>Remember:</strong> keep your project path reasonably short. Very long paths can cause problems when Visual Studio creates all of the files needed to build a MAUI application. Especially be aware of this if using OneDrive to save your files.</p>
+</blockquote>
+<p>Once the project has been created, build and run the application.</p>
+<p>You should see the default MAUI application running.</p>
+<p>You have now created and run your second .NET MAUI application.</p>
+<hr>
+</section>
+<section id="mainpage.xaml-and-mainpage.xaml.cs" class="level2">
+<h2 class="anchored" data-anchor-id="mainpage.xaml-and-mainpage.xaml.cs">2. MainPage.xaml and MainPage.xaml.cs</h2>
+<p>Clear out the template content so that your <code>MainPage.xaml</code> contains something <em>similar</em> (not identical) to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>             <span class="ot">x:Class=</span><span class="st">"ConversionApp.MainPage"</span>&gt;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your code-behind should initially be similar to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your namespace may be different depending on the name of your project.</p>
+</section>
+<section id="add-in-controls" class="level2">
+<h2 class="anchored" data-anchor-id="add-in-controls">Add in Controls</h2>
+<p>You need:</p>
+<ol type="1">
+<li>an <code>Entry</code> where the user can enter a number;</li>
+<li>a <code>Label</code> where the answer will be displayed;</li>
+<li>a <code>Button</code> which the user can press to perform the calculation.</li>
+</ol>
+<p>You already learned about these controls in the previous lab, so try to create them yourself.</p>
+<p>You will need sensible <code>x:Name</code> values so that the controls can be accessed from C#.</p>
+<p>For example, you might use names such as:</p>
+<ul>
+<li><code>QuantityEntry</code></li>
+<li><code>lblAnswer</code></li>
+<li><code>btnCalculate</code></li>
+</ul>
+<p>The button also needs a <code>Clicked</code> event handler.</p>
+<p>Use Visual Studio’s event-handler suggestion when adding the <code>Clicked</code> event rather than manually writing the method in the C# file.</p>
+<p>Your interface should provide the user with a way to enter a quantity, press a button, and see the result.</p>
+<hr>
+</section>
+<section id="the-conversion" class="level2">
+<h2 class="anchored" data-anchor-id="the-conversion">3. The Conversion</h2>
+<p>For the first version of the application, we will convert:</p>
+<p><strong>Kilograms → Pounds</strong></p>
+<p>The formula is:</p>
+<pre class="text"><code>pounds = kilograms × 2.20462</code></pre>
+<p>For example:</p>
+<pre class="text"><code>10 kg → 22.0462 lb</code></pre>
+<p>You should now have a button click event handler in <code>MainPage.xaml.cs</code>.</p>
+<p>It will look something like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">btnCalculate_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The method is an <strong>event handler</strong>.</p>
+<p>It will be called when the user clicks the button.</p>
+<hr>
+</section>
+<section id="getting-the-users-input" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-users-input">4. Getting the User’s Input</h2>
+<p>The text entered into an <code>Entry</code> can be accessed through its <code>Text</code> property.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>QuantityEntry<span class="op">.</span><span class="fu">Text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Remember that <code>Text</code> is a <code>string</code>.</p>
+<p>The conversion requires a number, so you need to convert the text into a numeric value.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> quantity <span class="op">=</span> Convert<span class="op">.</span><span class="fu">ToDouble</span><span class="op">(</span>QuantityEntry<span class="op">.</span><span class="fu">Text</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Important:</strong> this is deliberately a simple first version. What happens if the user leaves the box empty? What happens if they enter <code>"hello"</code> instead of a number?</p>
+<p>We will come back to this later in the lab.</p>
+</blockquote>
+<p>Calculate the number of pounds using the formula above.</p>
+<hr>
+</section>
+<section id="updating-the-user-interface" class="level2">
+<h2 class="anchored" data-anchor-id="updating-the-user-interface">5. Updating the User Interface</h2>
+<p>We created a <code>Label</code> called <code>lblAnswer</code>.</p>
+<p>Its <code>Text</code> property can be changed from C#.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lblAnswer<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use this to display the result of your conversion.</p>
+<p>You may need to convert your calculated number to a string using <code>ToString()</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lblAnswer<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> result<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can also combine text and values using string concatenation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lblAnswer<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"The answer is: "</span> <span class="op">+</span> result<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Try running the application.</p>
+<p>You should now be able to:</p>
+<ol type="1">
+<li>enter a number;</li>
+<li>click the button;</li>
+<li>calculate the conversion;</li>
+<li>display the answer.</li>
+</ol>
+<section id="checkpoint" class="level3">
+<h3 class="anchored" data-anchor-id="checkpoint">Checkpoint</h3>
+<p>At this point, make sure your application works before continuing.</p>
+<p>You have created a simple application where:</p>
+<pre class="text"><code>User input
+    ↓
+Entry
+    ↓
+Button clicked
+    ↓
+C# event handler
+    ↓
+Calculation
+    ↓
+Label updated</code></pre>
+<p>This is one of the fundamental patterns you will use throughout this module.</p>
+<hr>
+</section>
+</section>
+<section id="more-conversions" class="level2">
+<h2 class="anchored" data-anchor-id="more-conversions">6. More Conversions</h2>
+<p>A conversion application would be more useful if it could perform different conversions.</p>
+<p>Add a <code>Picker</code> to your page.</p>
+<p>The user should be able to choose between at least:</p>
+<ul>
+<li>Kilograms → Pounds</li>
+<li>Pounds → Kilograms</li>
+</ul>
+<p>You can use the following as a starting point:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Picker</span> <span class="ot">x:Name=</span><span class="st">"ConversionTypePicker"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Title=</span><span class="st">"Select Conversion"</span>&gt;</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Picker.Items</span>&gt;</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">x:String</span>&gt;Kilograms to Pounds&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">x:String</span>&gt;Pounds to Kilograms&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Picker.Items</span>&gt;</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Picker</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should already understand most of this XAML from the previous lab.</p>
+<hr>
+</section>
+<section id="selecting-a-default-option" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-a-default-option">7. Selecting a Default Option</h2>
+<p>When the application starts, the <code>Picker</code> does not automatically have to select an item.</p>
+<p>We don’t want the user to have to make a selection every time, so set the initial selected item in the <code>MainPage</code> constructor.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ConversionTypePicker<span class="op">.</span><span class="fu">SelectedIndex</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Remember that collection indexes start at <code>0</code>.</p>
+<p>Therefore:</p>
+<pre class="text"><code>0 → Kilograms to Pounds
+1 → Pounds to Kilograms</code></pre>
+<hr>
+</section>
+<section id="use-the-selected-conversion" class="level2">
+<h2 class="anchored" data-anchor-id="use-the-selected-conversion">8. Use the Selected Conversion</h2>
+<p>Inside your button event handler, you can find out which item the user selected:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> conversion <span class="op">=</span> ConversionTypePicker<span class="op">.</span><span class="fu">SelectedIndex</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now modify your calculation so that the application performs the appropriate conversion.</p>
+<p>You can use either:</p>
+<ul>
+<li><code>if</code> / <code>else</code>;</li>
+<li>or a <code>switch</code>.</li>
+</ul>
+<p>For example, conceptually:</p>
+<pre class="text"><code>if conversion is 0
+    kilograms → pounds
+
+else if conversion is 1
+    pounds → kilograms</code></pre>
+<p>You will need to find the formula for the reverse conversion yourself.</p>
+<p>Get both conversions working.</p>
+<p>Do not add a separate button for each conversion. The same Calculate button should perform whichever conversion the user selected.</p>
+<hr>
+</section>
+<section id="add-more-conversions" class="level2">
+<h2 class="anchored" data-anchor-id="add-more-conversions">9. Add More Conversions</h2>
+<p>Now extend your application.</p>
+<p>Add at least <strong>four</strong> more conversions.</p>
+<p>For example:</p>
+<ul>
+<li>Celsius → Fahrenheit</li>
+<li>Fahrenheit → Celsius</li>
+<li>Kilometres → Miles</li>
+<li>Miles → Kilometres</li>
+<li>Pints → Litres</li>
+<li>Litres → Pints</li>
+<li>Celcius → Kelvin</li>
+<li>Kelvin → Celcius</li>
+<li>Pounds → Kilograms</li>
+<li>Kilograms → Pounds</li>
+</ul>
+<p>Useful formulas include:</p>
+<pre class="text"><code>Fahrenheit = (Celsius × 9 / 5) + 32
+
+Miles = Kilometres × 0.621371</code></pre>
+<p>Find the other formulas yourself.</p>
+<p>You will need to:</p>
+<ol type="1">
+<li>add the conversion to the <code>Picker</code>;</li>
+<li>determine which conversion has been selected;</li>
+<li>perform the correct calculation;</li>
+<li>display the result.</li>
+</ol>
+<p>Keep your code organised rather than creating a separate button for every conversion.</p>
+<hr>
+</section>
+</section>
+<section id="experiment-with-events" class="level1">
+<h1>10. Experiment with Events</h1>
+<p>So far, the user has to press the Calculate button.</p>
+<p>But the <code>Picker</code> and <code>Entry</code> can also generate events.</p>
+<section id="picker-events" class="level2">
+<h2 class="anchored" data-anchor-id="picker-events">Picker Events</h2>
+<p>Look at the <code>Picker</code> documentation and investigate:</p>
+<p><code>SelectedIndexChanged</code></p>
+<p>Try adding an event handler for this event.</p>
+<p>Can you make the conversion happen when the user changes the selected conversion rather than pressing the Calculate button?</p>
+<p>You could:</p>
+<ul>
+<li>keep the Calculate button;</li>
+<li>remove the Calculate button;</li>
+<li>or use both.</li>
+</ul>
+<p>There is more than one reasonable solution.</p>
+<hr>
+</section>
+<section id="entry-events" class="level2">
+<h2 class="anchored" data-anchor-id="entry-events">Entry Events</h2>
+<p><code>Entry</code> also has events.</p>
+<p>Investigate:</p>
+<p><code>TextChanged</code></p>
+<p>Try making the application respond when the user changes the text in the <code>Entry</code>.</p>
+<p>For example:</p>
+<pre class="text"><code>User types 1
+      ↓
+TextChanged
+      ↓
+Application responds
+
+User types 10
+      ↓
+TextChanged
+      ↓
+Application responds</code></pre>
+<p>Think about whether you actually want to perform a calculation every time the user types a character.</p>
+<p>What happens when the box temporarily contains:</p>
+<pre class="text"><code>""</code></pre>
+<p>or:</p>
+<pre class="text"><code>"1."</code></pre>
+<p>or:</p>
+<pre class="text"><code>"hello"</code></pre>
+<p>This leads to an important issue.</p>
+<hr>
+</section>
+</section>
+<section id="input-validation" class="level1">
+<h1>11. Input Validation</h1>
+<p>At the moment, the application assumes that the user enters a valid number.</p>
+<p>That is not a safe assumption.</p>
+<p>What happens if the user:</p>
+<ul>
+<li>leaves the Entry empty?</li>
+<li>enters letters?</li>
+<li>enters spaces?</li>
+<li>enters something that cannot be converted to a number?</li>
+</ul>
+<p>You should investigate:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">string</span><span class="op">.</span><span class="fu">IsNullOrWhiteSpace</span><span class="op">(...)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span><span class="op">.</span><span class="fu">TryParse</span><span class="op">(...)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>TryParse</code> is particularly useful because it allows you to test whether the conversion was successful without your application crashing because of invalid input.</p>
+<p>For example, investigate how this works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="op">(</span><span class="dt">double</span><span class="op">.</span><span class="fu">TryParse</span><span class="op">(</span>QuantityEntry<span class="op">.</span><span class="fu">Text</span><span class="op">,</span> <span class="kw">out</span> <span class="dt">double</span> quantity<span class="op">))</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// We have a valid number</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">else</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The input was not a valid number</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Modify your application so that invalid input is handled sensibly.</p>
+<p>For example, you could display an error message in your answer <code>Label</code>.</p>
+<hr>
+<section id="adding-a-timer" class="level2">
+<h2 class="anchored" data-anchor-id="adding-a-timer">12. Adding a Timer</h2>
+<p>Add a timer to your application that displays the number of seconds since the application started.</p>
+<p>The timer is independent of the conversion itself. The purpose of this exercise is to practise using an event that occurs automatically at regular intervals.</p>
+<section id="create-the-timer" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-timer">1. Create the timer</h3>
+<p>Add fields to keep track of the timer and the number of seconds:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> IDispatcherTimer _timer<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should be able to figure out seconds!</p>
+<p>Create the timer using the page’s <code>Dispatcher</code>: - Think where the creation of the timer should go - I think it should go in its own method <code>void CreateTimer()</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>_timer <span class="op">=</span> Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Set the timer to tick once every second:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Interval</span> <span class="op">=</span> TimeSpan<span class="op">.</span><span class="fu">FromSeconds</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="handle-the-tick-event" class="level3">
+<h3 class="anchored" data-anchor-id="handle-the-tick-event">2. Handle the Tick event</h3>
+<p>The timer has a <code>Tick</code> event, just like a Button has a <code>Clicked</code> event.</p>
+<p>Subscribe to the event:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now create the event handler yourself.</p>
+<p>Each time the timer ticks:</p>
+<ul>
+<li>increase <code>_seconds</code> by 1</li>
+<li>update a Label in your application to show the current number of seconds</li>
+</ul>
+<p>For example, your application might display:</p>
+<pre class="text"><code>Time running: 12 seconds</code></pre>
+<p><code>CreateTimer</code> should probably be called as part of the MainPage constructor, after <code>InitializeComponents</code></p>
+</section>
+<section id="start-the-timer" class="level3">
+<h3 class="anchored" data-anchor-id="start-the-timer">3. Start the timer</h3>
+<p>Once your timer has been created and configured, start it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Start</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The timer should start when your application starts.</p>
+<p>Think about <strong>where</strong> this code should go. You already have code that runs when the page is created, so this is a good opportunity to decide where the timer setup belongs.</p>
+</section>
+<section id="add-a-stop-button" class="level3">
+<h3 class="anchored" data-anchor-id="add-a-stop-button">4. Add a Stop button</h3>
+<p>Add a Button to your application:</p>
+<pre class="text"><code>Stop Timer</code></pre>
+<p>When the button is clicked, stop the timer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Stop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The number of seconds should stop increasing.</p>
+</section>
+<section id="add-a-start-button" class="level3">
+<h3 class="anchored" data-anchor-id="add-a-start-button">5. Add a Start button</h3>
+<p>Add another Button:</p>
+<pre class="text"><code>Start Timer</code></pre>
+<p>Use it to start the timer again.</p>
+<p>The timer should continue counting from where it stopped.</p>
+<p>For example:</p>
+<pre class="text"><code>Time running: 18 seconds
+
+[ Stop Timer ]   [ Start Timer ]</code></pre>
+</section>
+<section id="challenge" class="level3">
+<h3 class="anchored" data-anchor-id="challenge">Challenge</h3>
+<p>Modify your timer so that it can be <strong>reset</strong>.</p>
+<p>Add a <code>Reset Timer</code> button which:</p>
+<ul>
+<li>stops the timer</li>
+<li>sets the number of seconds back to zero</li>
+<li>updates the Label</li>
+<li>starts the timer again</li>
+</ul>
+<p>Try to decide which parts of this should be placed in separate methods rather than putting everything directly into the Button event handlers.</p>
+<hr>
+</section>
+</section>
+<section id="try-it-on-different-platforms" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-on-different-platforms">14. Try It on Different Platforms</h2>
+<p>Once your application works on Windows, try running it on Android.</p>
+<p>The exact setup will depend on your computer and Android device.</p>
+<p>You can try:</p>
+<ul>
+<li>an Android emulator;</li>
+<li>or a physical Android phone.</li>
+</ul>
+<p>For a physical phone, you will normally need to enable <strong>Developer Options</strong> and <strong>USB debugging</strong> on the device.</p>
+<p>Keep the phone unlocked while Visual Studio attempts to deploy the application.</p>
+<p>If you cannot get Android working during this lab, don’t spend the entire lab fighting with the emulator. The important part of this exercise is getting the application itself working.</p>
+<hr>
+</section>
+<section id="improve-the-user-interface" class="level2">
+<h2 class="anchored" data-anchor-id="improve-the-user-interface">14. Improve the User Interface</h2>
+<p>The application does not need to look beautiful yet.</p>
+<p>However, once the functionality works, experiment with improving it.</p>
+<p>Try some of the following:</p>
+<ul>
+<li>add appropriate margins;</li>
+<li>centre controls where appropriate;</li>
+<li>add descriptive labels;</li>
+<li>use <code>Keyboard="Numeric"</code> for the numeric Entry;</li>
+<li>improve the text displayed in the answer;</li>
+<li>change the button text;</li>
+<li>make the Picker easier to understand;</li>
+<li>arrange controls using the layouts you learned about in the previous lab.</li>
+</ul>
+<p>Remember:</p>
+<blockquote class="blockquote">
+<p><code>Keyboard="Numeric"</code> does <strong>not</strong> validate the input.</p>
+</blockquote>
+<p>It only suggests that a numeric keyboard should be used where the platform supports it.</p>
+<p>Your C# code must still validate the value.</p>
+<hr>
+</section>
+<section id="final-task" class="level2">
+<h2 class="anchored" data-anchor-id="final-task">15. Final Task</h2>
+<p>Before finishing the lab, make sure your application can:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Run as a .NET MAUI application.</label></li>
+<li><label><input type="checkbox">Accept a number from the user.</label></li>
+<li><label><input type="checkbox">Perform a conversion.</label></li>
+<li><label><input type="checkbox">Display the result.</label></li>
+<li><label><input type="checkbox">Allow the user to select different conversions.</label></li>
+<li><label><input type="checkbox">Perform at least five different conversions.</label></li>
+<li><label><input type="checkbox">Handle invalid numeric input without crashing.</label></li>
+<li><label><input type="checkbox">Run successfully on Windows.</label></li>
+<li><label><input type="checkbox">Attempt to run on Android.</label></li>
+</ul>
+<p>If you have completed all of these, experiment with another event or improve the user interface.</p>
+<hr>
+</section>
+<section id="things-to-think-about" class="level2">
+<h2 class="anchored" data-anchor-id="things-to-think-about">Things to Think About</h2>
+<p>You have now used several important parts of MAUI:</p>
+<pre class="text"><code>XAML
+  ↓
+Controls
+  ↓
+x:Name
+  ↓
+C# code-behind
+  ↓
+Events
+  ↓
+User input
+  ↓
+Calculation
+  ↓
+Changing the UI</code></pre>
+<p>In the next lab we will build on this idea.</p>
+<p>Instead of just responding to controls that we created in XAML, we will start <strong>creating controls at runtime using C#</strong> and responding to events from those controls.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-html/tabby.min.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
   <title>Cross Platform Application Development – Week 2 .NET MAUI and XAML</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -100,11 +100,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-51289dd89659689ac096039999314983.css">
-  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-51289dd89659689ac096039999314983.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -208,7 +208,7 @@
 <section>
 <section id="net-maui" class="title-slide slide level1 center">
 <h1>.NET MAUI</h1>
-
+<p>A sample of the controls discussed here is available at <a href="https://github.com/DonH-ITS/CrossPlatform2026/tree/main/Week2">https://github.com/DonH-ITS/CrossPlatform2026/tree/main/Week2</a></p>
 </section>
 <section id="quick-recall-from-last-time" class="slide level2">
 <h2>Quick recall from last time</h2>
@@ -388,11 +388,11 @@
 <span id="cb7-17"><a aria-label="17"></a>        <span class="kw">return</span> builder<span class="op">.</span><span class="fu">Build</span><span class="op">();</span></span>
 <span id="cb7-18"><a aria-label="18"></a>    <span class="op">}</span></span>
 <span id="cb7-19"><a aria-label="19"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<h3 id="for-now">For now</h3>
 <p>Think of this as:</p>
 <blockquote>
 <p><strong>Where we configure the MAUI application.</strong></p>
 </blockquote>
+<p>I repeat, for now, leave it alone, don’t overwrite anything here.</p>
 </section>
 <section id="app.xaml" class="slide level2">
 <h2><code>App.xaml</code></h2>
@@ -423,15 +423,30 @@
 <h2><code>MainPage.xaml</code></h2>
 <p>This is where we describe the UI for our page.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb8-1"><a aria-label="1"></a>&lt;<span class="kw">ContentPage</span></span>
-<span id="cb8-2"><a aria-label="2"></a>    <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
-<span id="cb8-3"><a aria-label="3"></a>    <span class="ot">x:Class=</span><span class="st">"MyMauiApp.MainPage"</span>&gt;</span>
-<span id="cb8-4"><a aria-label="4"></a></span>
-<span id="cb8-5"><a aria-label="5"></a>    &lt;<span class="kw">VerticalStackLayout</span>&gt;</span>
-<span id="cb8-6"><a aria-label="6"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span>
-<span id="cb8-7"><a aria-label="7"></a>    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
-<span id="cb8-8"><a aria-label="8"></a></span>
-<span id="cb8-9"><a aria-label="9"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb8-1"><a aria-label="1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"utf-8"</span> <span class="fu">?&gt;</span></span>
+<span id="cb8-2"><a aria-label="2"></a>&lt;<span class="kw">ContentPage</span></span>
+<span id="cb8-3"><a aria-label="3"></a>    <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb8-4"><a aria-label="4"></a>    <span class="ot">x:Class=</span><span class="st">"MyMauiApp.MainPage"</span>&gt;</span>
+<span id="cb8-5"><a aria-label="5"></a></span>
+<span id="cb8-6"><a aria-label="6"></a>    &lt;<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb8-7"><a aria-label="7"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span>
+<span id="cb8-8"><a aria-label="8"></a>    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb8-9"><a aria-label="9"></a></span>
+<span id="cb8-10"><a aria-label="10"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>The top line of the XAML file is never edited, leave it alone. It is what identifies the file type and even a space out of place will stop it working.</p>
+<p>If you are copying and pasting from a sample file I give you, usually you will only copy in between the <code>&lt;ContentPage&gt; &lt;/ContentPage&gt;</code>, ignoring this will mess up your namespace</p>
+</div>
+</div>
+</div>
 </section>
 <section id="mainpage.xaml.cs" class="slide level2">
 <h2><code>MainPage.xaml.cs</code></h2>
@@ -1071,7 +1086,7 @@
 <li><code>Padding</code></li>
 <li><code>CornerRadius</code></li>
 </ul>
-<h3 id="for-now-1">For now</h3>
+<h3 id="for-now">For now</h3>
 <p>We are only interested in displaying and configuring the button.</p>
 <p><strong>Next week: making controls do something.</strong></p>
 </section>
@@ -1458,19 +1473,19 @@
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 1: C# Basics – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 1: C# Basics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="c-first-lab" class="level1">
+<h1>C# First Lab</h1>
+<p>This lab is an introduction to C# for students who have previously programmed in Java.</p>
+<p>The aim is not to learn everything about C#. Instead, we will look at some of the basic syntax you will need for the rest of this module.</p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> We will not read from the console or from files in this lab. So we will not use <code>Console.ReadLine()</code>. The applications developed later in this module will use graphical user interfaces rather than reading input from the console. We will deal with file reading/writing later.</p>
+</blockquote>
+<hr>
+<section id="part-1-creating-a-c-console-application" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-creating-a-c-console-application">Part 1 – Creating a C# Console Application</h2>
+<section id="visual-studio" class="level3">
+<h3 class="anchored" data-anchor-id="visual-studio">Visual Studio</h3>
+<p>The lecturer will probably demonstrate this first part in the lab.</p>
+<p>For a C# project, open <strong>Visual Studio</strong> and select:</p>
+<p><strong>Create a New Project</strong></p>
+<p>You want to select a <strong>C# Console App</strong>. Use the filters if necessary.</p>
+<p>Give the project a suitable name.</p>
+<blockquote class="blockquote">
+<p><strong>Tip:</strong> Selecting <strong>Place solution and project in the same directory</strong> is a personal preference and is not essential.</p>
+</blockquote>
+<p>When asked to select the framework, use <strong>.NET 10.0</strong>.</p>
+<p>Make sure:</p>
+<p><strong>Do not use top-level statements</strong></p>
+<p>is ticked.</p>
+<p>If .NET 10.0 is not available, use the highest version available. We will update the machines if necessary.</p>
+<hr>
+</section>
+</section>
+<section id="part-2-hello-world" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-hello-world">Part 2 – Hello World</h2>
+<p>A new console application will contain a <code>Program.cs</code> file.</p>
+<p>Write a program that displays:</p>
+<pre class="text"><code>Hello World!</code></pre>
+<p>The C# equivalent of Java’s:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise" class="level3">
+<h3 class="anchored" data-anchor-id="exercise">Exercise</h3>
+<p>Modify your program so that it displays your name as well as the <code>"Hello World!"</code> message.</p>
+<hr>
+</section>
+</section>
+<section id="part-3-variables-and-calculations" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-variables-and-calculations">Part 3 – Variables and Calculations</h2>
+<p>Create two integer variables and give them values.</p>
+<p>Add the two numbers together and display the result.</p>
+<p>For example, if:</p>
+<pre class="text"><code>a = 10
+b = 20</code></pre>
+<p>the program should display something similar to:</p>
+<pre class="text"><code>10 + 20 is 30</code></pre>
+<p>You can use <code>Console.WriteLine()</code> with string concatenation, just as you would use <code>+</code> when constructing a string in Java.</p>
+<section id="java-c" class="level3">
+<h3 class="anchored" data-anchor-id="java-c">Java → C</h3>
+<p>There is very little difference here. C# uses <code>+</code> for both numerical addition and string concatenation, just like Java.</p>
+</section>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise</h3>
+<p>Create variables for two numbers and display:</p>
+<ul>
+<li>the two numbers</li>
+<li>their sum</li>
+<li>their difference</li>
+<li>their product</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="part-4-formatted-output" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-formatted-output">Part 4 – Formatted Output</h2>
+<p>Java programmers may be familiar with <code>printf()</code> for producing formatted output.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">printf</span><span class="op">(</span><span class="st">"Name: </span><span class="sc">%s</span><span class="st">, Age: </span><span class="sc">%d%n</span><span class="st">"</span><span class="op">,</span> name<span class="op">,</span> age<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C# provides several ways of producing formatted output. One of the simplest is <strong>string interpolation</strong>.</p>
+<p>Place a <code>$</code> before the string and put variables inside <code>{ }</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>$<span class="st">"Name: {name}, Age: {age}"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The values of the variables are inserted into the string.</p>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise</h3>
+<p>Create variables for:</p>
+<ul>
+<li>a student’s name</li>
+<li>their age</li>
+<li>their average mark</li>
+</ul>
+<p>Display all three values in a single sentence using string interpolation.</p>
+<p>For example:</p>
+<pre class="text"><code>Alice is 21 years old and has an average mark of 68.</code></pre>
+<blockquote class="blockquote">
+<p><strong>Remember:</strong> String interpolation is an alternative to string concatenation. You can still use <code>+</code> when appropriate.</p>
+</blockquote>
+</section>
+</section>
+<section id="formatting-values" class="level2">
+<h2 class="anchored" data-anchor-id="formatting-values">Formatting Values</h2>
+<p>String interpolation can also be used to control how a value is displayed.</p>
+<p>For example, a <code>double</code> can be displayed to two decimal places using <code>F2</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> doubleNumber <span class="op">=</span> <span class="fl">3.14159265359</span><span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>$<span class="st">"Pi rounded is : {doubleNumber:F2}"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This produces:</p>
+<pre class="text"><code>Pi rounded is : 3.14</code></pre>
+<p>The <code>F2</code> means <strong>fixed-point notation with 2 decimal places</strong>.</p>
+<p>The same formatting can be used with <code>ToString()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>doubleNumber<span class="op">.</span><span class="fu">ToString</span><span class="op">(</span><span class="st">"F2"</span><span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This produces:</p>
+<pre class="text"><code>3.14</code></pre>
+<p><code>ToString()</code> is available on <strong>all objects in C#</strong>. It provides a string representation of the object or value.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> number <span class="op">=</span> <span class="dv">42</span><span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>number<span class="op">.</span><span class="fu">ToString</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>produces:</p>
+<pre class="text"><code>42</code></pre>
+<p>We can also provide a format when converting a value to a string, as with <code>doubleNumber.ToString("F2")</code>.</p>
+<p>You can find the other standard numeric formatting options in the Microsoft documentation:</p>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings">Standard numeric format strings – Microsoft Learn</a></p>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise</h3>
+<p>Try changing <code>F2</code> to <code>F1</code>, <code>F3</code> and <code>F4</code> and observe the difference.</p>
+<p>You can also experiment with some of the other formatting options in the Microsoft documentation.</p>
+<hr>
+</section>
+</section>
+<section id="part-5-static-methods-and-for-loops" class="level2">
+<h2 class="anchored" data-anchor-id="part-5-static-methods-and-for-loops">Part 5 – Static Methods and <code>for</code> Loops</h2>
+<p>Create a static method called <code>PrintNumbers</code>.</p>
+<p>The method should accept an integer parameter and use a <code>for</code> loop to display the numbers from <code>1</code> up to that value.</p>
+<p>For example:</p>
+<pre class="text"><code>1
+2
+3
+4
+5</code></pre>
+<p>Call the method from <code>Main()</code> using different values.</p>
+<section id="java-c-1" class="level3">
+<h3 class="anchored" data-anchor-id="java-c-1">Java → C</h3>
+<p>The basic syntax of a <code>for</code> loop is the same in Java and C#.</p>
+<p>One difference you will notice throughout C# is that method names normally use <strong>PascalCase</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PrintNumbers</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>rather than the Java convention <strong>camelCase</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printNumbers</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="part-6-methods-returning-a-value" class="level2">
+<h2 class="anchored" data-anchor-id="part-6-methods-returning-a-value">Part 6 – Methods Returning a Value</h2>
+<p>Create a static method called <code>IsEven</code>.</p>
+<p>The method should:</p>
+<ul>
+<li>accept an integer</li>
+<li>determine whether the number is even</li>
+<li>return <code>true</code> if it is even</li>
+<li>return <code>false</code> otherwise</li>
+</ul>
+<p>Call the method from <code>Main()</code> using several different numbers.</p>
+<section id="java-c-2" class="level3">
+<h3 class="anchored" data-anchor-id="java-c-2">Java → C</h3>
+<p>The C# equivalent of Java’s <code>boolean</code> is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">static</span> <span class="dt">bool</span> <span class="fu">IsEven</span><span class="op">(</span><span class="dt">int</span> number<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>if</code> statement itself is very similar to Java.</p>
+<hr>
+</section>
+</section>
+<section id="ternary-conditional-operator" class="level2">
+<h2 class="anchored" data-anchor-id="ternary-conditional-operator">Ternary Conditional Operator</h2>
+<p>C# also provides a shorthand way of writing a simple <code>if/else</code> when we want to choose between two values.</p>
+<p>The syntax is:</p>
+<p>condition ? valueIfTrue : valueIfFalse</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> number <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="dt">string</span> result <span class="op">=</span> number <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"Even"</span> <span class="op">:</span> <span class="st">"Odd"</span><span class="op">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>result<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The condition is checked first. If it is true, the first value is used; otherwise, the second value is used.</p>
+<p>The above is equivalent to:</p>
+<p>if (number % 2 == 0) { result = “Even”; } else { result = “Odd”; }</p>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4">Exercise</h3>
+<p>Create an integer variable called <code>age</code>.</p>
+<p>Use the ternary conditional operator to create a string containing:</p>
+<ul>
+<li><code>"Adult"</code> if the age is 18 or over</li>
+<li><code>"Under 18"</code> otherwise</li>
+</ul>
+<p>Display the result.</p>
+</section>
+</section>
+<section id="part-7-arrays" class="level2">
+<h2 class="anchored" data-anchor-id="part-7-arrays">Part 7 – Arrays</h2>
+<p>Create an array containing several integers.</p>
+<p>First, use a <code>for</code> loop to add all of the numbers together.</p>
+<p>Then repeat the exercise using a <code>foreach</code> loop.</p>
+<section id="java-c-3" class="level3">
+<h3 class="anchored" data-anchor-id="java-c-3">Java → C</h3>
+<p>There are two small syntax differences worth noting.</p>
+<p>Java:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>numbers<span class="op">.</span><span class="fu">length</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C#:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>numbers<span class="op">.</span><span class="fu">Length</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Java’s enhanced <code>for</code> loop:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> number <span class="op">:</span> numbers<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C#:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">int</span> number <span class="kw">in</span> numbers<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The rest of the loop body works in essentially the same way.</p>
+</section>
+<section id="exercise-5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5">Exercise</h3>
+<p>Create an array containing at least five numbers.</p>
+<p>Calculate and display:</p>
+<ul>
+<li>the total</li>
+</ul>
+<p>Do this using both a <code>for</code> loop and a <code>foreach</code> loop.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-8-a-new-project-animal" class="level1">
+<h1>Part 8 – A New Project: Animal</h1>
+<p>Now create a <strong>new C# Console App</strong> called:</p>
+<p><strong>Animal</strong></p>
+<p>This project will introduce classes, properties, inheritance and polymorphism.</p>
+<hr>
+<section id="part-9-the-animal-class" class="level2">
+<h2 class="anchored" data-anchor-id="part-9-the-animal-class">Part 9 – The Animal Class</h2>
+<p>Create a class called <code>Animal</code>.</p>
+<p>The class should contain:</p>
+<ul>
+<li>a private <code>_name</code> field of type <code>string</code></li>
+<li>a private <code>_age</code> field of type <code>int</code></li>
+<li>a public <code>Name</code> property</li>
+<li>a public <code>Age</code> property</li>
+<li>a constructor that sets the name and age</li>
+</ul>
+<section id="what-is-a-fieldproperty-java-version-why" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-fieldproperty-java-version-why">What is a field/property? Java Version? Why?</h3>
+<p>I will talk about this more in lectures but in java, for proper encapsulation, you typically did</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> age<span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">setAge</span><span class="op">(</span><span class="dt">int</span> age<span class="op">){</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span><span class="op">.</span><span class="fu">age</span> <span class="op">=</span> age<span class="op">;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">int</span> <span class="fu">getAge</span><span class="op">(){</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> age<span class="op">;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In C#, this approach will work fine, but it is not typically how we provide access to fields. Instead, C# provides properties.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> _age<span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">int</span> Age</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">get</span> <span class="op">{</span> <span class="kw">return</span> _age<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> <span class="op">{</span> _age <span class="op">=</span> value<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The property allows us to control how the value can be accessed or changed.</p>
+<p>One advantage is that we do not have to explicitly call <code>setAge</code> and <code>getAge</code>. We can treat the property much like a variable:</p>
+<pre><code>dog.Age = 5;
+Console.WriteLine(dog.Age)</code></pre>
+<p>The <code>get</code> code runs when we read the property, while the <code>set</code> code runs when we assign a value to it.</p>
+<p>The special keyword <code>value</code> represents the value being assigned to the property.</p>
+</section>
+<section id="naming-convention" class="level3">
+<h3 class="anchored" data-anchor-id="naming-convention">Naming Convention</h3>
+<p>In this module we will use the following naming convention:</p>
+<ul>
+<li><strong>Private fields</strong> begin with <code>_</code> and use lowercase/camelCase:
+<ul>
+<li><code>_name</code></li>
+<li><code>_age</code></li>
+<li><code>_breed</code></li>
+</ul></li>
+<li><strong>Public properties and methods</strong> begin with a capital letter:
+<ul>
+<li><code>Name</code></li>
+<li><code>Age</code></li>
+<li><code>Sound()</code></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="part-10-creating-a-dog" class="level2">
+<h2 class="anchored" data-anchor-id="part-10-creating-a-dog">Part 10 – Creating a Dog</h2>
+<p>Create a class called <code>Dog</code> that inherits from <code>Animal</code>.</p>
+<p>Java programmers will recognise inheritance immediately.</p>
+<p>Java:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Dog <span class="kw">extends</span> Animal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C#:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Dog <span class="op">:</span> Animal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create a private <code>_breed</code> field and a public <code>Breed</code> property.</p>
+<p>The <code>Dog</code> constructor should accept:</p>
+<ul>
+<li>name</li>
+<li>age</li>
+<li>breed</li>
+</ul>
+<p>The constructor needs to initialise the inherited <code>name</code> and <code>age</code> values.</p>
+<p>In C#, the base class constructor is called using <code>base()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="fu">Dog</span><span class="op">(</span><span class="dt">string</span> name<span class="op">,</span> <span class="dt">int</span> age<span class="op">,</span> <span class="dt">string</span> breed<span class="op">)</span> <span class="op">:</span> <span class="kw">base</span><span class="op">(</span>name<span class="op">,</span> age<span class="op">)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// initialise breed</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="java-c-4" class="level3">
+<h3 class="anchored" data-anchor-id="java-c-4">Java → C</h3>
+<p>Java uses:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">super</span><span class="op">(</span>name<span class="op">,</span> age<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C# uses:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">base</span><span class="op">(</span>name<span class="op">,</span> age<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="part-11-sound-method" class="level2">
+<h2 class="anchored" data-anchor-id="part-11-sound-method">Part 11 – <code>Sound()</code> Method</h2>
+<p>In the Animal base class, create a method called <code>Sound</code>.</p>
+<p>The <code>Sound()</code> method should display:</p>
+<pre class="text"><code>This animal makes a sound</code></pre>
+<p>In Java, you can override an inherited method simply by providing a new implementation in the derived class (with <code>@Override</code> used to indicate that this is intentional).</p>
+<p>C# is a little different. A method must explicitly allow itself to be overridden. To do this, the base-class method is marked <code>virtual</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">virtual</span> <span class="dt">void</span> <span class="fu">MakeSound</span><span class="op">()</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Some sound"</span><span class="op">);</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A derived class can then provide its own implementation using <code>override</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">override</span> <span class="dt">void</span> <span class="fu">MakeSound</span><span class="op">()</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Woof!"</span><span class="op">);</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Think of it as: &gt; Java asks for forgiveness; C# asks for permission. And it’s easier to ask for forgiveness.</p>
+<p>So, in C#, <code>virtual</code> is essentially the base class saying:</p>
+<blockquote class="blockquote">
+<p>“Derived classes are allowed to replace this method with their own implementation.”</p>
+</blockquote>
+<p>If a method is not marked <code>virtual</code> (or <code>abstract</code>), a derived class cannot override it.</p>
+<section id="so-now" class="level3">
+<h3 class="anchored" data-anchor-id="so-now">So now:</h3>
+<p>Override the <code>Sound()</code> method in <code>Dog</code>.</p>
+<p>It should display:</p>
+<pre class="text"><code>Woof!</code></pre>
+<p>Taking into consideration what was written above.</p>
+<hr>
+</section>
+</section>
+<section id="part-12-creating-a-cat" class="level2">
+<h2 class="anchored" data-anchor-id="part-12-creating-a-cat">Part 12 – Creating a Cat</h2>
+<p>Create another class called <code>Cat</code> that inherits from <code>Animal</code>.</p>
+<p>It should contain:</p>
+<ul>
+<li>a private <code>_colour</code> field</li>
+<li>a public <code>Colour</code> property</li>
+<li>a constructor accepting name, age and colour</li>
+<li>an overridden <code>Sound()</code> method</li>
+</ul>
+<p>The cat should make the following sound:</p>
+<pre class="text"><code>Meow!</code></pre>
+<p>Use the same approach as the <code>Dog</code> class.</p>
+<hr>
+</section>
+<section id="part-13-testing-your-classes" class="level2">
+<h2 class="anchored" data-anchor-id="part-13-testing-your-classes">Part 13 – Testing Your Classes</h2>
+<p>In <code>Main()</code> create at least:</p>
+<ul>
+<li>two <code>Dog</code> objects</li>
+<li>two <code>Cat</code> objects</li>
+</ul>
+<p>Test the following:</p>
+<ul>
+<li>setting and retrieving properties</li>
+<li>displaying the animal details</li>
+<li>calling <code>Sound()</code></li>
+</ul>
+<p>For example, make sure you can access values such as:</p>
+<pre class="text"><code>Name
+Age
+Breed
+Colour</code></pre>
+<p>Do not simply copy a completed program. Write the classes and test them as you go.</p>
+<hr>
+</section>
+<section id="part-14-polymorphism" class="level2">
+<h2 class="anchored" data-anchor-id="part-14-polymorphism">Part 14 – Polymorphism</h2>
+<p>Finally, demonstrate polymorphism.</p>
+<p>Create an array of <code>Animal</code> objects containing a mixture of dogs and cats.</p>
+<p>Call <code>Sound()</code> on each object.</p>
+<p>Although every object is stored as an <code>Animal</code>, the appropriate overridden method should be called:</p>
+<pre class="text"><code>Woof!
+Meow!
+Woof!
+Meow!</code></pre>
+<p>This demonstrates <strong>polymorphism</strong>: the same method call can produce different behaviour depending on the actual object.</p>
+<hr>
+</section>
+<section id="part-15---tostring-on-object" class="level2">
+<h2 class="anchored" data-anchor-id="part-15---tostring-on-object">Part 15 - ToString on Object</h2>
+<p>Every C# object has a (<code>virtual</code>) <code>ToString()</code> method.</p>
+<p>You can use it directly:</p>
+<p>Console.WriteLine(animal.ToString());</p>
+<p>or, because Console.WriteLine() can work with objects, try:</p>
+<p>Console.WriteLine(animal);</p>
+<p>Both approaches will use the object’s ToString() method.</p>
+<p>We can override it in our own class to provide a useful description of the object.</p>
+<p>Override ToString() so that an Animal produces a string containing its name and age.</p>
+<p>For example, an animal named Rex aged 5 might produce:</p>
+<pre class="text"><code>Rex is 5 years old</code></pre>
+<p>You could then override it again in the Dog class to say</p>
+<pre class="text"><code>Rex the dog is 5 years old</code></pre>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>You have seen some of the most important differences between Java and C#:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Java</th>
+<th>C#</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>boolean</code></td>
+<td><code>bool</code></td>
+</tr>
+<tr class="even">
+<td><code>.length</code></td>
+<td><code>.Length</code></td>
+</tr>
+<tr class="odd">
+<td><code>for (int x : array)</code></td>
+<td><code>foreach (int x in array)</code></td>
+</tr>
+<tr class="even">
+<td><code>extends</code></td>
+<td><code>:</code></td>
+</tr>
+<tr class="odd">
+<td><code>super(...)</code></td>
+<td><code>base(...)</code></td>
+</tr>
+<tr class="even">
+<td><code>@Override</code></td>
+<td><code>override</code></td>
+</tr>
+<tr class="odd">
+<td>Getter/setter methods</td>
+<td>Properties</td>
+</tr>
+<tr class="even">
+<td><code>System.out.println()</code></td>
+<td><code>Console.WriteLine()</code></td>
+</tr>
+</tbody>
+</table>
+<p>The purpose of this lab is <strong>not</strong> to memorise every difference between Java and C#. The important thing is to become comfortable reading and writing basic C# code before we move on to developing applications with .NET MAUI.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

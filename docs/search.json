@@ -1,863 +1,1584 @@
 [
   {
-    "objectID": "Week2/Week2.html#quick-recall-from-last-time",
-    "href": "Week2/Week2.html#quick-recall-from-last-time",
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Lecture Slides",
+    "section": "",
+    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "lectures/Week2/Week2.html#quick-recall-from-last-time",
+    "href": "lectures/Week2/Week2.html#quick-recall-from-last-time",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Quick recall from last time",
     "text": "Quick recall from last time\nLast lecture was about why: every platform has its own UI paradigms, dev environment and APIs — and a cross-platform framework lets us write most of our code once instead of three times.\n.NET MAUI is that framework, targeting Android and Windows for us (plus iOS/Mac Catalyst and macOS, which MAUI also supports).\nThis lecture is about how: what the pieces actually are and how they fit together."
   },
   {
-    "objectID": "Week2/Week2.html#the-three-pieces",
-    "href": "Week2/Week2.html#the-three-pieces",
+    "objectID": "lectures/Week2/Week2.html#the-three-pieces",
+    "href": "lectures/Week2/Week2.html#the-three-pieces",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "The three pieces",
     "text": "The three pieces\nC# is the programming language.\nXAML describes the UI.\n.NET MAUI connects the two and provides the cross-platform UI framework.\nThis is the part we didn’t cover last time — last week was about the problem a cross-platform framework solves. Today we start looking at the pieces MAUI actually gives us to solve it."
   },
   {
-    "objectID": "Week2/Week2.html#a-very-brief-history",
-    "href": "Week2/Week2.html#a-very-brief-history",
+    "objectID": "lectures/Week2/Week2.html#a-very-brief-history",
+    "href": "lectures/Week2/Week2.html#a-very-brief-history",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "A very brief history",
     "text": "A very brief history\nYou know why MAUI exists. Here’s where it came from — this bit is new.\nA simplified version:\nMono\n→ .NET implementation for platforms other than Windows\nXamarin\n→ .NET applications on mobile platforms\nXamarin.Forms\n→ shared UI framework\n.NET MAUI\n→ Microsoft’s current cross-platform UI framework"
   },
   {
-    "objectID": "Week2/Week2.html#what-is-xaml",
-    "href": "Week2/Week2.html#what-is-xaml",
+    "objectID": "lectures/Week2/Week2.html#what-is-xaml",
+    "href": "lectures/Week2/Week2.html#what-is-xaml",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "What is XAML",
     "text": "What is XAML\neXtensible Application Markup Language\nAn XML-based language for describing the structure and properties of a user interface.\n&lt;Label\n    Text=\"Hello, world!\"\n    FontSize=\"24\" /&gt;\nDeclarative, not imperative\nXAML describes what the UI should look like.\nC# describes how the application behaves.\nNot unique to XAML\nThe same idea appears elsewhere:\n\nHTML describes a web page’s structure\nXAML describes a MAUI page’s structure\n\nBoth are markup languages read by something else to build the actual UI."
   },
   {
-    "objectID": "Week2/Week2.html#two-ways-of-thinking-about-the-ui",
-    "href": "Week2/Week2.html#two-ways-of-thinking-about-the-ui",
+    "objectID": "lectures/Week2/Week2.html#two-ways-of-thinking-about-the-ui",
+    "href": "lectures/Week2/Week2.html#two-ways-of-thinking-about-the-ui",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Two ways of thinking about the UI",
     "text": "Two ways of thinking about the UI\nWe can create UI objects using C#. Broken down into its individual steps:\nLabel label;          // Declare a variable of type Label\nlabel = new Label();  // Instantiate: call the constructor, create the object\nlabel.Text = \"Hello!\"; // Set a property\nIn practice, we condense this using an object initializer:\nLabel label = new Label\n{\n    Text = \"Hello!\"\n};\nThis does exactly the same thing as the three lines above — declare, instantiate, and set the properties, all in one statement.\nWe still have to put the label somewhere on a page, it needs to be placed somewhere alongside all the other controls. This is possible via C#."
   },
   {
-    "objectID": "Week2/Week2.html#the-ui-with-xaml",
-    "href": "Week2/Week2.html#the-ui-with-xaml",
+    "objectID": "lectures/Week2/Week2.html#the-ui-with-xaml",
+    "href": "lectures/Week2/Week2.html#the-ui-with-xaml",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "The UI with XAML",
     "text": "The UI with XAML\nOr we can describe the same UI object using XAML:\n&lt;Label Text=\"Hello!\" /&gt;\nBoth ultimately create and configure a Label object.\nBut it might be a lot easier to read the XAML version alongside all the others.\nXAML is another way of describing objects\nIt is not a different programming language replacing C#.\nIt is a language for describing the structure and properties of the UI."
   },
   {
-    "objectID": "Week2/Week2.html#setting-a-property-two-xaml-syntaxes",
-    "href": "Week2/Week2.html#setting-a-property-two-xaml-syntaxes",
+    "objectID": "lectures/Week2/Week2.html#setting-a-property-two-xaml-syntaxes",
+    "href": "lectures/Week2/Week2.html#setting-a-property-two-xaml-syntaxes",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Setting a property: two XAML syntaxes",
     "text": "Setting a property: two XAML syntaxes\nAttribute syntax (the one we’ll use almost everywhere):\n&lt;Label Text=\"Hello!\" /&gt;\nProperty-element syntax (rarer, but you’ll see it soon):\n&lt;Label&gt;\n    &lt;Label.Text&gt;Hello!&lt;/Label.Text&gt;\n&lt;/Label&gt;\nBoth set the exact same Text property, to the exact same value.\nBoth Label tags are closed “/” is there on both.\nWhy would you ever use the longer one?\nAttribute syntax only works when the value can be written as a simple string.\nProperty-element syntax is needed when the value is something more complex than a string — a list, or another object."
   },
   {
-    "objectID": "Week2/Week2.html#open-visual-studio",
-    "href": "Week2/Week2.html#open-visual-studio",
+    "objectID": "lectures/Week2/Week2.html#open-visual-studio",
+    "href": "lectures/Week2/Week2.html#open-visual-studio",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Open Visual Studio",
     "text": "Open Visual Studio\nOpen Visual Studio and create a new project.\nChoose:\n.NET MAUI App\nUse the current .NET version installed on the lab machines. (should be .NET 10)"
   },
   {
-    "objectID": "Week2/Week2.html#run-the-starter-application",
-    "href": "Week2/Week2.html#run-the-starter-application",
+    "objectID": "lectures/Week2/Week2.html#run-the-starter-application",
+    "href": "lectures/Week2/Week2.html#run-the-starter-application",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Run the starter application",
     "text": "Run the starter application\nBefore changing anything:\n\nBuild the project\nRun it\nConfirm that the starter application works\n\nWhy do this first?\nIf something goes wrong later, we know the original project worked."
   },
   {
-    "objectID": "Week2/Week2.html#the-project-structure",
-    "href": "Week2/Week2.html#the-project-structure",
+    "objectID": "lectures/Week2/Week2.html#the-project-structure",
+    "href": "lectures/Week2/Week2.html#the-project-structure",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "The project structure",
     "text": "The project structure\nA new MAUI project contains several important pieces:\n\nResources\nPlatforms\nMauiProgram.cs\nApp.xaml\nAppShell.xaml\nMainPage.xaml\nMainPage.xaml.cs"
   },
   {
-    "objectID": "Week2/Week2.html#resources",
-    "href": "Week2/Week2.html#resources",
+    "objectID": "lectures/Week2/Week2.html#resources",
+    "href": "lectures/Week2/Week2.html#resources",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Resources",
     "text": "Resources\nThe Resources folder contains things such as:\n\nimages\nfonts\napplication icons\nsplash screen assets\nstyles\n\nMAUI handles these resources as part of the application build."
   },
   {
-    "objectID": "Week2/Week2.html#platforms",
-    "href": "Week2/Week2.html#platforms",
+    "objectID": "lectures/Week2/Week2.html#platforms",
+    "href": "lectures/Week2/Week2.html#platforms",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Platforms",
     "text": "Platforms\nThe Platforms folder contains platform-specific code.\nFor example:\n\nAndroid\niOS\nMac Catalyst\nWindows\n\nThe goal\nMost of our application code can be shared.\nBut when we need platform-specific behaviour, MAUI gives us somewhere to put it."
   },
   {
-    "objectID": "Week2/Week2.html#mauiprogram.cs",
-    "href": "Week2/Week2.html#mauiprogram.cs",
+    "objectID": "lectures/Week2/Week2.html#mauiprogram.cs",
+    "href": "lectures/Week2/Week2.html#mauiprogram.cs",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "MauiProgram.cs",
-    "text": "MauiProgram.cs\nMauiProgram.cs is where the MAUI application is configured. (For now, leave it alone!)\nFor example:\npublic static class MauiProgram\n{\n    public static MauiApp CreateMauiApp() {\n        var builder = MauiApp.CreateBuilder();\n        builder\n            .UseMauiApp&lt;App&gt;()\n            .ConfigureFonts(fonts =&gt;\n            {\n                fonts.AddFont(\"OpenSans-Regular.ttf\", \"OpenSansRegular\");\n                fonts.AddFont(\"OpenSans-Semibold.ttf\", \"OpenSansSemibold\");\n            });\n\n#if DEBUG\n        builder.Logging.AddDebug();\n#endif\n\n        return builder.Build();\n    }\n}\nFor now\nThink of this as:\n\nWhere we configure the MAUI application."
+    "text": "MauiProgram.cs\nMauiProgram.cs is where the MAUI application is configured. (For now, leave it alone!)\nFor example:\npublic static class MauiProgram\n{\n    public static MauiApp CreateMauiApp() {\n        var builder = MauiApp.CreateBuilder();\n        builder\n            .UseMauiApp&lt;App&gt;()\n            .ConfigureFonts(fonts =&gt;\n            {\n                fonts.AddFont(\"OpenSans-Regular.ttf\", \"OpenSansRegular\");\n                fonts.AddFont(\"OpenSans-Semibold.ttf\", \"OpenSansSemibold\");\n            });\n\n#if DEBUG\n        builder.Logging.AddDebug();\n#endif\n\n        return builder.Build();\n    }\n}\nThink of this as:\n\nWhere we configure the MAUI application.\n\nI repeat, for now, leave it alone, don’t overwrite anything here."
   },
   {
-    "objectID": "Week2/Week2.html#app.xaml",
-    "href": "Week2/Week2.html#app.xaml",
+    "objectID": "lectures/Week2/Week2.html#app.xaml",
+    "href": "lectures/Week2/Week2.html#app.xaml",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "App.xaml",
     "text": "App.xaml\nApp.xaml contains application-level XAML.\nIt is a good place for things that apply to the application as a whole, such as:\n\nresources\nstyles\ncolours\nreusable definitions"
   },
   {
-    "objectID": "Week2/Week2.html#appshell.xaml",
-    "href": "Week2/Week2.html#appshell.xaml",
+    "objectID": "lectures/Week2/Week2.html#appshell.xaml",
+    "href": "lectures/Week2/Week2.html#appshell.xaml",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "AppShell.xaml",
     "text": "AppShell.xaml\nThe Shell describes the application’s navigation structure.\nFor example, it can define:\n\npages\nroutes\nnavigation relationships\n\n\nShell = how the application’s pages fit together.\n\nFor now, we’ll also be leaving this alone."
   },
   {
-    "objectID": "Week2/Week2.html#mainpage.xaml",
-    "href": "Week2/Week2.html#mainpage.xaml",
+    "objectID": "lectures/Week2/Week2.html#mainpage.xaml",
+    "href": "lectures/Week2/Week2.html#mainpage.xaml",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "MainPage.xaml",
-    "text": "MainPage.xaml\nThis is where we describe the UI for our page.\nFor example:\n&lt;ContentPage\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    x:Class=\"MyMauiApp.MainPage\"&gt;\n\n    &lt;VerticalStackLayout&gt;\n        &lt;Label Text=\"Hello!\" /&gt;\n    &lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;"
+    "text": "MainPage.xaml\nThis is where we describe the UI for our page.\nFor example:\n&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?&gt;\n&lt;ContentPage\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    x:Class=\"MyMauiApp.MainPage\"&gt;\n\n    &lt;VerticalStackLayout&gt;\n        &lt;Label Text=\"Hello!\" /&gt;\n    &lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;\n\n\n\n\n\n\nWarning\n\n\nThe top line of the XAML file is never edited, leave it alone. It is what identifies the file type and even a space out of place will stop it working.\nIf you are copying and pasting from a sample file I give you, usually you will only copy in between the &lt;ContentPage&gt; &lt;/ContentPage&gt;, ignoring this will mess up your namespace"
   },
   {
-    "objectID": "Week2/Week2.html#mainpage.xaml.cs",
-    "href": "Week2/Week2.html#mainpage.xaml.cs",
+    "objectID": "lectures/Week2/Week2.html#mainpage.xaml.cs",
+    "href": "lectures/Week2/Week2.html#mainpage.xaml.cs",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "MainPage.xaml.cs",
     "text": "MainPage.xaml.cs\nThe .xaml.cs file is the code-behind.\nThis is where we can write C# code associated with the page.\nnamespace MyMauiApp;\n\npublic partial class MainPage : ContentPage\n{\n    public MainPage()\n    {\n        InitializeComponent();\n    }\n}\nXAML + code-behind\nThese two files work together to make the MainPage class. This is where we are going to be doing all our editing for the first few weeks at least.\nYou may have to click the arrow next to the MainPage.xaml in Visual Studio to actually see and access the code-behind file."
   },
   {
-    "objectID": "Week2/Week2.html#what-does-partial-mean",
-    "href": "Week2/Week2.html#what-does-partial-mean",
+    "objectID": "lectures/Week2/Week2.html#what-does-partial-mean",
+    "href": "lectures/Week2/Week2.html#what-does-partial-mean",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "What does partial mean?",
     "text": "What does partial mean?\nNormally, a class is written in one place:\npublic class Person\n{\n    // ...\n}\nWith partial, one class can be split across multiple files.\npublic partial class MainPage : ContentPage\n{\n    // C# code\n}\nThe XAML describes another part of that same class.\nSo:\nMainPage.xaml\n\n\n\nMainPage.xaml.cs\n=\nMainPage"
   },
   {
-    "objectID": "Week2/Week2.html#xclass",
-    "href": "Week2/Week2.html#xclass",
+    "objectID": "lectures/Week2/Week2.html#xclass",
+    "href": "lectures/Week2/Week2.html#xclass",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "x:Class",
     "text": "x:Class\nAt the top of the XAML we see something like:\n&lt;ContentPage\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    x:Class=\"MyMauiApp.MainPage\"&gt;\nx:Class tells XAML:\n\n“This XAML belongs to the MyMauiApp.MainPage class.”\n\nThis is how the XAML and C# sides are connected."
   },
   {
-    "objectID": "Week2/Week2.html#initializecomponent",
-    "href": "Week2/Week2.html#initializecomponent",
+    "objectID": "lectures/Week2/Week2.html#initializecomponent",
+    "href": "lectures/Week2/Week2.html#initializecomponent",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "InitializeComponent()",
     "text": "InitializeComponent()\nYou will normally see this in the page constructor:\npublic MainPage()\n{\n    InitializeComponent();\n}\nThis initialises the UI described in the XAML.\nIn simple terms\n\n“Set up the objects described by my XAML.”\n\n\n\n\n\n\n\nWarning\n\n\nNever delete InitializeComponent() from your code, even if the compiler says there is a problem.\nThis is required to Initialise all the XAML components, so if you delete this none of the XAML controls will show.\nIf InitializeComponent() has a compiler error, this is almost always an issue in the XAML code."
   },
   {
-    "objectID": "Week2/Week2.html#some-visual-studio-things",
-    "href": "Week2/Week2.html#some-visual-studio-things",
+    "objectID": "lectures/Week2/Week2.html#some-visual-studio-things",
+    "href": "lectures/Week2/Week2.html#some-visual-studio-things",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Some Visual Studio Things",
     "text": "Some Visual Studio Things\nWhen you first start a project it may have a bunch of red lines all over it - saying there are compiler errors.\nThis is a reason you should always compile the template program to start - clear these.\nSometimes you might have to close and reload Visual Studio.\nAs you go editing, maybe the XAML and C# Intellisense become out of sync so it is saying there are errors.\nAlways try compiling the program and if the errors remain there, they are real errors! Otherwise it is just some quirk of Visual Studio."
   },
   {
-    "objectID": "Week2/Week2.html#pages-layouts-and-views",
-    "href": "Week2/Week2.html#pages-layouts-and-views",
+    "objectID": "lectures/Week2/Week2.html#pages-layouts-and-views",
+    "href": "lectures/Week2/Week2.html#pages-layouts-and-views",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Pages, layouts and views",
     "text": "Pages, layouts and views\nThere are three useful concepts:\nPage\nA screen in the application.\nExamples: ContentPage, NavigationPage\nLayout\nControls how other UI elements are arranged.\nExamples: VerticalStackLayout, HorizontalStackLayout,Grid\nView / control\nSomething the user sees or interacts with.\nExamples: Label, Button, Entry, Image"
   },
   {
-    "objectID": "Week2/Week2.html#xaml-nesting",
-    "href": "Week2/Week2.html#xaml-nesting",
+    "objectID": "lectures/Week2/Week2.html#xaml-nesting",
+    "href": "lectures/Week2/Week2.html#xaml-nesting",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "XAML nesting",
     "text": "XAML nesting\nXAML describes a hierarchy of objects.\n&lt;VerticalStackLayout&gt;\n\n    &lt;Label Text=\"Name\" /&gt;\n\n    &lt;Entry /&gt;\n\n    &lt;Button Text=\"Save\" /&gt;\n\n&lt;/VerticalStackLayout&gt;\nThe VerticalStackLayout contains three child objects:\n\nLabel\nEntry\nButton\n\nThink of it as an object tree\nMainPage\n└── VerticalStackLayout\n    ├── Label\n    ├── Entry\n    └── Button"
   },
   {
-    "objectID": "Week2/Week2.html#layouts-1",
-    "href": "Week2/Week2.html#layouts-1",
+    "objectID": "lectures/Week2/Week2.html#layouts-1",
+    "href": "lectures/Week2/Week2.html#layouts-1",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Layouts",
     "text": "Layouts\nEvery page must have one Parent layout.\nYou cannot have\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;\nas those two Vertical Stack layouts are on the same level.\nSame with\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;Grid&gt;\n&lt;/Grid&gt;\n&lt;/ContentPage&gt;\nBut layouts can be children\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n    &lt;Grid&gt;\n    &lt;/Grid&gt;\n&lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;"
   },
   {
-    "objectID": "Week2/Week2.html#verticalstacklayout",
-    "href": "Week2/Week2.html#verticalstacklayout",
+    "objectID": "lectures/Week2/Week2.html#verticalstacklayout",
+    "href": "lectures/Week2/Week2.html#verticalstacklayout",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "VerticalStackLayout",
     "text": "VerticalStackLayout\nPlaces its children vertically.\n&lt;VerticalStackLayout&gt;\n\n    &lt;Label Text=\"First\" /&gt;\n    &lt;Label Text=\"Second\" /&gt;\n    &lt;Button Text=\"Third\" /&gt;\n\n&lt;/VerticalStackLayout&gt;\nResult:\nFirst\n\nSecond\n\n[ Third ]\nUseful properties\n\nSpacing\nPadding\nHorizontalOptions\nVerticalOptions"
   },
   {
-    "objectID": "Week2/Week2.html#horizontalstacklayout",
-    "href": "Week2/Week2.html#horizontalstacklayout",
+    "objectID": "lectures/Week2/Week2.html#horizontalstacklayout",
+    "href": "lectures/Week2/Week2.html#horizontalstacklayout",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "HorizontalStackLayout",
     "text": "HorizontalStackLayout\nPlaces its children horizontally.\n&lt;HorizontalStackLayout&gt;\n\n    &lt;Button Text=\"Yes\" /&gt;\n    &lt;Button Text=\"No\" /&gt;\n    &lt;Button Text=\"Cancel\" /&gt;\n\n&lt;/HorizontalStackLayout&gt;\nResult:\n[ Yes ]   [ No ]   [ Cancel ]\nUseful properties\n\nSpacing\nPadding\nHorizontalOptions\nVerticalOptions"
   },
   {
-    "objectID": "Week2/Week2.html#grid",
-    "href": "Week2/Week2.html#grid",
+    "objectID": "lectures/Week2/Week2.html#grid",
+    "href": "lectures/Week2/Week2.html#grid",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid",
     "text": "Grid\nA Grid arranges its children into rows and columns.\nThink of it as dividing the available space into cells.\n       Column 0    Column 1\n      ┌──────────┬──────────┐\nRow 0 │          │          │\n      ├──────────┼──────────┤\nRow 1 │          │          │\n      └──────────┴──────────┘\nImportant\nA Grid starts with one row and one column.\nWe define additional rows and columns when we need them."
   },
   {
-    "objectID": "Week2/Week2.html#grid-defining-rows",
-    "href": "Week2/Week2.html#grid-defining-rows",
+    "objectID": "lectures/Week2/Week2.html#grid-defining-rows",
+    "href": "lectures/Week2/Week2.html#grid-defining-rows",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: defining rows",
     "text": "Grid: defining rows\nRows are defined with RowDefinitions.\n&lt;Grid RowDefinitions=\"Auto,*,100\"&gt;\nThis creates three rows:\nRow 0 → Auto\nRow 1 → *\nRow 2 → 100\nThe order matters.\nThe first definition creates row 0, the second creates row 1, and so on."
   },
   {
-    "objectID": "Week2/Week2.html#grid-defining-columns",
-    "href": "Week2/Week2.html#grid-defining-columns",
+    "objectID": "lectures/Week2/Week2.html#grid-defining-columns",
+    "href": "lectures/Week2/Week2.html#grid-defining-columns",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: defining columns",
     "text": "Grid: defining columns\nColumns are defined with ColumnDefinitions.\n&lt;Grid ColumnDefinitions=\"Auto,*\"&gt;\nThis creates two columns:\nColumn 0 → Auto\nColumn 1 → *\nWe can define both rows and columns:\n&lt;Grid\n    RowDefinitions=\"Auto,*\"\n    ColumnDefinitions=\"Auto,*\"&gt;\n2 rows and 2 columns\nRow 0 has height Auto, Row 1 has height  Column 0 has width Auto, Column 1 has width"
   },
   {
-    "objectID": "Week2/Week2.html#grid-cells",
-    "href": "Week2/Week2.html#grid-cells",
+    "objectID": "lectures/Week2/Week2.html#grid-cells",
+    "href": "lectures/Week2/Week2.html#grid-cells",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid cells",
     "text": "Grid cells\nRows and columns are zero-indexed.\n             Column 0     Column 1\n           ┌────────────┬────────────┐\nRow 0      │   (0,0)    │   (0,1)    │\n           ├────────────┼────────────┤\nRow 1      │   (1,0)    │   (1,1)    │\n           └────────────┴────────────┘\nA control can specify its row and column:\n&lt;Label\n    Text=\"Hello\"\n    Grid.Row=\"1\"\n    Grid.Column=\"0\" /&gt;"
   },
   {
-    "objectID": "Week2/Week2.html#putting-controls-in-a-grid",
-    "href": "Week2/Week2.html#putting-controls-in-a-grid",
+    "objectID": "lectures/Week2/Week2.html#putting-controls-in-a-grid",
+    "href": "lectures/Week2/Week2.html#putting-controls-in-a-grid",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Putting controls in a Grid",
     "text": "Putting controls in a Grid\n&lt;Grid\n    RowDefinitions=\"Auto,Auto\"\n    ColumnDefinitions=\"Auto,*\"&gt;\n\n    &lt;Label\n        Text=\"Name:\"\n        Grid.Row=\"0\"\n        Grid.Column=\"0\" /&gt;\n\n    &lt;Entry\n        Grid.Row=\"0\"\n        Grid.Column=\"1\" /&gt;\n\n    &lt;Label\n        Text=\"Email:\"\n        Grid.Row=\"1\"\n        Grid.Column=\"0\" /&gt;\n\n    &lt;Entry\n        Grid.Row=\"1\"\n        Grid.Column=\"1\" /&gt;\n\n&lt;/Grid&gt;\nThe Grid is responsible for arrangement\nThe controls themselves do not need to know where the other controls are."
   },
   {
-    "objectID": "Week2/Week2.html#grid-auto",
-    "href": "Week2/Week2.html#grid-auto",
+    "objectID": "lectures/Week2/Week2.html#grid-auto",
+    "href": "lectures/Week2/Week2.html#grid-auto",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: Auto",
     "text": "Grid: Auto\nAuto sizes a row or column according to its content.\n&lt;Grid RowDefinitions=\"Auto,*\"&gt;\nThe first row takes the space it needs.\nThe second row receives the remaining space.\nThink:\n\nAuto = size me to my content."
   },
   {
-    "objectID": "Week2/Week2.html#grid-1",
-    "href": "Week2/Week2.html#grid-1",
+    "objectID": "lectures/Week2/Week2.html#grid-1",
+    "href": "lectures/Week2/Week2.html#grid-1",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: *",
     "text": "Grid: *\n* means:\n\nTake a share of the remaining available space.\n\n&lt;Grid RowDefinitions=\"Auto,*\"&gt;\nIf the first row takes 50 units, the * row receives the remaining space.\nThink:\n\n*** = flexible remaining space.**"
   },
   {
-    "objectID": "Week2/Week2.html#grid-star-sizing",
-    "href": "Week2/Week2.html#grid-star-sizing",
+    "objectID": "lectures/Week2/Week2.html#grid-star-sizing",
+    "href": "lectures/Week2/Week2.html#grid-star-sizing",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: star sizing",
     "text": "Grid: star sizing\nWe can have more than one * row or column.\n&lt;Grid ColumnDefinitions=\"*,*\"&gt;\nThe available space is divided equally.\n┌──────────────────┬──────────────────┐\n│        *         │        *         │\n└──────────────────┴──────────────────┘"
   },
   {
-    "objectID": "Week2/Week2.html#grid-different-star-sizes",
-    "href": "Week2/Week2.html#grid-different-star-sizes",
+    "objectID": "lectures/Week2/Week2.html#grid-different-star-sizes",
+    "href": "lectures/Week2/Week2.html#grid-different-star-sizes",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: different star sizes",
     "text": "Grid: different star sizes\nStar values can have different weights.\n&lt;Grid ColumnDefinitions=\"*,2*\"&gt;\nThe available space is divided into three parts:\n┌──────────┬────────────────────┐\n│    *     │        2*          │\n└──────────┴────────────────────┘\nThe second column gets twice as much space as the first."
   },
   {
-    "objectID": "Week2/Week2.html#grid-fixed-sizes",
-    "href": "Week2/Week2.html#grid-fixed-sizes",
+    "objectID": "lectures/Week2/Week2.html#grid-fixed-sizes",
+    "href": "lectures/Week2/Week2.html#grid-fixed-sizes",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: fixed sizes",
     "text": "Grid: fixed sizes\nWe can specify an explicit size:\n&lt;Grid ColumnDefinitions=\"100,*\"&gt;\nThe first column is 100 units wide.\nThe second column gets the remaining space.\nUse fixed sizes carefully\nA fixed size that looks good on one screen may not work well on another.\nPrefer:\n\nAuto\n*\nproportional star sizing\n\nwhen appropriate."
   },
   {
-    "objectID": "Week2/Week2.html#grid-spanning-cells",
-    "href": "Week2/Week2.html#grid-spanning-cells",
+    "objectID": "lectures/Week2/Week2.html#grid-spanning-cells",
+    "href": "lectures/Week2/Week2.html#grid-spanning-cells",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: spanning cells",
     "text": "Grid: spanning cells\nA control can occupy more than one row or column.\n&lt;Label\n    Text=\"A wide heading\"\n    Grid.ColumnSpan=\"2\" /&gt;\nIt occupies both columns.\n┌─────────────────────────────┐\n│      A wide heading          │   &lt;- ColumnSpan=\"2\"\n├───────────────┬───────────────┤\n│               │               │\n└───────────────┴───────────────┘\nSimilarly:\n&lt;Button\n    Text=\"Large area\"\n    Grid.RowSpan=\"2\" /&gt;\nIt occupies two rows.\n┌──────────────┬────────────────┐\n│              │                │\n│ Large area   ├────────────────┤   &lt;- RowSpan=\"2\"\n│              │                │\n└──────────────┴────────────────┘"
   },
   {
-    "objectID": "Week2/Week2.html#grid-spacing",
-    "href": "Week2/Week2.html#grid-spacing",
+    "objectID": "lectures/Week2/Week2.html#grid-spacing",
+    "href": "lectures/Week2/Week2.html#grid-spacing",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: spacing",
     "text": "Grid: spacing\nA Grid can add space between rows and columns.\n&lt;Grid\n    RowSpacing=\"10\"\n    ColumnSpacing=\"20\"&gt;\nThis is different from padding.\nRowSpacing\nSpace between rows.\nColumnSpacing\nSpace between columns."
   },
   {
-    "objectID": "Week2/Week2.html#a-complete-grid",
-    "href": "Week2/Week2.html#a-complete-grid",
+    "objectID": "lectures/Week2/Week2.html#a-complete-grid",
+    "href": "lectures/Week2/Week2.html#a-complete-grid",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "A complete Grid",
     "text": "A complete Grid\n&lt;Grid\n    RowDefinitions=\"Auto,Auto,Auto\"\n    ColumnDefinitions=\"Auto,*\"\n    RowSpacing=\"10\"\n    ColumnSpacing=\"10\"&gt;\n\n    &lt;Label\n        Text=\"Name:\"\n        Grid.Row=\"0\"\n        Grid.Column=\"0\" /&gt;\n\n    &lt;Entry\n        Placeholder=\"Enter your name\"\n        Grid.Row=\"0\"\n        Grid.Column=\"1\" /&gt;\n\n    &lt;Label\n        Text=\"Email:\"\n        Grid.Row=\"1\"\n        Grid.Column=\"0\" /&gt;\n\n    &lt;Entry\n        Placeholder=\"Enter your email\"\n        Grid.Row=\"1\"\n        Grid.Column=\"1\" /&gt;\n\n    &lt;Button\n        Text=\"Submit\"\n        Grid.Row=\"2\"\n        Grid.Column=\"1\" /&gt;\n\n&lt;/Grid&gt;"
   },
   {
-    "objectID": "Week2/Week2.html#scrollview",
-    "href": "Week2/Week2.html#scrollview",
+    "objectID": "lectures/Week2/Week2.html#scrollview",
+    "href": "lectures/Week2/Week2.html#scrollview",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "ScrollView",
     "text": "ScrollView\nWhat happens when the content is larger than the available screen?\nA ScrollView allows the user to scroll through content that does not fit.\n&lt;ScrollView&gt;\n    &lt;VerticalStackLayout&gt;\n        &lt;Label\n            Text=\"First item\" /&gt;\n        &lt;Label\n            Text=\"Second item\" /&gt;\n        &lt;Label\n            Text=\"Third item\" /&gt;\n        &lt;!-- lots more content --&gt;\n    &lt;/VerticalStackLayout&gt;\n&lt;/ScrollView&gt;\n\nScrollView = a window onto content that may be larger than the available space.\n\nThe content inside the ScrollView can extend beyond the visible area.\nThe user can then scroll to see it.\nImportant\nA ScrollView should normally contain one child — usually a layout such as a VerticalStackLayout or Grid.\nIt is particularly useful for forms and pages with lots of content."
   },
   {
-    "objectID": "Week2/Week2.html#alignment",
-    "href": "Week2/Week2.html#alignment",
+    "objectID": "lectures/Week2/Week2.html#alignment",
+    "href": "lectures/Week2/Week2.html#alignment",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Alignment",
     "text": "Alignment\nControls can specify how they are aligned within the space available to them.\n&lt;Label\n    Text=\"Hello\"\n    HorizontalOptions=\"Center\"\n    VerticalOptions=\"Center\" /&gt;\nCommon values include:\n\nStart\nCenter\nEnd\nFill\n\n    Start               Center               End                 Fill\n┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐\n│[Label]       │    │   [Label]    │    │       [Label]|    │[────────────]│\n│              │    │              │    │              │    │              │\n└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘"
   },
   {
-    "objectID": "Week2/Week2.html#dont-use-andexpand",
-    "href": "Week2/Week2.html#dont-use-andexpand",
+    "objectID": "lectures/Week2/Week2.html#dont-use-andexpand",
+    "href": "lectures/Week2/Week2.html#dont-use-andexpand",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Don’t use AndExpand",
     "text": "Don’t use AndExpand\nYou may find older MAUI/Xamarin examples using:\nCenterAndExpand\nFillAndExpand\nThese are old patterns.\nFor current MAUI layouts, use:\nStart\nCenter\nEnd\nFill\nand let the layout determine how space is allocated."
   },
   {
-    "objectID": "Week2/Week2.html#margin",
-    "href": "Week2/Week2.html#margin",
+    "objectID": "lectures/Week2/Week2.html#margin",
+    "href": "lectures/Week2/Week2.html#margin",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Margin",
     "text": "Margin\nMargin controls the space outside an element.\n&lt;Button\n    Text=\"Save\"\n    Margin=\"10\" /&gt;\nThink:\nspace\n  ↓\n┌───────────────┐\n│    Button     │\n└───────────────┘\nThe margin belongs to the element’s outside spacing."
   },
   {
-    "objectID": "Week2/Week2.html#padding",
-    "href": "Week2/Week2.html#padding",
+    "objectID": "lectures/Week2/Week2.html#padding",
+    "href": "lectures/Week2/Week2.html#padding",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Padding",
     "text": "Padding\nPadding controls the space inside an element.\n&lt;Border Padding=\"20\"&gt;\n    &lt;Label Text=\"Hello!\" /&gt;\n&lt;/Border&gt;\nThink:\n┌─────────────────────┐\n│   padding            │\n│     ┌───────────┐    │\n│     │  content  │    │\n│     └───────────┘    │\n└─────────────────────┘\nRemember\nMargin = outside\nPadding = inside"
   },
   {
-    "objectID": "Week2/Week2.html#displaying-collections",
-    "href": "Week2/Week2.html#displaying-collections",
+    "objectID": "lectures/Week2/Week2.html#displaying-collections",
+    "href": "lectures/Week2/Week2.html#displaying-collections",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Displaying collections",
     "text": "Displaying collections\nSo far we have created individual controls:\n&lt;Label Text=\"One\" /&gt;\n&lt;Label Text=\"Two\" /&gt;\n&lt;Label Text=\"Three\" /&gt;\nBut what if we have hundreds of items?\nWe need a control designed to display a collection.\nEnter CollectionView"
   },
   {
-    "objectID": "Week2/Week2.html#collectionview",
-    "href": "Week2/Week2.html#collectionview",
+    "objectID": "lectures/Week2/Week2.html#collectionview",
+    "href": "lectures/Week2/Week2.html#collectionview",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "CollectionView",
     "text": "CollectionView\nCollectionView displays a collection of items.\nIt can display items:\n\nvertically\nhorizontally\nin a grid\n\nA simple example:\n&lt;CollectionView&gt;\n    &lt;CollectionView.ItemsSource&gt;\n        &lt;x:Array Type=\"{x:Type x:String}\"&gt;\n            &lt;x:String&gt;Apple&lt;/x:String&gt;\n            &lt;x:String&gt;Banana&lt;/x:String&gt;\n            &lt;x:String&gt;Orange&lt;/x:String&gt;\n        &lt;/x:Array&gt;\n    &lt;/CollectionView.ItemsSource&gt;\n\n    &lt;CollectionView.ItemTemplate&gt;\n        &lt;DataTemplate&gt;\n            &lt;Label\n                Text=\"{Binding .}\"\n                Padding=\"10\" /&gt;\n        &lt;/DataTemplate&gt;\n    &lt;/CollectionView.ItemTemplate&gt;\n&lt;/CollectionView&gt;"
   },
   {
-    "objectID": "Week2/Week2.html#xaml-creates-objects",
-    "href": "Week2/Week2.html#xaml-creates-objects",
+    "objectID": "lectures/Week2/Week2.html#xaml-creates-objects",
+    "href": "lectures/Week2/Week2.html#xaml-creates-objects",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "XAML creates objects",
     "text": "XAML creates objects\nWhen we write:\n&lt;Label Text=\"Hello!\" /&gt;\n\n&lt;Entry /&gt;\nobjects of those classes are being created.\nThe Label is a Label object.\nThe Entry is an Entry object.\nThey become part of the UI object tree for our MainPage."
   },
   {
-    "objectID": "Week2/Week2.html#working-with-those-objects-from-c",
-    "href": "Week2/Week2.html#working-with-those-objects-from-c",
+    "objectID": "lectures/Week2/Week2.html#working-with-those-objects-from-c",
+    "href": "lectures/Week2/Week2.html#working-with-those-objects-from-c",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Working with those objects from C#",
     "text": "Working with those objects from C#\nBecause these objects are part of our MainPage UI, our C# code can work with them.\nWe could search through the UI object tree at runtime to find a particular object.\nBut that would be cumbersome.\nWe need an easier way to refer to important controls.\nThose controls are objects belonging to the MainPage class, so we need a reference to those objects"
   },
   {
-    "objectID": "Week2/Week2.html#xname",
-    "href": "Week2/Week2.html#xname",
+    "objectID": "lectures/Week2/Week2.html#xname",
+    "href": "lectures/Week2/Week2.html#xname",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "x:Name",
     "text": "x:Name\nx:Name gives a XAML-created object a name that we can use from code.\n&lt;Label\n    x:Name=\"GreetingLabel\"\n    Text=\"Hello!\" /&gt;\nNow the code-behind can refer to it:\nGreetingLabel.Text = \"Hello, world!\";\nMainPage.xaml                                    MainPage.xaml.cs\n\n┌───────────────────────────────┐                ┌───────────────────────────────┐\n│ &lt;Label                        │                │ GreetingLabel                 │\n│   x:Name=\"GreetingLabel\"      │ ──x:Name──────►│   .Text = \"Hello, world!\";    │\n│   Text=\"Hello!\" /&gt;            │                │ (the same object)             │\n└───────────────────────────────┘                └───────────────────────────────┘"
   },
   {
-    "objectID": "Week2/Week2.html#creating-a-label-in-c",
-    "href": "Week2/Week2.html#creating-a-label-in-c",
+    "objectID": "lectures/Week2/Week2.html#creating-a-label-in-c",
+    "href": "lectures/Week2/Week2.html#creating-a-label-in-c",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Creating a Label in C#",
     "text": "Creating a Label in C#\nWe don’t have to use XAML.\nThe same type of object can be created directly in C#:\nLabel label = new Label\n{\n    Text = \"Hello!\"\n};\nWe can then add it to a layout:\n&lt;VerticalStackLayout\n    x:Name=\"MainVerticalLayout\"&gt;\n    &lt;!--\n\n    --&gt;\n&lt;/VerticalStackLayout&gt;\nMainVerticalLayout.Add(label);\n\n\n\n\n\n\nWarning\n\n\nnew Label()\ncreates a new Label object.\nEvery time that statement runs, a new object is created.\nSo if you’re writing loops, be careful!"
   },
   {
-    "objectID": "Week2/Week2.html#xaml-or-c",
-    "href": "Week2/Week2.html#xaml-or-c",
+    "objectID": "lectures/Week2/Week2.html#xaml-or-c",
+    "href": "lectures/Week2/Week2.html#xaml-or-c",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "XAML or C#?",
     "text": "XAML or C#?\nWe can configure a Label in XAML:\n&lt;Label\n    Text=\"Hello!\"\n    FontSize=\"24\" /&gt;\nor in C#:\nLabel label = new Label\n{\n    Text = \"Hello!\",\n    FontSize = 24\n};\nSo why use XAML?\nXAML is particularly good at describing:\n\nhierarchy, layout, properties, the static structure of the UI\n\nC# is particularly useful for:\n\napplication logic, calculations, interaction, dynamic UI"
   },
   {
-    "objectID": "Week2/Week2.html#dynamic-ui",
-    "href": "Week2/Week2.html#dynamic-ui",
+    "objectID": "lectures/Week2/Week2.html#dynamic-ui",
+    "href": "lectures/Week2/Week2.html#dynamic-ui",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Dynamic UI",
     "text": "Dynamic UI\nBecause controls are objects, we can create them dynamically.\nfor (int i = 1; i &lt;= 5; i++)\n{\n    Label label = new Label\n    {\n        Text = $\"Item {i}\"\n    };\n\n    MainVerticalLayout.Add(label);\n}\nThe application creates five separate Label objects.\nThis is useful when the UI depends on runtime information."
   },
   {
-    "objectID": "Week2/Week2.html#avoid-hard-coded-layouts",
-    "href": "Week2/Week2.html#avoid-hard-coded-layouts",
+    "objectID": "lectures/Week2/Week2.html#avoid-hard-coded-layouts",
+    "href": "lectures/Week2/Week2.html#avoid-hard-coded-layouts",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Avoid hard-coded layouts",
     "text": "Avoid hard-coded layouts\nThis is fragile:\n&lt;Grid\n    WidthRequest=\"800\"\n    HeightRequest=\"600\"&gt;\nWhat happens on:\n\na phone?\na tablet?\na different window size?\na rotated device?\n\nPrefer layouts that adapt\nUse things like:\n\nAuto, *, proportional sizing, HorizontalOptions, VerticalOptions, Margin, Padding"
   },
   {
-    "objectID": "Week2/Week2.html#think-in-relationships",
-    "href": "Week2/Week2.html#think-in-relationships",
+    "objectID": "lectures/Week2/Week2.html#think-in-relationships",
+    "href": "lectures/Week2/Week2.html#think-in-relationships",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Think in relationships",
     "text": "Think in relationships\nInstead of:\n\n“Put this control at x = 100, y = 200.”\n\nthink:\n\n“Put this control in the second row and let it take the available space.”\n\nGrid:\n&lt;Grid ColumnDefinitions=\"Auto,*\"&gt;\nis describing a relationship.\nThis is much more useful for cross-platform UI."
   },
   {
-    "objectID": "Week2/Week2.html#microsoft-documentation",
-    "href": "Week2/Week2.html#microsoft-documentation",
+    "objectID": "lectures/Week2/Week2.html#microsoft-documentation",
+    "href": "lectures/Week2/Week2.html#microsoft-documentation",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Microsoft documentation",
     "text": "Microsoft documentation\nMAUI has extensive official documentation.\nStart here\n.NET MAUI controls\n.NET MAUI layouts\nThe documentation is your reference\nYou do not need to memorise every property.\nKnow how to find the documentation and understand what you are looking at."
   },
   {
-    "objectID": "Week2/Week2.html#what-have-we-learned",
-    "href": "Week2/Week2.html#what-have-we-learned",
+    "objectID": "lectures/Week2/Week2.html#what-have-we-learned",
+    "href": "lectures/Week2/Week2.html#what-have-we-learned",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "What have we learned?",
     "text": "What have we learned?\n.NET MAUI\nA cross-platform UI framework.\nXAML\nA way of describing the UI and constructing/configuring objects.\nC\nOur programming language for application logic and code-behind.\nLayouts\nControl how UI objects are arranged.\nControls\nThe things displayed to or used by the user.\nGrid\nRows + columns + flexible sizing."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Lecture Slides",
+    "objectID": "labs.html",
+    "href": "labs.html",
+    "title": "Labs",
     "section": "",
-    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\nNo matching items"
+    "text": "Lab 1: C# Basics\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "Week1/Week1.html#aim",
-    "href": "Week1/Week1.html#aim",
+    "objectID": "labs/Lab 3 - Conversion App.html",
+    "href": "labs/Lab 3 - Conversion App.html",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "In the previous lab you worked with XAML and created user interfaces using different layouts and controls.\nIn this lab we are going to put those pieces together to create a small working .NET MAUI application.\nThe application will be a unit conversion application.\nIt does not need to look particularly impressive. The important thing at this stage is getting the application working.\n\n\n\nCompile often. After completing one section, make sure it works before moving on.\nDon’t just copy and paste code. You will not learn much from doing that.\nYou are expected to write the code yourself.\nIf you are stuck, call me over for help.\nIf you finish the main game, move on to the stretch goals.\n\n\n\n\n\n\nOpen Visual Studio and create a new project.\nSelect:\n.NET MAUI App\nGive the project a sensible name, such as:\nConversionApp\nUse .NET 10.0.\nIf .NET 10.0 is not available, you may need to update Visual Studio or install the appropriate .NET MAUI workload.\n\nRemember: keep your project path reasonably short. Very long paths can cause problems when Visual Studio creates all of the files needed to build a MAUI application. Especially be aware of this if using OneDrive to save your files.\n\nOnce the project has been created, build and run the application.\nYou should see the default MAUI application running.\nYou have now created and run your second .NET MAUI application.\n\n\n\n\nClear out the template content so that your MainPage.xaml contains something similar (not identical) to:\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             x:Class=\"ConversionApp.MainPage\"&gt;\n\n    &lt;VerticalStackLayout&gt;\n\n    &lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;\nYour code-behind should initially be similar to:\npublic partial class MainPage : ContentPage\n{\n    public MainPage()\n    {\n        InitializeComponent();\n    }\n}\nYour namespace may be different depending on the name of your project.\n\n\n\nYou need:\n\nan Entry where the user can enter a number;\na Label where the answer will be displayed;\na Button which the user can press to perform the calculation.\n\nYou already learned about these controls in the previous lab, so try to create them yourself.\nYou will need sensible x:Name values so that the controls can be accessed from C#.\nFor example, you might use names such as:\n\nQuantityEntry\nlblAnswer\nbtnCalculate\n\nThe button also needs a Clicked event handler.\nUse Visual Studio’s event-handler suggestion when adding the Clicked event rather than manually writing the method in the C# file.\nYour interface should provide the user with a way to enter a quantity, press a button, and see the result.\n\n\n\n\nFor the first version of the application, we will convert:\nKilograms → Pounds\nThe formula is:\npounds = kilograms × 2.20462\nFor example:\n10 kg → 22.0462 lb\nYou should now have a button click event handler in MainPage.xaml.cs.\nIt will look something like:\nprivate void btnCalculate_Clicked(object sender, EventArgs e)\n{\n    \n}\nThe method is an event handler.\nIt will be called when the user clicks the button.\n\n\n\n\nThe text entered into an Entry can be accessed through its Text property.\nFor example:\nQuantityEntry.Text\nRemember that Text is a string.\nThe conversion requires a number, so you need to convert the text into a numeric value.\nFor example:\ndouble quantity = Convert.ToDouble(QuantityEntry.Text);\n\nImportant: this is deliberately a simple first version. What happens if the user leaves the box empty? What happens if they enter \"hello\" instead of a number?\nWe will come back to this later in the lab.\n\nCalculate the number of pounds using the formula above.\n\n\n\n\nWe created a Label called lblAnswer.\nIts Text property can be changed from C#.\nFor example:\nlblAnswer.Text = \"Hello\";\nUse this to display the result of your conversion.\nYou may need to convert your calculated number to a string using ToString().\nFor example:\nlblAnswer.Text = result.ToString();\nYou can also combine text and values using string concatenation:\nlblAnswer.Text = \"The answer is: \" + result.ToString();\nTry running the application.\nYou should now be able to:\n\nenter a number;\nclick the button;\ncalculate the conversion;\ndisplay the answer.\n\n\n\nAt this point, make sure your application works before continuing.\nYou have created a simple application where:\nUser input\n    ↓\nEntry\n    ↓\nButton clicked\n    ↓\nC# event handler\n    ↓\nCalculation\n    ↓\nLabel updated\nThis is one of the fundamental patterns you will use throughout this module.\n\n\n\n\n\nA conversion application would be more useful if it could perform different conversions.\nAdd a Picker to your page.\nThe user should be able to choose between at least:\n\nKilograms → Pounds\nPounds → Kilograms\n\nYou can use the following as a starting point:\n&lt;Picker x:Name=\"ConversionTypePicker\"\n        Title=\"Select Conversion\"&gt;\n\n    &lt;Picker.Items&gt;\n        &lt;x:String&gt;Kilograms to Pounds&lt;/x:String&gt;\n        &lt;x:String&gt;Pounds to Kilograms&lt;/x:String&gt;\n    &lt;/Picker.Items&gt;\n\n&lt;/Picker&gt;\nYou should already understand most of this XAML from the previous lab.\n\n\n\n\nWhen the application starts, the Picker does not automatically have to select an item.\nWe don’t want the user to have to make a selection every time, so set the initial selected item in the MainPage constructor.\nFor example:\nConversionTypePicker.SelectedIndex = 0;\nRemember that collection indexes start at 0.\nTherefore:\n0 → Kilograms to Pounds\n1 → Pounds to Kilograms\n\n\n\n\nInside your button event handler, you can find out which item the user selected:\nint conversion = ConversionTypePicker.SelectedIndex;\nNow modify your calculation so that the application performs the appropriate conversion.\nYou can use either:\n\nif / else;\nor a switch.\n\nFor example, conceptually:\nif conversion is 0\n    kilograms → pounds\n\nelse if conversion is 1\n    pounds → kilograms\nYou will need to find the formula for the reverse conversion yourself.\nGet both conversions working.\nDo not add a separate button for each conversion. The same Calculate button should perform whichever conversion the user selected.\n\n\n\n\nNow extend your application.\nAdd at least four more conversions.\nFor example:\n\nCelsius → Fahrenheit\nFahrenheit → Celsius\nKilometres → Miles\nMiles → Kilometres\nPints → Litres\nLitres → Pints\nCelcius → Kelvin\nKelvin → Celcius\nPounds → Kilograms\nKilograms → Pounds\n\nUseful formulas include:\nFahrenheit = (Celsius × 9 / 5) + 32\n\nMiles = Kilometres × 0.621371\nFind the other formulas yourself.\nYou will need to:\n\nadd the conversion to the Picker;\ndetermine which conversion has been selected;\nperform the correct calculation;\ndisplay the result.\n\nKeep your code organised rather than creating a separate button for every conversion."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#aim",
+    "href": "labs/Lab 3 - Conversion App.html#aim",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "In the previous lab you worked with XAML and created user interfaces using different layouts and controls.\nIn this lab we are going to put those pieces together to create a small working .NET MAUI application.\nThe application will be a unit conversion application.\nIt does not need to look particularly impressive. The important thing at this stage is getting the application working.\n\n\n\nCompile often. After completing one section, make sure it works before moving on.\nDon’t just copy and paste code. You will not learn much from doing that.\nYou are expected to write the code yourself.\nIf you are stuck, call me over for help.\nIf you finish the main game, move on to the stretch goals."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#create-the-project",
+    "href": "labs/Lab 3 - Conversion App.html#create-the-project",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "Open Visual Studio and create a new project.\nSelect:\n.NET MAUI App\nGive the project a sensible name, such as:\nConversionApp\nUse .NET 10.0.\nIf .NET 10.0 is not available, you may need to update Visual Studio or install the appropriate .NET MAUI workload.\n\nRemember: keep your project path reasonably short. Very long paths can cause problems when Visual Studio creates all of the files needed to build a MAUI application. Especially be aware of this if using OneDrive to save your files.\n\nOnce the project has been created, build and run the application.\nYou should see the default MAUI application running.\nYou have now created and run your second .NET MAUI application."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#mainpage.xaml-and-mainpage.xaml.cs",
+    "href": "labs/Lab 3 - Conversion App.html#mainpage.xaml-and-mainpage.xaml.cs",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "Clear out the template content so that your MainPage.xaml contains something similar (not identical) to:\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             x:Class=\"ConversionApp.MainPage\"&gt;\n\n    &lt;VerticalStackLayout&gt;\n\n    &lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;\nYour code-behind should initially be similar to:\npublic partial class MainPage : ContentPage\n{\n    public MainPage()\n    {\n        InitializeComponent();\n    }\n}\nYour namespace may be different depending on the name of your project."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#add-in-controls",
+    "href": "labs/Lab 3 - Conversion App.html#add-in-controls",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "You need:\n\nan Entry where the user can enter a number;\na Label where the answer will be displayed;\na Button which the user can press to perform the calculation.\n\nYou already learned about these controls in the previous lab, so try to create them yourself.\nYou will need sensible x:Name values so that the controls can be accessed from C#.\nFor example, you might use names such as:\n\nQuantityEntry\nlblAnswer\nbtnCalculate\n\nThe button also needs a Clicked event handler.\nUse Visual Studio’s event-handler suggestion when adding the Clicked event rather than manually writing the method in the C# file.\nYour interface should provide the user with a way to enter a quantity, press a button, and see the result."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#the-conversion",
+    "href": "labs/Lab 3 - Conversion App.html#the-conversion",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "For the first version of the application, we will convert:\nKilograms → Pounds\nThe formula is:\npounds = kilograms × 2.20462\nFor example:\n10 kg → 22.0462 lb\nYou should now have a button click event handler in MainPage.xaml.cs.\nIt will look something like:\nprivate void btnCalculate_Clicked(object sender, EventArgs e)\n{\n    \n}\nThe method is an event handler.\nIt will be called when the user clicks the button."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#getting-the-users-input",
+    "href": "labs/Lab 3 - Conversion App.html#getting-the-users-input",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "The text entered into an Entry can be accessed through its Text property.\nFor example:\nQuantityEntry.Text\nRemember that Text is a string.\nThe conversion requires a number, so you need to convert the text into a numeric value.\nFor example:\ndouble quantity = Convert.ToDouble(QuantityEntry.Text);\n\nImportant: this is deliberately a simple first version. What happens if the user leaves the box empty? What happens if they enter \"hello\" instead of a number?\nWe will come back to this later in the lab.\n\nCalculate the number of pounds using the formula above."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#updating-the-user-interface",
+    "href": "labs/Lab 3 - Conversion App.html#updating-the-user-interface",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "We created a Label called lblAnswer.\nIts Text property can be changed from C#.\nFor example:\nlblAnswer.Text = \"Hello\";\nUse this to display the result of your conversion.\nYou may need to convert your calculated number to a string using ToString().\nFor example:\nlblAnswer.Text = result.ToString();\nYou can also combine text and values using string concatenation:\nlblAnswer.Text = \"The answer is: \" + result.ToString();\nTry running the application.\nYou should now be able to:\n\nenter a number;\nclick the button;\ncalculate the conversion;\ndisplay the answer.\n\n\n\nAt this point, make sure your application works before continuing.\nYou have created a simple application where:\nUser input\n    ↓\nEntry\n    ↓\nButton clicked\n    ↓\nC# event handler\n    ↓\nCalculation\n    ↓\nLabel updated\nThis is one of the fundamental patterns you will use throughout this module."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#more-conversions",
+    "href": "labs/Lab 3 - Conversion App.html#more-conversions",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "A conversion application would be more useful if it could perform different conversions.\nAdd a Picker to your page.\nThe user should be able to choose between at least:\n\nKilograms → Pounds\nPounds → Kilograms\n\nYou can use the following as a starting point:\n&lt;Picker x:Name=\"ConversionTypePicker\"\n        Title=\"Select Conversion\"&gt;\n\n    &lt;Picker.Items&gt;\n        &lt;x:String&gt;Kilograms to Pounds&lt;/x:String&gt;\n        &lt;x:String&gt;Pounds to Kilograms&lt;/x:String&gt;\n    &lt;/Picker.Items&gt;\n\n&lt;/Picker&gt;\nYou should already understand most of this XAML from the previous lab."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#selecting-a-default-option",
+    "href": "labs/Lab 3 - Conversion App.html#selecting-a-default-option",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "When the application starts, the Picker does not automatically have to select an item.\nWe don’t want the user to have to make a selection every time, so set the initial selected item in the MainPage constructor.\nFor example:\nConversionTypePicker.SelectedIndex = 0;\nRemember that collection indexes start at 0.\nTherefore:\n0 → Kilograms to Pounds\n1 → Pounds to Kilograms"
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#use-the-selected-conversion",
+    "href": "labs/Lab 3 - Conversion App.html#use-the-selected-conversion",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "Inside your button event handler, you can find out which item the user selected:\nint conversion = ConversionTypePicker.SelectedIndex;\nNow modify your calculation so that the application performs the appropriate conversion.\nYou can use either:\n\nif / else;\nor a switch.\n\nFor example, conceptually:\nif conversion is 0\n    kilograms → pounds\n\nelse if conversion is 1\n    pounds → kilograms\nYou will need to find the formula for the reverse conversion yourself.\nGet both conversions working.\nDo not add a separate button for each conversion. The same Calculate button should perform whichever conversion the user selected."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#add-more-conversions",
+    "href": "labs/Lab 3 - Conversion App.html#add-more-conversions",
+    "title": "Lab 3: Events with XAML",
+    "section": "",
+    "text": "Now extend your application.\nAdd at least four more conversions.\nFor example:\n\nCelsius → Fahrenheit\nFahrenheit → Celsius\nKilometres → Miles\nMiles → Kilometres\nPints → Litres\nLitres → Pints\nCelcius → Kelvin\nKelvin → Celcius\nPounds → Kilograms\nKilograms → Pounds\n\nUseful formulas include:\nFahrenheit = (Celsius × 9 / 5) + 32\n\nMiles = Kilometres × 0.621371\nFind the other formulas yourself.\nYou will need to:\n\nadd the conversion to the Picker;\ndetermine which conversion has been selected;\nperform the correct calculation;\ndisplay the result.\n\nKeep your code organised rather than creating a separate button for every conversion."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#picker-events",
+    "href": "labs/Lab 3 - Conversion App.html#picker-events",
+    "title": "Lab 3: Events with XAML",
+    "section": "Picker Events",
+    "text": "Picker Events\nLook at the Picker documentation and investigate:\nSelectedIndexChanged\nTry adding an event handler for this event.\nCan you make the conversion happen when the user changes the selected conversion rather than pressing the Calculate button?\nYou could:\n\nkeep the Calculate button;\nremove the Calculate button;\nor use both.\n\nThere is more than one reasonable solution."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#entry-events",
+    "href": "labs/Lab 3 - Conversion App.html#entry-events",
+    "title": "Lab 3: Events with XAML",
+    "section": "Entry Events",
+    "text": "Entry Events\nEntry also has events.\nInvestigate:\nTextChanged\nTry making the application respond when the user changes the text in the Entry.\nFor example:\nUser types 1\n      ↓\nTextChanged\n      ↓\nApplication responds\n\nUser types 10\n      ↓\nTextChanged\n      ↓\nApplication responds\nThink about whether you actually want to perform a calculation every time the user types a character.\nWhat happens when the box temporarily contains:\n\"\"\nor:\n\"1.\"\nor:\n\"hello\"\nThis leads to an important issue."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#adding-a-timer",
+    "href": "labs/Lab 3 - Conversion App.html#adding-a-timer",
+    "title": "Lab 3: Events with XAML",
+    "section": "12. Adding a Timer",
+    "text": "12. Adding a Timer\nAdd a timer to your application that displays the number of seconds since the application started.\nThe timer is independent of the conversion itself. The purpose of this exercise is to practise using an event that occurs automatically at regular intervals.\n\n1. Create the timer\nAdd fields to keep track of the timer and the number of seconds:\nprivate IDispatcherTimer _timer;\nYou should be able to figure out seconds!\nCreate the timer using the page’s Dispatcher: - Think where the creation of the timer should go - I think it should go in its own method void CreateTimer()\n_timer = Dispatcher.CreateTimer();\nSet the timer to tick once every second:\n_timer.Interval = TimeSpan.FromSeconds(1);\n\n\n2. Handle the Tick event\nThe timer has a Tick event, just like a Button has a Clicked event.\nSubscribe to the event:\n_timer.Tick += OnTimerTick;\nNow create the event handler yourself.\nEach time the timer ticks:\n\nincrease _seconds by 1\nupdate a Label in your application to show the current number of seconds\n\nFor example, your application might display:\nTime running: 12 seconds\nCreateTimer should probably be called as part of the MainPage constructor, after InitializeComponents\n\n\n3. Start the timer\nOnce your timer has been created and configured, start it:\n_timer.Start();\nThe timer should start when your application starts.\nThink about where this code should go. You already have code that runs when the page is created, so this is a good opportunity to decide where the timer setup belongs.\n\n\n4. Add a Stop button\nAdd a Button to your application:\nStop Timer\nWhen the button is clicked, stop the timer:\n_timer.Stop();\nThe number of seconds should stop increasing.\n\n\n5. Add a Start button\nAdd another Button:\nStart Timer\nUse it to start the timer again.\nThe timer should continue counting from where it stopped.\nFor example:\nTime running: 18 seconds\n\n[ Stop Timer ]   [ Start Timer ]\n\n\nChallenge\nModify your timer so that it can be reset.\nAdd a Reset Timer button which:\n\nstops the timer\nsets the number of seconds back to zero\nupdates the Label\nstarts the timer again\n\nTry to decide which parts of this should be placed in separate methods rather than putting everything directly into the Button event handlers."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#try-it-on-different-platforms",
+    "href": "labs/Lab 3 - Conversion App.html#try-it-on-different-platforms",
+    "title": "Lab 3: Events with XAML",
+    "section": "14. Try It on Different Platforms",
+    "text": "14. Try It on Different Platforms\nOnce your application works on Windows, try running it on Android.\nThe exact setup will depend on your computer and Android device.\nYou can try:\n\nan Android emulator;\nor a physical Android phone.\n\nFor a physical phone, you will normally need to enable Developer Options and USB debugging on the device.\nKeep the phone unlocked while Visual Studio attempts to deploy the application.\nIf you cannot get Android working during this lab, don’t spend the entire lab fighting with the emulator. The important part of this exercise is getting the application itself working."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#improve-the-user-interface",
+    "href": "labs/Lab 3 - Conversion App.html#improve-the-user-interface",
+    "title": "Lab 3: Events with XAML",
+    "section": "14. Improve the User Interface",
+    "text": "14. Improve the User Interface\nThe application does not need to look beautiful yet.\nHowever, once the functionality works, experiment with improving it.\nTry some of the following:\n\nadd appropriate margins;\ncentre controls where appropriate;\nadd descriptive labels;\nuse Keyboard=\"Numeric\" for the numeric Entry;\nimprove the text displayed in the answer;\nchange the button text;\nmake the Picker easier to understand;\narrange controls using the layouts you learned about in the previous lab.\n\nRemember:\n\nKeyboard=\"Numeric\" does not validate the input.\n\nIt only suggests that a numeric keyboard should be used where the platform supports it.\nYour C# code must still validate the value."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#final-task",
+    "href": "labs/Lab 3 - Conversion App.html#final-task",
+    "title": "Lab 3: Events with XAML",
+    "section": "15. Final Task",
+    "text": "15. Final Task\nBefore finishing the lab, make sure your application can:\n\nRun as a .NET MAUI application.\nAccept a number from the user.\nPerform a conversion.\nDisplay the result.\nAllow the user to select different conversions.\nPerform at least five different conversions.\nHandle invalid numeric input without crashing.\nRun successfully on Windows.\nAttempt to run on Android.\n\nIf you have completed all of these, experiment with another event or improve the user interface."
+  },
+  {
+    "objectID": "labs/Lab 3 - Conversion App.html#things-to-think-about",
+    "href": "labs/Lab 3 - Conversion App.html#things-to-think-about",
+    "title": "Lab 3: Events with XAML",
+    "section": "Things to Think About",
+    "text": "Things to Think About\nYou have now used several important parts of MAUI:\nXAML\n  ↓\nControls\n  ↓\nx:Name\n  ↓\nC# code-behind\n  ↓\nEvents\n  ↓\nUser input\n  ↓\nCalculation\n  ↓\nChanging the UI\nIn the next lab we will build on this idea.\nInstead of just responding to controls that we created in XAML, we will start creating controls at runtime using C# and responding to events from those controls."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html",
+    "href": "labs/Lab 1 - Command Line.html",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "This lab is an introduction to C# for students who have previously programmed in Java.\nThe aim is not to learn everything about C#. Instead, we will look at some of the basic syntax you will need for the rest of this module.\n\nNote: We will not read from the console or from files in this lab. So we will not use Console.ReadLine(). The applications developed later in this module will use graphical user interfaces rather than reading input from the console. We will deal with file reading/writing later.\n\n\n\n\n\n\nThe lecturer will probably demonstrate this first part in the lab.\nFor a C# project, open Visual Studio and select:\nCreate a New Project\nYou want to select a C# Console App. Use the filters if necessary.\nGive the project a suitable name.\n\nTip: Selecting Place solution and project in the same directory is a personal preference and is not essential.\n\nWhen asked to select the framework, use .NET 10.0.\nMake sure:\nDo not use top-level statements\nis ticked.\nIf .NET 10.0 is not available, use the highest version available. We will update the machines if necessary.\n\n\n\n\n\nA new console application will contain a Program.cs file.\nWrite a program that displays:\nHello World!\nThe C# equivalent of Java’s:\nSystem.out.println();\nis:\nConsole.WriteLine();\n\n\nModify your program so that it displays your name as well as the \"Hello World!\" message.\n\n\n\n\n\nCreate two integer variables and give them values.\nAdd the two numbers together and display the result.\nFor example, if:\na = 10\nb = 20\nthe program should display something similar to:\n10 + 20 is 30\nYou can use Console.WriteLine() with string concatenation, just as you would use + when constructing a string in Java.\n\n\nThere is very little difference here. C# uses + for both numerical addition and string concatenation, just like Java.\n\n\n\nCreate variables for two numbers and display:\n\nthe two numbers\ntheir sum\ntheir difference\ntheir product\n\n\n\n\n\n\nJava programmers may be familiar with printf() for producing formatted output.\nFor example:\nSystem.out.printf(\"Name: %s, Age: %d%n\", name, age);\nC# provides several ways of producing formatted output. One of the simplest is string interpolation.\nPlace a $ before the string and put variables inside { }:\nConsole.WriteLine($\"Name: {name}, Age: {age}\");\nThe values of the variables are inserted into the string.\n\n\nCreate variables for:\n\na student’s name\ntheir age\ntheir average mark\n\nDisplay all three values in a single sentence using string interpolation.\nFor example:\nAlice is 21 years old and has an average mark of 68.\n\nRemember: String interpolation is an alternative to string concatenation. You can still use + when appropriate.\n\n\n\n\n\nString interpolation can also be used to control how a value is displayed.\nFor example, a double can be displayed to two decimal places using F2:\ndouble doubleNumber = 3.14159265359;\n\nConsole.WriteLine($\"Pi rounded is : {doubleNumber:F2}\");\nThis produces:\nPi rounded is : 3.14\nThe F2 means fixed-point notation with 2 decimal places.\nThe same formatting can be used with ToString():\nConsole.WriteLine(doubleNumber.ToString(\"F2\"));\nThis produces:\n3.14\nToString() is available on all objects in C#. It provides a string representation of the object or value.\nFor example:\nint number = 42;\n\nConsole.WriteLine(number.ToString());\nproduces:\n42\nWe can also provide a format when converting a value to a string, as with doubleNumber.ToString(\"F2\").\nYou can find the other standard numeric formatting options in the Microsoft documentation:\nStandard numeric format strings – Microsoft Learn\n\n\nTry changing F2 to F1, F3 and F4 and observe the difference.\nYou can also experiment with some of the other formatting options in the Microsoft documentation.\n\n\n\n\n\nCreate a static method called PrintNumbers.\nThe method should accept an integer parameter and use a for loop to display the numbers from 1 up to that value.\nFor example:\n1\n2\n3\n4\n5\nCall the method from Main() using different values.\n\n\nThe basic syntax of a for loop is the same in Java and C#.\nOne difference you will notice throughout C# is that method names normally use PascalCase:\nPrintNumbers()\nrather than the Java convention camelCase:\nprintNumbers()\n\n\n\n\n\nCreate a static method called IsEven.\nThe method should:\n\naccept an integer\ndetermine whether the number is even\nreturn true if it is even\nreturn false otherwise\n\nCall the method from Main() using several different numbers.\n\n\nThe C# equivalent of Java’s boolean is:\nbool\nFor example:\nstatic bool IsEven(int number)\nThe if statement itself is very similar to Java.\n\n\n\n\n\nC# also provides a shorthand way of writing a simple if/else when we want to choose between two values.\nThe syntax is:\ncondition ? valueIfTrue : valueIfFalse\nFor example:\nint number = 7;\n\nstring result = number % 2 == 0 ? \"Even\" : \"Odd\";\n\nConsole.WriteLine(result);\nThe condition is checked first. If it is true, the first value is used; otherwise, the second value is used.\nThe above is equivalent to:\nif (number % 2 == 0) { result = “Even”; } else { result = “Odd”; }\n\n\nCreate an integer variable called age.\nUse the ternary conditional operator to create a string containing:\n\n\"Adult\" if the age is 18 or over\n\"Under 18\" otherwise\n\nDisplay the result.\n\n\n\n\nCreate an array containing several integers.\nFirst, use a for loop to add all of the numbers together.\nThen repeat the exercise using a foreach loop.\n\n\nThere are two small syntax differences worth noting.\nJava:\nnumbers.length\nC#:\nnumbers.Length\nJava’s enhanced for loop:\nfor (int number : numbers)\nC#:\nforeach (int number in numbers)\nThe rest of the loop body works in essentially the same way.\n\n\n\nCreate an array containing at least five numbers.\nCalculate and display:\n\nthe total\n\nDo this using both a for loop and a foreach loop."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-1-creating-a-c-console-application",
+    "href": "labs/Lab 1 - Command Line.html#part-1-creating-a-c-console-application",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "The lecturer will probably demonstrate this first part in the lab.\nFor a C# project, open Visual Studio and select:\nCreate a New Project\nYou want to select a C# Console App. Use the filters if necessary.\nGive the project a suitable name.\n\nTip: Selecting Place solution and project in the same directory is a personal preference and is not essential.\n\nWhen asked to select the framework, use .NET 10.0.\nMake sure:\nDo not use top-level statements\nis ticked.\nIf .NET 10.0 is not available, use the highest version available. We will update the machines if necessary."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-2-hello-world",
+    "href": "labs/Lab 1 - Command Line.html#part-2-hello-world",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "A new console application will contain a Program.cs file.\nWrite a program that displays:\nHello World!\nThe C# equivalent of Java’s:\nSystem.out.println();\nis:\nConsole.WriteLine();\n\n\nModify your program so that it displays your name as well as the \"Hello World!\" message."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-3-variables-and-calculations",
+    "href": "labs/Lab 1 - Command Line.html#part-3-variables-and-calculations",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "Create two integer variables and give them values.\nAdd the two numbers together and display the result.\nFor example, if:\na = 10\nb = 20\nthe program should display something similar to:\n10 + 20 is 30\nYou can use Console.WriteLine() with string concatenation, just as you would use + when constructing a string in Java.\n\n\nThere is very little difference here. C# uses + for both numerical addition and string concatenation, just like Java.\n\n\n\nCreate variables for two numbers and display:\n\nthe two numbers\ntheir sum\ntheir difference\ntheir product"
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-4-formatted-output",
+    "href": "labs/Lab 1 - Command Line.html#part-4-formatted-output",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "Java programmers may be familiar with printf() for producing formatted output.\nFor example:\nSystem.out.printf(\"Name: %s, Age: %d%n\", name, age);\nC# provides several ways of producing formatted output. One of the simplest is string interpolation.\nPlace a $ before the string and put variables inside { }:\nConsole.WriteLine($\"Name: {name}, Age: {age}\");\nThe values of the variables are inserted into the string.\n\n\nCreate variables for:\n\na student’s name\ntheir age\ntheir average mark\n\nDisplay all three values in a single sentence using string interpolation.\nFor example:\nAlice is 21 years old and has an average mark of 68.\n\nRemember: String interpolation is an alternative to string concatenation. You can still use + when appropriate."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#formatting-values",
+    "href": "labs/Lab 1 - Command Line.html#formatting-values",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "String interpolation can also be used to control how a value is displayed.\nFor example, a double can be displayed to two decimal places using F2:\ndouble doubleNumber = 3.14159265359;\n\nConsole.WriteLine($\"Pi rounded is : {doubleNumber:F2}\");\nThis produces:\nPi rounded is : 3.14\nThe F2 means fixed-point notation with 2 decimal places.\nThe same formatting can be used with ToString():\nConsole.WriteLine(doubleNumber.ToString(\"F2\"));\nThis produces:\n3.14\nToString() is available on all objects in C#. It provides a string representation of the object or value.\nFor example:\nint number = 42;\n\nConsole.WriteLine(number.ToString());\nproduces:\n42\nWe can also provide a format when converting a value to a string, as with doubleNumber.ToString(\"F2\").\nYou can find the other standard numeric formatting options in the Microsoft documentation:\nStandard numeric format strings – Microsoft Learn\n\n\nTry changing F2 to F1, F3 and F4 and observe the difference.\nYou can also experiment with some of the other formatting options in the Microsoft documentation."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-5-static-methods-and-for-loops",
+    "href": "labs/Lab 1 - Command Line.html#part-5-static-methods-and-for-loops",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "Create a static method called PrintNumbers.\nThe method should accept an integer parameter and use a for loop to display the numbers from 1 up to that value.\nFor example:\n1\n2\n3\n4\n5\nCall the method from Main() using different values.\n\n\nThe basic syntax of a for loop is the same in Java and C#.\nOne difference you will notice throughout C# is that method names normally use PascalCase:\nPrintNumbers()\nrather than the Java convention camelCase:\nprintNumbers()"
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-6-methods-returning-a-value",
+    "href": "labs/Lab 1 - Command Line.html#part-6-methods-returning-a-value",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "Create a static method called IsEven.\nThe method should:\n\naccept an integer\ndetermine whether the number is even\nreturn true if it is even\nreturn false otherwise\n\nCall the method from Main() using several different numbers.\n\n\nThe C# equivalent of Java’s boolean is:\nbool\nFor example:\nstatic bool IsEven(int number)\nThe if statement itself is very similar to Java."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#ternary-conditional-operator",
+    "href": "labs/Lab 1 - Command Line.html#ternary-conditional-operator",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "C# also provides a shorthand way of writing a simple if/else when we want to choose between two values.\nThe syntax is:\ncondition ? valueIfTrue : valueIfFalse\nFor example:\nint number = 7;\n\nstring result = number % 2 == 0 ? \"Even\" : \"Odd\";\n\nConsole.WriteLine(result);\nThe condition is checked first. If it is true, the first value is used; otherwise, the second value is used.\nThe above is equivalent to:\nif (number % 2 == 0) { result = “Even”; } else { result = “Odd”; }\n\n\nCreate an integer variable called age.\nUse the ternary conditional operator to create a string containing:\n\n\"Adult\" if the age is 18 or over\n\"Under 18\" otherwise\n\nDisplay the result."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-7-arrays",
+    "href": "labs/Lab 1 - Command Line.html#part-7-arrays",
+    "title": "Lab 1: C# Basics",
+    "section": "",
+    "text": "Create an array containing several integers.\nFirst, use a for loop to add all of the numbers together.\nThen repeat the exercise using a foreach loop.\n\n\nThere are two small syntax differences worth noting.\nJava:\nnumbers.length\nC#:\nnumbers.Length\nJava’s enhanced for loop:\nfor (int number : numbers)\nC#:\nforeach (int number in numbers)\nThe rest of the loop body works in essentially the same way.\n\n\n\nCreate an array containing at least five numbers.\nCalculate and display:\n\nthe total\n\nDo this using both a for loop and a foreach loop."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-9-the-animal-class",
+    "href": "labs/Lab 1 - Command Line.html#part-9-the-animal-class",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 9 – The Animal Class",
+    "text": "Part 9 – The Animal Class\nCreate a class called Animal.\nThe class should contain:\n\na private _name field of type string\na private _age field of type int\na public Name property\na public Age property\na constructor that sets the name and age\n\n\nWhat is a field/property? Java Version? Why?\nI will talk about this more in lectures but in java, for proper encapsulation, you typically did\nprivate int age;\n\npublic void setAge(int age){\n  this.age = age;\n}\n\npublic int getAge(){\n  return age;\n}\nIn C#, this approach will work fine, but it is not typically how we provide access to fields. Instead, C# provides properties.\nprivate int _age;\n\npublic int Age\n{\n    get { return _age; }\n    set { _age = value; }\n}\nThe property allows us to control how the value can be accessed or changed.\nOne advantage is that we do not have to explicitly call setAge and getAge. We can treat the property much like a variable:\ndog.Age = 5;\nConsole.WriteLine(dog.Age)\nThe get code runs when we read the property, while the set code runs when we assign a value to it.\nThe special keyword value represents the value being assigned to the property.\n\n\nNaming Convention\nIn this module we will use the following naming convention:\n\nPrivate fields begin with _ and use lowercase/camelCase:\n\n_name\n_age\n_breed\n\nPublic properties and methods begin with a capital letter:\n\nName\nAge\nSound()"
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-10-creating-a-dog",
+    "href": "labs/Lab 1 - Command Line.html#part-10-creating-a-dog",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 10 – Creating a Dog",
+    "text": "Part 10 – Creating a Dog\nCreate a class called Dog that inherits from Animal.\nJava programmers will recognise inheritance immediately.\nJava:\npublic class Dog extends Animal\nC#:\npublic class Dog : Animal\nCreate a private _breed field and a public Breed property.\nThe Dog constructor should accept:\n\nname\nage\nbreed\n\nThe constructor needs to initialise the inherited name and age values.\nIn C#, the base class constructor is called using base():\npublic Dog(string name, int age, string breed) : base(name, age)\n{\n    // initialise breed\n}\n\nJava → C\nJava uses:\nsuper(name, age);\nC# uses:\nbase(name, age)"
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-11-sound-method",
+    "href": "labs/Lab 1 - Command Line.html#part-11-sound-method",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 11 – Sound() Method",
+    "text": "Part 11 – Sound() Method\nIn the Animal base class, create a method called Sound.\nThe Sound() method should display:\nThis animal makes a sound\nIn Java, you can override an inherited method simply by providing a new implementation in the derived class (with @Override used to indicate that this is intentional).\nC# is a little different. A method must explicitly allow itself to be overridden. To do this, the base-class method is marked virtual:\npublic virtual void MakeSound()\n{\n    Console.WriteLine(\"Some sound\");\n}\nA derived class can then provide its own implementation using override:\npublic override void MakeSound()\n{\n    Console.WriteLine(\"Woof!\");\n}\nThink of it as: &gt; Java asks for forgiveness; C# asks for permission. And it’s easier to ask for forgiveness.\nSo, in C#, virtual is essentially the base class saying:\n\n“Derived classes are allowed to replace this method with their own implementation.”\n\nIf a method is not marked virtual (or abstract), a derived class cannot override it.\n\nSo now:\nOverride the Sound() method in Dog.\nIt should display:\nWoof!\nTaking into consideration what was written above."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-12-creating-a-cat",
+    "href": "labs/Lab 1 - Command Line.html#part-12-creating-a-cat",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 12 – Creating a Cat",
+    "text": "Part 12 – Creating a Cat\nCreate another class called Cat that inherits from Animal.\nIt should contain:\n\na private _colour field\na public Colour property\na constructor accepting name, age and colour\nan overridden Sound() method\n\nThe cat should make the following sound:\nMeow!\nUse the same approach as the Dog class."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-13-testing-your-classes",
+    "href": "labs/Lab 1 - Command Line.html#part-13-testing-your-classes",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 13 – Testing Your Classes",
+    "text": "Part 13 – Testing Your Classes\nIn Main() create at least:\n\ntwo Dog objects\ntwo Cat objects\n\nTest the following:\n\nsetting and retrieving properties\ndisplaying the animal details\ncalling Sound()\n\nFor example, make sure you can access values such as:\nName\nAge\nBreed\nColour\nDo not simply copy a completed program. Write the classes and test them as you go."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-14-polymorphism",
+    "href": "labs/Lab 1 - Command Line.html#part-14-polymorphism",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 14 – Polymorphism",
+    "text": "Part 14 – Polymorphism\nFinally, demonstrate polymorphism.\nCreate an array of Animal objects containing a mixture of dogs and cats.\nCall Sound() on each object.\nAlthough every object is stored as an Animal, the appropriate overridden method should be called:\nWoof!\nMeow!\nWoof!\nMeow!\nThis demonstrates polymorphism: the same method call can produce different behaviour depending on the actual object."
+  },
+  {
+    "objectID": "labs/Lab 1 - Command Line.html#part-15---tostring-on-object",
+    "href": "labs/Lab 1 - Command Line.html#part-15---tostring-on-object",
+    "title": "Lab 1: C# Basics",
+    "section": "Part 15 - ToString on Object",
+    "text": "Part 15 - ToString on Object\nEvery C# object has a (virtual) ToString() method.\nYou can use it directly:\nConsole.WriteLine(animal.ToString());\nor, because Console.WriteLine() can work with objects, try:\nConsole.WriteLine(animal);\nBoth approaches will use the object’s ToString() method.\nWe can override it in our own class to provide a useful description of the object.\nOverride ToString() so that an Animal produces a string containing its name and age.\nFor example, an animal named Rex aged 5 might produce:\nRex is 5 years old\nYou could then override it again in the Dog class to say\nRex the dog is 5 years old"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Cross Platform Application Development",
+    "section": "",
+    "text": "Welcome to the Cross Platform Application Development module."
+  },
+  {
+    "objectID": "index.html#course-materials",
+    "href": "index.html#course-materials",
+    "title": "Cross Platform Application Development",
+    "section": "Course Materials",
+    "text": "Course Materials\n\nLecture Notes — lecture slides and supporting material\nLabs — practical laboratory exercises\n\nUse the navigation bar above to access the materials."
+  },
+  {
+    "objectID": "labs/Lab 2 - Building a UI with XAML.html",
+    "href": "labs/Lab 2 - Building a UI with XAML.html",
+    "title": "Lab 2: XAML Layouts",
+    "section": "",
+    "text": "This lab is an introduction to building user interfaces using XAML in .NET MAUI.\nThe aim is to become comfortable reading and writing XAML, particularly:\n\ncreating controls\nsetting properties\nnesting controls\nusing layouts\nusing Grid\ncontrolling spacing and alignment\nusing common MAUI controls\nbuilding a UI that adapts to different screen sizes\n\n\n\nFor this lab, do not write any code in MainPage.xaml.cs apart from the existing constructor.\nWe are concentrating on the XAML side of .NET MAUI.\nThe buttons and other controls do not need to do anything yet. We will deal with events and interaction in a later lab."
+  },
+  {
+    "objectID": "labs/Lab 2 - Building a UI with XAML.html#important",
+    "href": "labs/Lab 2 - Building a UI with XAML.html#important",
+    "title": "Lab 2: XAML Layouts",
+    "section": "",
+    "text": "For this lab, do not write any code in MainPage.xaml.cs apart from the existing constructor.\nWe are concentrating on the XAML side of .NET MAUI.\nThe buttons and other controls do not need to do anything yet. We will deal with events and interaction in a later lab."
+  },
+  {
+    "objectID": "labs/Lab 2 - Building a UI with XAML.html#create-a-new-project",
+    "href": "labs/Lab 2 - Building a UI with XAML.html#create-a-new-project",
+    "title": "Lab 2: XAML Layouts",
+    "section": "1. Create a new project",
+    "text": "1. Create a new project\nOpen Visual Studio and create a new:\n.NET MAUI App\nGive the project a suitable name, for example:\nXamlLab\nKeep your project path reasonably short. Very long paths can cause problems when Visual Studio creates all of the files needed to build a MAUI application. Especially be aware of this if using OneDrive to save your files.\nUse the current .NET version installed on the lab machines.\nFor this module, this should be .NET 10."
+  },
+  {
+    "objectID": "labs/Lab 2 - Building a UI with XAML.html#run-the-template-project",
+    "href": "labs/Lab 2 - Building a UI with XAML.html#run-the-template-project",
+    "title": "Lab 2: XAML Layouts",
+    "section": "2. Run the template project",
+    "text": "2. Run the template project\nBefore making any changes to the project, run the application.\nCheck that the template application starts successfully and that you can see the default MAUI page.\nThis is important.\nIf the template application does not run correctly, tell your lecturer before making any changes.\nWe want to know that the project was working before we start changing the XAML."
+  },
+  {
+    "objectID": "labs/Lab 2 - Building a UI with XAML.html#clear-out-the-template-project",
+    "href": "labs/Lab 2 - Building a UI with XAML.html#clear-out-the-template-project",
+    "title": "Lab 2: XAML Layouts",
+    "section": "3. Clear out the template project",
+    "text": "3. Clear out the template project\nWe are now going to remove the example content provided by the MAUI template.\n\nMainPage.xaml.cs\nOpen:\nMainPage.xaml.cs\nRemove everything except the constructor.\nYour file should contain the basic structure of the class and the constructor, but no event handlers or other template code.\nYou should have something equivalent to:\nnamespace XamlLab;\n\npublic partial class MainPage : ContentPage\n{\n    public MainPage()\n    {\n        InitializeComponent();\n    }\n}\nYour namespace may be different depending on the name you gave your project.\nDo not change the namespace to XamlLab if Visual Studio created a different namespace for your project.\n\n\n\nMainPage.xaml\nNow open:\nMainPage.xaml\nWe want to remove the controls provided by the template.\nRemove everything between the opening and closing ContentPage tags.\n\n⚠️ WARNING – BE CAREFUL\nDo not delete or overwrite the opening ContentPage information at the top of the file.\nIn particular, leave the first line(s) of the file alone.\nThe ContentPage declaration contains important information such as the XML namespaces and the x:Class that connects the XAML to MainPage.xaml.cs.\nIf you accidentally overwrite this information, the project may stop working.\nOnly remove the content inside the ContentPage.\n\nAfter removing the template controls, your file should look approximately like this:\n&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?&gt;\n&lt;ContentPage\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    x:Class=\"XamlLab.MainPage\"&gt;\n\n&lt;/ContentPage&gt;\nYour x:Class value may be different because it will use your project namespace.\n\n\nAdd the layout back\nWe now need to put our own layout inside the ContentPage.\nFor example:\n&lt;ScrollView&gt;\n\n    &lt;VerticalStackLayout&gt;\n\n        &lt;Label\n            Text=\"My First XAML Page\"\n            FontSize=\"28\" /&gt;\n\n    &lt;/VerticalStackLayout&gt;\n\n&lt;/ScrollView&gt;\nThe important structure is:\nContentPage\n└── ScrollView\n    └── VerticalStackLayout\n        └── Label\nYou will build the rest of the interface inside this layout.\n\nRemember: ContentPage is already provided by the template. We are adding the content inside it.\n\nRun the application again.\nYou should now see your own Label rather than the original template content.\nIf this works, you are ready to begin."
+  },
+  {
+    "objectID": "labs/Lab 4 - Tic Tac Toe.html",
+    "href": "labs/Lab 4 - Tic Tac Toe.html",
+    "title": "Lab 4: Tic Tac Toe",
+    "section": "",
+    "text": "This lab will be a step up from the previous three, but at the end of it all you should have something more substantial.\nThe goal of this project is to make a game of Tic Tac Toe.\nYou should aim to get the basic playable game working during this lab.\nThere are stretch goals at the end if you finish early.\n\n\n\nCompile often. After completing one section, make sure it works before moving on.\nDon’t just copy and paste code. You will not learn much from doing that.\nYou are expected to write the code yourself.\nIf you are stuck, call me over for help.\nIf you finish the main game, move on to the stretch goals.\nYou do not need to complete every stretch goal."
+  },
+  {
+    "objectID": "labs/Lab 4 - Tic Tac Toe.html#some-important-advice",
+    "href": "labs/Lab 4 - Tic Tac Toe.html#some-important-advice",
+    "title": "Lab 4: Tic Tac Toe",
+    "section": "",
+    "text": "Compile often. After completing one section, make sure it works before moving on.\nDon’t just copy and paste code. You will not learn much from doing that.\nYou are expected to write the code yourself.\nIf you are stuck, call me over for help.\nIf you finish the main game, move on to the stretch goals.\nYou do not need to complete every stretch goal."
+  },
+  {
+    "objectID": "labs/Lab 4 - Tic Tac Toe.html#create-a-placeholder-grid",
+    "href": "labs/Lab 4 - Tic Tac Toe.html#create-a-placeholder-grid",
+    "title": "Lab 4: Tic Tac Toe",
+    "section": "Create a Placeholder Grid",
+    "text": "Create a Placeholder Grid\nAdd the following Grid to your XAML:\n&lt;Grid x:Name=\"GameGrid\"\n      BackgroundColor=\"CornflowerBlue\"\n      HeightRequest=\"300\"\n      WidthRequest=\"300\"\n      HorizontalOptions=\"Center\"\n      VerticalOptions=\"Center\"&gt;\n&lt;/Grid&gt;\nThe Grid itself is defined in XAML, but its rows, columns and contents will be created using C#."
+  },
+  {
+    "objectID": "lectures/Week1/Week1.html#aim",
+    "href": "lectures/Week1/Week1.html#aim",
     "title": "Week 1 Introduction",
     "section": "Aim",
     "text": "Aim\n\nGet an app written using .NET Multi-platform App UI (.NET MAUI) to deploy on Android and Windows\nUse C# and XAML (eXtensible Application Markup Language)\nUnderstand the separation of common/shared/background functionality from the User Interface\nDesign an app that can actually be used\n\nIt doesn’t have to be complicated, but it should be coherent in its purpose\nIt should be tested to some level"
   },
   {
-    "objectID": "Week1/Week1.html#what-is-this-module-about",
-    "href": "Week1/Week1.html#what-is-this-module-about",
+    "objectID": "lectures/Week1/Week1.html#what-is-this-module-about",
+    "href": "lectures/Week1/Week1.html#what-is-this-module-about",
     "title": "Week 1 Introduction",
     "section": "What is this module about?",
     "text": "What is this module about?\nThis module is about developing applications that can run on multiple platforms.\nWe will concentrate on:\n\nAndroid\nWindows\n\nWe will use:\n\nC# for programming\nXAML for describing the user interface\n.NET MAUI as our cross-platform application framework\nVisual Studio as our main development environment\n\nThe goal isn’t simply to make an application that compiles.\nWe want to understand how an application is structured, how the UI communicates with the code behind it, and how the same application can target different platforms."
   },
   {
-    "objectID": "Week1/Week1.html#why-cross-platform-development",
-    "href": "Week1/Week1.html#why-cross-platform-development",
+    "objectID": "lectures/Week1/Week1.html#why-cross-platform-development",
+    "href": "lectures/Week1/Week1.html#why-cross-platform-development",
     "title": "Week 1 Introduction",
     "section": "Why Cross-Platform Development?",
     "text": "Why Cross-Platform Development?\nDoes everybody use an Android phone?\nDoes everybody use Windows?\nDoes everybody use PS5?\nEtc. etc.\nFrom a business point of view, it makes sense to deliver your product to as many customers as possible.\nThis means you will often want to develop for multiple different systems."
   },
   {
-    "objectID": "Week1/Week1.html#why-cross-platform-development-1",
-    "href": "Week1/Week1.html#why-cross-platform-development-1",
+    "objectID": "lectures/Week1/Week1.html#why-cross-platform-development-1",
+    "href": "lectures/Week1/Week1.html#why-cross-platform-development-1",
     "title": "Week 1 Introduction",
     "section": "Why Cross-Platform Development?",
     "text": "Why Cross-Platform Development?\nWebsites already work across platforms.\nBut maybe we need more functionality than what we can build in a web browser.\nWe may want:\n\nAccess to device hardware\nNotifications\nLocal storage\nCamera access\nBetter integration with the operating system\nAn application that behaves like a native application\n\nA cross-platform framework can potentially allow us to build these applications without writing a completely separate application for every platform."
   },
   {
-    "objectID": "Week1/Week1.html#cross-platform-development",
-    "href": "Week1/Week1.html#cross-platform-development",
+    "objectID": "lectures/Week1/Week1.html#cross-platform-development",
+    "href": "lectures/Week1/Week1.html#cross-platform-development",
     "title": "Week 1 Introduction",
     "section": "Cross-Platform Development",
     "text": "Cross-Platform Development\nJava should work across platforms.\nYou compile the .java file into a .class.\nThat class can be used on:\n\nWindows\nLinux\nMac\netc.\n\nThis is because Java makes use of a Virtual Machine.\nEven then, some issues may still arise."
   },
   {
-    "objectID": "Week1/Week1.html#cross-platform-development-1",
-    "href": "Week1/Week1.html#cross-platform-development-1",
+    "objectID": "lectures/Week1/Week1.html#cross-platform-development-1",
+    "href": "lectures/Week1/Week1.html#cross-platform-development-1",
     "title": "Week 1 Introduction",
     "section": "Cross-Platform Development",
     "text": "Cross-Platform Development\nYou may develop software using the same language, let’s say C++, for both Windows and Linux.\nBasic command-line applications will probably work.\nBut what about more complicated applications?\nDrawing to the screen in Windows uses a different library than drawing to the screen in Linux or Mac.\n#include &lt;windows.h&gt;\nversus something appropriate for the target platform.\nThe APIs may use completely different functions to achieve the same thing.\nSuddenly, managing one project for multiple systems becomes much more difficult."
   },
   {
-    "objectID": "Week1/Week1.html#the-in-between",
-    "href": "Week1/Week1.html#the-in-between",
+    "objectID": "lectures/Week1/Week1.html#the-in-between",
+    "href": "lectures/Week1/Week1.html#the-in-between",
     "title": "Week 1 Introduction",
     "section": "The “In-Between”",
     "text": "The “In-Between”\nUnless we come up with an in-between for us.\nWe interact with the in-between.\nThe in-between then deals with the target platform.\n             Our Application\n                    |\n                    v\n             Cross-Platform\n                Framework\n              /     |      \\\n             v      v       v\n         Windows   Linux    Mac\nFor example, for Windows and Linux we could use Qt.\nWe write against Qt rather than directly against every operating system’s GUI APIs."
   },
   {
-    "objectID": "Week1/Week1.html#a-more-interesting-example",
-    "href": "Week1/Week1.html#a-more-interesting-example",
+    "objectID": "lectures/Week1/Week1.html#a-more-interesting-example",
+    "href": "lectures/Week1/Week1.html#a-more-interesting-example",
     "title": "Week 1 Introduction",
     "section": "A More Interesting Example",
     "text": "A More Interesting Example\nWhat about games?\nCompanies want to develop for multiple systems.\nUnless you’re Nintendo.\nGames are developed using the same base language, typically C++, and then targeted towards the desired system.\nDrawing a triangle on an Xbox is different from drawing one on a PlayStation, which is different again on a Switch."
   },
   {
-    "objectID": "Week1/Week1.html#games",
-    "href": "Week1/Week1.html#games",
+    "objectID": "lectures/Week1/Week1.html#games",
+    "href": "lectures/Week1/Week1.html#games",
     "title": "Week 1 Introduction",
     "section": "Games",
     "text": "Games\nThe platforms also have different APIs.\n\nXbox → DirectX\nPlayStation → its own graphics APIs\nNintendo Switch → its own platform-specific APIs\n\nThey also have different buttons on the controllers.\nWe want this to be reflected on screen too.\nGame designers and developers are increasingly not low-level graphics programmers.\nThey need something easier to use."
   },
   {
-    "objectID": "Week1/Week1.html#game-engines",
-    "href": "Week1/Week1.html#game-engines",
+    "objectID": "lectures/Week1/Week1.html#game-engines",
+    "href": "lectures/Week1/Week1.html#game-engines",
     "title": "Week 1 Introduction",
     "section": "Game Engines",
     "text": "Game Engines\nRather than writing an awful lot of if statements, #defines, or completely different projects, why not use something that abstracts that away from us?\nA framework or engine can target the platform for us.\nWe target the framework and let it take care of many of the platform-specific details."
   },
   {
-    "objectID": "Week1/Week1.html#game-engines-1",
-    "href": "Week1/Week1.html#game-engines-1",
+    "objectID": "lectures/Week1/Week1.html#game-engines-1",
+    "href": "lectures/Week1/Week1.html#game-engines-1",
     "title": "Week 1 Introduction",
     "section": "Game Engines",
     "text": "Game Engines\nYou’ve probably heard of:\n\nUnity\nUnreal Engine\nGodot\n\n\n\n\n\n\n\nUnity\n\n\n\n\n\n\n\nUnreal\n\n\n\n\n\n\n\nGodot\n\n\n\n\n\nDevelopers target these engines.\nThe engine takes care of many of the lower-level platform-specific details."
   },
   {
-    "objectID": "Week1/Week1.html#any-problems",
-    "href": "Week1/Week1.html#any-problems",
+    "objectID": "lectures/Week1/Week1.html#any-problems",
+    "href": "lectures/Week1/Week1.html#any-problems",
     "title": "Week 1 Introduction",
     "section": "Any Problems?",
     "text": "Any Problems?\nCan you think of any problems that may arise with this approach?\n\nPorts aren’t always perfect\nDifferent platforms have different capabilities\nPerformance may differ\nPlatform-specific changes may still be necessary\n\nFor example, a game targeting Nintendo Switch may require specific changes because the hardware is different.\nStar Wars Outlaws probably needed a lot of specific work to get running on Switch 2."
   },
   {
-    "objectID": "Week1/Week1.html#the-same-problem-with-apps",
-    "href": "Week1/Week1.html#the-same-problem-with-apps",
+    "objectID": "lectures/Week1/Week1.html#the-same-problem-with-apps",
+    "href": "lectures/Week1/Week1.html#the-same-problem-with-apps",
     "title": "Week 1 Introduction",
     "section": "The Same Problem With Apps",
     "text": "The Same Problem With Apps\nThe same analogy applies to developing an app for:\n\nWindows\nAndroid\niOS\n\nEven when we use a framework to help us target multiple systems, we still need to be aware of differences.\nRemember GUI last year?\nRemember responsive websites?\nThe framework helps.\nIt doesn’t do all the work for us."
   },
   {
-    "objectID": "Week1/Week1.html#previous-projects",
-    "href": "Week1/Week1.html#previous-projects",
+    "objectID": "lectures/Week1/Week1.html#previous-projects",
+    "href": "lectures/Week1/Week1.html#previous-projects",
     "title": "Week 1 Introduction",
     "section": "Previous Projects",
     "text": "Previous Projects\nWe will eventually build applications that can run on multiple platforms.\nHere are some examples of applications developed by students in previous years.\n\n\n\n\n\n\ncargame\n\n\n\n\n\n\n\ncargame"
   },
   {
-    "objectID": "Week1/Week1.html#programming-languages",
-    "href": "Week1/Week1.html#programming-languages",
+    "objectID": "lectures/Week1/Week1.html#programming-languages",
+    "href": "lectures/Week1/Week1.html#programming-languages",
     "title": "Week 1 Introduction",
     "section": "Programming Languages",
     "text": "Programming Languages\nYou’ve already worked with:\n\nJava\nJavaScript\nHTML\nCSS\n\nYou are also doing C in another module this semester.\nGaining skills in multiple languages will be an advantage.\nYou will soon start to see the similarities between them.\nOnce you understand the underlying programming concepts, learning another language becomes much easier."
   },
   {
-    "objectID": "Week1/Week1.html#c",
-    "href": "Week1/Week1.html#c",
+    "objectID": "lectures/Week1/Week1.html#c",
+    "href": "lectures/Week1/Week1.html#c",
     "title": "Week 1 Introduction",
     "section": "C#",
     "text": "C#\nSo now it’s time for C# (C-Sharp).\nC# is:\n\nA general-purpose programming language\nObject-oriented\nCompiled\nStrongly typed\nClosely related to the C family of languages\n\nIt bears a strong resemblance to both C++ and Java.\nIt has also borrowed, adapted, or improved many ideas found in other languages."
   },
   {
-    "objectID": "Week1/Week1.html#where-is-c-used",
-    "href": "Week1/Week1.html#where-is-c-used",
+    "objectID": "lectures/Week1/Week1.html#where-is-c-used",
+    "href": "lectures/Week1/Week1.html#where-is-c-used",
     "title": "Week 1 Introduction",
     "section": "Where is C# Used?",
     "text": "Where is C# Used?\nC# is used in a wide range of applications.\nFor example:\n\nASP.NET\n.NET MAUI\nUnity\nDesktop applications\nWeb applications\nGames\nCloud applications\nGeneral-purpose software\n\nSo learning C# is useful beyond this module."
   },
   {
-    "objectID": "Week1/Week1.html#c-and-java",
-    "href": "Week1/Week1.html#c-and-java",
+    "objectID": "lectures/Week1/Week1.html#c-and-java",
+    "href": "lectures/Week1/Week1.html#c-and-java",
     "title": "Week 1 Introduction",
     "section": "C# and Java",
     "text": "C# and Java\nIf you’ve done Java, you are not starting from scratch.\nBoth languages have:\n\nClasses\nObjects\nMethods\nInheritance\nInterfaces\nExceptions\nArrays\nLoops\nConditionals\nGenerics\n\nA lot of the syntax is also familiar.\nThe differences are often in how the language provides these features."
   },
   {
-    "objectID": "Week1/Week1.html#c-versus-java",
-    "href": "Week1/Week1.html#c-versus-java",
+    "objectID": "lectures/Week1/Week1.html#c-versus-java",
+    "href": "lectures/Week1/Week1.html#c-versus-java",
     "title": "Week 1 Introduction",
     "section": "C# versus Java",
     "text": "C# versus Java\nFor example:\nC#:\nstring name = \"Donny\";\nJava:\nString name = \"Donny\";\nNotice the small difference.\nC# uses the keyword string.\nJava uses the class name String."
   },
   {
-    "objectID": "Week1/Week1.html#c-refresher",
-    "href": "Week1/Week1.html#c-refresher",
+    "objectID": "lectures/Week1/Week1.html#c-refresher",
+    "href": "lectures/Week1/Week1.html#c-refresher",
     "title": "Week 1 Introduction",
     "section": "C# Refresher",
     "text": "C# Refresher\nFor the rest of this lecture and the next week’s labs, we will use command-line C# programs to get comfortable with the language.\nYou already know most of the programming concepts.\nYou need to remember (from last year):\n\nClasses\nObjects\nMethods\nInheritance\nArrays\nFile reading/writing\nConditionals\nLoops\netc.\n\nWe will concentrate on the C# way of doing things."
   },
   {
-    "objectID": "Week1/Week1.html#which-language",
-    "href": "Week1/Week1.html#which-language",
+    "objectID": "lectures/Week1/Week1.html#which-language",
+    "href": "lectures/Week1/Week1.html#which-language",
     "title": "Week 1 Introduction",
     "section": "Which Language?",
     "text": "Which Language?\nConsider this familiar example:\nchar gradeEarned;\n\nif (num &gt;= 70)\n{\n    gradeEarned = 'A';\n}\nelse if (num &gt;= 60)\n{\n    gradeEarned = 'B';\n}\nelse\n{\n    gradeEarned = 'C';\n}"
   },
   {
-    "objectID": "Week1/Week1.html#c-vs-java",
-    "href": "Week1/Week1.html#c-vs-java",
+    "objectID": "lectures/Week1/Week1.html#c-vs-java",
+    "href": "lectures/Week1/Week1.html#c-vs-java",
     "title": "Week 1 Introduction",
     "section": "C# vs Java",
     "text": "C# vs Java\nArrays are also very similar.\nFor example, suppose we have:\nint[] listOfInt = { 1, 2, 3, 4, 5 };\nThe traditional for loop is also very similar.\nJava:\nfor (int i = 0; i &lt; listOfInt.length; ++i)\n{\n    System.out.println(listOfInt[i]);\n}\nC#:\nfor (int i = 0; i &lt; listOfInt.Length; ++i)\n{\n    Console.WriteLine(listOfInt[i]);\n}\nNotice two small differences:\n\nJava uses .length\nC# uses .Length\n\nLength is a property in C#."
   },
   {
-    "objectID": "Week1/Week1.html#the-ternary-conditional-operator",
-    "href": "Week1/Week1.html#the-ternary-conditional-operator",
+    "objectID": "lectures/Week1/Week1.html#the-ternary-conditional-operator",
+    "href": "lectures/Week1/Week1.html#the-ternary-conditional-operator",
     "title": "Week 1 Introduction",
     "section": "The Ternary Conditional Operator",
     "text": "The Ternary Conditional Operator\nSometimes we have a very simple if/else.\nFor example:\nstring result;\n\nif (num &gt;= 50)\n{\n    result = \"Pass\";\n}\nelse\n{\n    result = \"Fail\";\n}\nMost languages allows us to write this using the ternary conditional operator:\nstring result = num &gt;= 50 ? \"Pass\" : \"Fail\";\nThe general form is:\ncondition ? value_if_true : value_if_false\nThis is useful when the decision is simple.\nDon’t use it to turn complicated logic into an unreadable mess."
   },
   {
-    "objectID": "Week1/Week1.html#string-formatting",
-    "href": "Week1/Week1.html#string-formatting",
+    "objectID": "lectures/Week1/Week1.html#string-formatting",
+    "href": "lectures/Week1/Week1.html#string-formatting",
     "title": "Week 1 Introduction",
     "section": "String Formatting",
     "text": "String Formatting\nWe also have several ways of putting values into strings.\nOne familiar approach is concatenation:\nstring name = \"Donny\";\nint age = 25;\n\nConsole.WriteLine(\"Name: \" + name + \", Age: \" + age);\nBut C# also provides string interpolation.\nConsole.WriteLine($\"Name: {name}, Age: {age}\");\nThe $ tells C# that the string contains interpolated expressions."
   },
   {
-    "objectID": "Week1/Week1.html#string-interpolation",
-    "href": "Week1/Week1.html#string-interpolation",
+    "objectID": "lectures/Week1/Week1.html#string-interpolation",
+    "href": "lectures/Week1/Week1.html#string-interpolation",
     "title": "Week 1 Introduction",
     "section": "String Interpolation",
     "text": "String Interpolation\nExpressions can be placed directly inside { }.\nstring name = \"Donny\";\nint age = 25;\n\nConsole.WriteLine($\"Hello {name}\");\nConsole.WriteLine($\"You are {age} years old\");\nYou can also put expressions inside.\nConsole.WriteLine($\"Next year you will be {age + 1}\");\nThis is likely to be much more convenient than constructing long strings using +."
   },
   {
-    "objectID": "Week1/Week1.html#string-formatting-1",
-    "href": "Week1/Week1.html#string-formatting-1",
+    "objectID": "lectures/Week1/Week1.html#string-formatting-1",
+    "href": "lectures/Week1/Week1.html#string-formatting-1",
     "title": "Week 1 Introduction",
     "section": "String Formatting",
     "text": "String Formatting\nWe can also control how values are displayed.\ndouble price = 12.5;\n\nConsole.WriteLine($\"Price: €{price:F2}\");\nThe F2 specifies two decimal places.\nOther formatting options exist for:\n\nNumbers\nCurrency\nDates\nTimes\nPercentages\n\nYou will encounter these as we develop applications.\nFor more information, see the Microsoft documentation:\nStandard Numeric Format Strings"
   },
   {
-    "objectID": "Week1/Week1.html#naming-conventions-in-c",
-    "href": "Week1/Week1.html#naming-conventions-in-c",
+    "objectID": "lectures/Week1/Week1.html#naming-conventions-in-c",
+    "href": "lectures/Week1/Week1.html#naming-conventions-in-c",
     "title": "Week 1 Introduction",
     "section": "Naming Conventions in C#",
     "text": "Naming Conventions in C#\nPascalCase\nUse PascalCase for:\n\nClasses\nMethods\nProperties\nPublic members\n\nEach word starts with a capital letter.\npublic class Person\n{\n    public string Name { get; set; }\n\n    public void IncreaseAge()\n    {\n    }\n}\nExamples:\nPerson\nStudentAccount\nCalculateAverage\nFirstName"
   },
   {
-    "objectID": "Week1/Week1.html#access-modifiers-internal-classes",
-    "href": "Week1/Week1.html#access-modifiers-internal-classes",
+    "objectID": "lectures/Week1/Week1.html#access-modifiers-internal-classes",
+    "href": "lectures/Week1/Week1.html#access-modifiers-internal-classes",
     "title": "Week 1 Introduction",
     "section": "Access Modifiers: internal Classes",
     "text": "Access Modifiers: internal Classes\nYou already know public and private from Java.\nC# adds a third one worth knowing: internal.\nWhen you create a new project, some of the generated template code uses it on classes:\ninternal class Program\n{\n    // ...\n}\nAn internal class is only visible within the same project.\nCode in a different project can’t see or use it at all — not even to reference the class name.\npublic class Person   // visible to other projects too\n{\n}\n\ninternal class Helper // only visible inside this project\n{\n}"
   },
   {
-    "objectID": "Week1/Week1.html#namespaces",
-    "href": "Week1/Week1.html#namespaces",
+    "objectID": "lectures/Week1/Week1.html#namespaces",
+    "href": "lectures/Week1/Week1.html#namespaces",
     "title": "Week 1 Introduction",
     "section": "Namespaces",
     "text": "Namespaces\nA namespace groups related classes together and helps avoid naming collisions.\nnamespace SchoolSystem\n{\n    public class Person\n    {\n    }\n}\nTwo different libraries could each have their own Person class, as long as they live in different namespaces:\nSchoolSystem.Person\nHospitalSystem.Person\nUsing a namespace\nRather than writing the full name every time, we bring a namespace into scope with using:\nusing SchoolSystem;\n\nPerson person = new Person();\nCan also do\nnamespace SchoolSystem;\n\npublic class Person{\n}\nThen the namespace applies to the whole file"
   },
   {
-    "objectID": "Week1/Week1.html#using-vs-import",
-    "href": "Week1/Week1.html#using-vs-import",
+    "objectID": "lectures/Week1/Week1.html#using-vs-import",
+    "href": "lectures/Week1/Week1.html#using-vs-import",
     "title": "Week 1 Introduction",
     "section": "using vs import",
     "text": "using vs import\nIn Java, you bring another package into scope with import:\nimport java.util.List;\nIn C#, the equivalent keyword is using:\nusing System.Collections.Generic;\nSame idea, different keyword: both just bring a namespace into scope so you can use its types without writing the full name every time.\nExternal libraries\nAn external library — installed via NuGet, or one of .NET MAUI’s own libraries — defines its own namespace(s).\nYou using it exactly the same way as your own code:\nusing CommunityToolkit.Maui;\nInstalling the library and bringing its namespace into scope are two separate steps — you need both."
   },
   {
-    "objectID": "Week1/Week1.html#file-naming",
-    "href": "Week1/Week1.html#file-naming",
+    "objectID": "lectures/Week1/Week1.html#file-naming",
+    "href": "lectures/Week1/Week1.html#file-naming",
     "title": "Week 1 Introduction",
     "section": "File Naming",
     "text": "File Naming\nIn Java, every new class needed its own file.\nThe filename also had to match the class name exactly.\nC# doesn’t enforce this:\n\nYou can have multiple classes in the one file\nThe filename doesn’t have to match the class name at all\n\nBut — best practice\nDo it the Java way anyway: one class per file, filename matching the class name.\nPerson.cs   →  contains  public class Person"
   },
   {
-    "objectID": "Week1/Week1.html#classes",
-    "href": "Week1/Week1.html#classes",
+    "objectID": "lectures/Week1/Week1.html#classes",
+    "href": "lectures/Week1/Week1.html#classes",
     "title": "Week 1 Introduction",
     "section": "Classes",
     "text": "Classes\nWhy use a class?\nOne reason is encapsulation of functionality.\nInstead of putting everything into one enormous program, we can create objects that have:\n\nData\nBehaviour\nResponsibility\n\nThis becomes increasingly important as our programs become larger."
   },
   {
-    "objectID": "Week1/Week1.html#classes-and-encapsulation",
-    "href": "Week1/Week1.html#classes-and-encapsulation",
+    "objectID": "lectures/Week1/Week1.html#classes-and-encapsulation",
+    "href": "lectures/Week1/Week1.html#classes-and-encapsulation",
     "title": "Week 1 Introduction",
     "section": "Classes and Encapsulation",
     "text": "Classes and Encapsulation\nA class allows us to group related:\n\nData\nMethods\nFunctionality\n\nFor example:\npublic class Person\n{\n    private string _name;\n    private int _age;\n\n    public void SayHello()\n    {\n        Console.WriteLine(\"Hello!\");\n    }\n}\nThe private fields are hidden from code outside the class.\nThis is encapsulation.\nIn a larger application, this allows a class to control how its data is accessed and changed."
   },
   {
-    "objectID": "Week1/Week1.html#properties",
-    "href": "Week1/Week1.html#properties",
+    "objectID": "lectures/Week1/Week1.html#properties",
+    "href": "lectures/Week1/Week1.html#properties",
     "title": "Week 1 Introduction",
     "section": "Properties",
     "text": "Properties\nIn Java, you may have written:\nprivate String name;\n\npublic void setName(String name)\n{\n    this.name = name;\n}\n\npublic String getName()\n{\n    return name;\n}\nThe methods control access to the private field.\nThis will work fine in C#, but it is not the usual way of doing things.\nC# has a different mechanism for this: properties."
   },
   {
-    "objectID": "Week1/Week1.html#c-properties",
-    "href": "Week1/Week1.html#c-properties",
+    "objectID": "lectures/Week1/Week1.html#c-properties",
+    "href": "lectures/Week1/Week1.html#c-properties",
     "title": "Week 1 Introduction",
     "section": "C# Properties",
     "text": "C# Properties\nA property allows us to expose controlled access to data. A property will have a backing field that stores the data.\npublic class Person\n{\n    private string _name;\n\n    public string Name\n    {\n        get\n        {\n            return _name;\n        }\n\n        set\n        {\n            _name = value;\n        }\n    }\n}\nA property has accessors.\nThe get accessor is used when reading the property.\nThe set accessor is used when assigning to it.\nThe private field _name is where the actual data is stored."
   },
   {
-    "objectID": "Week1/Week1.html#using-a-property",
-    "href": "Week1/Week1.html#using-a-property",
+    "objectID": "lectures/Week1/Week1.html#using-a-property",
+    "href": "lectures/Week1/Week1.html#using-a-property",
     "title": "Week 1 Introduction",
     "section": "Using a Property",
     "text": "Using a Property\nInstead of:\nperson.setName(\"Donny\");\nSystem.out.print(person.getName());\nwe can write:\nperson.Name = \"Donny\";\n\nConsole.Write(person.Name);\nC# knows whether we are reading or writing the property.\nperson.Name = \"Donny\";  // set\n\nConsole.Write(person.Name);  // get\nThe property looks like a variable when we use it."
   },
   {
-    "objectID": "Week1/Week1.html#auto-implemented-properties",
-    "href": "Week1/Week1.html#auto-implemented-properties",
+    "objectID": "lectures/Week1/Week1.html#auto-implemented-properties",
+    "href": "lectures/Week1/Week1.html#auto-implemented-properties",
     "title": "Week 1 Introduction",
     "section": "Auto-Implemented Properties",
     "text": "Auto-Implemented Properties\nIf we don’t need to write our own get and set logic, C# provides a shorthand.\npublic class Person\n{\n    public string Name { get; set; }\n}\nThis is an auto-implemented property.\nC# automatically provides the backing storage for us. The private field does still exist, we just don’t have a reference to it.\nThis is extremely common in C#."
   },
   {
-    "objectID": "Week1/Week1.html#read-only-properties",
-    "href": "Week1/Week1.html#read-only-properties",
+    "objectID": "lectures/Week1/Week1.html#read-only-properties",
+    "href": "lectures/Week1/Week1.html#read-only-properties",
     "title": "Week 1 Introduction",
     "section": "Read-Only Properties",
     "text": "Read-Only Properties\nWe don’t always want the outside world to be able to change a value.\nFor example:\npublic class Person\n{\n    public string Name { get; set; }\n\n    public int Age { get; }\n}\nA property with only a get accessor cannot normally be assigned from outside the class.\nThe value can be assigned when the object is constructed:\npublic Person(int age)\n{\n    Age = age;\n}\nBut it cannot subsequently be changed:\nPerson person = new Person(25);\n\nperson.Age = 26;\nThink of this as:\n\n“You can ask me what my age is, but you cannot change it.”"
   },
   {
-    "objectID": "Week1/Week1.html#private-setters",
-    "href": "Week1/Week1.html#private-setters",
+    "objectID": "lectures/Week1/Week1.html#private-setters",
+    "href": "lectures/Week1/Week1.html#private-setters",
     "title": "Week 1 Introduction",
     "section": "Private Setters",
     "text": "Private Setters\nSometimes we want the class itself to be able to change a value, but we don’t want other code to do so.\npublic class Person\n{\n    public int Age { get; private set; }\n\n    public Person(int age)\n    {\n        Age = age;\n    }\n\n    public void IncreaseAge()\n    {\n        ++Age;\n    }\n}\nOutside the class:\nPerson person = new Person(25);\n\nConsole.WriteLine(person.Age);  // ✅\n\nperson.Age = 30;                // ❌\nBut the class itself can change the property:\nperson.IncreaseAge();           // ✅"
   },
   {
-    "objectID": "Week1/Week1.html#properties-vs-fields",
-    "href": "Week1/Week1.html#properties-vs-fields",
+    "objectID": "lectures/Week1/Week1.html#properties-vs-fields",
+    "href": "lectures/Week1/Week1.html#properties-vs-fields",
     "title": "Week 1 Introduction",
     "section": "Properties vs Fields",
     "text": "Properties vs Fields\nIt is important to distinguish between a field and a property.\nprivate int _age;               // field\n\npublic int Age { get; set; }    // property\nA field is a variable belonging to the object.\nA property provides controlled access to data.\nThe property may use a field behind the scenes:\nprivate int _age;\n\npublic int Age\n{\n    get\n    {\n        return _age;\n    }\n\n    set\n    {\n        _age = value;\n    }\n}\nOr C# can generate the backing storage automatically:\npublic int Age { get; set; }"
   },
   {
-    "objectID": "Week1/Week1.html#why-properties-matter",
-    "href": "Week1/Week1.html#why-properties-matter",
+    "objectID": "lectures/Week1/Week1.html#why-properties-matter",
+    "href": "lectures/Week1/Week1.html#why-properties-matter",
     "title": "Week 1 Introduction",
     "section": "Why Properties Matter",
     "text": "Why Properties Matter\nProperties give us encapsulation.\nWe can start with:\npublic string Name { get; set; }\nBut later we might need validation:\nprivate int _age;\n\npublic int Age\n{\n    get\n    {\n        return _age;\n    }\n\n    set\n    {\n        if (value &gt;= 0)\n        {\n            _age = value;\n        }\n    }\n}\nHere the property controls access to _age.\nThe setter can validate the value before changing the field."
   },
   {
-    "objectID": "Week1/Week1.html#inheritance",
-    "href": "Week1/Week1.html#inheritance",
+    "objectID": "lectures/Week1/Week1.html#inheritance",
+    "href": "lectures/Week1/Week1.html#inheritance",
     "title": "Week 1 Introduction",
     "section": "Inheritance",
     "text": "Inheritance\nC# uses : to specify inheritance.\nJava:\npublic class Dog extends Animal\n{\n}\nC#:\npublic class Dog : Animal\n{\n}\nA derived class inherits members from its base class."
   },
   {
-    "objectID": "Week1/Week1.html#the-base-class",
-    "href": "Week1/Week1.html#the-base-class",
+    "objectID": "lectures/Week1/Week1.html#the-base-class",
+    "href": "lectures/Week1/Week1.html#the-base-class",
     "title": "Week 1 Introduction",
     "section": "The base Class",
     "text": "The base Class\nSometimes a derived class needs to access functionality from its base class.\nC# uses the keyword:\nbase\n(In Java you would’ve used super) For example:\npublic class Animal\n{\n    public string Name { get; set; }\n\n    public void Speak()\n    {\n        Console.WriteLine(\"Some animal noise\");\n    }\n}\nA derived class can call the base implementation:\npublic class Dog : Animal\n{\n    public void SpeakLikeADog()\n    {\n        base.Speak();\n        Console.WriteLine(\"Woof!\");\n    }\n}\nbase means: “the version belonging to my base class.”"
   },
   {
-    "objectID": "Week1/Week1.html#constructors-and-base",
-    "href": "Week1/Week1.html#constructors-and-base",
+    "objectID": "lectures/Week1/Week1.html#constructors-and-base",
+    "href": "lectures/Week1/Week1.html#constructors-and-base",
     "title": "Week 1 Introduction",
     "section": "Constructors and base",
     "text": "Constructors and base\nbase can also be used when calling a base-class constructor.\npublic class Animal\n{\n    public Animal(string name)\n    {\n        Name = name;\n    }\n\n    public string Name { get; }\n}\nThe derived class can call it:\npublic class Dog : Animal\n{\n    public Dog(string name)  : base(name)\n    {\n\n    }\n}\nThe Dog constructor passes name to the Animal constructor."
   },
   {
-    "objectID": "Week1/Week1.html#overriding-methods",
-    "href": "Week1/Week1.html#overriding-methods",
+    "objectID": "lectures/Week1/Week1.html#overriding-methods",
+    "href": "lectures/Week1/Week1.html#overriding-methods",
     "title": "Week 1 Introduction",
     "section": "Overriding Methods",
     "text": "Overriding Methods\nSometimes a derived class needs to provide its own version of a method.\nIn Java, you may remember:\n@Override\npublic void Speak()\n{\n    System.out.println(\"Woof!\");\n}\nIn C#, you cannot override just any method.\nThe base class must give permission by marking the method as virtual.\npublic class Animal\n{\n    public virtual void Speak()\n    {\n        Console.WriteLine(\"Some animal noise\");\n    }\n}\nThe derived class can then use override:\npublic class Dog : Animal\n{\n    public override void Speak()\n    {\n        Console.WriteLine(\"Woof!\");\n    }\n}\nThink of it as:\n\nJava asks for forgiveness.\nC# asks for permission."
   },
   {
-    "objectID": "Week1/Week1.html#virtual-and-override",
-    "href": "Week1/Week1.html#virtual-and-override",
+    "objectID": "lectures/Week1/Week1.html#virtual-and-override",
+    "href": "lectures/Week1/Week1.html#virtual-and-override",
     "title": "Week 1 Introduction",
     "section": "virtual and override",
     "text": "virtual and override\nThe base class:\npublic virtual void Speak()\n{\n    Console.WriteLine(\"Some animal noise\");\n}\nis saying:\n\n“Derived classes are allowed to provide their own implementation of this method.”\n\nThe derived class:\npublic override void Speak()\n{\n    Console.WriteLine(\"Woof!\");\n}\nis saying:\n\n“I am providing that alternative implementation.”"
   },
   {
-    "objectID": "Week1/Week1.html#why-virtual-and-override",
-    "href": "Week1/Week1.html#why-virtual-and-override",
+    "objectID": "lectures/Week1/Week1.html#why-virtual-and-override",
+    "href": "lectures/Week1/Week1.html#why-virtual-and-override",
     "title": "Week 1 Introduction",
     "section": "Why virtual and override?",
     "text": "Why virtual and override?\nThis gives us polymorphism.\nAnimal animal = new Dog();\n\nanimal.Speak();\nEven though the variable is declared as Animal, the actual object is a Dog.\nThe overridden Dog.Speak() is called.\nAnimal reference\n       |\n       v\n    Dog object\n       |\n       v\nDog.Speak()\nThis is one of the reasons inheritance is useful."
   },
   {
-    "objectID": "Week1/Week1.html#base-and-override",
-    "href": "Week1/Week1.html#base-and-override",
+    "objectID": "lectures/Week1/Week1.html#base-and-override",
+    "href": "lectures/Week1/Week1.html#base-and-override",
     "title": "Week 1 Introduction",
     "section": "base and override",
     "text": "base and override\nAn override doesn’t necessarily mean we have to completely throw away the base implementation.\nWe can call it using base.\npublic class Dog : Animal\n{\n    public override void Speak()\n    {\n        base.Speak();\n        Console.WriteLine(\"...and then Woof!\");\n    }\n}\nSo:\nbase.Speak();\nmeans:\nCall the implementation from my base class."
   },
   {
-    "objectID": "Week1/Week1.html#a-quick-comparison",
-    "href": "Week1/Week1.html#a-quick-comparison",
+    "objectID": "lectures/Week1/Week1.html#a-quick-comparison",
+    "href": "lectures/Week1/Week1.html#a-quick-comparison",
     "title": "Week 1 Introduction",
     "section": "A Quick Comparison",
     "text": "A Quick Comparison\n\n\n\n\n\n\n\n\nConcept\nJava\nC#\n\n\n\n\nString type\nString\nstring\n\n\nArray length\n.length\n.Length\n\n\nArray declaration\nint[] numbers\nint[] numbers\n\n\nArray literal\nnew int[] { 1, 2, 3 }\nnew int[] { 1, 2, 3 }\n\n\nEnhanced for loop\nfor (int n : numbers)\nforeach (int n in numbers)\n\n\nInheritance\nextends\n:\n\n\nOverride annotation\n@Override\noverride\n\n\nAllow overriding\nNormal method\nvirtual\n\n\nAccess base implementation\nsuper\nbase\n\n\nProperties\nGetters/setters\nProperties\n\n\nMethod naming\ncamelCase\nPascalCase"
   },
   {
-    "objectID": "Week1/Week1.html#another-example---random",
-    "href": "Week1/Week1.html#another-example---random",
+    "objectID": "lectures/Week1/Week1.html#another-example---random",
+    "href": "lectures/Week1/Week1.html#another-example---random",
     "title": "Week 1 Introduction",
     "section": "Another Example - Random",
     "text": "Another Example - Random\nFor generating a pseudo-random number in Java you used the Random class.\nRandom randomNumber = new Random();\nShockingly, C# uses a class with the same name.\nRandom random = new Random();\nC# uses .Next() similarly to Java.\nIf you type into Visual Studio, you should see options for the object after the .."
   },
   {
-    "objectID": "Week1/Week1.html#random",
-    "href": "Week1/Week1.html#random",
+    "objectID": "lectures/Week1/Week1.html#random",
+    "href": "lectures/Week1/Week1.html#random",
     "title": "Week 1 Introduction",
     "section": "Random",
     "text": "Random\nSome available members include:\n\nNext\nNextBytes\nNextDouble\nNextInt64\nNextSingle\n\nNotice that the standard naming scheme for methods is to start with a capital letter.\nJava normally uses camelCase:\nnextInt()\nC# uses PascalCase:\nNext()"
   },
   {
-    "objectID": "Week1/Week1.html#method-overloading",
-    "href": "Week1/Week1.html#method-overloading",
+    "objectID": "lectures/Week1/Week1.html#method-overloading",
+    "href": "lectures/Week1/Week1.html#method-overloading",
     "title": "Week 1 Introduction",
     "section": "Method Overloading",
     "text": "Method Overloading\nNextInt64 is an overloaded method.\nIt has multiple forms.\nFor example, different versions can accept different parameters.\nVisual Studio can help us discover these options.\nThis is another useful feature of the C# development environment:\nlet the IDE help you learn the API."
   },
   {
-    "objectID": "Week1/Week1.html#putting-it-together",
-    "href": "Week1/Week1.html#putting-it-together",
+    "objectID": "lectures/Week1/Week1.html#putting-it-together",
+    "href": "lectures/Week1/Week1.html#putting-it-together",
     "title": "Week 1 Introduction",
     "section": "Putting It Together",
     "text": "Putting It Together\nA simple C# class might therefore look like:\npublic class Person\n{\n    private string _name;\n\n    public string Name\n    {\n        get\n        {\n            return _name;\n        }\n\n        private set\n        {\n            _name = value;\n        }\n    }\n\n    public int Age { get; private set; }\n\n    public Person(string name, int age)\n    {\n        _name = name;\n        Age = age;\n    }\n\n    public void IncreaseAge()\n    {\n        ++Age;\n    }\n\n    public void SayHello()\n    {\n        Console.WriteLine($\"Hello, my name is {Name} and I am {Age}.\");\n    }\n}"
   },
   {
-    "objectID": "Week1/Week1.html#why-.net-maui",
-    "href": "Week1/Week1.html#why-.net-maui",
+    "objectID": "lectures/Week1/Week1.html#why-.net-maui",
+    "href": "lectures/Week1/Week1.html#why-.net-maui",
     "title": "Week 1 Introduction",
     "section": "Why .NET MAUI?",
     "text": "Why .NET MAUI?\nNow that we have refreshed our C# knowledge, we can start looking at the actual purpose of this module.\nHow do we use C# to build an application that can run on multiple platforms?\nThis is where .NET MAUI comes in."
   },
   {
-    "objectID": "Week1/Week1.html#net-maui-one-solution",
-    "href": "Week1/Week1.html#net-maui-one-solution",
+    "objectID": "lectures/Week1/Week1.html#net-maui-one-solution",
+    "href": "lectures/Week1/Week1.html#net-maui-one-solution",
     "title": "Week 1 Introduction",
     "section": ".NET MAUI – One Solution",
     "text": ".NET MAUI – One Solution\nWithout a cross-platform framework, we might need:\n             Our Application\n              /     |      \\\n             /      |       \\\n            v       v        v\n         Android   iOS    Windows\nDifferent platforms have:\n\nDifferent UI paradigms\nDifferent development environments\nDifferent programming interfaces\nDifferent platform-specific APIs\n\n.NET MAUI provides a common framework for us to work with."
   },
   {
-    "objectID": "Week1/Week1.html#different-development-environments",
-    "href": "Week1/Week1.html#different-development-environments",
+    "objectID": "lectures/Week1/Week1.html#different-development-environments",
+    "href": "lectures/Week1/Week1.html#different-development-environments",
     "title": "Week 1 Introduction",
     "section": "Different Development Environments",
     "text": "Different Development Environments\nTraditionally:\n\niOS → Xcode\nAndroid → Android Studio\nWindows → Visual Studio\n\nWe don’t necessarily want to learn completely different development environments and APIs just to build the same application."
   },
   {
-    "objectID": "Week1/Week1.html#different-programming-interfaces",
-    "href": "Week1/Week1.html#different-programming-interfaces",
+    "objectID": "lectures/Week1/Week1.html#different-programming-interfaces",
+    "href": "lectures/Week1/Week1.html#different-programming-interfaces",
     "title": "Week 1 Introduction",
     "section": "Different Programming Interfaces",
     "text": "Different Programming Interfaces\nThe terminology and APIs are also different.\nFor example:\n\niPhone → views\nAndroid → widgets\nWindows → controls\n\nThe concepts are often similar.\nThe details are different."
   },
   {
-    "objectID": "Week1/Week1.html#different-programming-languages",
-    "href": "Week1/Week1.html#different-programming-languages",
+    "objectID": "lectures/Week1/Week1.html#different-programming-languages",
+    "href": "lectures/Week1/Week1.html#different-programming-languages",
     "title": "Week 1 Introduction",
     "section": "Different Programming Languages",
     "text": "Different Programming Languages\nHistorically, different platforms also encouraged different languages.\nFor example:\n\nJava\nObjective-C\nSwift\nKotlin\nC++\n\n.NET MAUI allows us to use C# across the platforms we target."
   },
   {
-    "objectID": "Week1/Week1.html#sharing-code",
-    "href": "Week1/Week1.html#sharing-code",
+    "objectID": "lectures/Week1/Week1.html#sharing-code",
+    "href": "lectures/Week1/Week1.html#sharing-code",
     "title": "Week 1 Introduction",
     "section": "Sharing Code",
     "text": "Sharing Code\nThe basic idea is:\nWrite the common code once.\nThen let the framework and platform-specific implementations deal with the differences.\n             C# / .NET MAUI\n                    |\n          -----------------------\n          |          |          |\n          v          v          v\n       Android      iOS      Windows\nWe still need to understand the differences between those platforms.\nBut we don’t have to build everything from scratch for each one."
   },
   {
-    "objectID": "Week1/Week1.html#requirements",
-    "href": "Week1/Week1.html#requirements",
+    "objectID": "lectures/Week1/Week1.html#requirements",
+    "href": "lectures/Week1/Week1.html#requirements",
     "title": "Week 1 Introduction",
     "section": "Requirements",
     "text": "Requirements\nVisual Studio\n\nVisual Studio 2026\nCommunity Edition is free\nWindows 10 or Windows 11\n\n.NET MAUI\nInstall it as part of Visual Studio.\nThe main component for this module is:\n.NET Multi-platform App UI development\nOther components may be required for other modules."
   },
   {
-    "objectID": "Week1/Week1.html#android-testing",
-    "href": "Week1/Week1.html#android-testing",
+    "objectID": "lectures/Week1/Week1.html#android-testing",
+    "href": "lectures/Week1/Week1.html#android-testing",
     "title": "Week 1 Introduction",
     "section": "Android Testing",
     "text": "Android Testing\nYou will need either:\n\nAn Android device\nAn Android emulator\n\nOne advantage is that you can test quickly on Windows and see how the application looks and behaves.\nYou can then deploy it to an Android device."
   },
   {
-    "objectID": "Week1/Week1.html#mac-users",
-    "href": "Week1/Week1.html#mac-users",
+    "objectID": "lectures/Week1/Week1.html#mac-users",
+    "href": "lectures/Week1/Week1.html#mac-users",
     "title": "Week 1 Introduction",
     "section": "Mac Users",
     "text": "Mac Users\nMac users will need to set up .NET MAUI on Mac through VS Code.\nI’ve linked to a guide that should help with this on Moodle.\nI’m not going to be much help at debugging things on a Mac."
   },
   {
-    "objectID": "Week1/Week1.html#developer-mode",
-    "href": "Week1/Week1.html#developer-mode",
+    "objectID": "lectures/Week1/Week1.html#developer-mode",
+    "href": "lectures/Week1/Week1.html#developer-mode",
     "title": "Week 1 Introduction",
     "section": "Developer Mode",
     "text": "Developer Mode\nFor Android, you will need to enable USB Debugging on your phone if you want to send the compiled application to it through USB.\nInstructions are available from Google:\nhttps://developer.android.com/studio/debug/dev-options\nVisual Studio also provides an Android Emulator so you can test on your PC."
   },
   {
-    "objectID": "Week1/Week1.html#assessment",
-    "href": "Week1/Week1.html#assessment",
+    "objectID": "lectures/Week1/Week1.html#assessment",
+    "href": "lectures/Week1/Week1.html#assessment",
     "title": "Week 1 Introduction",
     "section": "Assessment",
     "text": "Assessment\n100% CA assessment\nProgramming Assessments\n\nAn in-class test before or after Halloween break\nA project due at the end of the semester\n\nWritten Assessment\n\nA written exam in the last two weeks of the semester"
   },
   {
-    "objectID": "Week1/Week1.html#the-project",
-    "href": "Week1/Week1.html#the-project",
+    "objectID": "lectures/Week1/Week1.html#the-project",
+    "href": "lectures/Week1/Week1.html#the-project",
     "title": "Week 1 Introduction",
     "section": "The Project",
     "text": "The Project\nThe project is not about creating the next Facebook.\nThe aim is to demonstrate that you understand the technologies and concepts covered in the module.\nYour application should:\n\nHave a coherent purpose\nBe usable\nUse C#\nUse .NET MAUI\nHave a suitable user interface\nDemonstrate appropriate programming techniques\nBe tested"
   },
   {
-    "objectID": "Week1/Week1.html#other-options-for-mobile-cross-platform-development",
-    "href": "Week1/Week1.html#other-options-for-mobile-cross-platform-development",
+    "objectID": "lectures/Week1/Week1.html#other-options-for-mobile-cross-platform-development",
+    "href": "lectures/Week1/Week1.html#other-options-for-mobile-cross-platform-development",
     "title": "Week 1 Introduction",
     "section": "Other Options for Mobile Cross-Platform Development",
     "text": "Other Options for Mobile Cross-Platform Development\n.NET MAUI isn’t the only option.\nYou will encounter other technologies in other modules.\nFor example:\n\nReact\nIonic\n\nThere are many different approaches to cross-platform development.\nThe important thing is to understand the problem they are trying to solve."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#event-driven-programming",
+    "href": "lectures/Week3/Week3.html#event-driven-programming",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Event-Driven Programming",
+    "text": "Event-Driven Programming\nThis week we will look at how our application responds to things happening while it is running.\nWe will look at:\n\nEvents and event handlers\nButton clicks and text input\nRuntime changes to the UI\nInput validation and data integrity\nProperties for protecting data\nTimers\nLambda and anonymous functions\nGestures"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#from-static-ui-to-dynamic-application",
+    "href": "lectures/Week3/Week3.html#from-static-ui-to-dynamic-application",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "From Static UI to Dynamic Application",
+    "text": "From Static UI to Dynamic Application\nLast week we created our user interface using XAML.\nFor example:\n&lt;VerticalStackLayout&gt;\n    &lt;Label x:Name=\"lblAnswer\" Text=\"Waiting...\" /&gt;\n    &lt;Button Text=\"Calculate\" /&gt;\n&lt;/VerticalStackLayout&gt;\nThis describes the initial structure of the page.\nHowever, an application should not remain exactly as it was when it started.\nWhile the application is running, we can change the UI using C#.\nlblAnswer.Text = \"The answer is 42\";\nWe can also create new objects and add them to layouts.\nLabel newLabel = new Label\n{\n    Text = \"Created while the app is running\"\n};\n\nmyLayout.Children.Add(newLabel);"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#compile-time-and-run-time",
+    "href": "lectures/Week3/Week3.html#compile-time-and-run-time",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Compile Time and Run Time",
+    "text": "Compile Time and Run Time\nThere are two useful ideas to distinguish.\nCompile time is when our source code is processed before the application runs.\nRun time is when the application is actually running and responding to the user.\nXAML gives us a convenient way to define the initial structure of our UI before the application runs.\n&lt;Label Text=\"Hello\" /&gt;\nC# can then modify that UI while the application is running.\nlblAnswer.Text = \"Hello from C#\";"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#compile-time-vs-run-time",
+    "href": "lectures/Week3/Week3.html#compile-time-vs-run-time",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Compile Time vs Run Time",
+    "text": "Compile Time vs Run Time\nThe initial UI can be thought of as the starting point:\nXAML\n  ↓\nInitial UI\n  ↓\nApplication starts\nOnce the application is running, C# can make changes:\nUser interaction / application event\n              ↓\n          C# code runs\n              ↓\n        UI can change\nThe UI does not have to remain exactly as it was defined in XAML."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#runtime-changes",
+    "href": "lectures/Week3/Week3.html#runtime-changes",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Runtime Changes",
+    "text": "Runtime Changes\nFor example, the following changes an existing Label:\nlblAnswer.Text = \"The conversion is: \" + answer;\nWe can also change other properties:\nlblAnswer.TextColor = Colors.Red;\nlblAnswer.FontSize = 24;\nOr create new controls:\nButton button = new Button\n{\n    Text = \"New Button\"\n};\n\nmyLayout.Children.Add(button);\nIf we can do something in XAML, we can often do the equivalent in C# at runtime."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#but-what-makes-the-code-run",
+    "href": "lectures/Week3/Week3.html#but-what-makes-the-code-run",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "But What Makes the Code Run?",
+    "text": "But What Makes the Code Run?\nWe could write:\nlblAnswer.Text = \"The answer is 42\";\nBut when should this code execute?\nWe don’t want it to execute immediately when the application starts.\nPerhaps it should execute when the user presses a button.\nThis leads us to event-driven programming."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#what-is-event-driven-programming",
+    "href": "lectures/Week3/Week3.html#what-is-event-driven-programming",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "What Is Event-Driven Programming?",
+    "text": "What Is Event-Driven Programming?\nEvent-driven programming is a programming model where the flow of the program is determined by events.\nAn event is something that happens while the application is running.\nExamples include:\n\nA button is clicked\nThe user types something\nA timer reaches its interval\nA finger touches the screen\nThe user swipes\nA page finishes appearing\n\nInstead of deciding exactly when everything happens, our application waits for events and responds to the ones we are interested in."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#events-are-happening-all-the-time",
+    "href": "lectures/Week3/Week3.html#events-are-happening-all-the-time",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Events Are Happening All the Time",
+    "text": "Events Are Happening All the Time\nEverything the user does can potentially generate events.\nFor example:\n\nMoving the mouse\nClicking or tapping\nTyping on the keyboard\nPressing a button\nSwiping\nPinching\nChanging the device orientation\n\nThe application does not need to respond to all of these.\nWe subscribe to the events that we care about."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#the-event-driven-model",
+    "href": "lectures/Week3/Week3.html#the-event-driven-model",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "The Event-Driven Model",
+    "text": "The Event-Driven Model\nA typical event-driven application has:\nEvent source\nSomething that generates an event.\nExamples: Button, Entry, Timer, Gesture recogniser\nEvent\nSomething that happened.\nExamples: Clicked, TextChanged, Tick, Tapped\nEvent handler\nThe method that runs when the event occurs.\nEvent source\n     ↓\nEvent occurs\n     ↓\nEvent handler runs\n     ↓\nApplication responds"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#subscribing-to-an-event",
+    "href": "lectures/Week3/Week3.html#subscribing-to-an-event",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Subscribing to an Event",
+    "text": "Subscribing to an Event\nConsider:\nbutton.Clicked += OnButtonClicked;\nThe Clicked event belongs to the Button.\nThe += means that we are subscribing to the event.\nWe are saying:\n\nWhen this button is clicked, call OnButtonClicked.\n\nThe method is not called when this line executes.\nIt is called later, when the event actually occurs."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#a-button-click",
+    "href": "lectures/Week3/Week3.html#a-button-click",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "A Button Click",
+    "text": "A Button Click\nIn XAML we can connect a Button to an event handler.\n&lt;Button Text=\"Click Me\"\n        Clicked=\"OnButtonClicked\" /&gt;\nThe method is written in the code-behind:\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    lblMessage.Text = \"Button clicked!\";\n}\nWhen the user clicks the button:\nButton clicked\n      ↓\nClicked event raised\n      ↓\nOnButtonClicked() runs\n      ↓\nLabel is changed"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#event-handlers",
+    "href": "lectures/Week3/Week3.html#event-handlers",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Event Handlers",
+    "text": "Event Handlers\nAn event handler is a method that is called when an event occurs.\nA typical handler looks like:\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    // Code to run when the event occurs\n}\nThe exact type of the event arguments depends on the event.\nFor a simple Button click, there is no additional information required, so we use:\nEventArgs e\nOther events can provide more information."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#the-sender-parameter",
+    "href": "lectures/Week3/Week3.html#the-sender-parameter",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "The sender Parameter",
+    "text": "The sender Parameter\nWhat is sender?\nIt is the object that raised the event.\nFor example, if a Button is clicked:\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n}\nsender refers to the Button that was clicked.\nAlthough its declared type is object, the actual object can be a Button, Entry, Timer, or another object that raised the event."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#working-with-sender",
+    "href": "lectures/Week3/Week3.html#working-with-sender",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Working with sender",
+    "text": "Working with sender\nIf we know that the sender is a Button, we can access its Button properties.\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    Button button = (Button)sender;\n\n    button.Text = \"Clicked!\";\n}\nThe cast:\n(Button)sender\ntells C#:\n\nTreat this object as a Button."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#one-handler-multiple-buttons",
+    "href": "lectures/Week3/Week3.html#one-handler-multiple-buttons",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "One Handler, Multiple Buttons",
+    "text": "One Handler, Multiple Buttons\nThe same event handler can be used by multiple controls.\n&lt;Button Text=\"Red\"\n        Clicked=\"OnButtonClicked\" /&gt;\n\n&lt;Button Text=\"Blue\"\n        Clicked=\"OnButtonClicked\" /&gt;\nThe handler can determine which Button raised the event.\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    if (sender is Button button)\n    {\n        button.Text = \"Clicked!\";\n    }\n}\nThis is often safer than assuming that sender is always a particular type."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#object-and-pattern-matching",
+    "href": "lectures/Week3/Week3.html#object-and-pattern-matching",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "object and Pattern Matching",
+    "text": "object and Pattern Matching\nRemember that object is a general C# type.\nAn object can refer to an instance of many different classes.\nWe can check its actual type using pattern matching:\nif (sender is Button button)\n{\n    button.Text = \"Clicked!\";\n}\nThis means:\n\nIf sender is a Button, create a variable called button referring to it.\n\nWe can use the same idea with other controls.\nif (sender is Entry entry)\n{\n    entry.Text = \"Hello\";\n}"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#event-arguments",
+    "href": "lectures/Week3/Week3.html#event-arguments",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Event Arguments",
+    "text": "Event Arguments\nThe second parameter contains information about the event.\nFor a Button click:\nEventArgs e\ndoes not contain much additional information.\nOther events provide more specialised information.\nFor example:\nprivate void OnSwipe(object sender, SwipedEventArgs e)\n{\n    lblMessage.Text = $\"Swiped {e.Direction}\";\n}\nThe SwipedEventArgs object tells us information about the swipe."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#creating-event-handlers-in-visual-studio",
+    "href": "lectures/Week3/Week3.html#creating-event-handlers-in-visual-studio",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Creating Event Handlers in Visual Studio",
+    "text": "Creating Event Handlers in Visual Studio\nVisual Studio can create an appropriate event handler for us.\nIn XAML, start typing:\nClicked=\nVisual Studio will offer:\n&lt;New Event Handler&gt;\nSelecting this creates a suitable method in the code-behind.\nFor example:\nprivate void Button_Clicked(object sender, EventArgs e)\n{\n}\nThis is useful because Visual Studio knows which event we are handling and can provide the appropriate event argument type."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#button-events",
+    "href": "lectures/Week3/Week3.html#button-events",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Button Events",
+    "text": "Button Events\nA button has three events that can occur\n\nPressed: Fired immediately when a finger or mouse pointer presses down on the button.\nReleased: Fired when the finger or mouse button is lifted, regardless of whether it moved off the button.\nClicked: Fired only when a press is completed and released while the pointer remains on the button’s surface. If the user slides their finger away before releasing, Released fires, but Clicked does not.\n\nEven if we are not subscribing to them, the events still happen. But we only subscribe to the ones we wish to react to.\ne.g. Maybe we want to change how the button looks when Pressed happens."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#entry-events",
+    "href": "lectures/Week3/Week3.html#entry-events",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Entry Events",
+    "text": "Entry Events\nButtons are not the only controls that raise events.\nAn Entry has events that allow us to react to text input.\nTwo useful examples are:\n\nTextChanged\nCompleted\n\nTextChanged occurs when the text changes.\nCompleted occurs when the user finishes entering the text, such as pressing Enter on the keyboard.\nMore Events\nThere are many more.\nThe important skill is not memorising every event.\nIt is knowing that a control provides events and knowing how to find and handle the ones you need."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#the-textchanged-event",
+    "href": "lectures/Week3/Week3.html#the-textchanged-event",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "The TextChanged Event",
+    "text": "The TextChanged Event\nFor example:\n&lt;Entry x:Name=\"txtName\"\n       TextChanged=\"OnTextChanged\" /&gt;\nThe handler can examine the new text:\nprivate void OnTextChanged(object sender, TextChangedEventArgs e)\n{\n    lblMessage.Text = e.NewTextValue;\n}\nThe event arguments contain useful information about what changed.\nFor example:\ne.OldTextValue\ne.NewTextValue"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#why-validate-input",
+    "href": "lectures/Week3/Week3.html#why-validate-input",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Why Validate Input?",
+    "text": "Why Validate Input?\nA user can enter unexpected data.\nFor example, suppose we want a quantity:\nQuantity: [             ]\nWhat happens if the user enters:\nhello\nand we try:\ndouble quantity = Convert.ToDouble(txtQuantity.Text);\nThe conversion can fail and the application can crash.\nWe should never assume that data entered by a user is valid."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#never-trust-input",
+    "href": "lectures/Week3/Week3.html#never-trust-input",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Never Trust Input",
+    "text": "Never Trust Input\nA useful rule in software development is:\n\nNever trust data from the client.\n\nEven if you wrote the application, the user can still enter unexpected data.\nInput validation protects the application from:\n\nEmpty input\nIncorrect formats\nValues outside an allowed range\nUnexpected characters\nData that cannot be converted to the required type"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#checking-for-empty-input",
+    "href": "lectures/Week3/Week3.html#checking-for-empty-input",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Checking for Empty Input",
+    "text": "Checking for Empty Input\nWe can check whether an Entry contains text.\nprivate void OnCalculateClicked(object sender, EventArgs e)\n{\n    if (string.IsNullOrWhiteSpace(txtQuantity.Text))\n    {\n        lblResult.Text = \"Please enter a quantity.\";\n        return;\n    }\n\n    // Continue with the calculation\n}\nreturn exits the method.\nIf the input is invalid, the rest of the calculation is not performed."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#isnullorempty-vs-isnullorwhitespace",
+    "href": "lectures/Week3/Week3.html#isnullorempty-vs-isnullorwhitespace",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "IsNullOrEmpty vs IsNullOrWhiteSpace",
+    "text": "IsNullOrEmpty vs IsNullOrWhiteSpace\nC# provides:\nstring.IsNullOrEmpty(text)\nThis checks whether the string is null or has zero characters.\nThere is also:\nstring.IsNullOrWhiteSpace(text)\nThis also considers a string containing only spaces to be empty for validation purposes.\nFor user input, IsNullOrWhiteSpace is often the more useful check."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#checking-for-a-number",
+    "href": "lectures/Week3/Week3.html#checking-for-a-number",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Checking for a Number",
+    "text": "Checking for a Number\nWe can use TryParse to safely attempt a conversion.\nif (double.TryParse(txtQuantity.Text, out double quantity))\n{\n    // quantity contains the number\n}\nelse\n{\n    // The input was not a valid double\n}\nTryParse returns:\n\ntrue if the conversion succeeds\nfalse if the conversion fails\n\nIf it succeeds, the converted value is placed into quantity."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#handling-invalid-numbers",
+    "href": "lectures/Week3/Week3.html#handling-invalid-numbers",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Handling Invalid Numbers",
+    "text": "Handling Invalid Numbers\nPutting this into our button event:\nprivate void OnCalculateClicked(object sender, EventArgs e)\n{\n    if (!double.TryParse(txtQuantity.Text, out double quantity))\n    {\n        lblResult.Text = \"Please enter a valid number.\";\n        return;\n    }\n\n    lblResult.Text = $\"Quantity entered: {quantity}\";\n}\nThe application does not crash when the user enters something such as:\nhello\nInstead, we handle the error ourselves."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#keyboard-types-are-not-validation",
+    "href": "lectures/Week3/Week3.html#keyboard-types-are-not-validation",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Keyboard Types Are Not Validation",
+    "text": "Keyboard Types Are Not Validation\nWe can suggest an appropriate keyboard in XAML:\n&lt;Entry Keyboard=\"Numeric\" /&gt;\nThis is useful because it gives the user a more appropriate keyboard.\nHowever, it does not guarantee that the value is a valid number.\nThe application still needs to validate the input.\nKeyboard=\"Numeric\"\n        ↓\nHelps the user enter numbers\n\nTryParse\n        ↓\nActually checks whether the input is a number"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#verifying-string-structure",
+    "href": "lectures/Week3/Week3.html#verifying-string-structure",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Verifying String Structure",
+    "text": "Verifying String Structure\nSometimes we need to check more than whether a string is empty.\nFor example, suppose we expect:\nABC123\nWe may need to check:\n\nThe string is not empty\nIt has the correct length\nIt contains the expected characters\nIt follows the required structure\n\nValidation should happen before we use the data.\nThe exact validation technique depends on the structure we need to verify."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#properties-can-protect-data",
+    "href": "lectures/Week3/Week3.html#properties-can-protect-data",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Properties Can Protect Data",
+    "text": "Properties Can Protect Data\nValidation does not always have to happen in the UI.\nSuppose we have a class representing a person.\nWe might want to prevent an invalid age from being stored.\nprivate int _age;\n\npublic int Age\n{\n    get\n    {\n        return _age;\n    }\n    set\n    {\n        if (value &gt;= 0 && value &lt;= 120)\n        {\n            _age = value;\n        }\n    }\n}\nThe property controls how the field can be changed."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#why-validate-in-a-property",
+    "href": "lectures/Week3/Week3.html#why-validate-in-a-property",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Why Validate in a Property?",
+    "text": "Why Validate in a Property?\nImagine that several different parts of our application can change Age.\nIf we only validate the Entry:\nEntry\n  ↓\nValidation\n  ↓\nPerson.Age\nanother part of the program could potentially bypass that validation.\nA property can protect the data itself:\nAny code\n   ↓\nPerson.Age\n   ↓\nProperty validation\n   ↓\n_age\nThis helps maintain the integrity of our application’s data."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#events-and-data-integrity",
+    "href": "lectures/Week3/Week3.html#events-and-data-integrity",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Events and Data Integrity",
+    "text": "Events and Data Integrity\nThese ideas work together.\nFor example:\nUser enters data\n       ↓\nTextChanged / Button Clicked\n       ↓\nEvent handler runs\n       ↓\nValidate input\n       ↓\nStore valid data\n       ↓\nUpdate the UI\nEvent-driven programming gives us the opportunity to respond when the user provides or changes data."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#finding-available-events",
+    "href": "lectures/Week3/Week3.html#finding-available-events",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Finding Available Events",
+    "text": "Finding Available Events\nVisual Studio’s IntelliSense can help us find available events.\nDocumentation can also be used.\nFor example, the .NET MAUI Entry documentation lists the events and properties available for the control.\nEntry Documentation\nThe same approach can be used for other MAUI controls."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#timer-events",
+    "href": "lectures/Week3/Week3.html#timer-events",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Timer Events",
+    "text": "Timer Events\nEvents do not have to come directly from the user.\nA timer can also generate events.\nA timer allows us to run code at regular intervals.\nFor example:\nTimer\n  ↓\nWait for interval\n  ↓\nTick event\n  ↓\nEvent handler runs\n  ↓\nWait for interval\n  ↓\nTick event\n  ↓\n...\nThis is useful for things such as:\n\nGames, Clocks, Counters, Periodic UI updates, Checking conditions"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#dispatchertimer",
+    "href": "lectures/Week3/Week3.html#dispatchertimer",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "DispatcherTimer",
+    "text": "DispatcherTimer\nThere are different types of timers and I will come back to another type later.\nFor UI work in .NET MAUI, we can use the application’s dispatcher to create a timer.\nprivate IDispatcherTimer timer;\n\nprivate void StartTimer()\n{\n    timer = Dispatcher.CreateTimer();\n    timer.Interval = TimeSpan.FromSeconds(1);\n    timer.Tick += OnTimerTick;\n    timer.Start();\n}\nThe timer will raise its Tick event every second."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#handling-the-timer-event",
+    "href": "lectures/Week3/Week3.html#handling-the-timer-event",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Handling the Timer Event",
+    "text": "Handling the Timer Event\nWe can handle the Tick event just like other events.\nprivate void OnTimerTick(object sender, EventArgs e)\n{\n    lblTime.Text = DateTime.Now.ToLongTimeString();\n}\nThe important thing to notice is that the timer is simply another event source.\nDispatcherTimer\n       ↓\n    Tick event\n       ↓\n OnTimerTick()\n       ↓\n Update Label"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#starting-and-stopping-a-timer",
+    "href": "lectures/Week3/Week3.html#starting-and-stopping-a-timer",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Starting and Stopping a Timer",
+    "text": "Starting and Stopping a Timer\nA timer can be started and stopped.\ntimer.Start();\nand:\ntimer.Stop();\nFor example:\nprivate void StartTimer()\n{\n    timer = Dispatcher.CreateTimer();\n    timer.Interval = TimeSpan.FromSeconds(1);\n    timer.Tick += OnTimerTick;\n    timer.Start();\n}\n\nprivate void StopTimer()\n{\n    timer?.Stop();\n}\nThe ?. means that Stop() is only called if timer is not null."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#anonymous-functions",
+    "href": "lectures/Week3/Week3.html#anonymous-functions",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Anonymous Functions",
+    "text": "Anonymous Functions\nWe have written a separate method for every event:\ntimer.Tick += OnTimerTick;\nwith:\nprivate void OnTimerTick(object sender, EventArgs e)\n{\n    lblTime.Text = DateTime.Now.ToLongTimeString();\n}\nBut sometimes an event handler is very small and is only used once.\nC# allows us to write the function directly where we subscribe to the event.\nThis is an anonymous function."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#lambda-expressions",
+    "href": "lectures/Week3/Week3.html#lambda-expressions",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Lambda Expressions",
+    "text": "Lambda Expressions\nIn C#, anonymous functions are commonly written using lambda expressions.\nA basic lambda looks like:\n(parameters) =&gt; expression\nor:\n(parameters) =&gt;\n{\n    // statements\n};\nFor example:\nbutton.Clicked += (sender, e) =&gt;\n{\n    lblMessage.Text = \"Button clicked!\";\n};\nThere is no separate method called OnButtonClicked."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#lambda-expression-example",
+    "href": "lectures/Week3/Week3.html#lambda-expression-example",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Lambda Expression Example",
+    "text": "Lambda Expression Example\nInstead of:\ntimer.Tick += OnTimerTick;\n\nprivate void OnTimerTick(object sender, EventArgs e)\n{\n    lblTime.Text = DateTime.Now.ToLongTimeString();\n}\nwe could write:\ntimer.Tick += (sender, e) =&gt;\n{\n    lblTime.Text = DateTime.Now.ToLongTimeString();\n};\nThe event still works in exactly the same way.\nThe only difference is where the event-handling code is written."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#when-are-lambdas-useful",
+    "href": "lectures/Week3/Week3.html#when-are-lambdas-useful",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "When Are Lambdas Useful?",
+    "text": "When Are Lambdas Useful?\nLambdas are particularly useful when:\n\nThe handler is very short\nThe handler is only needed once\nThe code makes sense directly beside the event subscription\n\nFor a larger event handler, a named method is often easier to read.\nThere is no requirement to use a lambda just because one is possible."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#gestures",
+    "href": "lectures/Week3/Week3.html#gestures",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Gestures",
+    "text": "Gestures\nButtons and Entries are not the only way users interact with a mobile application.\nUsers are familiar with gestures such as:\n\nA MAUI application can recognise these gestures using gesture recognisers."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#gesture-recognisers",
+    "href": "lectures/Week3/Week3.html#gesture-recognisers",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Gesture Recognisers",
+    "text": "Gesture Recognisers\n.NET MAUI provides gesture recognisers that allow controls to respond to touch gestures.\nSome examples are:\n\nTapGestureRecognizer\nSwipeGestureRecognizer\nPanGestureRecognizer\nPinchGestureRecognizer\n\nThe recogniser detects the gesture and raises an event.\nOur application can then subscribe to that event."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#tap-gesture",
+    "href": "lectures/Week3/Week3.html#tap-gesture",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Tap Gesture",
+    "text": "Tap Gesture\nA tap gesture can be added to a control in XAML.\nFor example:\n&lt;Image x:Name=\"img1\"\n       Source=\"Images/Mastermind.png\"&gt;\n\n    &lt;Image.GestureRecognizers&gt;\n        &lt;TapGestureRecognizer Tapped=\"OnImageTapped\" /&gt;\n    &lt;/Image.GestureRecognizers&gt;\n\n&lt;/Image&gt;\nWhen the image is tapped:\nUser taps image\n      ↓\nTapGestureRecognizer detects tap\n      ↓\nTapped event is raised\n      ↓\nOnImageTapped() runs"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#handling-a-tap",
+    "href": "lectures/Week3/Week3.html#handling-a-tap",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Handling a Tap",
+    "text": "Handling a Tap\nThe event handler can be written like any other event handler.\nprivate void OnImageTapped(object sender, TappedEventArgs e)\n{\n    lblMessage.Text = \"Image tapped!\";\n}\nNotice that this event uses:\nTappedEventArgs\nrather than the generic:\nEventArgs\nThe specialised event arguments can contain additional information about the gesture."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#adding-a-gesture-at-runtime",
+    "href": "lectures/Week3/Week3.html#adding-a-gesture-at-runtime",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Adding a Gesture at Runtime",
+    "text": "Adding a Gesture at Runtime\nWe can also create the gesture recogniser using C#.\nTapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();\n\ntapGestureRecognizer.Tapped += OnImageTapped;\n\nimg1.GestureRecognizers.Add(tapGestureRecognizer);\nThis is another example of the relationship between XAML and runtime C#.\nThe XAML version defines the initial UI.\nThe C# version can create and attach the same type of functionality while the application is running."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#properties-of-a-gesture",
+    "href": "lectures/Week3/Week3.html#properties-of-a-gesture",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Properties of a Gesture",
+    "text": "Properties of a Gesture\nTapGestureRecognizer has properties such as NumberOfTapsRequired and Buttons.\nNumberOfTapsRequired\nPretty obvious what this does!\nThe event will only be raised when the user taps this number of times.\n\nDefault is 1\nOn some devices, taps greater than 2 are ignored\n\nButtons\nThis is particularly useful on desktop, where we can distinguish between mouse buttons.\nWe can respond to:\n\nPrimary — normally the left mouse button\nSecondary — normally the right mouse button\nBoth — either button\n\nButtons=\"Primary,Secondary\""
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#tappedeventargs-e",
+    "href": "lectures/Week3/Week3.html#tappedeventargs-e",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "TappedEventArgs e",
+    "text": "TappedEventArgs e\nThe e parameter contains information about what happened.\nTyping e. in Visual Studio and waiting for IntelliSense will show the properties and methods available.\n\ne.Buttons can tell us which mouse button was used\ne.GetPosition(...) can tell us where the tap occurred\n\nvoid OnTapGestureRecognizerTapped(object sender, TappedEventArgs e)\n{\n    // Position inside the window\n    Point? windowPosition = e.GetPosition(null);\n\n    // Position relative to an Image\n    Point? relativeToImagePosition = e.GetPosition(image);\n\n    // Position relative to the container view\n    Point? relativeToContainerPosition = e.GetPosition((View)sender);\n}\nThe argument to GetPosition() determines what the position is relative to."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#swipe-gestures",
+    "href": "lectures/Week3/Week3.html#swipe-gestures",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Swipe Gestures",
+    "text": "Swipe Gestures\nA swipe recogniser can detect the direction of a swipe.\n&lt;BoxView Color=\"Red\"\n         HeightRequest=\"200\"\n         WidthRequest=\"200\"&gt;\n\n    &lt;BoxView.GestureRecognizers&gt;\n        &lt;SwipeGestureRecognizer Swiped=\"OnSwipeGesture\"\n                                Direction=\"Left\" /&gt;\n    &lt;/BoxView.GestureRecognizers&gt;\n\n&lt;/BoxView&gt;\nThe event handler can inspect the direction:\nprivate void OnSwipeGesture(object sender, SwipedEventArgs e)\n{\n    lblMessage.Text = $\"Swiped {e.Direction}\";\n}"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#several-swipe-directions",
+    "href": "lectures/Week3/Week3.html#several-swipe-directions",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Several Swipe Directions",
+    "text": "Several Swipe Directions\nWe can configure multiple recognisers if we want to respond to different directions.\n&lt;BoxView Color=\"Red\"\n         HeightRequest=\"200\"\n         WidthRequest=\"200\"&gt;\n\n    &lt;BoxView.GestureRecognizers&gt;\n        &lt;SwipeGestureRecognizer Swiped=\"OnSwipeGesture\"\n                                Direction=\"Left\" /&gt;\n\n        &lt;SwipeGestureRecognizer Swiped=\"OnSwipeGesture\"\n                                Direction=\"Right\" /&gt;\n\n        &lt;SwipeGestureRecognizer Swiped=\"OnSwipeGesture\"\n                                Direction=\"Up\" /&gt;\n\n        &lt;SwipeGestureRecognizer Swiped=\"OnSwipeGesture\"\n                                Direction=\"Down\" /&gt;\n    &lt;/BoxView.GestureRecognizers&gt;\n\n&lt;/BoxView&gt;\nAll four can use the same event handler.\nprivate void OnSwipeGesture(object sender, SwipedEventArgs e)\n{\n    lblMessage.Text = $\"Swiped {e.Direction}\";\n}\nThe event arguments tell us which direction was detected."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#other-gestures",
+    "href": "lectures/Week3/Week3.html#other-gestures",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Other Gestures",
+    "text": "Other Gestures\nThe same basic idea applies to other gestures.\nTap\nDetects a tap on a control.\nTapGestureRecognizer\nSwipe\nDetects a swipe in a particular direction.\nSwipeGestureRecognizer\nPan\nDetects movement across the screen.\nPanGestureRecognizer\nPinch\nDetects a pinch gesture, commonly used for zooming.\nPinchGestureRecognizer"
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#the-same-pattern-everywhere",
+    "href": "lectures/Week3/Week3.html#the-same-pattern-everywhere",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "The Same Pattern Everywhere",
+    "text": "The Same Pattern Everywhere\nWe have now seen many different event sources:\nButton\n  ↓\nClicked\n  ↓\nEvent handler\nEntry\n  ↓\nTextChanged\n  ↓\nEvent handler\nTimer\n  ↓\nTick\n  ↓\nEvent handler\nGesture recogniser\n  ↓\nTapped / Swiped / PanUpdated\n  ↓\nEvent handler\nThe details differ, but the underlying model is the same."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#event-driven-programming-in-maui",
+    "href": "lectures/Week3/Week3.html#event-driven-programming-in-maui",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Event-Driven Programming in MAUI",
+    "text": "Event-Driven Programming in MAUI\n.NET MAUI applications are largely event-driven.\nThe application starts and waits for things to happen.\n                ┌── Button clicked\n                │\n                ├── Text changed\nApplication ────┼── Timer tick\n                │\n                ├── Tap gesture\n                │\n                └── Swipe gesture\n                         ↓\n                  Event handler\n                         ↓\n                   C# code runs\n                         ↓\n                    UI changes\nThe programmer does not decide exactly when the user will click, type, swipe or tap.\nWe write the code that should respond when those events occur."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#putting-it-all-together",
+    "href": "lectures/Week3/Week3.html#putting-it-all-together",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Putting It All Together",
+    "text": "Putting It All Together\nConsider a simple application with:\n\nAn Entry for a quantity\nA Button to calculate\nA Label for the result\nA timer updating the screen\n\nThe application is constantly waiting for events.\nUser types\n    ↓\nTextChanged event\n\nUser clicks Calculate\n    ↓\nClicked event\n\nTimer interval expires\n    ↓\nTick event\nEach event can cause a different piece of C# code to run."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#the-big-picture",
+    "href": "lectures/Week3/Week3.html#the-big-picture",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "The Big Picture",
+    "text": "The Big Picture\nThe important idea from this week is not memorising every event.\nIt is understanding the pattern:\nSomething happens\n       ↓\nAn event is raised\n       ↓\nWe subscribe to the event\n       ↓\nOur event handler runs\n       ↓\nWe inspect the event\n       ↓\nWe validate or process data\n       ↓\nWe change the application\nThis is the basic model behind much of the interaction in a .NET MAUI application."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#key-points",
+    "href": "lectures/Week3/Week3.html#key-points",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Key Points",
+    "text": "Key Points\n\n.NET MAUI applications are event-driven.\nControls and other objects can raise events.\nWe subscribe to events using +=.\nEvent handlers contain the code that responds to events.\nsender identifies the object that raised the event.\nEventArgs and specialised event argument types provide information about the event.\nUser input should always be validated.\nProperties can help protect the integrity of application data.\nTimers are another source of events.\nGesture recognisers allow applications to respond to touch gestures.\nLambda expressions allow small event handlers to be written directly where they are subscribed."
   }
 ]

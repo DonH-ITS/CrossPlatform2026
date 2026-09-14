@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 4: Tic Tac Toe – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 4: Tic Tac Toe</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="tic-tac-toe" class="level1">
+<h1>Tic Tac Toe</h1>
+<p>This lab will be a step up from the previous three, but at the end of it all you should have something more substantial.</p>
+<p>The goal of this project is to make a game of <strong>Tic Tac Toe</strong>.</p>
+<p>You should aim to get the <strong>basic playable game</strong> working during this lab.</p>
+<p>There are stretch goals at the end if you finish early.</p>
+<section id="some-important-advice" class="level2">
+<h2 class="anchored" data-anchor-id="some-important-advice">Some Important Advice</h2>
+<ul>
+<li>Compile often. After completing one section, make sure it works before moving on.</li>
+<li>Don’t just copy and paste code. You will not learn much from doing that.</li>
+<li>You are expected to write the code yourself.</li>
+<li>If you are stuck, call me over for help.</li>
+<li>If you finish the main game, move on to the stretch goals.</li>
+<li>You do not need to complete every stretch goal.</li>
+</ul>
+</section>
+</section>
+<section id="getting-started" class="level1">
+<h1>Getting Started</h1>
+<p>Create a new .NET MAUI project in the same way as the previous lab.</p>
+<p>Give your project a sensible name, such as:</p>
+<p><code>TicTacToe</code></p>
+<p>Make sure the initial project compiles and runs.</p>
+<p>Clear out the template content.</p>
+</section>
+<section id="the-game-board" class="level1">
+<h1>The Game Board</h1>
+<p>A normal Tic Tac Toe game has a 3 × 3 board.</p>
+<p>In the previous lab, you created Grids and placed controls into individual cells using XAML. At the end of a previous lab (Lab 2) I had you create a 3x3 grid using XAML. We are basically going to recreate that, but this time using C#.</p>
+<p>We are going to create the contents of the board <strong>while the application is running using C#</strong>.</p>
+<p>This is useful when the number of controls is not known in advance.</p>
+<p>For example, if a user could choose a 3 × 3, 4 × 4 or 5 × 5 board, we would not want to manually create every possible square in XAML.</p>
+<section id="create-a-placeholder-grid" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-placeholder-grid">Create a Placeholder Grid</h2>
+<p>Add the following Grid to your XAML:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span> <span class="ot">x:Name=</span><span class="st">"GameGrid"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="ot">BackgroundColor=</span><span class="st">"CornflowerBlue"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="ot">HeightRequest=</span><span class="st">"300"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="ot">WidthRequest=</span><span class="st">"300"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="ot">VerticalOptions=</span><span class="st">"Center"</span>&gt;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Grid</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Grid itself is defined in XAML, but <strong>its rows, columns and contents will be created using C#</strong>.</p>
+</section>
+</section>
+<section id="create-the-grid-at-runtime" class="level1">
+<h1>Create the Grid at Runtime</h1>
+<p>Create a method called:</p>
+<p><code>CreateTheGrid</code> that takes as input one variable num</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">CreateTheGrid</span><span class="op">(</span><span class="dt">int</span> num<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The method should:</p>
+<ol type="1">
+<li>Add three <code>RowDefinition</code> objects to <code>GameGrid</code>.</li>
+<li>Add three <code>ColumnDefinition</code> objects to <code>GameGrid</code>.</li>
+</ol>
+<p>You have already seen how to add a row or column to a Grid.</p>
+<p>For example, the following adds one row:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">AddRowDefinition</span><span class="op">(</span><span class="kw">new</span> <span class="fu">RowDefinition</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And this adds one column:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">AddColumnDefinition</span><span class="op">(</span><span class="kw">new</span> <span class="fu">ColumnDefinition</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="task" class="level3">
+<h3 class="anchored" data-anchor-id="task">Task</h3>
+<p>Do <strong>not</strong> copy the same line three times.</p>
+<p>Use a <code>for</code> loop to add the three rows and three columns.</p>
+<p>Instead of hardcoding the number 3, use the variable num that was passed to the method.</p>
+<p>Think about whether you need:</p>
+<ul>
+<li>one loop</li>
+<li>two loops</li>
+<li>or something else</li>
+</ul>
+<p>Compile and run the program.</p>
+<p>At this point you should have an empty 3 × 3 Grid.</p>
+</section>
+</section>
+<section id="start-button" class="level1">
+<h1>Start Button</h1>
+<p>Add a Button to your XAML:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span> <span class="ot">x:Name=</span><span class="st">"StartButton"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Text=</span><span class="st">"Start Game"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Clicked=</span> <span class="er">/&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create the appropriate event handler. Remember what I said in lectures about using Visual Studio to create the event handler, try to do that otherwise you will need to write the signature yourself.</p>
+<p>When the button is clicked, it should call your <code>CreateTheGrid(3)</code> method.</p>
+<p>This means the entire contents of the event handler is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">EventHandlerName</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">CreateTheGrid</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="aside-why-not-put-the-grid-code-in-the-event-handler" class="level3">
+<h3 class="anchored" data-anchor-id="aside-why-not-put-the-grid-code-in-the-event-handler">Aside: Why not put the grid code in the Event Handler?</h3>
+<p>The question you are probably asking is, why not just put the contents of CreateTheGrid directly into the event handler?</p>
+<p>It is good programming practice to keep methods focused on a particular task: - The event handler deals with the event - in this case the user clicking the button. - CreateTheGrid deals with creating the grid.</p>
+<p>This also means that CreateTheGrid does not care why it was called. It could be called from this event handler, from another method, or later when we want to create a different-sized board.</p>
+<p>Keeping tasks in separate methods makes code easier to understand, reuse and change.</p>
+</section>
+<section id="task-1" class="level3">
+<h3 class="anchored" data-anchor-id="task-1">Task</h3>
+<p>Write the contents of the event handler yourself.</p>
+<p>You should now be able to click <strong>Start Game</strong> and create the Grid.</p>
+</section>
+</section>
+<section id="creating-the-game-squares" class="level1">
+<h1>Creating the Game Squares</h1>
+<p>A Grid does not automatically draw lines around its cells.</p>
+<p>We need to put something inside each cell.</p>
+<p>We are going to use <code>Border</code> objects.</p>
+<p>A Border can be created in C#:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Border border <span class="op">=</span> <span class="kw">new</span> Border</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    BackgroundColor <span class="op">=</span> Colors<span class="op">.</span><span class="fu">Red</span><span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    Stroke <span class="op">=</span> Colors<span class="op">.</span><span class="fu">Black</span><span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    StrokeThickness <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A Border can then be added to a particular Grid cell.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> column<span class="op">,</span> row<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Remember that Grid positions are zero-indexed.</p>
+<p>The top-left cell is:</p>
+<pre class="text"><code>row = 0
+column = 0</code></pre>
+<p>The centre cell is:</p>
+<pre class="text"><code>row = 1
+column = 1</code></pre>
+<p>The bottom-right cell is:</p>
+<pre class="text"><code>row = 2
+column = 2</code></pre>
+<section id="task-2" class="level3">
+<h3 class="anchored" data-anchor-id="task-2">Task</h3>
+<p>Modify <code>CreateTheGrid()</code> so that it creates <strong>nine Borders</strong> and places them into the Grid. Remember to use the variable num.</p>
+<p>You should <strong>not</strong> write nine separate pieces of code.</p>
+<p>Use <strong>nested loops</strong>.</p>
+<p>Think about:</p>
+<ul>
+<li>What should the outer loop represent?</li>
+<li>What should the inner loop represent?</li>
+<li>Where should <code>row</code> come from?</li>
+<li>Where should <code>column</code> come from?</li>
+<li>When should a new <code>Border</code> be created? The above code creates one border.</li>
+</ul>
+<p>Compile and test it.</p>
+<p>You should now have a visible 3 × 3 board.</p>
+</section>
+</section>
+<section id="adding-a-tap-gesture" class="level1">
+<h1>Adding a Tap Gesture</h1>
+<p>We now need to allow the player to select a square.</p>
+<p>A <code>Border</code> can have a gesture recogniser attached to it.</p>
+<p>Create a <code>TapGestureRecognizer</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>TapGestureRecognizer tapGestureRecognizer <span class="op">=</span> <span class="kw">new</span> <span class="fu">TapGestureRecognizer</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>Tapped</code> event can be subscribed to in the usual way:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tapGestureRecognizer<span class="op">.</span><span class="fu">Tapped</span> <span class="op">+=</span> OnBorderTapped<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The recogniser then needs to be added to the Border:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>border<span class="op">.</span><span class="fu">GestureRecognizers</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>tapGestureRecognizer<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="task-3" class="level3">
+<h3 class="anchored" data-anchor-id="task-3">Task</h3>
+<p>Add a <code>TapGestureRecognizer</code> to <strong>every Border that you create</strong>.</p>
+<p>Create an event handler called:</p>
+<p><code>OnBorderTapped</code></p>
+<p>Use the appropriate event arguments for a tap gesture. You may be able to get Visual Studio to create this automatically for you.</p>
+<p>When a Border is tapped, temporarily change its background colour.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>border<span class="op">.</span><span class="fu">BackgroundColor</span> <span class="op">=</span> Colors<span class="op">.</span><span class="fu">Green</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You will need to work out how to obtain the Border that was tapped from <code>sender</code>. See the lecture notes!</p>
+<p>The event handler does not know which of the nine Borders was tapped.</p>
+<p>So how can <code>sender</code> help us?</p>
+</section>
+</section>
+<section id="making-a-move" class="level1">
+<h1>Making a Move</h1>
+<p>At the moment, <code>OnBorderTapped()</code> is starting to become responsible for too many things. You should not have a lot of things in an Event Handler.</p>
+<p>Create a separate method:</p>
+<p><code>DoMove</code></p>
+<p>It should accept the Border that was tapped.</p>
+<p>The event handler should:</p>
+<ol type="1">
+<li>Check that <code>sender</code> is a Border.</li>
+<li>Pass that Border to <code>DoMove()</code>.</li>
+</ol>
+<p><code>DoMove()</code> should deal with making the move.</p>
+<section id="task-4" class="level3">
+<h3 class="anchored" data-anchor-id="task-4">Task</h3>
+<p>Refactor your code so that:</p>
+<ul>
+<li><code>OnBorderTapped()</code> deals with the event.</li>
+<li><code>DoMove()</code> deals with the game move.</li>
+</ul>
+<p>At this point, <code>DoMove()</code> can simply change the colour of the selected Border.</p>
+</section>
+</section>
+<section id="two-players" class="level1">
+<h1>Two Players</h1>
+<p>We now need to keep track of whose turn it is.</p>
+<p>Create a field in your <code>MainPage</code> class to represent the current player.</p>
+<p>Player 1 should be represented by <code>1</code>.</p>
+<p>Player 2 should be represented by <code>2</code>.</p>
+<section id="task-5" class="level3">
+<h3 class="anchored" data-anchor-id="task-5">Task</h3>
+<p>Modify <code>DoMove()</code> so that:</p>
+<ul>
+<li>Player 1’s move changes the square to green.</li>
+<li>Player 2’s move changes the square to blue.</li>
+<li>The player changes after every valid move.</li>
+</ul>
+<p>You will need an <code>if</code> statement.</p>
+<p>For example, the general structure might be:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="op">(</span><span class="co">/* player 1 */</span><span class="op">)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Player 1's move</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">else</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Player 2's move</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Work out the rest yourself.</p>
+<p>Add a Label to your XAML so that the current player can be displayed.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"WhichPlayerLabel"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="ot">Text=</span><span class="st">"Click Start Game to Begin"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="task-6" class="level3">
+<h3 class="anchored" data-anchor-id="task-6">Task</h3>
+<p>Update the Label after each move so that it tells the players whose turn it is.</p>
+</section>
+</section>
+<section id="keeping-track-of-the-board" class="level1">
+<h1>Keeping Track of the Board</h1>
+<p>There is currently a problem.</p>
+<p>A player can select the same square more than once.</p>
+<p>We need to keep track of which squares have already been used.</p>
+<p>Create a two-dimensional array:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span><span class="op">[,]</span> positions<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A value of:</p>
+<ul>
+<li><code>0</code> means the square is empty</li>
+<li><code>1</code> means Player 1 has used it</li>
+<li><code>2</code> means Player 2 has used it</li>
+</ul>
+<p>Create the array when you create the game board.</p>
+<p>You need a 3 × 3 array.</p>
+<section id="task-7" class="level3">
+<h3 class="anchored" data-anchor-id="task-7">Task</h3>
+<p>Before allowing a move, determine which row and column the selected Border occupies.</p>
+<p>You can retrieve the Grid row and column using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>border<span class="op">.</span><span class="fu">GetValue</span><span class="op">(</span>Grid<span class="op">.</span><span class="fu">RowProperty</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>border<span class="op">.</span><span class="fu">GetValue</span><span class="op">(</span>Grid<span class="op">.</span><span class="fu">ColumnProperty</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You will need to convert these values into integers.</p>
+</section>
+<section id="task-8" class="level3">
+<h3 class="anchored" data-anchor-id="task-8">Task</h3>
+<p>Modify <code>DoMove()</code> so that:</p>
+<ol type="1">
+<li>You find the row and column of the selected Border.</li>
+<li>You check whether <code>positions[row, column]</code> is <code>0</code>.</li>
+<li>If it is <code>0</code>, make the move.</li>
+<li>Store the current player in the array.</li>
+<li>Change the player.</li>
+<li>If the square is already occupied, do nothing.</li>
+</ol>
+<p>Test this carefully.</p>
+<p>Try selecting the same square multiple times.</p>
+</section>
+</section>
+<section id="checking-for-a-winner" class="level1">
+<h1>Checking for a Winner</h1>
+<p>The game now works, but it doesn’t know when somebody has won.</p>
+<p>Create a method:</p>
+<p><code>CheckWinner</code></p>
+<p>It should take the player number and return an integer.</p>
+<p>Use these return values:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Return value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>0</code></td>
+<td>No winner yet</td>
+</tr>
+<tr class="even">
+<td><code>1</code></td>
+<td>Player 1 wins</td>
+</tr>
+<tr class="odd">
+<td><code>2</code></td>
+<td>Player 2 wins</td>
+</tr>
+<tr class="even">
+<td><code>3</code></td>
+<td>Draw</td>
+</tr>
+</tbody>
+</table>
+<p>A player wins if they have completed:</p>
+<ul>
+<li>an entire row</li>
+<li>an entire column</li>
+<li>the diagonal from top-left to bottom-right</li>
+<li>the diagonal from top-right to bottom-left</li>
+</ul>
+<section id="task-9" class="level3">
+<h3 class="anchored" data-anchor-id="task-9">Task</h3>
+<p>Write <code>CheckWinner()</code>.</p>
+<p>You will need to examine the <code>positions</code> array.</p>
+<p>Think about how you could use loops to avoid unnecessarily repeating code.</p>
+<p>You may find it useful to break the problem into smaller methods.</p>
+</section>
+<section id="supplied-methods" class="level3">
+<h3 class="anchored" data-anchor-id="supplied-methods">Supplied Methods</h3>
+<p>Some methods for searching the array are provided on the module GitHub repository.</p>
+<p>These can help you determine whether a particular row, column or diagonal has been completed.</p>
+<p>Copy the supplied methods into your class and use them from <code>CheckWinner()</code>.</p>
+<p>You will need to work out:</p>
+<ul>
+<li>which arguments to pass</li>
+<li>which player to check</li>
+<li>when each method should be called</li>
+<li>what the return value means</li>
+</ul>
+<p>You should <strong>not</strong> simply copy a complete <code>CheckWinner()</code> method.</p>
+<p>The purpose is for you to put the pieces together yourself.</p>
+</section>
+</section>
+<section id="using-checkwinner" class="level1">
+<h1>Using CheckWinner</h1>
+<p>A winner needs to be checked <strong>after a successful move</strong>.</p>
+<section id="task-10" class="level3">
+<h3 class="anchored" data-anchor-id="task-10">Task</h3>
+<p>Modify <code>DoMove()</code> so that after a move:</p>
+<ol type="1">
+<li>You check whether the move has resulted in a win.</li>
+<li>You check whether the board is full.</li>
+<li>If somebody has won, display the winner.</li>
+<li>If the board is full without a winner, display a draw.</li>
+<li>Otherwise, display whose turn it is next.</li>
+</ol>
+<p>Think carefully about the value of <code>player</code> at the point where you call <code>CheckWinner()</code>.</p>
+<p>Which player has just made the move?</p>
+<p>Which player is now waiting to make a move?</p>
+</section>
+</section>
+<section id="finishing-the-game" class="level1">
+<h1>Finishing the Game</h1>
+<p>Create a method:</p>
+<p><code>FinishGame</code></p>
+<p>It should accept the result from <code>CheckWinner()</code>.</p>
+<section id="task-11" class="level3">
+<h3 class="anchored" data-anchor-id="task-11">Task</h3>
+<p>Make <code>FinishGame()</code>:</p>
+<ul>
+<li>display the winning player, or</li>
+<li>display that the game is a draw.</li>
+</ul>
+<p>You also need to prevent players from making any more moves.</p>
+<p>Create a Boolean field to represent whether the game has finished.</p>
+</section>
+<section id="task-12" class="level3">
+<h3 class="anchored" data-anchor-id="task-12">Task</h3>
+<p>Modify <code>DoMove()</code> so that it immediately stops if the game has already finished.</p>
+<p>Test this by completing a game and then trying to click another square.</p>
+</section>
+</section>
+<section id="restarting-the-game" class="level1">
+<h1>Restarting the Game</h1>
+<p>It would be useful to start a new game without closing the application.</p>
+<p>Create a Boolean field to keep track of whether the Grid has already been created.</p>
+<p>The Start Game button can then have two jobs:</p>
+<ul>
+<li>first click → create the game</li>
+<li>later click → restart the game</li>
+</ul>
+<section id="task-13" class="level3">
+<h3 class="anchored" data-anchor-id="task-13">Task</h3>
+<p>Create:</p>
+<p><code>RestartGame()</code></p>
+<p>Think carefully about everything that represents the current state of the game.</p>
+<p>When restarting, you will need to reset things such as:</p>
+<ul>
+<li>the current player</li>
+<li>whether the game has finished</li>
+<li>the <code>positions</code> array</li>
+<li>the player information displayed on screen</li>
+<li>the colours of the game squares</li>
+</ul>
+</section>
+<section id="array-reset" class="level3">
+<h3 class="anchored" data-anchor-id="array-reset">Array Reset</h3>
+<p>The <code>positions</code> array contains nine values.</p>
+<p>Use <strong>nested loops</strong> to reset every value to <code>0</code>.</p>
+<p>Do not manually reset all nine positions.</p>
+</section>
+<section id="reset-the-borders" class="level3">
+<h3 class="anchored" data-anchor-id="reset-the-borders">Reset the Borders</h3>
+<p>You can examine the children of the Grid using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">Children</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can use a <code>foreach</code> loop to examine the controls in the Grid.</p>
+</section>
+<section id="task-14" class="level3">
+<h3 class="anchored" data-anchor-id="task-14">Task</h3>
+<p>Write the code needed to reset all of the Borders.</p>
+<p>Think about:</p>
+<ul>
+<li>What type of object is in <code>GameGrid.Children</code>?</li>
+<li>How can you check whether an object is a <code>Border</code>?</li>
+<li>How can you change its background colour?</li>
+</ul>
+<p>Once this is working, you should be able to play multiple games without restarting the application.</p>
+</section>
+</section>
+<section id="core-task-complete" class="level1">
+<h1>Core Task Complete</h1>
+<p>At this point you should have a playable Tic Tac Toe game.</p>
+<p>Your game should:</p>
+<ul>
+<li>create the board at runtime</li>
+<li>use loops to create the squares</li>
+<li>respond to taps</li>
+<li>alternate between two players</li>
+<li>prevent a square being used twice</li>
+<li>detect a winner</li>
+<li>detect a draw</li>
+<li>prevent moves after the game finishes</li>
+<li>allow the game to be restarted</li>
+</ul>
+<p>If you have reached this point, <strong>you have completed the main task</strong>.</p>
+<p>The remaining sections are stretch goals.</p>
+</section>
+<section id="stretch-goal-draw-xs-and-os" class="level1">
+<h1>Stretch Goal — Draw Xs and Os</h1>
+<p>At the moment, you are using different colours to represent the players.</p>
+<p>A real Tic Tac Toe game would normally use Xs and Os.</p>
+<p>Try replacing the coloured squares with shapes.</p>
+<p>For an O, investigate the <code>Ellipse</code> class.</p>
+<p>Useful properties include:</p>
+<pre class="text"><code>Stroke
+StrokeThickness
+Fill
+HeightRequest
+WidthRequest</code></pre>
+<p>You can add an <code>Ellipse</code> to your Grid using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">Add</span><span class="op">(...)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For an X, you could use a <code>Path</code>.</p>
+<p>This is more complicated because an X consists of two diagonal lines.</p>
+<p>A method for creating an X is available on the module GitHub repository.</p>
+<p>Try to understand what the method does before using it.</p>
+</section>
+<section id="stretch-goal-reset-the-xs-and-os" class="level1">
+<h1>Stretch Goal — Reset the Xs and Os</h1>
+<p>Once you have replaced the colours with Xs and Os, restarting the game will no longer be as simple.</p>
+<p>The Xs and Os are now additional children of the Grid.</p>
+<section id="task-15" class="level3">
+<h3 class="anchored" data-anchor-id="task-15">Task</h3>
+<p>When the game is restarted:</p>
+<ol type="1">
+<li>Find the X and O objects in the Grid.</li>
+<li>Store the objects that need to be removed.</li>
+<li>Remove them from the Grid.</li>
+</ol>
+<p>Think carefully about why it may be a bad idea to remove items directly from a collection while you are using <code>foreach</code> to examine that collection.</p>
+</section>
+</section>
+<section id="stretch-goal-choose-the-board-size" class="level1">
+<h1>Stretch Goal — Choose the Board Size</h1>
+<p>At the moment, the board is always 3 × 3.</p>
+<p>Allow the user to choose the board size.</p>
+<p>Add an <code>Entry</code> where the user can enter the desired size.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Entry</span> <span class="ot">x:Name=</span><span class="st">"GridSize"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="ot">Keyboard=</span><span class="st">"Numeric"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>       <span class="ot">Text=</span><span class="st">"3"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use <code>int.TryParse()</code> to read the value.</p>
+<p>Remember:</p>
+<blockquote class="blockquote">
+<p><code>Keyboard="Numeric"</code> does not guarantee that the user has entered a number.</p>
+</blockquote>
+<section id="task-16" class="level3">
+<h3 class="anchored" data-anchor-id="task-16">Task</h3>
+<p>Allow the user to create boards such as:</p>
+<ul>
+<li>3 × 3</li>
+<li>4 × 4</li>
+<li>5 × 5</li>
+</ul>
+<p>You will need to change:</p>
+<ul>
+<li>the number of rows</li>
+<li>the number of columns</li>
+<li>the size of the <code>positions</code> array</li>
+<li>the loops that create the board</li>
+<li>the winner-checking code</li>
+</ul>
+<p>You should also prevent a board smaller than 3 × 3.</p>
+</section>
+</section>
+<section id="stretch-goal---adding-a-game-timer" class="level1">
+<h1>Stretch Goal - Adding a Game Timer</h1>
+<p>It would be nice to show how long the current game has been running.</p>
+<p>Add a Label to your XAML:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"ElapsedTimeLabel"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="ot">Text=</span><span class="st">"0"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>       <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Declare a field in <code>MainPage</code> to hold the timer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> IDispatcherTimer gameTimer<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You will also need a field to count elapsed seconds.</p>
+<section id="task-17" class="level3">
+<h3 class="anchored" data-anchor-id="task-17">Task</h3>
+<p>Write two methods:</p>
+<p><code>StartGameTimer</code> — creates and starts a <code>DispatcherTimer</code> (as covered in the lecture), resetting the elapsed seconds to <code>0</code> first. Each <code>Tick</code>, increase the elapsed seconds and update <code>ElapsedTimeLabel</code>.</p>
+<p><code>StopGameTimer</code> — stops the timer if one is running.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gameTimer<span class="op">?.</span><span class="fu">Stop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="task-18" class="level3">
+<h3 class="anchored" data-anchor-id="task-18">Task</h3>
+<p>Call <code>StartGameTimer()</code> from your Start Game button handler, and call <code>StopGameTimer()</code> from inside <code>FinishGame()</code>.</p>
+<p>Test it: click Start Game and confirm the count climbs, finish the game and confirm it stops. Leave the app idle after the game finishes — the number should <strong>not</strong> keep climbing.</p>
+</section>
+</section>
+<section id="final-challenge" class="level1">
+<h1>Final Challenge</h1>
+<p>If you have completed all of the above, improve the game.</p>
+<p>Some possibilities:</p>
+<ul>
+<li>allow players to enter their names</li>
+<li>keep a score for each player</li>
+<li>highlight the winning squares</li>
+<li>improve the visual design</li>
+<li>allow different board sizes</li>
+<li>add a computer opponent</li>
+</ul>
+<p>Don’t just add random features.</p>
+<p>For every feature, think about:</p>
+<blockquote class="blockquote">
+<p><strong>What information does my program need to remember?</strong></p>
+</blockquote>
+<p>and:</p>
+<blockquote class="blockquote">
+<p><strong>What event causes my program to change?</strong></p>
+</blockquote>
+<p>These are two of the most important ideas when building event-driven applications.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">static</span> <span class="dt">bool</span> <span class="fu">SearchDiagonalComplete</span><span class="op">(</span><span class="dt">int</span><span class="op">[,]</span> ints<span class="op">,</span> <span class="dt">int</span> size<span class="op">,</span> <span class="dt">int</span> which<span class="op">)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Top left to bottom right</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> foundit <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> size<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>ints<span class="op">[</span>i<span class="op">,</span> i<span class="op">]</span> <span class="op">!=</span> which<span class="op">)</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>            foundit <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="op">(</span>foundit<span class="op">)</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Top right to bottom left</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    foundit <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> size <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--)</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>ints<span class="op">[</span>i<span class="op">,</span> size <span class="op">-</span> <span class="dv">1</span> <span class="op">-</span> i<span class="op">]</span> <span class="op">!=</span> which<span class="op">)</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>            foundit <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="op">(</span>foundit<span class="op">)</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">static</span> <span class="dt">bool</span> <span class="fu">SearchColsComplete</span><span class="op">(</span><span class="dt">int</span><span class="op">[,]</span> ints<span class="op">,</span> <span class="dt">int</span> size<span class="op">,</span> <span class="dt">int</span> which<span class="op">)</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Search for a completed column for the specified player</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> size<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>       <span class="dt">bool</span> found <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> size<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> <span class="op">(</span>ints<span class="op">[</span>j<span class="op">,</span> i<span class="op">]</span> <span class="op">!=</span> which<span class="op">)</span></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>                found <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>                <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>found<span class="op">)</span></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>            <span class="kw">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">//If a completed column has not been found here, then return false</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">static</span> <span class="dt">bool</span> <span class="fu">SearchRowsComplete</span><span class="op">(</span><span class="dt">int</span><span class="op">[,]</span> ints<span class="op">,</span> <span class="dt">int</span> size<span class="op">,</span> <span class="dt">int</span> which<span class="op">)</span></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> size<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>        <span class="dt">bool</span> found <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> size<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> <span class="op">(</span>ints<span class="op">[</span>i<span class="op">,</span> j<span class="op">]</span> <span class="op">!=</span> which<span class="op">)</span></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>                found <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>                <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>found<span class="op">)</span></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a>            <span class="kw">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>    <span class="co">//If a completed row has not been found here, then return false</span></span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">static</span> <span class="dt">bool</span> <span class="fu">FindinArray</span><span class="op">(</span><span class="dt">int</span><span class="op">[,]</span> ints<span class="op">,</span> <span class="dt">int</span> size<span class="op">,</span> <span class="dt">int</span> which<span class="op">)</span></span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> foundit <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> size<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> size<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> <span class="op">(</span>ints<span class="op">[</span>i<span class="op">,</span> j<span class="op">]</span> <span class="op">==</span> which<span class="op">)</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a>                foundit <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a>                <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>foundit<span class="op">)</span></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a>            <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> foundit<span class="op">;</span></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp10.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="30">
+
+            <Label
+                Text="Week 2: Layouts, Controls and Views"
+                FontSize="26"
+                FontAttributes="Bold" />
+
+            <!-- SECTION: VerticalStackLayout                       -->
+            <Label Text="VerticalStackLayout" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Border Stroke="Gray" StrokeThickness="1" Padding="10">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Item one" />
+                    <Label Text="Item two" />
+                    <Label Text="Item three" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- SECTION: HorizontalStackLayout                     -->
+            <Label Text="HorizontalStackLayout" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Border Stroke="Gray" StrokeThickness="1" Padding="10">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Item one" />
+                    <Label Text="Item two" />
+                    <Label Text="Item three" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- SECTION: Alignment (HorizontalOptions)             -->
+            <Label Text="Alignment: Start / Center / End / Fill" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
+
+                <Border Grid.Column="0" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
+                    <Label Text="Start" HorizontalOptions="Start" VerticalOptions="Center" />
+                </Border>
+
+                <Border Grid.Column="1" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
+                    <Label Text="Center" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+
+                <Border Grid.Column="2" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
+                    <Label Text="End" HorizontalOptions="End" VerticalOptions="Center" />
+                </Border>
+
+                <Border Grid.Column="3" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
+                    <Label Text="Fill" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                </Border>
+
+            </Grid>
+
+            <!-- SECTION: Margin vs Padding                         -->
+            <Label Text="Margin vs Padding" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Padding: space INSIDE the Border" FontAttributes="Italic" />
+            <Border Stroke="Gray" StrokeThickness="1" Padding="20" BackgroundColor="LightYellow">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Label 1" BackgroundColor="LightBlue" />
+                    <Label Text="Label 2" BackgroundColor="LightBlue" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <Label Text="Margin: space OUTSIDE the Label" FontAttributes="Italic" />
+            <Border Stroke="Gray" StrokeThickness="1" BackgroundColor="LightYellow">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Label 1" BackgroundColor="LightBlue" Margin="20" />
+                    <Label Text="Label 2" BackgroundColor="LightBlue" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- SECTION: Grid                                      -->
+            <Label Text="Grid" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Example 1: a simple form" FontAttributes="Italic" />
+            <Grid
+                RowDefinitions="Auto,Auto,Auto"
+                ColumnDefinitions="Auto,*"
+                RowSpacing="10"
+                ColumnSpacing="10">
+
+                <Label
+                    Text="Name:"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalOptions="Center" />
+
+                <Entry
+                    Placeholder="Enter your name"
+                    Grid.Row="0"
+                    Grid.Column="1" />
+
+                <Label
+                    Text="Email:"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalOptions="Center" />
+
+                <Entry
+                    Placeholder="Enter your email"
+                    Grid.Row="1"
+                    Grid.Column="1" />
+
+                <Button
+                    Text="Submit"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalOptions="End" />
+
+            </Grid>
+
+            <Label Text="Example 2: RowSpan / ColumnSpan" FontAttributes="Italic" />
+            <Grid
+                RowDefinitions="Auto,60,60"
+                ColumnDefinitions="*,*"
+                RowSpacing="5"
+                ColumnSpacing="5">
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Stroke="Gray"
+                    BackgroundColor="LightBlue">
+                    <Label
+                        Text="A wide heading (ColumnSpan=2)"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Stroke="Gray"
+                    BackgroundColor="LightGreen">
+                    <Label
+                        Text="Large area (RowSpan=2)"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1" Stroke="Gray">
+                    <Label Text="(1,1)" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="1" Stroke="Gray">
+                    <Label Text="(2,1)" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+
+            </Grid>
+
+            <Label Text="Example 3: star sizing (*, 2*)" FontAttributes="Italic" />
+            <Grid ColumnDefinitions="*,2*" HeightRequest="50" ColumnSpacing="2">
+                <BoxView Grid.Column="0" Color="Orange" />
+                <BoxView Grid.Column="1" Color="OrangeRed" />
+            </Grid>
+            <Label Text="Second column gets twice the space of the first." FontSize="12" />
+
+            <!-- SECTION: Label                                     -->
+            <Label Text="Label" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Plain label, default styling." />
+            <Label
+                Text="Styled label: bigger, bold, coloured."
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="DarkBlue" />
+
+            <!-- SECTION: Image                                     -->
+            <Label Text="Image" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Aspect=&quot;AspectFit&quot;" FontSize="12" />
+            <Image
+                Source="dotnet_bot.png"
+                Aspect="AspectFit"
+                HeightRequest="120" />
+
+            <Label Text="Aspect=&quot;Fill&quot; (stretched, distorted on purpose)" FontSize="12" />
+            <Image
+                Source="dotnet_bot.png"
+                Aspect="Fill"
+                HeightRequest="80"
+                WidthRequest="300" />
+
+            <!-- SECTION: Border                                    -->
+            <Label Text="Border" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Default (square) border" FontSize="12" />
+            <Border
+                Stroke="Black"
+                StrokeThickness="2"
+                Padding="10">
+                <Label Text="Hello!" />
+            </Border>
+
+            <Label Text="Rounded border, via StrokeShape" FontSize="12" />
+            <Border
+                Stroke="DarkBlue"
+                StrokeThickness="3"
+                Padding="10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+                <Label Text="Rounded corners!" />
+            </Border>
+
+            <!-- SECTION: Entry / Editor                            -->
+            <Label Text="Entry" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Entry Placeholder="Enter your name" />
+            <Entry Placeholder="Enter a number..." Keyboard="Numeric" />
+
+            <Label Text="Editor" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Editor Placeholder="Type a short note..." HeightRequest="80" />
+            <Editor Placeholder="This one auto-sizes as you type..." AutoSize="TextChanges" />
+
+            <!-- SECTION: Button                                    -->
+            <Label Text="Button" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Button Text="Enabled button" IsEnabled="True" />
+            <Button Text="Disabled button" IsEnabled="False" />
+
+            <!-- SECTION: Switch                                    -->
+            <Label Text="Switch" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Off:" VerticalOptions="Center" />
+                <Switch IsToggled="False" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="On:" VerticalOptions="Center" />
+                <Switch IsToggled="True" />
+            </HorizontalStackLayout>
+
+            <!-- SECTION: Slider                                    -->
+            <Label Text="Slider" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Default range (0-100)" FontSize="12" />
+            <Slider Minimum="0" Maximum="100" Value="50" />
+
+            <Label Text="Custom range and colours" FontSize="12" />
+            <Slider
+                Minimum="0"
+                Maximum="10"
+                Value="3"
+                MinimumTrackColor="Green"
+                MaximumTrackColor="LightGray" />
+
+            <!-- SECTION: Stepper                                   -->
+            <Label Text="Stepper" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Default increment" FontSize="12" />
+            <Stepper Minimum="0" Maximum="10" Increment="1" />
+
+            <Label Text="Fractional increment" FontSize="12" />
+            <Stepper Minimum="0" Maximum="5" Increment="0.5" />
+
+            <!-- SECTION: Picker                                    -->
+            <Label Text="Picker" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Picker Title="Choose a colour">
+                <Picker.Items>
+                    <x:String>Red</x:String>
+                    <x:String>Green</x:String>
+                    <x:String>Blue</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- SECTION: DatePicker / TimePicker                   -->
+            <Label Text="DatePicker" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Default" FontSize="12" />
+            <DatePicker Format="dd/MM/yyyy" />
+
+            <Label Text="With Minimum/Maximum bounds" FontSize="12" />
+            <DatePicker
+                Format="dd/MM/yyyy"
+                MinimumDate="2000-01-01"
+                MaximumDate="2100-12-31" />
+
+            <Label Text="TimePicker" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <TimePicker Format="HH:mm" />
+
+            <!-- SECTION: ActivityIndicator / ProgressBar           -->
+            <Label Text="ActivityIndicator" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <HorizontalStackLayout Spacing="20">
+                <VerticalStackLayout>
+                    <Label Text="IsRunning=True" FontSize="12" />
+                    <ActivityIndicator IsRunning="True" Color="DarkBlue" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <Label Text="IsRunning=False" FontSize="12" />
+                    <ActivityIndicator IsRunning="False" Color="DarkBlue" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <Label Text="ProgressBar" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label Text="Progress = 0.25" FontSize="12" />
+            <ProgressBar Progress="0.25" />
+
+            <Label Text="Progress = 0.75" FontSize="12" />
+            <ProgressBar Progress="0.75" ProgressColor="Green" />
+
+            <!-- SECTION: CollectionView                            -->
+            <Label Text="CollectionView" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <CollectionView HeightRequest="150">
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Apple</x:String>
+                        <x:String>Banana</x:String>
+                        <x:String>Orange</x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label
+                            Text="{Binding .}"
+                            Padding="10" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- SECTION: x:Name - referencing XAML objects in C#   -->
+            <Label Text="x:Name" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Label
+                x:Name="GreetingLabel"
+                Text="This text was set in XAML..."
+                FontAttributes="Italic" />
+
+            <!-- SECTION: Dynamic UI - creating controls in C#      -->
+            <Label Text="Dynamic UI (created from C#)" FontSize="20" FontAttributes="Bold" />
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <Border Stroke="Gray" StrokeThickness="1" Padding="10">
+                <VerticalStackLayout x:Name="DynamicItemsLayout" Spacing="5">
+                    <!-- Labels below are added here at runtime, from the constructor -->
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
