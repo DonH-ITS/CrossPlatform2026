@@ -796,7 +796,7 @@
 <h3 id="external-libraries">External libraries</h3>
 <p>An external library — installed via <strong>NuGet</strong>, or one of .NET MAUI’s own libraries — defines its own namespace(s).</p>
 <p>You <code>using</code> it exactly the same way as your own code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a><span class="kw">using</span> CommunityToolkit<span class="op">.</span><span class="fu">Maui</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a><span class="kw">using</span> Plugin<span class="op">.</span><span class="fu">Maui</span><span class="op">.</span><span class="fu">Audio</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Installing the library and bringing its namespace into scope are <strong>two separate steps</strong> — you need both.</p>
 </section>
 <section id="file-naming" class="slide level2">
@@ -808,7 +808,7 @@
 <li>You can have multiple classes in the one file</li>
 <li>The filename doesn’t have to match the class name at all</li>
 </ul>
-<h3 id="but-best-practice">But — best practice</h3>
+<h3 id="but---best-practice">But - best practice</h3>
 <p>Do it the Java way anyway: <strong>one class per file, filename matching the class name.</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb36-1"><a aria-label="1"></a>Person.cs   →  contains  public class Person</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
@@ -1541,7 +1541,6 @@ C# asks for permission.</p>
 </section>
 <section id="the-project" class="slide level2">
 <h2>The Project</h2>
-<p>The project is not about creating the next Facebook.</p>
 <p>The aim is to demonstrate that you understand the technologies and concepts covered in the module.</p>
 <p>Your application should:</p>
 <ul>

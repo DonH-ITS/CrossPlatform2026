@@ -479,11 +479,7 @@
 <span id="cb11-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The XAML describes another part of that same class.</p>
 <h3 id="so">So:</h3>
-<p><code>MainPage.xaml</code></p>
-<ul>
-<li></li>
-</ul>
-<p><code>MainPage.xaml.cs</code></p>
+<p><code>MainPage.xaml</code> <span class="math inline">\(+\)</span> <code>MainPage.xaml.cs</code></p>
 <p>=</p>
 <p><strong><code>MainPage</code></strong></p>
 </section>
@@ -523,6 +519,7 @@
 <p>Never delete InitializeComponent() from your code, even if the compiler says there is a problem.</p>
 <p>This is required to Initialise all the XAML components, so if you delete this none of the XAML controls will show.</p>
 <p>If InitializeComponent() has a compiler error, this is almost always an issue in the XAML code.</p>
+<p>Usually you need to close a tag <code>/</code> or a quote <code>"</code></p>
 </div>
 </div>
 </div>
@@ -592,8 +589,7 @@
 <span id="cb16-3"><a aria-label="3"></a>&lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
 <span id="cb16-4"><a aria-label="4"></a>&lt;<span class="kw">VerticalStackLayout</span>&gt;</span>
 <span id="cb16-5"><a aria-label="5"></a>&lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
-<span id="cb16-6"><a aria-label="6"></a></span>
-<span id="cb16-7"><a aria-label="7"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-6"><a aria-label="6"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>as those two Vertical Stack layouts are on the same level.</p>
 <p>Same with</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb17-1"><a aria-label="1"></a>&lt;<span class="kw">ContentPage</span>&gt;</span>
@@ -608,8 +604,7 @@
 <span id="cb18-3"><a aria-label="3"></a>    &lt;<span class="kw">Grid</span>&gt;</span>
 <span id="cb18-4"><a aria-label="4"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
 <span id="cb18-5"><a aria-label="5"></a>&lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
-<span id="cb18-6"><a aria-label="6"></a></span>
-<span id="cb18-7"><a aria-label="7"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-6"><a aria-label="6"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="verticalstacklayout" class="slide level2">
 <h2>VerticalStackLayout</h2>
@@ -692,7 +687,8 @@
 <span id="cb28-2"><a aria-label="2"></a>    <span class="ot">RowDefinitions=</span><span class="st">"Auto,*"</span></span>
 <span id="cb28-3"><a aria-label="3"></a>    <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>2 rows and 2 columns</p>
-<p>Row 0 has height Auto, Row 1 has height <em> Column 0 has width Auto, Column 1 has width </em></p>
+<p>Row 0 has height Auto, Row 1 has height <code>*</code></p>
+<p>Column 0 has width Auto, Column 1 has width <code>*</code></p>
 </section>
 <section id="grid-cells" class="slide level2">
 <h2>Grid cells</h2>
@@ -897,7 +893,7 @@
 <p>The content inside the <code>ScrollView</code> can extend beyond the visible area.</p>
 <p>The user can then scroll to see it.</p>
 <h3 id="important-1">Important</h3>
-<p>A <code>ScrollView</code> should normally contain <strong>one child</strong> — usually a layout such as a <code>VerticalStackLayout</code> or <code>Grid</code>.</p>
+<p>A <code>ScrollView</code> should normally contain <strong>one child</strong> - usually a layout such as a <code>VerticalStackLayout</code> or <code>Grid</code>.</p>
 <p>It is particularly useful for forms and pages with lots of content.</p>
 </section>
 <section id="alignment" class="slide level2">
@@ -1235,6 +1231,81 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb69-1"><a aria-label="1"></a>0.0 ─────────────── 1.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>So:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb70-1"><a aria-label="1"></a>0.65 = 65%</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="widthrequest-and-heightrequest" class="slide level2">
+<h2>WidthRequest and HeightRequest</h2>
+<p>You will often see controls with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb71-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb71-2"><a aria-label="2"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span></span>
+<span id="cb71-3"><a aria-label="3"></a>    <span class="ot">WidthRequest=</span><span class="st">"200"</span></span>
+<span id="cb71-4"><a aria-label="4"></a>    <span class="ot">HeightRequest=</span><span class="st">"50"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>WidthRequest</code> and <code>HeightRequest</code> are used to <strong>request a particular size</strong> for a control.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb72-1"><a aria-label="1"></a>&lt;<span class="kw">Button</span></span>
+<span id="cb72-2"><a aria-label="2"></a>    <span class="ot">Text=</span><span class="st">"Click me"</span></span>
+<span id="cb72-3"><a aria-label="3"></a>    <span class="ot">WidthRequest=</span><span class="st">"200"</span></span>
+<span id="cb72-4"><a aria-label="4"></a>    <span class="ot">HeightRequest=</span><span class="st">"50"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is asking MAUI for a button approximately:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb73-1"><a aria-label="1"></a>200 × 50</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>in layout units.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="why-request">Why “Request”?</h3>
+<p>The name is deliberate.</p>
+<p><code>WidthRequest</code> and <code>HeightRequest</code> are <strong>not absolute commands</strong> saying:</p>
+<blockquote>
+<p>“This control must be exactly this size.”</p>
+</blockquote>
+<p>The layout system still has to consider:</p>
+<ul>
+<li>the available space</li>
+<li>the parent layout</li>
+<li>other controls</li>
+<li>minimum and maximum constraints</li>
+<li>the platform</li>
+</ul>
+<p>So the requested size may not always be possible.</p>
+<p><strong>Request = preferred size, not a guarantee.</strong></p>
+</section>
+<section id="what-is-a-dip" class="slide level2">
+<h2>What is a DIP?</h2>
+<p>The values used for layout sizes in .NET MAUI are generally measured in <strong>device-independent pixels (DIP)</strong>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb74-1"><a aria-label="1"></a>&lt;<span class="kw">Button</span></span>
+<span id="cb74-2"><a aria-label="2"></a>    <span class="ot">Text=</span><span class="st">"Click me"</span></span>
+<span id="cb74-3"><a aria-label="3"></a>    <span class="ot">WidthRequest=</span><span class="st">"300"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>means approximately: <strong>Request a width of 300 DIP</strong>.</p>
+<p>A DIP is <strong>not necessarily one physical screen pixel</strong>.</p>
+<p>This helps layouts behave more consistently across devices with different pixel densities.</p>
+<h3 id="why-not-just-use-pixels">Why not just use pixels?</h3>
+<p>Imagine two Android devices:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb75-1"><a aria-label="1"></a>Device A</span>
+<span id="cb75-2"><a aria-label="2"></a>300 DIP → 300 physical pixels</span>
+<span id="cb75-3"><a aria-label="3"></a></span>
+<span id="cb75-4"><a aria-label="4"></a>Device B</span>
+<span id="cb75-5"><a aria-label="5"></a>300 DIP → 450 physical pixels</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The physical pixel density can be different, but the requested layout size can remain the same in DIP.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="dip-values-do-not-have-to-be-whole-numbers">DIP values do not have to be whole numbers</h3>
+<p>DIP is a logical layout unit, so it can represent fractional values.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb76-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb76-2"><a aria-label="2"></a>    <span class="ot">WidthRequest=</span><span class="st">"123.5"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>may be perfectly valid.</p>
+<p>The device ultimately has to render things using physical pixels, which are discrete, whole pixels.</p>
+<p>So MAUI may have to convert the requested DIP value into a physical pixel value appropriate for the device.</p>
+<p><strong>Think of DIP as the unit used for layout, not the individual pixels on the screen.</strong></p>
+<h3 id="a-useful-distinction">A useful distinction</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb77-1"><a aria-label="1"></a>WidthRequest / HeightRequest</span>
+<span id="cb77-2"><a aria-label="2"></a>        ↓</span>
+<span id="cb77-3"><a aria-label="3"></a>   DIP (layout units)</span>
+<span id="cb77-4"><a aria-label="4"></a>        ↓</span>
+<span id="cb77-5"><a aria-label="5"></a> platform/device layout</span>
+<span id="cb77-6"><a aria-label="6"></a>        ↓</span>
+<span id="cb77-7"><a aria-label="7"></a> physical pixels</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
 <section>
 <section id="collections" class="title-slide slide level1 center">
@@ -1244,9 +1315,9 @@
 <section id="displaying-collections" class="slide level2">
 <h2>Displaying collections</h2>
 <p>So far we have created individual controls:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb71-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"One"</span> /&gt;</span>
-<span id="cb71-2"><a aria-label="2"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Two"</span> /&gt;</span>
-<span id="cb71-3"><a aria-label="3"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Three"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb78-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"One"</span> /&gt;</span>
+<span id="cb78-2"><a aria-label="2"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Two"</span> /&gt;</span>
+<span id="cb78-3"><a aria-label="3"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Three"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But what if we have <strong>hundreds of items</strong>?</p>
 <p>We need a control designed to display a collection.</p>
 <h3 id="enter-collectionview">Enter <code>CollectionView</code></h3>
@@ -1261,23 +1332,23 @@
 <li>in a grid</li>
 </ul>
 <p>A simple example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb72-1"><a aria-label="1"></a>&lt;<span class="kw">CollectionView</span>&gt;</span>
-<span id="cb72-2"><a aria-label="2"></a>    &lt;<span class="kw">CollectionView.ItemsSource</span>&gt;</span>
-<span id="cb72-3"><a aria-label="3"></a>        &lt;<span class="kw">x:Array</span> <span class="ot">Type=</span><span class="st">"{x:Type x:String}"</span>&gt;</span>
-<span id="cb72-4"><a aria-label="4"></a>            &lt;<span class="kw">x:String</span>&gt;Apple&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb72-5"><a aria-label="5"></a>            &lt;<span class="kw">x:String</span>&gt;Banana&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb72-6"><a aria-label="6"></a>            &lt;<span class="kw">x:String</span>&gt;Orange&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb72-7"><a aria-label="7"></a>        &lt;/<span class="kw">x:Array</span>&gt;</span>
-<span id="cb72-8"><a aria-label="8"></a>    &lt;/<span class="kw">CollectionView.ItemsSource</span>&gt;</span>
-<span id="cb72-9"><a aria-label="9"></a></span>
-<span id="cb72-10"><a aria-label="10"></a>    &lt;<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
-<span id="cb72-11"><a aria-label="11"></a>        &lt;<span class="kw">DataTemplate</span>&gt;</span>
-<span id="cb72-12"><a aria-label="12"></a>            &lt;<span class="kw">Label</span></span>
-<span id="cb72-13"><a aria-label="13"></a>                <span class="ot">Text=</span><span class="st">"{Binding .}"</span></span>
-<span id="cb72-14"><a aria-label="14"></a>                <span class="ot">Padding=</span><span class="st">"10"</span> /&gt;</span>
-<span id="cb72-15"><a aria-label="15"></a>        &lt;/<span class="kw">DataTemplate</span>&gt;</span>
-<span id="cb72-16"><a aria-label="16"></a>    &lt;/<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
-<span id="cb72-17"><a aria-label="17"></a>&lt;/<span class="kw">CollectionView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb79-1"><a aria-label="1"></a>&lt;<span class="kw">CollectionView</span>&gt;</span>
+<span id="cb79-2"><a aria-label="2"></a>    &lt;<span class="kw">CollectionView.ItemsSource</span>&gt;</span>
+<span id="cb79-3"><a aria-label="3"></a>        &lt;<span class="kw">x:Array</span> <span class="ot">Type=</span><span class="st">"{x:Type x:String}"</span>&gt;</span>
+<span id="cb79-4"><a aria-label="4"></a>            &lt;<span class="kw">x:String</span>&gt;Apple&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb79-5"><a aria-label="5"></a>            &lt;<span class="kw">x:String</span>&gt;Banana&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb79-6"><a aria-label="6"></a>            &lt;<span class="kw">x:String</span>&gt;Orange&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb79-7"><a aria-label="7"></a>        &lt;/<span class="kw">x:Array</span>&gt;</span>
+<span id="cb79-8"><a aria-label="8"></a>    &lt;/<span class="kw">CollectionView.ItemsSource</span>&gt;</span>
+<span id="cb79-9"><a aria-label="9"></a></span>
+<span id="cb79-10"><a aria-label="10"></a>    &lt;<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb79-11"><a aria-label="11"></a>        &lt;<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb79-12"><a aria-label="12"></a>            &lt;<span class="kw">Label</span></span>
+<span id="cb79-13"><a aria-label="13"></a>                <span class="ot">Text=</span><span class="st">"{Binding .}"</span></span>
+<span id="cb79-14"><a aria-label="14"></a>                <span class="ot">Padding=</span><span class="st">"10"</span> /&gt;</span>
+<span id="cb79-15"><a aria-label="15"></a>        &lt;/<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb79-16"><a aria-label="16"></a>    &lt;/<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb79-17"><a aria-label="17"></a>&lt;/<span class="kw">CollectionView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
 <section>
 <section id="creating-controls-in-c" class="title-slide slide level1 center">
@@ -1287,9 +1358,9 @@
 <section id="xaml-creates-objects" class="slide level2">
 <h2>XAML creates objects</h2>
 <p>When we write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb73-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span>
-<span id="cb73-2"><a aria-label="2"></a></span>
-<span id="cb73-3"><a aria-label="3"></a>&lt;<span class="kw">Entry</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb80-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span>
+<span id="cb80-2"><a aria-label="2"></a></span>
+<span id="cb80-3"><a aria-label="3"></a>&lt;<span class="kw">Entry</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>objects of those classes are being created.</p>
 <p>The Label is a <code>Label</code> object.</p>
 <p>The Entry is an <code>Entry</code> object.</p>
@@ -1306,26 +1377,26 @@
 <section id="xname" class="slide level2">
 <h2><code>x:Name</code></h2>
 <p><code>x:Name</code> gives a XAML-created object a name that we can use from code.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb74-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
-<span id="cb74-2"><a aria-label="2"></a>    <span class="ot">x:Name=</span><span class="st">"GreetingLabel"</span></span>
-<span id="cb74-3"><a aria-label="3"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb81-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb81-2"><a aria-label="2"></a>    <span class="ot">x:Name=</span><span class="st">"GreetingLabel"</span></span>
+<span id="cb81-3"><a aria-label="3"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now the code-behind can refer to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb75-1"><a aria-label="1"></a>GreetingLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello, world!"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb76-1"><a aria-label="1"></a>MainPage.xaml                                    MainPage.xaml.cs</span>
-<span id="cb76-2"><a aria-label="2"></a></span>
-<span id="cb76-3"><a aria-label="3"></a>┌───────────────────────────────┐                ┌───────────────────────────────┐</span>
-<span id="cb76-4"><a aria-label="4"></a>│ &lt;Label                        │                │ GreetingLabel                 │</span>
-<span id="cb76-5"><a aria-label="5"></a>│   x:Name="GreetingLabel"      │ ──x:Name──────►│   .Text = "Hello, world!";    │</span>
-<span id="cb76-6"><a aria-label="6"></a>│   Text="Hello!" /&gt;            │                │ (the same object)             │</span>
-<span id="cb76-7"><a aria-label="7"></a>└───────────────────────────────┘                └───────────────────────────────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb82-1"><a aria-label="1"></a>GreetingLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello, world!"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb83-1"><a aria-label="1"></a>MainPage.xaml                                    MainPage.xaml.cs</span>
+<span id="cb83-2"><a aria-label="2"></a></span>
+<span id="cb83-3"><a aria-label="3"></a>┌───────────────────────────────┐                ┌───────────────────────────────┐</span>
+<span id="cb83-4"><a aria-label="4"></a>│ &lt;Label                        │                │ GreetingLabel                 │</span>
+<span id="cb83-5"><a aria-label="5"></a>│   x:Name="GreetingLabel"      │ ──x:Name──────►│   .Text = "Hello, world!";    │</span>
+<span id="cb83-6"><a aria-label="6"></a>│   Text="Hello!" /&gt;            │                │ (the same object)             │</span>
+<span id="cb83-7"><a aria-label="7"></a>└───────────────────────────────┘                └───────────────────────────────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
 <p>Behind the scenes, <code>x:Name</code> is roughly equivalent to declaring a field at the top of the partial class:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
-<span id="cb77-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb77-3"><a aria-label="3"></a>    <span class="kw">private</span> Label GreetingLabel<span class="op">;</span></span>
-<span id="cb77-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb84-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
+<span id="cb84-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb84-3"><a aria-label="3"></a>    <span class="kw">private</span> Label GreetingLabel<span class="op">;</span></span>
+<span id="cb84-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You never write this yourself. When <code>InitializeComponent()</code> runs, it creates the <code>Label</code> from the XAML and assigns it to a field with exactly this name — that’s the “same object” in the diagram above.</p>
 <p><strong>XAML creates the object. <code>x:Name</code> gives us a reference to it.</strong></p>
 </section>
@@ -1333,10 +1404,10 @@
 <h2>Creating a Label in C#</h2>
 <p>We don’t have to use XAML.</p>
 <p>The same type of object can be created directly in C#:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a>Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb78-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb78-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span></span>
-<span id="cb78-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb85-1"><a aria-label="1"></a>Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
+<span id="cb85-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb85-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span></span>
+<span id="cb85-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can then add it to a layout:</p>
 <pre><code>&lt;VerticalStackLayout
     x:Name="MainVerticalLayout"&gt;
@@ -1344,7 +1415,7 @@
 
     --&gt;
 &lt;/VerticalStackLayout&gt;</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb80-1"><a aria-label="1"></a>MainVerticalLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb87-1"><a aria-label="1"></a>MainVerticalLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1354,7 +1425,7 @@
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb81-1"><a aria-label="1"></a><span class="kw">new</span> <span class="fu">Label</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb88-1"><a aria-label="1"></a><span class="kw">new</span> <span class="fu">Label</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>creates a new <code>Label</code> object.</p>
 <p>Every time that statement runs, a new object is created.</p>
 <p>So if you’re writing loops, be careful!</p>
@@ -1365,15 +1436,15 @@
 <section id="xaml-or-c" class="slide level2">
 <h2>XAML or C#?</h2>
 <p>We can configure a Label in XAML:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb82-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
-<span id="cb82-2"><a aria-label="2"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span></span>
-<span id="cb82-3"><a aria-label="3"></a>    <span class="ot">FontSize=</span><span class="st">"24"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb89"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb89-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
+<span id="cb89-2"><a aria-label="2"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span></span>
+<span id="cb89-3"><a aria-label="3"></a>    <span class="ot">FontSize=</span><span class="st">"24"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or in C#:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb83-1"><a aria-label="1"></a>Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb83-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb83-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span><span class="op">,</span></span>
-<span id="cb83-4"><a aria-label="4"></a>    FontSize <span class="op">=</span> <span class="dv">24</span></span>
-<span id="cb83-5"><a aria-label="5"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb90"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb90-1"><a aria-label="1"></a>Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
+<span id="cb90-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb90-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span><span class="op">,</span></span>
+<span id="cb90-4"><a aria-label="4"></a>    FontSize <span class="op">=</span> <span class="dv">24</span></span>
+<span id="cb90-5"><a aria-label="5"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h3 id="so-why-use-xaml">So why use XAML?</h3>
 <p>XAML is particularly good at describing:</p>
 <ul>
@@ -1387,15 +1458,15 @@
 <section id="dynamic-ui" class="slide level2">
 <h2>Dynamic UI</h2>
 <p>Because controls are objects, we can create them dynamically.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb84-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb84-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb84-3"><a aria-label="3"></a>    Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb84-4"><a aria-label="4"></a>    <span class="op">{</span></span>
-<span id="cb84-5"><a aria-label="5"></a>        Text <span class="op">=</span> $<span class="st">"Item {i}"</span></span>
-<span id="cb84-6"><a aria-label="6"></a>    <span class="op">};</span></span>
-<span id="cb84-7"><a aria-label="7"></a></span>
-<span id="cb84-8"><a aria-label="8"></a>    MainVerticalLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span>
-<span id="cb84-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb91-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb91-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb91-3"><a aria-label="3"></a>    Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
+<span id="cb91-4"><a aria-label="4"></a>    <span class="op">{</span></span>
+<span id="cb91-5"><a aria-label="5"></a>        Text <span class="op">=</span> $<span class="st">"Item {i}"</span></span>
+<span id="cb91-6"><a aria-label="6"></a>    <span class="op">};</span></span>
+<span id="cb91-7"><a aria-label="7"></a></span>
+<span id="cb91-8"><a aria-label="8"></a>    MainVerticalLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span>
+<span id="cb91-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The application creates five separate Label objects.</p>
 <p><strong>This is useful when the UI depends on runtime information.</strong></p>
 </section></section>
@@ -1407,9 +1478,9 @@
 <section id="avoid-hard-coded-layouts" class="slide level2">
 <h2>Avoid hard-coded layouts</h2>
 <p>This is fragile:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb85-1"><a aria-label="1"></a>&lt;<span class="kw">Grid</span></span>
-<span id="cb85-2"><a aria-label="2"></a>    <span class="ot">WidthRequest=</span><span class="st">"800"</span></span>
-<span id="cb85-3"><a aria-label="3"></a>    <span class="ot">HeightRequest=</span><span class="st">"600"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb92"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb92-1"><a aria-label="1"></a>&lt;<span class="kw">Grid</span></span>
+<span id="cb92-2"><a aria-label="2"></a>    <span class="ot">WidthRequest=</span><span class="st">"800"</span></span>
+<span id="cb92-3"><a aria-label="3"></a>    <span class="ot">HeightRequest=</span><span class="st">"600"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>What happens on:</p>
 <ul>
 <li>a phone?</li>
@@ -1434,7 +1505,7 @@
 <p>“Put this control in the second row and let it take the available space.”</p>
 </blockquote>
 <p>Grid:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb86-1"><a aria-label="1"></a>&lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb93-1"><a aria-label="1"></a>&lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>is describing a relationship.</p>
 <p><strong>This is much more useful for cross-platform UI.</strong></p>
 </section>
@@ -1448,8 +1519,8 @@
 <p>You do <strong>not</strong> need to memorise every property.</p>
 <p>Know how to find the documentation and understand what you are looking at.</p>
 </section>
-<section id="what-have-we-learned" class="slide level2">
-<h2>What have we learned?</h2>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
 <h3 id="net-maui-1">.NET MAUI</h3>
 <p>A cross-platform UI framework.</p>
 <h3 id="xaml">XAML</h3>

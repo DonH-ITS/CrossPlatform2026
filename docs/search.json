@@ -130,7 +130,7 @@
     "href": "lectures/Week2/Week2.html#what-does-partial-mean",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "What does partial mean?",
-    "text": "What does partial mean?\nNormally, a class is written in one place:\npublic class Person\n{\n    // ...\n}\nWith partial, one class can be split across multiple files.\npublic partial class MainPage : ContentPage\n{\n    // C# code\n}\nThe XAML describes another part of that same class.\nSo:\nMainPage.xaml\n\n\n\nMainPage.xaml.cs\n=\nMainPage"
+    "text": "What does partial mean?\nNormally, a class is written in one place:\npublic class Person\n{\n    // ...\n}\nWith partial, one class can be split across multiple files.\npublic partial class MainPage : ContentPage\n{\n    // C# code\n}\nThe XAML describes another part of that same class.\nSo:\nMainPage.xaml \\(+\\) MainPage.xaml.cs\n=\nMainPage"
   },
   {
     "objectID": "lectures/Week2/Week2.html#xclass",
@@ -144,7 +144,7 @@
     "href": "lectures/Week2/Week2.html#initializecomponent",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "InitializeComponent()",
-    "text": "InitializeComponent()\nYou will normally see this in the page constructor:\npublic MainPage()\n{\n    InitializeComponent();\n}\nThis initialises the UI described in the XAML.\nIn simple terms\n\n“Set up the objects described by my XAML.”\n\n\n\n\n\n\n\nWarning\n\n\nNever delete InitializeComponent() from your code, even if the compiler says there is a problem.\nThis is required to Initialise all the XAML components, so if you delete this none of the XAML controls will show.\nIf InitializeComponent() has a compiler error, this is almost always an issue in the XAML code."
+    "text": "InitializeComponent()\nYou will normally see this in the page constructor:\npublic MainPage()\n{\n    InitializeComponent();\n}\nThis initialises the UI described in the XAML.\nIn simple terms\n\n“Set up the objects described by my XAML.”\n\n\n\n\n\n\n\nWarning\n\n\nNever delete InitializeComponent() from your code, even if the compiler says there is a problem.\nThis is required to Initialise all the XAML components, so if you delete this none of the XAML controls will show.\nIf InitializeComponent() has a compiler error, this is almost always an issue in the XAML code.\nUsually you need to close a tag / or a quote \""
   },
   {
     "objectID": "lectures/Week2/Week2.html#some-visual-studio-things",
@@ -172,7 +172,7 @@
     "href": "lectures/Week2/Week2.html#layouts-1",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Layouts",
-    "text": "Layouts\nEvery page must have one Parent layout.\nYou cannot have\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;\nas those two Vertical Stack layouts are on the same level.\nSame with\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;Grid&gt;\n&lt;/Grid&gt;\n&lt;/ContentPage&gt;\nBut layouts can be children\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n    &lt;Grid&gt;\n    &lt;/Grid&gt;\n&lt;/VerticalStackLayout&gt;\n\n&lt;/ContentPage&gt;"
+    "text": "Layouts\nEvery page must have one Parent layout.\nYou cannot have\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;/ContentPage&gt;\nas those two Vertical Stack layouts are on the same level.\nSame with\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;Grid&gt;\n&lt;/Grid&gt;\n&lt;/ContentPage&gt;\nBut layouts can be children\n&lt;ContentPage&gt;\n&lt;VerticalStackLayout&gt;\n    &lt;Grid&gt;\n    &lt;/Grid&gt;\n&lt;/VerticalStackLayout&gt;\n&lt;/ContentPage&gt;"
   },
   {
     "objectID": "lectures/Week2/Week2.html#verticalstacklayout",
@@ -207,7 +207,7 @@
     "href": "lectures/Week2/Week2.html#grid-defining-columns",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: defining columns",
-    "text": "Grid: defining columns\nColumns are defined with ColumnDefinitions.\n&lt;Grid ColumnDefinitions=\"Auto,*\"&gt;\nThis creates two columns:\nColumn 0 → Auto\nColumn 1 → *\nWe can define both rows and columns:\n&lt;Grid\n    RowDefinitions=\"Auto,*\"\n    ColumnDefinitions=\"Auto,*\"&gt;\n2 rows and 2 columns\nRow 0 has height Auto, Row 1 has height  Column 0 has width Auto, Column 1 has width"
+    "text": "Grid: defining columns\nColumns are defined with ColumnDefinitions.\n&lt;Grid ColumnDefinitions=\"Auto,*\"&gt;\nThis creates two columns:\nColumn 0 → Auto\nColumn 1 → *\nWe can define both rows and columns:\n&lt;Grid\n    RowDefinitions=\"Auto,*\"\n    ColumnDefinitions=\"Auto,*\"&gt;\n2 rows and 2 columns\nRow 0 has height Auto, Row 1 has height *\nColumn 0 has width Auto, Column 1 has width *"
   },
   {
     "objectID": "lectures/Week2/Week2.html#grid-cells",
@@ -284,7 +284,7 @@
     "href": "lectures/Week2/Week2.html#scrollview",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "ScrollView",
-    "text": "ScrollView\nWhat happens when the content is larger than the available screen?\nA ScrollView allows the user to scroll through content that does not fit.\n&lt;ScrollView&gt;\n    &lt;VerticalStackLayout&gt;\n        &lt;Label\n            Text=\"First item\" /&gt;\n        &lt;Label\n            Text=\"Second item\" /&gt;\n        &lt;Label\n            Text=\"Third item\" /&gt;\n        &lt;!-- lots more content --&gt;\n    &lt;/VerticalStackLayout&gt;\n&lt;/ScrollView&gt;\n\nScrollView = a window onto content that may be larger than the available space.\n\nThe content inside the ScrollView can extend beyond the visible area.\nThe user can then scroll to see it.\nImportant\nA ScrollView should normally contain one child — usually a layout such as a VerticalStackLayout or Grid.\nIt is particularly useful for forms and pages with lots of content."
+    "text": "ScrollView\nWhat happens when the content is larger than the available screen?\nA ScrollView allows the user to scroll through content that does not fit.\n&lt;ScrollView&gt;\n    &lt;VerticalStackLayout&gt;\n        &lt;Label\n            Text=\"First item\" /&gt;\n        &lt;Label\n            Text=\"Second item\" /&gt;\n        &lt;Label\n            Text=\"Third item\" /&gt;\n        &lt;!-- lots more content --&gt;\n    &lt;/VerticalStackLayout&gt;\n&lt;/ScrollView&gt;\n\nScrollView = a window onto content that may be larger than the available space.\n\nThe content inside the ScrollView can extend beyond the visible area.\nThe user can then scroll to see it.\nImportant\nA ScrollView should normally contain one child - usually a layout such as a VerticalStackLayout or Grid.\nIt is particularly useful for forms and pages with lots of content."
   },
   {
     "objectID": "lectures/Week2/Week2.html#alignment",
@@ -313,6 +313,20 @@
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Padding",
     "text": "Padding\nPadding controls the space inside an element.\n&lt;Border Padding=\"20\"&gt;\n    &lt;Label Text=\"Hello!\" /&gt;\n&lt;/Border&gt;\nThink:\n┌─────────────────────┐\n│   padding            │\n│     ┌───────────┐    │\n│     │  content  │    │\n│     └───────────┘    │\n└─────────────────────┘\nRemember\nMargin = outside\nPadding = inside"
+  },
+  {
+    "objectID": "lectures/Week2/Week2.html#widthrequest-and-heightrequest",
+    "href": "lectures/Week2/Week2.html#widthrequest-and-heightrequest",
+    "title": "Week 2 .NET MAUI and XAML",
+    "section": "WidthRequest and HeightRequest",
+    "text": "WidthRequest and HeightRequest\nYou will often see controls with:\n&lt;Label\n    Text=\"Hello!\"\n    WidthRequest=\"200\"\n    HeightRequest=\"50\" /&gt;\nWidthRequest and HeightRequest are used to request a particular size for a control.\nFor example:\n&lt;Button\n    Text=\"Click me\"\n    WidthRequest=\"200\"\n    HeightRequest=\"50\" /&gt;\nThis is asking MAUI for a button approximately:\n200 × 50\nin layout units."
+  },
+  {
+    "objectID": "lectures/Week2/Week2.html#what-is-a-dip",
+    "href": "lectures/Week2/Week2.html#what-is-a-dip",
+    "title": "Week 2 .NET MAUI and XAML",
+    "section": "What is a DIP?",
+    "text": "What is a DIP?\nThe values used for layout sizes in .NET MAUI are generally measured in device-independent pixels (DIP).\nFor example:\n&lt;Button\n    Text=\"Click me\"\n    WidthRequest=\"300\" /&gt;\nmeans approximately: Request a width of 300 DIP.\nA DIP is not necessarily one physical screen pixel.\nThis helps layouts behave more consistently across devices with different pixel densities.\nWhy not just use pixels?\nImagine two Android devices:\nDevice A\n300 DIP → 300 physical pixels\n\nDevice B\n300 DIP → 450 physical pixels\nThe physical pixel density can be different, but the requested layout size can remain the same in DIP."
   },
   {
     "objectID": "lectures/Week2/Week2.html#displaying-collections",
@@ -392,11 +406,11 @@
     "text": "Microsoft documentation\nMAUI has extensive official documentation.\nStart here\n.NET MAUI controls\n.NET MAUI layouts\nThe documentation is your reference\nYou do not need to memorise every property.\nKnow how to find the documentation and understand what you are looking at."
   },
   {
-    "objectID": "lectures/Week2/Week2.html#what-have-we-learned",
-    "href": "lectures/Week2/Week2.html#what-have-we-learned",
+    "objectID": "lectures/Week2/Week2.html#summary",
+    "href": "lectures/Week2/Week2.html#summary",
     "title": "Week 2 .NET MAUI and XAML",
-    "section": "What have we learned?",
-    "text": "What have we learned?\n.NET MAUI\nA cross-platform UI framework.\nXAML\nA way of describing the UI and constructing/configuring objects.\nC\nOur programming language for application logic and code-behind.\nLayouts\nControl how UI objects are arranged.\nControls\nThe things displayed to or used by the user.\nGrid\nRows + columns + flexible sizing."
+    "section": "Summary",
+    "text": "Summary\n.NET MAUI\nA cross-platform UI framework.\nXAML\nA way of describing the UI and constructing/configuring objects.\nC\nOur programming language for application logic and code-behind.\nLayouts\nControl how UI objects are arranged.\nControls\nThe things displayed to or used by the user.\nGrid\nRows + columns + flexible sizing."
   },
   {
     "objectID": "labs.html",
@@ -543,32 +557,32 @@
     "href": "labs/Lab 1 - Command Line.html",
     "title": "Lab 1: C# Basics",
     "section": "",
-    "text": "This lab is an introduction to C# for students who have previously programmed in Java.\nThe aim is not to learn everything about C#. Instead, we will look at some of the basic syntax you will need for the rest of this module.\n\nNote: We will not read from the console or from files in this lab. So we will not use Console.ReadLine(). The applications developed later in this module will use graphical user interfaces rather than reading input from the console. We will deal with file reading/writing later.\n\n\n\n\n\n\nThe lecturer will probably demonstrate this first part in the lab.\nFor a C# project, open Visual Studio and select:\nCreate a New Project\nYou want to select a C# Console App. Use the filters if necessary.\nGive the project a suitable name.\n\nTip: Selecting Place solution and project in the same directory is a personal preference and is not essential.\n\nWhen asked to select the framework, use .NET 10.0.\nMake sure:\nDo not use top-level statements\nis ticked.\nIf .NET 10.0 is not available, use the highest version available. We will update the machines if necessary.\n\n\n\n\n\nA new console application will contain a Program.cs file.\nWrite a program that displays:\nHello World!\nThe C# equivalent of Java’s:\nSystem.out.println();\nis:\nConsole.WriteLine();\n\n\nModify your program so that it displays your name as well as the \"Hello World!\" message.\n\n\n\n\n\nCreate two integer variables and give them values.\nAdd the two numbers together and display the result.\nFor example, if:\na = 10\nb = 20\nthe program should display something similar to:\n10 + 20 is 30\nYou can use Console.WriteLine() with string concatenation, just as you would use + when constructing a string in Java.\n\n\nThere is very little difference here. C# uses + for both numerical addition and string concatenation, just like Java.\n\n\n\nCreate variables for two numbers and display:\n\nthe two numbers\ntheir sum\ntheir difference\ntheir product\n\n\n\n\n\n\nJava programmers may be familiar with printf() for producing formatted output.\nFor example:\nSystem.out.printf(\"Name: %s, Age: %d%n\", name, age);\nC# provides several ways of producing formatted output. One of the simplest is string interpolation.\nPlace a $ before the string and put variables inside { }:\nConsole.WriteLine($\"Name: {name}, Age: {age}\");\nThe values of the variables are inserted into the string.\n\n\nCreate variables for:\n\na student’s name\ntheir age\ntheir average mark\n\nDisplay all three values in a single sentence using string interpolation.\nFor example:\nAlice is 21 years old and has an average mark of 68.\n\nRemember: String interpolation is an alternative to string concatenation. You can still use + when appropriate.\n\n\n\n\n\nString interpolation can also be used to control how a value is displayed.\nFor example, a double can be displayed to two decimal places using F2:\ndouble doubleNumber = 3.14159265359;\n\nConsole.WriteLine($\"Pi rounded is : {doubleNumber:F2}\");\nThis produces:\nPi rounded is : 3.14\nThe F2 means fixed-point notation with 2 decimal places.\nThe same formatting can be used with ToString():\nConsole.WriteLine(doubleNumber.ToString(\"F2\"));\nThis produces:\n3.14\nToString() is available on all objects in C#. It provides a string representation of the object or value.\nFor example:\nint number = 42;\n\nConsole.WriteLine(number.ToString());\nproduces:\n42\nWe can also provide a format when converting a value to a string, as with doubleNumber.ToString(\"F2\").\nYou can find the other standard numeric formatting options in the Microsoft documentation:\nStandard numeric format strings – Microsoft Learn\n\n\nTry changing F2 to F1, F3 and F4 and observe the difference.\nYou can also experiment with some of the other formatting options in the Microsoft documentation.\n\n\n\n\n\nCreate a static method called PrintNumbers.\nThe method should accept an integer parameter and use a for loop to display the numbers from 1 up to that value.\nFor example:\n1\n2\n3\n4\n5\nCall the method from Main() using different values.\n\n\nThe basic syntax of a for loop is the same in Java and C#.\nOne difference you will notice throughout C# is that method names normally use PascalCase:\nPrintNumbers()\nrather than the Java convention camelCase:\nprintNumbers()\n\n\n\n\n\nCreate a static method called IsEven.\nThe method should:\n\naccept an integer\ndetermine whether the number is even\nreturn true if it is even\nreturn false otherwise\n\nCall the method from Main() using several different numbers.\n\n\nThe C# equivalent of Java’s boolean is:\nbool\nFor example:\nstatic bool IsEven(int number)\nThe if statement itself is very similar to Java.\n\n\n\n\n\nC# also provides a shorthand way of writing a simple if/else when we want to choose between two values.\nThe syntax is:\ncondition ? valueIfTrue : valueIfFalse\nFor example:\nint number = 7;\n\nstring result = number % 2 == 0 ? \"Even\" : \"Odd\";\n\nConsole.WriteLine(result);\nThe condition is checked first. If it is true, the first value is used; otherwise, the second value is used.\nThe above is equivalent to:\nif (number % 2 == 0) { result = “Even”; } else { result = “Odd”; }\n\n\nCreate an integer variable called age.\nUse the ternary conditional operator to create a string containing:\n\n\"Adult\" if the age is 18 or over\n\"Under 18\" otherwise\n\nDisplay the result.\n\n\n\n\nCreate an array containing several integers.\nFirst, use a for loop to add all of the numbers together.\nThen repeat the exercise using a foreach loop.\n\n\nThere are two small syntax differences worth noting.\nJava:\nnumbers.length\nC#:\nnumbers.Length\nJava’s enhanced for loop:\nfor (int number : numbers)\nC#:\nforeach (int number in numbers)\nThe rest of the loop body works in essentially the same way.\n\n\n\nCreate an array containing at least five numbers.\nCalculate and display:\n\nthe total\n\nDo this using both a for loop and a foreach loop."
+    "text": "This lab is an introduction to C# for students who have previously programmed in Java.\nThe aim is not to learn everything about C#. Instead, we will look at some of the basic syntax you will need for the rest of this module.\n\nNote: We will not read from the console or from files in this lab. So we will not use Console.ReadLine(). The applications developed later in this module will use graphical user interfaces rather than reading input from the console. We will deal with file reading/writing later.\n\n\n\n\n\n\nThe lecturer will probably demonstrate this first part in the lab.\nFor a C# project, open Visual Studio and select:\nCreate a New Project\nYou want to select a C# Console App. Use the filters if necessary.\nGive the project a suitable name.\n\nTip: Selecting Place solution and project in the same directory is a personal preference and is not essential.\n\nWhen asked to select the framework, use .NET 10.0.\nMake sure:\nDo not use top-level statements\nis ticked.\nIf .NET 10.0 is not available, use the highest version available. We will update the machines if necessary.\n\n\n\n\n\nA new console application will contain a Program.cs file.\nWrite a program that displays:\nHello World!\nThe C# equivalent of Java’s:\nSystem.out.println();\nis:\nConsole.WriteLine();\n\n\nModify your program so that it displays your name as well as the \"Hello World!\" message.\n\n\n\n\n\nCreate two integer variables and give them values.\nAdd the two numbers together and display the result.\nFor example, if:\na = 10\nb = 20\nthe program should display something similar to:\n10 + 20 is 30\nYou can use Console.WriteLine() with string concatenation, just as you would use + when constructing a string in Java.\n\n\nThere is very little difference here. C# uses + for both numerical addition and string concatenation, just like Java.\n\n\n\nCreate variables for two numbers and display:\n\nthe two numbers\ntheir sum\ntheir difference\ntheir product\n\n\n\n\n\n\nJava programmers may be familiar with printf() for producing formatted output.\nFor example:\nSystem.out.printf(\"Name: %s, Age: %d%n\", name, age);\nC# provides several ways of producing formatted output. One of the simplest is string interpolation.\nPlace a $ before the string and put variables inside { }:\nConsole.WriteLine($\"Name: {name}, Age: {age}\");\nThe values of the variables are inserted into the string.\n\n\nCreate variables for:\n\na student’s name\ntheir age\ntheir average mark\n\nDisplay all three values in a single sentence using string interpolation.\nFor example:\nAlice is 21 years old and has an average mark of 68.\n\nRemember: String interpolation is an alternative to string concatenation. You can still use + when appropriate.\n\n\n\n\n\nString interpolation can also be used to control how a value is displayed.\nFor example, a double can be displayed to two decimal places using F2:\ndouble doubleNumber = 3.14159265359;\n\nConsole.WriteLine($\"Pi rounded is : {doubleNumber:F2}\");\nThis produces:\nPi rounded is : 3.14\nThe F2 means fixed-point notation with 2 decimal places.\nThe same formatting can be used with ToString():\nConsole.WriteLine(doubleNumber.ToString(\"F2\"));\nThis produces:\n3.14\nToString() is available on all objects in C#. It provides a string representation of the object or value.\nFor example:\nint number = 42;\n\nConsole.WriteLine(number.ToString());\nproduces:\n42\nWe can also provide a format when converting a value to a string, as with doubleNumber.ToString(\"F2\").\nYou can find the other standard numeric formatting options in the Microsoft documentation:\nStandard numeric format strings - Microsoft Learn\n\n\nTry changing F2 to F1, F3 and F4 and observe the difference.\nYou can also experiment with some of the other formatting options in the Microsoft documentation.\n\n\n\n\n\nCreate a static method called PrintNumbers.\nThe method should accept an integer parameter and use a for loop to display the numbers from 1 up to that value.\nFor example:\n1\n2\n3\n4\n5\nCall the method from Main() using different values.\n\n\nThe basic syntax of a for loop is the same in Java and C#.\nOne difference you will notice throughout C# is that method names normally use PascalCase:\nPrintNumbers()\nrather than the Java convention camelCase:\nprintNumbers()\n\n\n\n\n\nCreate a static method called IsEven.\nThe method should:\n\naccept an integer\ndetermine whether the number is even\nreturn true if it is even\nreturn false otherwise\n\nCall the method from Main() using several different numbers.\n\n\nThe C# equivalent of Java’s boolean is:\nbool\nFor example:\nstatic bool IsEven(int number)\nThe if statement itself is very similar to Java.\n\n\n\n\n\nC# also provides a shorthand way of writing a simple if/else when we want to choose between two values.\nThe syntax is:\ncondition ? valueIfTrue : valueIfFalse\nFor example:\nint number = 7;\n\nstring result = number % 2 == 0 ? \"Even\" : \"Odd\";\n\nConsole.WriteLine(result);\nThe condition is checked first. If it is true, the first value is used; otherwise, the second value is used.\nThe above is equivalent to:\nif (number % 2 == 0)\n{\n    result = \"Even\";\n}\nelse\n{\n    result = \"Odd\";\n}\n\n\nCreate an integer variable called age.\nUse the ternary conditional operator to create a string containing:\n\n\"Adult\" if the age is 18 or over\n\"Under 18\" otherwise\n\nDisplay the result.\n\n\n\n\nCreate an array containing several integers.\nFirst, use a for loop to add all of the numbers together.\nThen repeat the exercise using a foreach loop.\n\n\nThere are two small syntax differences worth noting.\nJava:\nnumbers.length\nC#:\nnumbers.Length\nJava’s enhanced for loop:\nfor (int number : numbers)\nC#:\nforeach (int number in numbers)\nThe rest of the loop body works in essentially the same way.\n\n\n\nCreate an array containing at least five numbers.\nCalculate and display:\n\nthe total\n\nDo this using both a for loop and a foreach loop."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-1-creating-a-c-console-application",
-    "href": "labs/Lab 1 - Command Line.html#part-1-creating-a-c-console-application",
+    "objectID": "labs/Lab 1 - Command Line.html#part-1---creating-a-c-console-application",
+    "href": "labs/Lab 1 - Command Line.html#part-1---creating-a-c-console-application",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "The lecturer will probably demonstrate this first part in the lab.\nFor a C# project, open Visual Studio and select:\nCreate a New Project\nYou want to select a C# Console App. Use the filters if necessary.\nGive the project a suitable name.\n\nTip: Selecting Place solution and project in the same directory is a personal preference and is not essential.\n\nWhen asked to select the framework, use .NET 10.0.\nMake sure:\nDo not use top-level statements\nis ticked.\nIf .NET 10.0 is not available, use the highest version available. We will update the machines if necessary."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-2-hello-world",
-    "href": "labs/Lab 1 - Command Line.html#part-2-hello-world",
+    "objectID": "labs/Lab 1 - Command Line.html#part-2---hello-world",
+    "href": "labs/Lab 1 - Command Line.html#part-2---hello-world",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "A new console application will contain a Program.cs file.\nWrite a program that displays:\nHello World!\nThe C# equivalent of Java’s:\nSystem.out.println();\nis:\nConsole.WriteLine();\n\n\nModify your program so that it displays your name as well as the \"Hello World!\" message."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-3-variables-and-calculations",
-    "href": "labs/Lab 1 - Command Line.html#part-3-variables-and-calculations",
+    "objectID": "labs/Lab 1 - Command Line.html#part-3---variables-and-calculations",
+    "href": "labs/Lab 1 - Command Line.html#part-3---variables-and-calculations",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "Create two integer variables and give them values.\nAdd the two numbers together and display the result.\nFor example, if:\na = 10\nb = 20\nthe program should display something similar to:\n10 + 20 is 30\nYou can use Console.WriteLine() with string concatenation, just as you would use + when constructing a string in Java.\n\n\nThere is very little difference here. C# uses + for both numerical addition and string concatenation, just like Java.\n\n\n\nCreate variables for two numbers and display:\n\nthe two numbers\ntheir sum\ntheir difference\ntheir product"
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-4-formatted-output",
-    "href": "labs/Lab 1 - Command Line.html#part-4-formatted-output",
+    "objectID": "labs/Lab 1 - Command Line.html#part-4---formatted-output",
+    "href": "labs/Lab 1 - Command Line.html#part-4---formatted-output",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "Java programmers may be familiar with printf() for producing formatted output.\nFor example:\nSystem.out.printf(\"Name: %s, Age: %d%n\", name, age);\nC# provides several ways of producing formatted output. One of the simplest is string interpolation.\nPlace a $ before the string and put variables inside { }:\nConsole.WriteLine($\"Name: {name}, Age: {age}\");\nThe values of the variables are inserted into the string.\n\n\nCreate variables for:\n\na student’s name\ntheir age\ntheir average mark\n\nDisplay all three values in a single sentence using string interpolation.\nFor example:\nAlice is 21 years old and has an average mark of 68.\n\nRemember: String interpolation is an alternative to string concatenation. You can still use + when appropriate."
@@ -578,18 +592,18 @@
     "href": "labs/Lab 1 - Command Line.html#formatting-values",
     "title": "Lab 1: C# Basics",
     "section": "",
-    "text": "String interpolation can also be used to control how a value is displayed.\nFor example, a double can be displayed to two decimal places using F2:\ndouble doubleNumber = 3.14159265359;\n\nConsole.WriteLine($\"Pi rounded is : {doubleNumber:F2}\");\nThis produces:\nPi rounded is : 3.14\nThe F2 means fixed-point notation with 2 decimal places.\nThe same formatting can be used with ToString():\nConsole.WriteLine(doubleNumber.ToString(\"F2\"));\nThis produces:\n3.14\nToString() is available on all objects in C#. It provides a string representation of the object or value.\nFor example:\nint number = 42;\n\nConsole.WriteLine(number.ToString());\nproduces:\n42\nWe can also provide a format when converting a value to a string, as with doubleNumber.ToString(\"F2\").\nYou can find the other standard numeric formatting options in the Microsoft documentation:\nStandard numeric format strings – Microsoft Learn\n\n\nTry changing F2 to F1, F3 and F4 and observe the difference.\nYou can also experiment with some of the other formatting options in the Microsoft documentation."
+    "text": "String interpolation can also be used to control how a value is displayed.\nFor example, a double can be displayed to two decimal places using F2:\ndouble doubleNumber = 3.14159265359;\n\nConsole.WriteLine($\"Pi rounded is : {doubleNumber:F2}\");\nThis produces:\nPi rounded is : 3.14\nThe F2 means fixed-point notation with 2 decimal places.\nThe same formatting can be used with ToString():\nConsole.WriteLine(doubleNumber.ToString(\"F2\"));\nThis produces:\n3.14\nToString() is available on all objects in C#. It provides a string representation of the object or value.\nFor example:\nint number = 42;\n\nConsole.WriteLine(number.ToString());\nproduces:\n42\nWe can also provide a format when converting a value to a string, as with doubleNumber.ToString(\"F2\").\nYou can find the other standard numeric formatting options in the Microsoft documentation:\nStandard numeric format strings - Microsoft Learn\n\n\nTry changing F2 to F1, F3 and F4 and observe the difference.\nYou can also experiment with some of the other formatting options in the Microsoft documentation."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-5-static-methods-and-for-loops",
-    "href": "labs/Lab 1 - Command Line.html#part-5-static-methods-and-for-loops",
+    "objectID": "labs/Lab 1 - Command Line.html#part-5---static-methods-and-for-loops",
+    "href": "labs/Lab 1 - Command Line.html#part-5---static-methods-and-for-loops",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "Create a static method called PrintNumbers.\nThe method should accept an integer parameter and use a for loop to display the numbers from 1 up to that value.\nFor example:\n1\n2\n3\n4\n5\nCall the method from Main() using different values.\n\n\nThe basic syntax of a for loop is the same in Java and C#.\nOne difference you will notice throughout C# is that method names normally use PascalCase:\nPrintNumbers()\nrather than the Java convention camelCase:\nprintNumbers()"
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-6-methods-returning-a-value",
-    "href": "labs/Lab 1 - Command Line.html#part-6-methods-returning-a-value",
+    "objectID": "labs/Lab 1 - Command Line.html#part-6---methods-returning-a-value",
+    "href": "labs/Lab 1 - Command Line.html#part-6---methods-returning-a-value",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "Create a static method called IsEven.\nThe method should:\n\naccept an integer\ndetermine whether the number is even\nreturn true if it is even\nreturn false otherwise\n\nCall the method from Main() using several different numbers.\n\n\nThe C# equivalent of Java’s boolean is:\nbool\nFor example:\nstatic bool IsEven(int number)\nThe if statement itself is very similar to Java."
@@ -599,56 +613,56 @@
     "href": "labs/Lab 1 - Command Line.html#ternary-conditional-operator",
     "title": "Lab 1: C# Basics",
     "section": "",
-    "text": "C# also provides a shorthand way of writing a simple if/else when we want to choose between two values.\nThe syntax is:\ncondition ? valueIfTrue : valueIfFalse\nFor example:\nint number = 7;\n\nstring result = number % 2 == 0 ? \"Even\" : \"Odd\";\n\nConsole.WriteLine(result);\nThe condition is checked first. If it is true, the first value is used; otherwise, the second value is used.\nThe above is equivalent to:\nif (number % 2 == 0) { result = “Even”; } else { result = “Odd”; }\n\n\nCreate an integer variable called age.\nUse the ternary conditional operator to create a string containing:\n\n\"Adult\" if the age is 18 or over\n\"Under 18\" otherwise\n\nDisplay the result."
+    "text": "C# also provides a shorthand way of writing a simple if/else when we want to choose between two values.\nThe syntax is:\ncondition ? valueIfTrue : valueIfFalse\nFor example:\nint number = 7;\n\nstring result = number % 2 == 0 ? \"Even\" : \"Odd\";\n\nConsole.WriteLine(result);\nThe condition is checked first. If it is true, the first value is used; otherwise, the second value is used.\nThe above is equivalent to:\nif (number % 2 == 0)\n{\n    result = \"Even\";\n}\nelse\n{\n    result = \"Odd\";\n}\n\n\nCreate an integer variable called age.\nUse the ternary conditional operator to create a string containing:\n\n\"Adult\" if the age is 18 or over\n\"Under 18\" otherwise\n\nDisplay the result."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-7-arrays",
-    "href": "labs/Lab 1 - Command Line.html#part-7-arrays",
+    "objectID": "labs/Lab 1 - Command Line.html#part-7---arrays",
+    "href": "labs/Lab 1 - Command Line.html#part-7---arrays",
     "title": "Lab 1: C# Basics",
     "section": "",
     "text": "Create an array containing several integers.\nFirst, use a for loop to add all of the numbers together.\nThen repeat the exercise using a foreach loop.\n\n\nThere are two small syntax differences worth noting.\nJava:\nnumbers.length\nC#:\nnumbers.Length\nJava’s enhanced for loop:\nfor (int number : numbers)\nC#:\nforeach (int number in numbers)\nThe rest of the loop body works in essentially the same way.\n\n\n\nCreate an array containing at least five numbers.\nCalculate and display:\n\nthe total\n\nDo this using both a for loop and a foreach loop."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-9-the-animal-class",
-    "href": "labs/Lab 1 - Command Line.html#part-9-the-animal-class",
+    "objectID": "labs/Lab 1 - Command Line.html#part-9---the-animal-class",
+    "href": "labs/Lab 1 - Command Line.html#part-9---the-animal-class",
     "title": "Lab 1: C# Basics",
-    "section": "Part 9 – The Animal Class",
-    "text": "Part 9 – The Animal Class\nCreate a class called Animal.\nThe class should contain:\n\na private _name field of type string\na private _age field of type int\na public Name property\na public Age property\na constructor that sets the name and age\n\n\nWhat is a field/property? Java Version? Why?\nI will talk about this more in lectures but in java, for proper encapsulation, you typically did\nprivate int age;\n\npublic void setAge(int age){\n  this.age = age;\n}\n\npublic int getAge(){\n  return age;\n}\nIn C#, this approach will work fine, but it is not typically how we provide access to fields. Instead, C# provides properties.\nprivate int _age;\n\npublic int Age\n{\n    get { return _age; }\n    set { _age = value; }\n}\nThe property allows us to control how the value can be accessed or changed.\nOne advantage is that we do not have to explicitly call setAge and getAge. We can treat the property much like a variable:\ndog.Age = 5;\nConsole.WriteLine(dog.Age)\nThe get code runs when we read the property, while the set code runs when we assign a value to it.\nThe special keyword value represents the value being assigned to the property.\n\n\nNaming Convention\nIn this module we will use the following naming convention:\n\nPrivate fields begin with _ and use lowercase/camelCase:\n\n_name\n_age\n_breed\n\nPublic properties and methods begin with a capital letter:\n\nName\nAge\nSound()"
+    "section": "Part 9 - The Animal Class",
+    "text": "Part 9 - The Animal Class\nCreate a class called Animal.\nThe class should contain:\n\na private _name field of type string\na private _age field of type int\na public Name property\na public Age property\na constructor that sets the name and age\n\n\nWhat is a field/property? Java Version? Why?\nI will talk about this more in lectures but in java, for proper encapsulation, you typically did\nprivate int age;\n\npublic void setAge(int age){\n  this.age = age;\n}\n\npublic int getAge(){\n  return age;\n}\nIn C#, this approach will work fine, but it is not typically how we provide access to fields. Instead, C# provides properties.\nprivate int _age;\n\npublic int Age\n{\n    get { return _age; }\n    set { _age = value; }\n}\nThe property allows us to control how the value can be accessed or changed.\nOne advantage is that we do not have to explicitly call setAge and getAge. We can treat the property much like a variable:\ndog.Age = 5;\nConsole.WriteLine(dog.Age)\nThe get code runs when we read the property, while the set code runs when we assign a value to it.\nThe special keyword value represents the value being assigned to the property.\n\n\nNaming Convention\nIn this module we will use the following naming convention:\n\nPrivate fields begin with _ and use lowercase/camelCase:\n\n_name\n_age\n_breed\n\nPublic properties and methods begin with a capital letter:\n\nName\nAge\nSound()"
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-10-creating-a-dog",
-    "href": "labs/Lab 1 - Command Line.html#part-10-creating-a-dog",
+    "objectID": "labs/Lab 1 - Command Line.html#part-10---creating-a-dog",
+    "href": "labs/Lab 1 - Command Line.html#part-10---creating-a-dog",
     "title": "Lab 1: C# Basics",
-    "section": "Part 10 – Creating a Dog",
-    "text": "Part 10 – Creating a Dog\nCreate a class called Dog that inherits from Animal.\nJava programmers will recognise inheritance immediately.\nJava:\npublic class Dog extends Animal\nC#:\npublic class Dog : Animal\nCreate a private _breed field and a public Breed property.\nThe Dog constructor should accept:\n\nname\nage\nbreed\n\nThe constructor needs to initialise the inherited name and age values.\nIn C#, the base class constructor is called using base():\npublic Dog(string name, int age, string breed) : base(name, age)\n{\n    // initialise breed\n}\n\nJava → C\nJava uses:\nsuper(name, age);\nC# uses:\nbase(name, age)"
+    "section": "Part 10 - Creating a Dog",
+    "text": "Part 10 - Creating a Dog\nCreate a class called Dog that inherits from Animal.\nJava programmers will recognise inheritance immediately.\nJava:\npublic class Dog extends Animal\nC#:\npublic class Dog : Animal\nCreate a private _breed field and a public Breed property.\nThe Dog constructor should accept:\n\nname\nage\nbreed\n\nThe constructor needs to initialise the inherited name and age values.\nIn C#, the base class constructor is called using base():\npublic Dog(string name, int age, string breed) : base(name, age)\n{\n    // initialise breed\n}\n\nJava → C\nJava uses:\nsuper(name, age);\nC# uses:\nbase(name, age)"
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-11-sound-method",
-    "href": "labs/Lab 1 - Command Line.html#part-11-sound-method",
+    "objectID": "labs/Lab 1 - Command Line.html#part-11---sound-method",
+    "href": "labs/Lab 1 - Command Line.html#part-11---sound-method",
     "title": "Lab 1: C# Basics",
-    "section": "Part 11 – Sound() Method",
-    "text": "Part 11 – Sound() Method\nIn the Animal base class, create a method called Sound.\nThe Sound() method should display:\nThis animal makes a sound\nIn Java, you can override an inherited method simply by providing a new implementation in the derived class (with @Override used to indicate that this is intentional).\nC# is a little different. A method must explicitly allow itself to be overridden. To do this, the base-class method is marked virtual:\npublic virtual void MakeSound()\n{\n    Console.WriteLine(\"Some sound\");\n}\nA derived class can then provide its own implementation using override:\npublic override void MakeSound()\n{\n    Console.WriteLine(\"Woof!\");\n}\nThink of it as: &gt; Java asks for forgiveness; C# asks for permission. And it’s easier to ask for forgiveness.\nSo, in C#, virtual is essentially the base class saying:\n\n“Derived classes are allowed to replace this method with their own implementation.”\n\nIf a method is not marked virtual (or abstract), a derived class cannot override it.\n\nSo now:\nOverride the Sound() method in Dog.\nIt should display:\nWoof!\nTaking into consideration what was written above."
+    "section": "Part 11 - Sound() Method",
+    "text": "Part 11 - Sound() Method\nIn the Animal base class, create a method called Sound.\nThe Sound() method should display:\nThis animal makes a sound\nIn Java, you can override an inherited method simply by providing a new implementation in the derived class (with @Override used to indicate that this is intentional).\nC# is a little different. A method must explicitly allow itself to be overridden. To do this, the base-class method is marked virtual:\npublic virtual void MakeSound()\n{\n    Console.WriteLine(\"Some sound\");\n}\nA derived class can then provide its own implementation using override:\npublic override void MakeSound()\n{\n    Console.WriteLine(\"Woof!\");\n}\nThink of it as:\n\nJava asks for forgiveness; C# asks for permission. And it’s easier to ask for forgiveness.\n\nSo, in C#, virtual is essentially the base class saying:\n\n“Derived classes are allowed to replace this method with their own implementation.”\n\nIf a method is not marked virtual (or abstract), a derived class cannot override it.\n\nSo now:\nOverride the Sound() method in Dog.\nIt should display:\nWoof!\nTaking into consideration what was written above."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-12-creating-a-cat",
-    "href": "labs/Lab 1 - Command Line.html#part-12-creating-a-cat",
+    "objectID": "labs/Lab 1 - Command Line.html#part-12---creating-a-cat",
+    "href": "labs/Lab 1 - Command Line.html#part-12---creating-a-cat",
     "title": "Lab 1: C# Basics",
-    "section": "Part 12 – Creating a Cat",
-    "text": "Part 12 – Creating a Cat\nCreate another class called Cat that inherits from Animal.\nIt should contain:\n\na private _colour field\na public Colour property\na constructor accepting name, age and colour\nan overridden Sound() method\n\nThe cat should make the following sound:\nMeow!\nUse the same approach as the Dog class."
+    "section": "Part 12 - Creating a Cat",
+    "text": "Part 12 - Creating a Cat\nCreate another class called Cat that inherits from Animal.\nIt should contain:\n\na private _colour field\na public Colour property\na constructor accepting name, age and colour\nan overridden Sound() method\n\nThe cat should make the following sound:\nMeow!\nUse the same approach as the Dog class."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-13-testing-your-classes",
-    "href": "labs/Lab 1 - Command Line.html#part-13-testing-your-classes",
+    "objectID": "labs/Lab 1 - Command Line.html#part-13---testing-your-classes",
+    "href": "labs/Lab 1 - Command Line.html#part-13---testing-your-classes",
     "title": "Lab 1: C# Basics",
-    "section": "Part 13 – Testing Your Classes",
-    "text": "Part 13 – Testing Your Classes\nIn Main() create at least:\n\ntwo Dog objects\ntwo Cat objects\n\nTest the following:\n\nsetting and retrieving properties\ndisplaying the animal details\ncalling Sound()\n\nFor example, make sure you can access values such as:\nName\nAge\nBreed\nColour\nDo not simply copy a completed program. Write the classes and test them as you go."
+    "section": "Part 13 - Testing Your Classes",
+    "text": "Part 13 - Testing Your Classes\nIn Main() create at least:\n\ntwo Dog objects\ntwo Cat objects\n\nTest the following:\n\nsetting and retrieving properties\ndisplaying the animal details\ncalling Sound()\n\nFor example, make sure you can access values such as:\nName\nAge\nBreed\nColour\nDo not simply copy a completed program. Write the classes and test them as you go."
   },
   {
-    "objectID": "labs/Lab 1 - Command Line.html#part-14-polymorphism",
-    "href": "labs/Lab 1 - Command Line.html#part-14-polymorphism",
+    "objectID": "labs/Lab 1 - Command Line.html#part-14---polymorphism",
+    "href": "labs/Lab 1 - Command Line.html#part-14---polymorphism",
     "title": "Lab 1: C# Basics",
-    "section": "Part 14 – Polymorphism",
-    "text": "Part 14 – Polymorphism\nFinally, demonstrate polymorphism.\nCreate an array of Animal objects containing a mixture of dogs and cats.\nCall Sound() on each object.\nAlthough every object is stored as an Animal, the appropriate overridden method should be called:\nWoof!\nMeow!\nWoof!\nMeow!\nThis demonstrates polymorphism: the same method call can produce different behaviour depending on the actual object."
+    "section": "Part 14 - Polymorphism",
+    "text": "Part 14 - Polymorphism\nFinally, demonstrate polymorphism.\nCreate an array of Animal objects containing a mixture of dogs and cats.\nCall Sound() on each object.\nAlthough every object is stored as an Animal, the appropriate overridden method should be called:\nWoof!\nMeow!\nWoof!\nMeow!\nThis demonstrates polymorphism: the same method call can produce different behaviour depending on the actual object."
   },
   {
     "objectID": "labs/Lab 1 - Command Line.html#part-15---tostring-on-object",
@@ -935,14 +949,14 @@
     "href": "lectures/Week1/Week1.html#using-vs-import",
     "title": "Week 1 Introduction",
     "section": "using vs import",
-    "text": "using vs import\nIn Java, you bring another package into scope with import:\nimport java.util.List;\nIn C#, the equivalent keyword is using:\nusing System.Collections.Generic;\nSame idea, different keyword: both just bring a namespace into scope so you can use its types without writing the full name every time.\nExternal libraries\nAn external library — installed via NuGet, or one of .NET MAUI’s own libraries — defines its own namespace(s).\nYou using it exactly the same way as your own code:\nusing CommunityToolkit.Maui;\nInstalling the library and bringing its namespace into scope are two separate steps — you need both."
+    "text": "using vs import\nIn Java, you bring another package into scope with import:\nimport java.util.List;\nIn C#, the equivalent keyword is using:\nusing System.Collections.Generic;\nSame idea, different keyword: both just bring a namespace into scope so you can use its types without writing the full name every time.\nExternal libraries\nAn external library — installed via NuGet, or one of .NET MAUI’s own libraries — defines its own namespace(s).\nYou using it exactly the same way as your own code:\nusing Plugin.Maui.Audio;\nInstalling the library and bringing its namespace into scope are two separate steps — you need both."
   },
   {
     "objectID": "lectures/Week1/Week1.html#file-naming",
     "href": "lectures/Week1/Week1.html#file-naming",
     "title": "Week 1 Introduction",
     "section": "File Naming",
-    "text": "File Naming\nIn Java, every new class needed its own file.\nThe filename also had to match the class name exactly.\nC# doesn’t enforce this:\n\nYou can have multiple classes in the one file\nThe filename doesn’t have to match the class name at all\n\nBut — best practice\nDo it the Java way anyway: one class per file, filename matching the class name.\nPerson.cs   →  contains  public class Person"
+    "text": "File Naming\nIn Java, every new class needed its own file.\nThe filename also had to match the class name exactly.\nC# doesn’t enforce this:\n\nYou can have multiple classes in the one file\nThe filename doesn’t have to match the class name at all\n\nBut - best practice\nDo it the Java way anyway: one class per file, filename matching the class name.\nPerson.cs   →  contains  public class Person"
   },
   {
     "objectID": "lectures/Week1/Week1.html#classes",
@@ -1180,7 +1194,7 @@
     "href": "lectures/Week1/Week1.html#the-project",
     "title": "Week 1 Introduction",
     "section": "The Project",
-    "text": "The Project\nThe project is not about creating the next Facebook.\nThe aim is to demonstrate that you understand the technologies and concepts covered in the module.\nYour application should:\n\nHave a coherent purpose\nBe usable\nUse C#\nUse .NET MAUI\nHave a suitable user interface\nDemonstrate appropriate programming techniques\nBe tested"
+    "text": "The Project\nThe aim is to demonstrate that you understand the technologies and concepts covered in the module.\nYour application should:\n\nHave a coherent purpose\nBe usable\nUse C#\nUse .NET MAUI\nHave a suitable user interface\nDemonstrate appropriate programming techniques\nBe tested"
   },
   {
     "objectID": "lectures/Week1/Week1.html#other-options-for-mobile-cross-platform-development",
@@ -1260,11 +1274,25 @@
     "text": "Subscribing to an Event\nConsider:\nbutton.Clicked += OnButtonClicked;\nThe Clicked event belongs to the Button.\nThe += means that we are subscribing to the event.\nWe are saying:\n\nWhen this button is clicked, call OnButtonClicked.\n\nThe method is not called when this line executes.\nIt is called later, when the event actually occurs."
   },
   {
+    "objectID": "lectures/Week3/Week3.html#unsubscribing-from-an-event",
+    "href": "lectures/Week3/Week3.html#unsubscribing-from-an-event",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Unsubscribing from an event",
+    "text": "Unsubscribing from an event\nWhen we subscribe to an event using +=, we can also unsubscribe using -=.\nIf we subscribe as on the previous slide, we can later remove that subscription:\nbutton.Clicked -= OnButtonClicked;\n\n\n\n\n\n\nWarning\n\n\nThe method being added or removed must be the same method:\nbutton.Clicked += OnButtonClicked;\nbutton.Clicked -= OnButtonClicked;\nAlthough -= doing an eventhandler that’s not already subscribed, won’t actually break anything."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#why-and-not-just",
+    "href": "lectures/Week3/Week3.html#why-and-not-just",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Why += and not just =",
+    "text": "Why += and not just =\nYou might wonder why we write:\nbutton.Clicked += OnButtonClicked;\n\\\\ And Not\nbutton.Clicked = OnButtonClicked;\nThe important difference is that Clicked is an event, not a normal property.\nAn event can have multiple methods subscribed to it.\nFor example:\nbutton.Clicked += OnButtonClicked;\nbutton.Clicked += OnAnotherButtonClicked;\nWhen the button is clicked, both methods can be called.\nExample\nI mentioned earlier, moving the mouse is an event.\nIt should be obvious that multiple things may want to track the mouse movement.\nSo multiple methods may need to be subscribed to the mouse movement event."
+  },
+  {
     "objectID": "lectures/Week3/Week3.html#a-button-click",
     "href": "lectures/Week3/Week3.html#a-button-click",
     "title": "Week 3 Event-Driven Programming",
     "section": "A Button Click",
-    "text": "A Button Click\nIn XAML we can connect a Button to an event handler.\n&lt;Button Text=\"Click Me\"\n        Clicked=\"OnButtonClicked\" /&gt;\nThe method is written in the code-behind:\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    lblMessage.Text = \"Button clicked!\";\n}\nWhen the user clicks the button:\nButton clicked\n      ↓\nClicked event raised\n      ↓\nOnButtonClicked() runs\n      ↓\nLabel is changed"
+    "text": "A Button Click\nIn XAML we can connect a Button to an event handler.\n&lt;Button Text=\"Click Me\"\n        Clicked=\"OnButtonClicked\" /&gt;\nThis is XAML syntax for connecting an event to a handler. It isn’t the same as assigning a value to a normal property.\nThe method is written in the code-behind:\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    lblMessage.Text = \"Button clicked!\";\n}\nWhen the user clicks the button:\nButton clicked\n      ↓\nClicked event raised\n      ↓\nOnButtonClicked() runs\n      ↓\nLabel is changed"
   },
   {
     "objectID": "lectures/Week3/Week3.html#event-handlers",
@@ -1327,7 +1355,7 @@
     "href": "lectures/Week3/Week3.html#entry-events",
     "title": "Week 3 Event-Driven Programming",
     "section": "Entry Events",
-    "text": "Entry Events\nButtons are not the only controls that raise events.\nAn Entry has events that allow us to react to text input.\nTwo useful examples are:\n\nTextChanged\nCompleted\n\nTextChanged occurs when the text changes.\nCompleted occurs when the user finishes entering the text, such as pressing Enter on the keyboard.\nMore Events\nThere are many more.\nThe important skill is not memorising every event.\nIt is knowing that a control provides events and knowing how to find and handle the ones you need."
+    "text": "Entry Events\nButtons are not the only controls that raise events.\nAn Entry has events that allow us to react to text input.\nTwo useful examples are:\n\nTextChanged\nCompleted\n\nTextChanged occurs when the text changes.\nCompleted occurs when the user finishes entering the text, such as pressing Enter on the keyboard.\nMore Events\nThere are many more.\nThe important skill is not memorising every event.\nIt is knowing that a control provides events and knowing how to find and handle the ones you need.\nRemember, Visual Studio Intellisense will remind you in the editor of different possible events when typing in the control."
   },
   {
     "objectID": "lectures/Week3/Week3.html#the-textchanged-event",
@@ -1575,10 +1603,10 @@
     "text": "The Big Picture\nThe important idea from this week is not memorising every event.\nIt is understanding the pattern:\nSomething happens\n       ↓\nAn event is raised\n       ↓\nWe subscribe to the event\n       ↓\nOur event handler runs\n       ↓\nWe inspect the event\n       ↓\nWe validate or process data\n       ↓\nWe change the application\nThis is the basic model behind much of the interaction in a .NET MAUI application."
   },
   {
-    "objectID": "lectures/Week3/Week3.html#key-points",
-    "href": "lectures/Week3/Week3.html#key-points",
+    "objectID": "lectures/Week3/Week3.html#summary",
+    "href": "lectures/Week3/Week3.html#summary",
     "title": "Week 3 Event-Driven Programming",
-    "section": "Key Points",
-    "text": "Key Points\n\n.NET MAUI applications are event-driven.\nControls and other objects can raise events.\nWe subscribe to events using +=.\nEvent handlers contain the code that responds to events.\nsender identifies the object that raised the event.\nEventArgs and specialised event argument types provide information about the event.\nUser input should always be validated.\nProperties can help protect the integrity of application data.\nTimers are another source of events.\nGesture recognisers allow applications to respond to touch gestures.\nLambda expressions allow small event handlers to be written directly where they are subscribed."
+    "section": "Summary",
+    "text": "Summary\n\n.NET MAUI applications are event-driven.\nControls and other objects can raise events.\nWe subscribe to events using +=, unsubscribe using -=.\nEvent handlers contain the code that responds to events.\nsender identifies the object that raised the event.\nEventArgs and specialised event argument types provide information about the event.\nUser input should always be validated.\nProperties can help protect the integrity of application data.\nTimers are another source of events.\nGesture recognisers allow applications to respond to touch gestures.\nLambda expressions allow small event handlers to be written directly where they are subscribed."
   }
 ]
