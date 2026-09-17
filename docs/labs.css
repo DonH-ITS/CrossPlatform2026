@@ -1,0 +1,9 @@
+div.sourceCode {
+  max-height: 600px;
+  overflow-y: auto;
+  position: relative;
+}
+
+pre {
+  font-size: 0.9em;
+}
