@@ -243,9 +243,6 @@
 <p>Now that we have refreshed our C# knowledge, we can start looking at the actual purpose of this module.</p>
 <p><strong>How do we use C# to build an application that can run on multiple platforms?</strong></p>
 <p>This is where <strong>.NET MAUI</strong> comes in.</p>
-</section>
-<section class="slide level2">
-
 <p>.NET MAUI solves several problems for us.</p>
 <p>We need to understand the mobile landscape:</p>
 <ul>
@@ -375,7 +372,7 @@
 </section>
 <section id="quick-recall-from-last-time" class="slide level2">
 <h2>Quick recall from last time</h2>
-<p>Last lecture was about <strong>why</strong>: every platform has its own UI paradigms, dev environment and APIs — and a cross-platform framework lets us write most of our code once instead of three times.</p>
+<p>Last lecture was about <strong>why</strong>: every platform has its own UI paradigms, dev environment and APIs - and a cross-platform framework lets us write most of our code once instead of three times.</p>
 <p><code>.NET MAUI</code> is that framework, targeting <strong>Android and Windows</strong> for us (plus iOS/Mac Catalyst and macOS, which MAUI also supports).</p>
 <p>This lecture is about <strong>how</strong>: what the pieces actually are and how they fit together.</p>
 </section>
@@ -384,7 +381,7 @@
 <p><strong>C# is the programming language.</strong></p>
 <p><strong>XAML describes the UI.</strong></p>
 <p><strong>.NET MAUI connects the two and provides the cross-platform UI framework.</strong></p>
-<p>This is the part we didn’t cover last time — last week was about the <em>problem</em> a cross-platform framework solves. Today we start looking at the <em>pieces</em> MAUI actually gives us to solve it.</p>
+<p>This is the part we didn’t cover last time - last week was about the <em>problem</em> a cross-platform framework solves. Today we start looking at the <em>pieces</em> MAUI actually gives us to solve it.</p>
 </section>
 <section id="open-visual-studio" class="slide level2">
 <h2>Open Visual Studio</h2>
@@ -560,7 +557,7 @@
 <span id="cb7-2"><a aria-label="2"></a><span class="op">{</span></span>
 <span id="cb7-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span></span>
 <span id="cb7-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This does exactly the same thing as the three lines above — declare, instantiate, and set the properties, all in one statement.</p>
+<p>This does exactly the same thing as the three lines above - declare, instantiate, and set the properties, all in one statement.</p>
 <p>We still have to put the label somewhere on a page, it needs to be placed somewhere alongside all the other controls. This is possible via C#.</p>
 </section>
 <section id="the-ui-with-xaml" class="slide level2">
@@ -585,7 +582,7 @@
 <p>Both Label tags are closed “/” is there on both.</p>
 <h3 id="why-would-you-ever-use-the-longer-one">Why would you ever use the longer one?</h3>
 <p>Attribute syntax only works when the value can be written as a simple string.</p>
-<p>Property-element syntax is needed when the value is something more complex than a string — a list, or another object.</p>
+<p>Property-element syntax is needed when the value is something more complex than a string - a list, or another object.</p>
 </section>
 <section id="mainpage.xaml.cs" class="slide level2">
 <h2><code>MainPage.xaml.cs</code></h2>
@@ -802,7 +799,7 @@
 <span id="cb25-2"><a aria-label="2"></a>    <span class="ot">RowDefinitions=</span><span class="st">"Auto,*,100"</span></span>
 <span id="cb25-3"><a aria-label="3"></a>    <span class="ot">ColumnDefinitions=</span><span class="st">"Auto,*"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This creates 3 rows (Auto, <code>*</code>, 100) and 2 columns (Auto, <code>*</code>).</p>
-<p>Cells are <strong>zero-indexed</strong> — a control says which one it belongs in:</p>
+<p>Cells are <strong>zero-indexed</strong> - a control says which one it belongs in:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb26-1"><a aria-label="1"></a>             Column 0     Column 1</span>
 <span id="cb26-2"><a aria-label="2"></a>           ┌────────────┬────────────┐</span>
 <span id="cb26-3"><a aria-label="3"></a>Row 0      │   (0,0)    │   (0,1)    │</span>
@@ -852,7 +849,7 @@
 <p><strong>Auto</strong> = size me to my content. <strong>*</strong> = flexible remaining space, optionally weighted.</p>
 <p><code>Auto</code> costs more than <code>*</code> or a fixed number, since the engine has to measure your content first.</p>
 <h3 id="use-fixed-sizes-carefully">Use fixed sizes carefully</h3>
-<p>A fixed size that looks good on one screen may not work on another — prefer <code>Auto</code>, <code>*</code>, or weighted star sizing when you can.</p>
+<p>A fixed size that looks good on one screen may not work on another - prefer <code>Auto</code>, <code>*</code>, or weighted star sizing when you can.</p>
 </section>
 <section id="grid-spanning-and-spacing" class="slide level2">
 <h2>Grid: spanning and spacing</h2>
@@ -1026,7 +1023,7 @@
 </ul>
 <p><a href="https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/border?view=net-maui-10.0">Border documentation</a></p>
 <h3 id="worth-noticing">Worth noticing</h3>
-<p><code>Border</code> isn’t just a control — it’s a control that <strong>contains another control</strong>.</p>
+<p><code>Border</code> isn’t just a control - it’s a control that <strong>contains another control</strong>.</p>
 </section>
 <section class="slide level2">
 
@@ -1063,7 +1060,7 @@
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p><code>AutoSize="TextChanges"</code> won’t do anything if <code>HeightRequest</code> is also set — an explicit height always wins.</p>
+<p><code>AutoSize="TextChanges"</code> won’t do anything if <code>HeightRequest</code> is also set - an explicit height always wins.</p>
 </div>
 </div>
 </div>
@@ -1121,7 +1118,7 @@
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>Don’t set <code>HorizontalOptions="Center"</code>, <code>Start</code>, or <code>End</code> on a <code>Slider</code> — it needs a constrained/fillable width to size the track correctly. Leave it as <code>Fill</code> (the default) or give it an explicit <code>WidthRequest</code>.</p>
+<p>Don’t set <code>HorizontalOptions="Center"</code>, <code>Start</code>, or <code>End</code> on a <code>Slider</code> - it needs a constrained/fillable width to size the track correctly. Leave it as <code>Fill</code> (the default) or give it an explicit <code>WidthRequest</code>.</p>
 </div>
 </div>
 </div>
@@ -1192,7 +1189,7 @@
 <ul>
 <li><code>Date</code>, <code>MinimumDate</code>, <code>MaximumDate</code>, <code>Format</code></li>
 </ul>
-<p><code>Format</code> uses standard .NET date format strings — full list here:</p>
+<p><code>Format</code> uses standard .NET date format strings - full list here:</p>
 <p><a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings">Standard date and time format strings</a></p>
 <h3 id="setting-an-initial-date-from-code">Setting an initial date from code</h3>
 <p><code>MinimumDate</code>/<code>MaximumDate</code> are often genuinely fixed (e.g.&nbsp;a date-of-birth field shouldn’t accept the future).</p>
@@ -1212,7 +1209,7 @@
 <li><code>Time</code></li>
 <li><code>Format</code></li>
 </ul>
-<p><code>Format</code> uses the same <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings">standard date and time format strings</a> as <code>DatePicker</code> — no need to learn a second set.</p>
+<p><code>Format</code> uses the same <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings">standard date and time format strings</a> as <code>DatePicker</code> - no need to learn a second set.</p>
 <h3 id="important-2">Important</h3>
 <p><code>TimePicker.Time</code> is a <strong>TimeSpan</strong>.</p>
 <p>It is not a <code>DateTime</code>.</p>
@@ -1432,9 +1429,7 @@
 <section id="xname" class="slide level2">
 <h2><code>x:Name</code></h2>
 <p><code>x:Name</code> gives a XAML-created object a name that we can use from code.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb68-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
-<span id="cb68-2"><a aria-label="2"></a>    <span class="ot">x:Name=</span><span class="st">"GreetingLabel"</span></span>
-<span id="cb68-3"><a aria-label="3"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb68-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"GreetingLabel"</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now the code-behind can refer to it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb69-1"><a aria-label="1"></a>GreetingLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello, world!"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb70-1"><a aria-label="1"></a>MainPage.xaml                                    MainPage.xaml.cs</span>
@@ -1444,15 +1439,12 @@
 <span id="cb70-5"><a aria-label="5"></a>│   x:Name="GreetingLabel"      │ ──x:Name──────►│   .Text = "Hello, world!";    │</span>
 <span id="cb70-6"><a aria-label="6"></a>│   Text="Hello!" /&gt;            │                │ (the same object)             │</span>
 <span id="cb70-7"><a aria-label="7"></a>└───────────────────────────────┘                └───────────────────────────────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section class="slide level2">
-
 <p>Behind the scenes, <code>x:Name</code> is roughly equivalent to declaring a field at the top of the partial class:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb71-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
 <span id="cb71-2"><a aria-label="2"></a><span class="op">{</span></span>
 <span id="cb71-3"><a aria-label="3"></a>    <span class="kw">private</span> Label GreetingLabel<span class="op">;</span></span>
 <span id="cb71-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You never write this yourself. When <code>InitializeComponent()</code> runs, it creates the <code>Label</code> from the XAML and assigns it to a field with exactly this name — that’s the “same object” in the diagram above.</p>
+<p>You never write this yourself. When <code>InitializeComponent()</code> runs, it creates the <code>Label</code> from the XAML and assigns it to a field with exactly this name - that’s the “same object” in the diagram above.</p>
 <p><strong>XAML creates the object. <code>x:Name</code> gives us a reference to it.</strong></p>
 </section>
 <section id="creating-a-label-in-c" class="slide level2">

@@ -25,7 +25,7 @@
     "href": "lectures/Week2/Week2.html#why-.net-maui",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Why .NET MAUI?",
-    "text": "Why .NET MAUI?\nNow that we have refreshed our C# knowledge, we can start looking at the actual purpose of this module.\nHow do we use C# to build an application that can run on multiple platforms?\nThis is where .NET MAUI comes in."
+    "text": "Why .NET MAUI?\nNow that we have refreshed our C# knowledge, we can start looking at the actual purpose of this module.\nHow do we use C# to build an application that can run on multiple platforms?\nThis is where .NET MAUI comes in.\n.NET MAUI solves several problems for us.\nWe need to understand the mobile landscape:\n\nApple vs Android\nDifferent operating systems\nDifferent devices\nDifferent screen sizes\nDifferent APIs\nDifferent UI conventions\n\nIt isn’t simply a case of compiling exactly the same application and assuming everything will behave identically."
   },
   {
     "objectID": "lectures/Week2/Week2.html#net-maui-one-solution",
@@ -102,14 +102,14 @@
     "href": "lectures/Week2/Week2.html#quick-recall-from-last-time",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Quick recall from last time",
-    "text": "Quick recall from last time\nLast lecture was about why: every platform has its own UI paradigms, dev environment and APIs — and a cross-platform framework lets us write most of our code once instead of three times.\n.NET MAUI is that framework, targeting Android and Windows for us (plus iOS/Mac Catalyst and macOS, which MAUI also supports).\nThis lecture is about how: what the pieces actually are and how they fit together."
+    "text": "Quick recall from last time\nLast lecture was about why: every platform has its own UI paradigms, dev environment and APIs - and a cross-platform framework lets us write most of our code once instead of three times.\n.NET MAUI is that framework, targeting Android and Windows for us (plus iOS/Mac Catalyst and macOS, which MAUI also supports).\nThis lecture is about how: what the pieces actually are and how they fit together."
   },
   {
     "objectID": "lectures/Week2/Week2.html#the-three-pieces",
     "href": "lectures/Week2/Week2.html#the-three-pieces",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "The three pieces",
-    "text": "The three pieces\nC# is the programming language.\nXAML describes the UI.\n.NET MAUI connects the two and provides the cross-platform UI framework.\nThis is the part we didn’t cover last time — last week was about the problem a cross-platform framework solves. Today we start looking at the pieces MAUI actually gives us to solve it."
+    "text": "The three pieces\nC# is the programming language.\nXAML describes the UI.\n.NET MAUI connects the two and provides the cross-platform UI framework.\nThis is the part we didn’t cover last time - last week was about the problem a cross-platform framework solves. Today we start looking at the pieces MAUI actually gives us to solve it."
   },
   {
     "objectID": "lectures/Week2/Week2.html#open-visual-studio",
@@ -186,7 +186,7 @@
     "href": "lectures/Week2/Week2.html#two-ways-of-thinking-about-the-ui",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Two ways of thinking about the UI",
-    "text": "Two ways of thinking about the UI\nWe can create UI objects using C#. Broken down into its individual steps:\nLabel label;          // Declare a variable of type Label\nlabel = new Label();  // Instantiate: call the constructor, create the object\nlabel.Text = \"Hello!\"; // Set a property\nIn practice, we condense this using an object initializer:\nLabel label = new Label\n{\n    Text = \"Hello!\"\n};\nThis does exactly the same thing as the three lines above — declare, instantiate, and set the properties, all in one statement.\nWe still have to put the label somewhere on a page, it needs to be placed somewhere alongside all the other controls. This is possible via C#."
+    "text": "Two ways of thinking about the UI\nWe can create UI objects using C#. Broken down into its individual steps:\nLabel label;          // Declare a variable of type Label\nlabel = new Label();  // Instantiate: call the constructor, create the object\nlabel.Text = \"Hello!\"; // Set a property\nIn practice, we condense this using an object initializer:\nLabel label = new Label\n{\n    Text = \"Hello!\"\n};\nThis does exactly the same thing as the three lines above - declare, instantiate, and set the properties, all in one statement.\nWe still have to put the label somewhere on a page, it needs to be placed somewhere alongside all the other controls. This is possible via C#."
   },
   {
     "objectID": "lectures/Week2/Week2.html#the-ui-with-xaml",
@@ -200,7 +200,7 @@
     "href": "lectures/Week2/Week2.html#setting-a-property-two-xaml-syntaxes",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Setting a property: two XAML syntaxes",
-    "text": "Setting a property: two XAML syntaxes\nAttribute syntax (the one we’ll use almost everywhere):\n&lt;Label Text=\"Hello!\" /&gt;\nProperty-element syntax (rarer, but you’ll see it soon):\n&lt;Label&gt;\n    &lt;Label.Text&gt;Hello!&lt;/Label.Text&gt;\n&lt;/Label&gt;\nBoth set the exact same Text property, to the exact same value.\nBoth Label tags are closed “/” is there on both.\nWhy would you ever use the longer one?\nAttribute syntax only works when the value can be written as a simple string.\nProperty-element syntax is needed when the value is something more complex than a string — a list, or another object."
+    "text": "Setting a property: two XAML syntaxes\nAttribute syntax (the one we’ll use almost everywhere):\n&lt;Label Text=\"Hello!\" /&gt;\nProperty-element syntax (rarer, but you’ll see it soon):\n&lt;Label&gt;\n    &lt;Label.Text&gt;Hello!&lt;/Label.Text&gt;\n&lt;/Label&gt;\nBoth set the exact same Text property, to the exact same value.\nBoth Label tags are closed “/” is there on both.\nWhy would you ever use the longer one?\nAttribute syntax only works when the value can be written as a simple string.\nProperty-element syntax is needed when the value is something more complex than a string - a list, or another object."
   },
   {
     "objectID": "lectures/Week2/Week2.html#mainpage.xaml.cs",
@@ -284,7 +284,7 @@
     "href": "lectures/Week2/Week2.html#grid-rows-columns-and-cells",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: rows, columns and cells",
-    "text": "Grid: rows, columns and cells\nRows and columns are defined with RowDefinitions / ColumnDefinitions, in order:\n&lt;Grid\n    RowDefinitions=\"Auto,*,100\"\n    ColumnDefinitions=\"Auto,*\"&gt;\nThis creates 3 rows (Auto, *, 100) and 2 columns (Auto, *).\nCells are zero-indexed — a control says which one it belongs in:\n             Column 0     Column 1\n           ┌────────────┬────────────┐\nRow 0      │   (0,0)    │   (0,1)    │\n           ├────────────┼────────────┤\nRow 1      │   (1,0)    │   (1,1)    │\n           └────────────┴────────────┘\n&lt;Label\n    Text=\"Hello\"\n    Grid.Row=\"1\"\n    Grid.Column=\"0\" /&gt;"
+    "text": "Grid: rows, columns and cells\nRows and columns are defined with RowDefinitions / ColumnDefinitions, in order:\n&lt;Grid\n    RowDefinitions=\"Auto,*,100\"\n    ColumnDefinitions=\"Auto,*\"&gt;\nThis creates 3 rows (Auto, *, 100) and 2 columns (Auto, *).\nCells are zero-indexed - a control says which one it belongs in:\n             Column 0     Column 1\n           ┌────────────┬────────────┐\nRow 0      │   (0,0)    │   (0,1)    │\n           ├────────────┼────────────┤\nRow 1      │   (1,0)    │   (1,1)    │\n           └────────────┴────────────┘\n&lt;Label\n    Text=\"Hello\"\n    Grid.Row=\"1\"\n    Grid.Column=\"0\" /&gt;"
   },
   {
     "objectID": "lectures/Week2/Week2.html#putting-controls-in-a-grid",
@@ -298,7 +298,7 @@
     "href": "lectures/Week2/Week2.html#grid-sizing-rows-and-columns",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "Grid: sizing rows and columns",
-    "text": "Grid: sizing rows and columns\nFour ways to size a row or column:\nAuto  → size to content:      RowDefinitions=\"Auto,*\"\n*     → share of remaining:   ColumnDefinitions=\"*,*\"      (divided equally)\n2*    → weighted share:       ColumnDefinitions=\"*,2*\"      (second gets 2x the first)\n100   → fixed size:           ColumnDefinitions=\"100,*\"     (100 units, then remaining space)\nAuto = size me to my content. * = flexible remaining space, optionally weighted.\nAuto costs more than * or a fixed number, since the engine has to measure your content first.\nUse fixed sizes carefully\nA fixed size that looks good on one screen may not work on another — prefer Auto, *, or weighted star sizing when you can."
+    "text": "Grid: sizing rows and columns\nFour ways to size a row or column:\nAuto  → size to content:      RowDefinitions=\"Auto,*\"\n*     → share of remaining:   ColumnDefinitions=\"*,*\"      (divided equally)\n2*    → weighted share:       ColumnDefinitions=\"*,2*\"      (second gets 2x the first)\n100   → fixed size:           ColumnDefinitions=\"100,*\"     (100 units, then remaining space)\nAuto = size me to my content. * = flexible remaining space, optionally weighted.\nAuto costs more than * or a fixed number, since the engine has to measure your content first.\nUse fixed sizes carefully\nA fixed size that looks good on one screen may not work on another - prefer Auto, *, or weighted star sizing when you can."
   },
   {
     "objectID": "lectures/Week2/Week2.html#grid-spanning-and-spacing",
@@ -382,7 +382,7 @@
     "href": "lectures/Week2/Week2.html#xname",
     "title": "Week 2 .NET MAUI and XAML",
     "section": "x:Name",
-    "text": "x:Name\nx:Name gives a XAML-created object a name that we can use from code.\n&lt;Label\n    x:Name=\"GreetingLabel\"\n    Text=\"Hello!\" /&gt;\nNow the code-behind can refer to it:\nGreetingLabel.Text = \"Hello, world!\";\nMainPage.xaml                                    MainPage.xaml.cs\n\n┌───────────────────────────────┐                ┌───────────────────────────────┐\n│ &lt;Label                        │                │ GreetingLabel                 │\n│   x:Name=\"GreetingLabel\"      │ ──x:Name──────►│   .Text = \"Hello, world!\";    │\n│   Text=\"Hello!\" /&gt;            │                │ (the same object)             │\n└───────────────────────────────┘                └───────────────────────────────┘"
+    "text": "x:Name\nx:Name gives a XAML-created object a name that we can use from code.\n&lt;Label x:Name=\"GreetingLabel\" Text=\"Hello!\" /&gt;\nNow the code-behind can refer to it:\nGreetingLabel.Text = \"Hello, world!\";\nMainPage.xaml                                    MainPage.xaml.cs\n\n┌───────────────────────────────┐                ┌───────────────────────────────┐\n│ &lt;Label                        │                │ GreetingLabel                 │\n│   x:Name=\"GreetingLabel\"      │ ──x:Name──────►│   .Text = \"Hello, world!\";    │\n│   Text=\"Hello!\" /&gt;            │                │ (the same object)             │\n└───────────────────────────────┘                └───────────────────────────────┘\nBehind the scenes, x:Name is roughly equivalent to declaring a field at the top of the partial class:\npublic partial class MainPage : ContentPage\n{\n    private Label GreetingLabel;\n}\nYou never write this yourself. When InitializeComponent() runs, it creates the Label from the XAML and assigns it to a field with exactly this name - that’s the “same object” in the diagram above.\nXAML creates the object. x:Name gives us a reference to it."
   },
   {
     "objectID": "lectures/Week2/Week2.html#creating-a-label-in-c",
@@ -1243,7 +1243,7 @@
     "href": "lectures/Week3/Week3.html#working-with-sender",
     "title": "Week 3 Event-Driven Programming",
     "section": "Working with sender",
-    "text": "Working with sender\nIf we know that the sender is a Button, we can access its Button properties.\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    Button button = (Button)sender;\n\n    button.Text = \"Clicked!\";\n}\nThe cast:\n(Button)sender\ntells C#:\n\nTreat this object as a Button."
+    "text": "Working with sender\nIf we know that the sender is a Button, we can access its Button properties by casting the object to type button (just like )\nprivate void OnButtonClicked(object sender, EventArgs e)\n{\n    Button button = (Button)sender;\n\n    button.Text = \"Clicked!\";\n}\nThe cast:\n(Button)sender\ntells C#:\n\nTreat this object as a Button."
   },
   {
     "objectID": "lectures/Week3/Week3.html#one-handler-multiple-buttons",
@@ -1327,7 +1327,7 @@
     "href": "lectures/Week3/Week3.html#checking-for-a-number",
     "title": "Week 3 Event-Driven Programming",
     "section": "Checking for a Number",
-    "text": "Checking for a Number\nWe can use TryParse to safely attempt a conversion.\nif (double.TryParse(txtQuantity.Text, out double quantity))\n{\n    // quantity contains the number\n}\nelse\n{\n    // The input was not a valid double\n}\nTryParse returns:\n\ntrue if the conversion succeeds\nfalse if the conversion fails\n\nIf it succeeds, the converted value is placed into quantity."
+    "text": "Checking for a Number\nWe can use TryParse to safely attempt a conversion.\nif (double.TryParse(txtQuantity.Text, out double quantity))\n{\n    // quantity contains the number\n}\nelse\n{\n    // The input was not a valid double and quantity is 0\n}\nTryParse returns:\n\ntrue if the conversion succeeds\nfalse if the conversion fails\n\nIf it succeeds, the converted value is placed into quantity."
   },
   {
     "objectID": "lectures/Week3/Week3.html#handling-invalid-numbers",
@@ -1390,7 +1390,7 @@
     "href": "lectures/Week3/Week3.html#dispatchertimer",
     "title": "Week 3 Event-Driven Programming",
     "section": "DispatcherTimer",
-    "text": "DispatcherTimer\nThere are different types of timers and I will come back to another type later.\nFor UI work in .NET MAUI, we can use the application’s dispatcher to create a timer.\nprivate IDispatcherTimer timer;\n\nprivate void StartTimer()\n{\n    timer = Dispatcher.CreateTimer();\n    timer.Interval = TimeSpan.FromSeconds(1);\n    timer.Tick += OnTimerTick;\n    timer.Start();\n}\nThe timer will raise its Tick event every second."
+    "text": "DispatcherTimer\nFor UI work in .NET MAUI, we can use the application’s dispatcher to create a timer.\nprivate IDispatcherTimer _timer;\n\nprivate void StartandCreateTimer()\n{\n    // Instantiate the object\n    _timer = Dispatcher.CreateTimer();\n    // Set its properties\n    _timer.Interval = TimeSpan.FromSeconds(1);\n    _timer.Tick += OnTimerTick;\n    // Start the timer\n    _timer?.Start();\n}\nThe timer will raise its Tick event every second.\n\n\n\n\n\n\nNote\n\n\nThe ? is there as it only tries to run the method if the timer field is not null.\nIf the field is null and you don’t have that ?, you get a runtime error.\nIt’s a useful check and Visual Studio will often give you a warning about it."
   },
   {
     "objectID": "lectures/Week3/Week3.html#handling-the-timer-event",
@@ -1404,7 +1404,7 @@
     "href": "lectures/Week3/Week3.html#starting-and-stopping-a-timer",
     "title": "Week 3 Event-Driven Programming",
     "section": "Starting and Stopping a Timer",
-    "text": "Starting and Stopping a Timer\nA timer can be started and stopped.\ntimer.Start();\nand:\ntimer.Stop();\nFor example:\nprivate void StartTimer()\n{\n    timer = Dispatcher.CreateTimer();\n    timer.Interval = TimeSpan.FromSeconds(1);\n    timer.Tick += OnTimerTick;\n    timer.Start();\n}\n\nprivate void StopTimer()\n{\n    timer?.Stop();\n}\nThe ?. means that Stop() is only called if timer is not null."
+    "text": "Starting and Stopping a Timer\nA timer can be started and stopped. You can probably guess how to stop:\n_timer?.Stop();\nFor example:\nprivate void CreateTimer(){\n    _timer = Dispatcher.CreateTimer();\n    _timer.Interval = TimeSpan.FromSeconds(1);\n    _timer.Tick += OnTimerTick;\n}\n\nprivate void StartTimer(){\n    _timer?.Start();\n}\n\nprivate void StopTimer(){\n    _timer?.Stop();\n}\n\n\n\n\n\n\nCaution\n\n\nStop() on its own does not destroy the timer. You can call Start() later to use the same timer again.\nHowever, Stop() is not a pause.\nFor example, if the timer has a 10-second interval and you stop it after 4 seconds, calling Start() again does not continue from the remaining 6 seconds. The timer starts its interval again."
   },
   {
     "objectID": "lectures/Week3/Week3.html#anonymous-functions",
@@ -1538,5 +1538,474 @@
     "title": "Week 3 Event-Driven Programming",
     "section": "Summary",
     "text": "Summary\n\n.NET MAUI applications are event-driven.\nControls and other objects can raise events.\nWe subscribe to events using +=, unsubscribe using -=.\nEvent handlers contain the code that responds to events.\nsender identifies the object that raised the event.\nEventArgs and specialised event argument types provide information about the event.\nUser input should always be validated.\nProperties can help protect the integrity of application data.\nTimers are another source of events.\nGesture recognisers allow applications to respond to touch gestures.\nLambda expressions allow small event handlers to be written directly where they are subscribed."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html",
+    "href": "lectures/Week4/Week4.html",
+    "title": "Cross Platform Application Development",
+    "section": "",
+    "text": "---\ntitle: \"Week 4 Threads, Async/Await and Animations\"\nsubtitle: \"Cross Platform Application Development\"\ndescription: \"Threads, asynchronous programming and animations in .NET MAUI\"\nformat:\n  revealjs:\n    theme: [default, ../styles.css]\n    slide-number: true\n    transition: none\n    controls: true\n    progress: true\n---\n\n## This Week\n\nThis week we are going to look at:\n\n- Threads and the UI thread\n- Timers\n- `System.Timers.Timer`\n- The MAUI dispatcher\n- `async` and `await`\n- `Task` and `Task.Run()`\n- .NET MAUI animations\n\nThe common theme is:\n\n&gt; **Keeping our application responsive**\n\n## Our Application Is Always Doing Something\n\nAn application does not simply display a screen.\n\nIt is constantly responding to events:\n\n- The user presses a button\n- The user types into an `Entry`\n- A timer fires\n- A calculation is performed\n- Data is loaded\n- An animation is running\n- A network request completes\n\nAll of these things require code to execute.\n\nSo where does that code execute?\n\n## What Is a Thread?\n\nA **thread** is a path of execution within a program.\n\nWhen our application starts, it has a thread available to execute our code.\n\nWe can have more than one thread executing work.\n\n```text\nAPPLICATION\n     |\n     +-------------------+\n     |                   |\n  THREAD 1            THREAD 2\n     |                   |\n   Work A              Work B\n```\n\nMultiple threads allow different pieces of work to be performed independently.\n\n## The UI Thread\n\n.NET MAUI has a **UI thread**.\n\nThis is the thread responsible for interacting with the user interface.\n\nFor example:\n\n```csharp\nButton.Text = \"Hello\";\nLabel.Text = \"Finished\";\n```\n\nThese are UI operations.\n\nThey need to happen on the UI thread.\n\n## Why Does the UI Thread Matter?\n\nImagine the UI thread is doing this:\n\n```text\nUI THREAD\n   |\n   v\nDo some work\n   |\n   v\nDo some more work\n   |\n   v\nDo some more work\n   |\n   v\nFinally update the screen\n```\n\nWhile that work is happening, the UI thread cannot respond to other events.\n\nThe application can appear to **freeze**.\n\n## A Deliberately Bad Example\n\nConsider:\n\n```csharp\nprivate void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    Thread.Sleep(5000);\n}\n```\n\nWhat happens when the button is clicked?\n\nThe UI thread sleeps for five seconds.\n\nDuring those five seconds:\n\n- The button cannot respond\n- The UI cannot update\n- Other UI events cannot be processed\n\nThe application appears frozen.\n\n## Try It\n\nAdd a button to a page.\n\nWhen the button is clicked:\n\n```csharp\nThread.Sleep(5000);\n```\n\nThen try interacting with the application.\n\nThe application has not crashed.\n\nIt is simply **busy on the UI thread**.\n\n## A More Realistic Problem\n\n`Thread.Sleep()` is obviously artificial.\n\nA real application might have a calculation that takes a long time.\n\nFor example:\n\n```csharp\nprivate void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    long total = 0;\n\n    for (long i = 0; i &lt; 5000000000; i++)\n    {\n        total += i;\n    }\n\n    ResultLabel.Text = total.ToString();\n}\n```\n\nThe calculation is being performed on the UI thread.\n\nThe user may see the application become unresponsive while it runs.\n\n## We Need More Than One Thread\n\nOne solution is to perform suitable work away from the UI thread.\n\n```text\nAPPLICATION\n     |\n     +-------------------+-------------------+\n     |                                       |\n UI THREAD                              OTHER THREAD\n     |                                       |\n User input                              Calculation\n UI updates                              Background work\n```\n\nThe UI thread can remain available while other work is being performed elsewhere.\n\nWe will come back to this calculation later.\n\nFirst, let's look at another common situation where work happens independently of the user.\n\n## Timers\n\nA timer allows us to perform something repeatedly.\n\nFor example:\n\n```text\n1 second\n   |\n   v\nDo something\n\n1 second\n   |\n   v\nDo something\n\n1 second\n   |\n   v\nDo something\n```\n\nTimers are useful for:\n\n- Games\n- Clocks\n- Counters\n- Periodic updates\n- Checking for changes\n- Background tasks\n\n## `System.Timers.Timer`\n\n.NET provides several different timer classes.\n\nOne of them is:\n\n```csharp\nSystem.Timers.Timer\n```\n\nA simple timer can be created like this:\n\n```csharp\nvar timer = new System.Timers.Timer(1000);\n\n// 1000 ms = 1 second\n\ntimer.Elapsed += OnTimerElapsed;\n\ntimer.AutoReset = true;\n// Repeats regularly\n\ntimer.Enabled = true;\n// Starts the timer\n```\n\n## The `Elapsed` Event\n\nWe provide a method to handle the timer event:\n\n```csharp\nprivate void OnTimerElapsed(\n    object? sender,\n    System.Timers.ElapsedEventArgs e)\n{\n    // This code runs when the timer fires\n}\n```\n\nWith a one-second interval, this method will normally be called approximately once per second.\n\n## Which Thread Runs the Timer?\n\nThere is an important detail here.\n\n`System.Timers.Timer` normally raises its `Elapsed` event on a **ThreadPool thread**.\n\nIt is therefore not the UI thread.\n\n```text\nSystem.Timers.Timer\n        |\n        v\n   ThreadPool thread\n        |\n        v\n   OnTimerElapsed()\n```\n\nWhy does this matter?\n\nBecause our UI still belongs to the UI thread.\n\n## We Cannot Simply Update the UI\n\nThis looks tempting:\n\n```csharp\nprivate void OnTimerElapsed(\n    object? sender,\n    System.Timers.ElapsedEventArgs e)\n{\n    CounterLabel.Text = \"Hello\";\n}\n```\n\nBut the timer callback is running away from the UI thread.\n\nWe should not directly manipulate the UI from there.\n\nWe need a way to get back to the UI thread.\n\n## The MAUI Dispatcher\n\n.NET MAUI provides a **dispatcher**.\n\nThe dispatcher allows us to schedule code to run on the UI thread.\n\nFor example:\n\n```csharp\nDispatcher.Dispatch(() =&gt;\n{\n    CounterLabel.Text = \"Hello\";\n});\n```\n\nThe code inside the `Dispatch` call will be executed on the UI thread.\n\n## Timer + Dispatcher\n\nWe can therefore do this:\n\n```csharp\nprivate int counter = 0;\n\nprivate void OnTimerElapsed(\n    object? sender,\n    System.Timers.ElapsedEventArgs e)\n{\n    counter++;\n\n    Dispatcher.Dispatch(() =&gt;\n    {\n        CounterLabel.Text = counter.ToString();\n    });\n}\n```\n\nThe flow is:\n\n```text\nSystem.Timers.Timer\n        |\n        v\n   ThreadPool thread\n        |\n        | Dispatcher.Dispatch(...)\n        v\n      UI thread\n        |\n        v\n  Update the Label\n```\n\n## A Complete Timer Example\n\nThe timer can be stored as a field so that we can stop and dispose of it later.\n\n```csharp\nprivate System.Timers.Timer? timer;\nprivate int counter = 0;\n\npublic MainPage()\n{\n    InitializeComponent();\n\n    timer = new System.Timers.Timer(1000);\n\n    timer.Elapsed += OnTimerElapsed;\n    timer.AutoReset = true;\n    timer.Enabled = true;\n}\n\nprivate void OnTimerElapsed(\n    object? sender,\n    System.Timers.ElapsedEventArgs e)\n{\n    counter++;\n\n    Dispatcher.Dispatch(() =&gt;\n    {\n        CounterLabel.Text = counter.ToString();\n    });\n}\n```\n\nThe timer performs its work away from the UI thread.\n\nThe dispatcher brings the UI update back to the UI thread.\n\n## Stopping the Timer\n\nA timer that is no longer needed should be stopped.\n\n```csharp\ntimer?.Stop();\ntimer?.Dispose();\ntimer = null;\n```\n\nWhy?\n\nBecause we do not want a timer continuing to fire after the page is no longer using it.\n\nIt is important to think about the lifetime of timers.\n\n## But Do We Always Need This?\n\nNot necessarily.\n\n.NET MAUI has its own dispatcher timer.\n\nWe can create one using:\n\n```csharp\nvar timer = Dispatcher.CreateTimer();\n\ntimer.Interval = TimeSpan.FromSeconds(1);\n\ntimer.Tick += OnTimerTick;\n\ntimer.Start();\n```\n\n## The MAUI Dispatcher Timer\n\nThe callback looks like this:\n\n```csharp\nprivate void OnTimerTick(\n    object? sender,\n    EventArgs e)\n{\n    CounterLabel.Text =\n        DateTime.Now.ToLongTimeString();\n}\n```\n\nThe important difference is that the MAUI dispatcher timer runs its tick on the UI dispatcher.\n\nWe can therefore update the UI directly.\n\n## Two Different Timer Approaches\n\n```text\nSystem.Timers.Timer\n\n       |\n       v\n ThreadPool thread\n       |\n       v\nDispatcher.Dispatch()\n       |\n       v\n   UI thread\n```\n\nversus:\n\n```text\nMAUI Dispatcher Timer\n\n       |\n       v\n   UI thread\n```\n\nBoth are useful.\n\nThey simply solve slightly different problems.\n\n## Which Timer Should We Use?\n\nFor work that naturally belongs with the UI:\n\n```csharp\nDispatcher.CreateTimer()\n```\n\nis often convenient.\n\nFor a general-purpose timer where the callback does not need to run on the UI thread:\n\n```csharp\nSystem.Timers.Timer\n```\n\ncan be appropriate.\n\nIf the callback needs to update the UI, use the dispatcher to get back onto the UI thread.\n\n## A Bigger Question\n\nWe have now seen two related problems.\n\n**Problem 1:**\n\nThe UI thread can become blocked by work that takes a long time.\n\n**Problem 2:**\n\nWork happening away from the UI thread cannot simply update the UI directly.\n\nThere is another programming technique designed to help us deal with operations that take time.\n\nThat technique is:\n\n**asynchronous programming**\n\n## Asynchronous Programming\n\nAsynchronous programming allows our application to start an operation and **not block the thread while waiting for it to finish**.\n\nThis is particularly useful for operations such as:\n\n- Waiting for a file\n- Waiting for a network response\n- Waiting for a timer\n- Loading data\n- Talking to another service\n\nThe keywords we will use are:\n\n```text\nasync\nawait\n```\n\n## What Is a `Task`?\n\nA `Task` represents work that will complete in the future.\n\nThink of it as a representation of an operation that has not necessarily finished yet.\n\n```text\nSTART\n  |\n  v\nTask\n  |\n  |   operation in progress\n  |\n  v\nFINISHED\n```\n\nA method can return a `Task` rather than waiting for the operation to finish.\n\n## `Task&lt;T&gt;`\n\nA task can also produce a result.\n\nFor example:\n\n```csharp\nTask&lt;int&gt;\n```\n\nmeans:\n\n&gt; A task that will eventually produce an `int`.\n\nSimilarly:\n\n```csharp\nTask&lt;string&gt;\n```\n\nmeans:\n\n&gt; A task that will eventually produce a `string`.\n\n## The `async` Keyword\n\nWe mark a method as asynchronous using:\n\n```csharp\nasync\n```\n\nFor example:\n\n```csharp\nprivate async Task DoSomethingAsync()\n{\n    // Asynchronous work\n}\n```\n\nAn asynchronous method commonly returns:\n\n```text\nTask\nTask&lt;T&gt;\n```\n\nEvent handlers are a common exception.\n\n## The `await` Keyword\n\n`await` allows us to wait for a task to complete without blocking the current thread.\n\nFor example:\n\n```csharp\nawait SomeOperationAsync();\n```\n\nConceptually:\n\n```text\nStart operation\n      |\n      v\n   await\n      |\n      | UI thread is free\n      |\n      v\nOperation completes\n      |\n      v\nContinue here\n```\n\n## `await` Does Not Mean \"Use Another Thread\"\n\nThis is important.\n\n`await` does **not** automatically create another thread.\n\nFor example:\n\n```csharp\nawait Task.Delay(5000);\n```\n\ndoes not mean:\n\n&gt; \"Create another thread and make it sleep.\"\n\nInstead, the method can pause at the `await` while the UI thread is free to do other work.\n\nWhen the operation completes, the method continues.\n\n## `Task.Delay`\n\nA simple example is:\n\n```csharp\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    StatusLabel.Text = \"Starting...\";\n\n    await Task.Delay(5000);\n\n    StatusLabel.Text = \"Finished!\";\n}\n```\n\nThe application does not freeze for five seconds.\n\nThe UI thread is available while we wait.\n\n## Try It\n\nWhile the five seconds are passing:\n\n- Press another button\n- Type into an `Entry`\n- Interact with the page\n\nThe application remains responsive.\n\nCompare this with:\n\n```csharp\nThread.Sleep(5000);\n```\n\n## Blocking vs Asynchronous Waiting\n\n### Blocking\n\n```csharp\nThread.Sleep(5000);\n```\n\n```text\nUI THREAD\n   |\n   |------ blocked ------|\n   |\n```\n\nThe UI thread cannot do anything else.\n\n### Asynchronous\n\n```csharp\nawait Task.Delay(5000);\n```\n\n```text\nUI THREAD\n   |\n   |-- free to process UI --|\n   |\n   v\ncontinue\n```\n\nThe UI thread remains available.\n\n## `async` and `await` Work Together\n\nConsider:\n\n```csharp\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    StatusLabel.Text = \"Starting...\";\n\n    await Task.Delay(5000);\n\n    StatusLabel.Text = \"Finished!\";\n}\n```\n\n`async` allows the method to use `await`.\n\n`await` allows us to wait for an asynchronous operation without blocking the thread.\n\nThey are commonly used together.\n\n## Returning a Result\n\nAn asynchronous method can also return a result.\n\nFor example:\n\n```csharp\nprivate async Task&lt;string&gt; GetMessageAsync()\n{\n    await Task.Delay(2000);\n\n    return \"Finished!\";\n}\n```\n\nThe method returns:\n\n```text\nTask&lt;string&gt;\n```\n\nThe eventual result will be a `string`.\n\n## Using the Result\n\nWe can await the method:\n\n```csharp\nstring message = await GetMessageAsync();\n\nStatusLabel.Text = message;\n```\n\nThe method waits for the task to complete.\n\nOnce it has completed, `message` contains the returned string.\n\n## `Task` vs `Task&lt;T&gt;`\n\nThe distinction is straightforward.\n\n```csharp\nTask\n```\n\nAn asynchronous operation that does not return a value.\n\n```csharp\nTask&lt;string&gt;\n```\n\nAn asynchronous operation that eventually returns a `string`.\n\n```csharp\nTask&lt;int&gt;\n```\n\nAn asynchronous operation that eventually returns an `int`.\n\n## Async Event Handlers\n\nButton event handlers are commonly written as:\n\n```csharp\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    await SomeOperationAsync();\n}\n```\n\nNormally, asynchronous methods should return `Task` or `Task&lt;T&gt;`.\n\nEvent handlers are a common exception because the event system expects a `void` method.\n\n## Async and the UI\n\nAn important feature of `await` in a MAUI event handler is that, after the awaited operation completes, execution can continue in the UI context.\n\nFor example:\n\n```csharp\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    await Task.Delay(2000);\n\n    StatusLabel.Text = \"Finished!\";\n}\n```\n\nThe UI update can be made after the `await`.\n\nThis is one reason asynchronous programming is so useful in UI applications.\n\n## Back to Our Calculation\n\nEarlier we had this problem:\n\n```csharp\nprivate void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    long total = 0;\n\n    for (long i = 0; i &lt; 5000000000; i++)\n    {\n        total += i;\n    }\n\n    ResultLabel.Text = total.ToString();\n}\n```\n\nThe calculation runs on the UI thread.\n\nThe UI can become unresponsive.\n\nSo how do we solve this?\n\n## A Solution: `Task.Run()`\n\n`Task.Run()` can be used to perform **CPU-bound work** on a ThreadPool thread.\n\n```csharp\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    ResultLabel.Text = \"Calculating...\";\n\n    long total = await Task.Run(() =&gt;\n    {\n        long result = 0;\n\n        for (long i = 0; i &lt; 5000000000; i++)\n        {\n            result += i;\n        }\n\n        return result;\n    });\n\n    ResultLabel.Text = total.ToString();\n}\n```\n\n## What Is Happening?\n\nThe important part is:\n\n```csharp\nlong total = await Task.Run(() =&gt;\n{\n    // Long-running calculation\n\n    return result;\n});\n```\n\nThe calculation is handed off to another thread.\n\n```text\nUI THREAD\n    |\n    | Task.Run()\n    v\nThreadPool thread\n    |\n    | calculation\n    v\n  result\n    |\n    | await\n    v\nUI THREAD\n    |\n    v\nUpdate the UI\n```\n\nThe UI thread is not stuck performing the calculation.\n\n## `Task.Run()` Is Not Needed for Everything\n\nWe should not automatically wrap every operation in:\n\n```csharp\nTask.Run(...)\n```\n\nFor example:\n\n```csharp\nawait Task.Delay(5000);\n```\n\ndoes not need `Task.Run()`.\n\nThere is no long-running calculation that needs another thread.\n\n`Task.Run()` is particularly useful for **CPU-bound work** that would otherwise occupy the UI thread.\n\n## `await` vs `Task.Run()`\n\nThese solve related but different problems.\n\n### `await`\n\nAllows us to wait for an asynchronous operation without blocking the current thread.\n\n```csharp\nawait Task.Delay(5000);\n```\n\n### `Task.Run()`\n\nMoves suitable CPU-bound work to the ThreadPool.\n\n```csharp\nawait Task.Run(() =&gt;\n{\n    // CPU-bound work\n});\n```\n\nThey can be used together.\n\n## Why This Matters in MAUI\n\nA responsive application should not spend a long time doing CPU-intensive work on the UI thread.\n\nInstead:\n\n```text\nUI THREAD\n    |\n    | Start calculation\n    |\n    +----------------------+\n                           |\n                           v\n                    THREADPOOL THREAD\n                           |\n                           | Calculation\n                           |\n                           v\n                         Result\n                           |\n                           v\n                       UI THREAD\n                           |\n                           v\n                     Update screen\n```\n\nThe user can continue interacting with the application while the calculation runs.\n\n## Another Form of Asynchronous Work\n\nSo far we have looked at waiting and calculations.\n\nBut there is another place where asynchronous programming appears frequently in MAUI:\n\n**animations.**\n\nAnimations take time.\n\nWe do not want to freeze the UI while an animation is running.\n\n## Animations\n\n.NET MAUI provides built-in animations for visual elements.\n\nFor example:\n\n- Move an element\n- Fade an element\n- Scale an element\n- Rotate an element\n\nThese animations are asynchronous.\n\n## A Box to Animate\n\nFor example:\n\n```xml\n&lt;BoxView\n    x:Name=\"MyBox\"\n    WidthRequest=\"100\"\n    HeightRequest=\"100\"\n    HorizontalOptions=\"Start\"\n    VerticalOptions=\"Start\" /&gt;\n```\n\nWe can move this box across the screen.\n\n## Moving an Element\n\nIn .NET 10, use:\n\n```csharp\nTranslateToAsync()\n```\n\nFor example:\n\n```csharp\nprivate async void MoveButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    await MyBox.TranslateToAsync(\n        100,\n        0,\n        1000);\n}\n```\n\nThe arguments are:\n\n```text\nX position\nY position\nDuration in milliseconds\n```\n\nSo this means:\n\n&gt; Move 100 pixels horizontally over 1 second.\n\n## Why `await` the Animation?\n\nThe animation takes time.\n\n```csharp\nawait MyBox.TranslateToAsync(\n    100,\n    0,\n    1000);\n```\n\nWe can allow the animation to finish before continuing.\n\nFor example:\n\n```csharp\nawait MyBox.TranslateToAsync(100, 0, 1000);\n\nStatusLabel.Text = \"Finished!\";\n```\n\nThe label is updated after the animation completes.\n\n## Chaining Animations\n\nBecause animations are asynchronous, we can easily run them one after another.\n\n```csharp\nawait MyBox.TranslateToAsync(100, 0, 1000);\n\nawait MyBox.TranslateToAsync(100, 100, 1000);\n\nawait MyBox.TranslateToAsync(0, 100, 1000);\n\nawait MyBox.TranslateToAsync(0, 0, 1000);\n```\n\nThe box moves:\n\n```text\nSTART\n  |\n  v\nRIGHT\n  |\n  v\nDOWN\n  |\n  v\nLEFT\n  |\n  v\nUP\n  |\n  v\nSTART\n```\n\nEach animation waits for the previous one to finish.\n\n## Fading\n\nWe can also change the opacity of an element.\n\n```csharp\nawait MyBox.FadeToAsync(0, 1000);\nawait MyBox.FadeToAsync(1, 1000);\n```\n\nThe first line fades the element out.\n\nThe second line fades it back in.\n\n`1` means fully visible.\n\n`0` means invisible.\n\n## Scaling\n\nWe can make an element larger or smaller.\n\n```csharp\nawait MyBox.ScaleToAsync(2, 1000);\nawait MyBox.ScaleToAsync(1, 1000);\n```\n\nA scale of:\n\n```text\n1 = normal size\n2 = twice the size\n0.5 = half the size\n```\n\n## Rotation\n\nWe can rotate an element:\n\n```csharp\nawait MyBox.RotateToAsync(\n    360,\n    1000);\n```\n\nThis rotates the element through 360 degrees over one second.\n\n## Running Animations Together\n\nSo far, our animations have run one after another.\n\nWe can also start several animations at the same time.\n\nFor example:\n\n```csharp\nawait Task.WhenAll(\n    MyBox.RotateToAsync(360, 1000),\n    MyBox.ScaleToAsync(2, 1000)\n);\n```\n\nThe box rotates and scales at the same time.\n\n## `Task.WhenAll`\n\n`Task.WhenAll()` waits until **all** of the supplied tasks have completed.\n\n```text\n             +-- Rotate --------+\n             |                  |\nSTART -------+                  +---- FINISHED\n             |                  |\n             +-- Scale ---------+\n```\n\nThis is useful when several independent asynchronous operations can happen simultaneously.\n\n## Sequential vs Simultaneous\n\n### Sequential\n\n```csharp\nawait MyBox.RotateToAsync(360, 1000);\nawait MyBox.ScaleToAsync(2, 1000);\n```\n\nFirst rotate.\n\nThen scale.\n\n### Simultaneous\n\n```csharp\nawait Task.WhenAll(\n    MyBox.RotateToAsync(360, 1000),\n    MyBox.ScaleToAsync(2, 1000)\n);\n```\n\nRotate and scale at the same time.\n\n## Combining Animations\n\nWe can combine several animations into a sequence.\n\nFor example:\n\n```csharp\nawait Task.WhenAll(\n    MyBox.RotateToAsync(360, 1000),\n    MyBox.ScaleToAsync(2, 1000)\n);\n\nawait MyBox.FadeToAsync(0, 500);\n\nawait MyBox.FadeToAsync(1, 500);\n```\n\nThis gives us:\n\n```text\nRotate + Scale\n       |\n       v\n     Fade out\n       |\n       v\n     Fade in\n```\n\n## Cancelling Animations\n\nAn animation can also be cancelled.\n\n```csharp\nMyBox.CancelAnimations();\n```\n\nThis is useful if the user starts another action and we no longer want the current animation to continue.\n\n## Pop-Ups Are Asynchronous Too\n\nWe have already seen methods such as:\n\n```csharp\nawait DisplayAlertAsync(\n    \"Alert\",\n    \"You have been alerted\",\n    \"OK\");\n```\n\nThe alert takes control of the UI while the user decides what to do.\n\nWe can await the result.\n\n## Getting an Answer\n\nFor example:\n\n```csharp\nbool answer = await DisplayAlertAsync(\n    \"Play?\",\n    \"Would you like to play a game?\",\n    \"Yes\",\n    \"No\");\n\nif (answer)\n{\n    // Start the game\n}\n```\n\nThe method returns:\n\n```text\ntrue  → Yes\nfalse → No\n```\n\nThe application can continue once the user has made their choice.\n\n## Asking for Text\n\nWe can also use:\n\n```csharp\nstring? name = await DisplayPromptAsync(\n    \"Question\",\n    \"What's your name?\");\n```\n\nThe user enters some text.\n\nThe method completes when the user responds.\n\nThe result is returned as a `string`.\n\n## The Bigger Picture\n\nWe have now seen several different situations where operations take time.\n\n```text\nCALCULATION\n    |\n    | Task.Run()\n    v\nOTHER THREAD\n\n\nWAITING\n    |\n    | await\n    v\nUI THREAD REMAINS AVAILABLE\n\n\nANIMATION\n    |\n    | await\n    v\nUI REMAINS RESPONSIVE\n\n\nTIMER\n    |\n    | dispatcher\n    v\nUI THREAD\n```\n\nThe key is understanding **where the work happens** and **whether the UI thread is being blocked**.\n\n## Three Things to Remember\n\n### 1. The UI thread matters\n\nLong-running work on the UI thread can make an application appear frozen.\n\n### 2. `async` / `await`\n\nAllows us to wait for asynchronous operations without blocking the UI thread.\n\n### 3. `Task.Run()`\n\nCan move suitable CPU-bound work away from the UI thread.\n\n```csharp\nawait Task.Run(() =&gt;\n{\n    // CPU-bound work\n});\n```\n\n## This Week\n\nWe have looked at:\n\n- Threads\n- The UI thread\n- `System.Timers.Timer`\n- The MAUI dispatcher\n- `Dispatcher.CreateTimer()`\n- `async`\n- `await`\n- `Task`\n- `Task.Run()`\n- `Task.WhenAll()`\n- MAUI animations\n\nNext, we will use these ideas in our applications."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#this-week",
+    "href": "lectures/Week4/Week4.html#this-week",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "This Week",
+    "text": "This Week\nThis week we are going to look at:\n\nThreads and the UI thread\nTimers\nSystem.Timers.Timer\nThe MAUI dispatcher\nasync and await\nTask and Task.Run()\n.NET MAUI animations\n\nThe common theme is:\n\nKeeping our application responsive"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#our-application-is-always-doing-something",
+    "href": "lectures/Week4/Week4.html#our-application-is-always-doing-something",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Our Application Is Always Doing Something",
+    "text": "Our Application Is Always Doing Something\nAn application does not simply display a screen.\nIt is constantly responding to events:\n\nThe user presses a button\nThe user types into an Entry\nA timer fires\nA calculation is performed\nData is loaded\nAn animation is running\nA network request completes\n\nAll of these things require code to execute.\nSo where does that code execute?"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#what-is-a-thread",
+    "href": "lectures/Week4/Week4.html#what-is-a-thread",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "What Is a Thread?",
+    "text": "What Is a Thread?\nA thread is a path of execution within a program.\nWhen our application starts, it has a thread available to execute our code.\nWe can have more than one thread executing work.\nAPPLICATION\n     |\n     +-------------------+\n     |                   |\n  THREAD 1            THREAD 2\n     |                   |\n   Work A              Work B\nMultiple threads allow different pieces of work to be performed independently."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-ui-thread",
+    "href": "lectures/Week4/Week4.html#the-ui-thread",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The UI Thread",
+    "text": "The UI Thread\n.NET MAUI has a UI thread.\nThis is the thread responsible for interacting with the user interface.\nFor example:\nButton.Text = \"Hello\";\nLabel.Text = \"Finished\";\nThese are UI operations.\nThey need to happen on the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#why-does-the-ui-thread-matter",
+    "href": "lectures/Week4/Week4.html#why-does-the-ui-thread-matter",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Why Does the UI Thread Matter?",
+    "text": "Why Does the UI Thread Matter?\nImagine the UI thread is doing this:\nUI THREAD\n   |\n   v\nDo some work\n   |\n   v\nDo some more work\n   |\n   v\nDo some more work\n   |\n   v\nFinally update the screen\nWhile that work is happening, the UI thread cannot respond to other events.\nThe application can appear to freeze."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#a-deliberately-bad-example",
+    "href": "lectures/Week4/Week4.html#a-deliberately-bad-example",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "A Deliberately Bad Example",
+    "text": "A Deliberately Bad Example\nConsider:\nprivate void ButtonClicked(object sender, EventArgs e)\n{\n    Thread.Sleep(5000);\n}\nWhat happens when the button is clicked?\nThe UI thread sleeps for five seconds.\nDuring those five seconds:\n\nThe button cannot respond\nThe UI cannot update\nOther UI events cannot be processed\n\nThe application appears frozen."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#try-it",
+    "href": "lectures/Week4/Week4.html#try-it",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Try It",
+    "text": "Try It\nAdd a button to a page.\nWhen the button is clicked:\nThread.Sleep(5000);\nThen try interacting with the application.\nThe application has not crashed.\nIt is simply busy on the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#a-more-realistic-problem",
+    "href": "lectures/Week4/Week4.html#a-more-realistic-problem",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "A More Realistic Problem",
+    "text": "A More Realistic Problem\nThread.Sleep() is obviously artificial.\nA real application might have a calculation that takes a long time.\nFor example:\nprivate void ButtonClicked(object sender, EventArgs e)\n{\n    long total = 0;\n\n    for (long i = 0; i &lt; 5000000000; i++)\n    {\n        total += i;\n    }\n\n    ResultLabel.Text = total.ToString();\n}\nThe calculation is being performed on the UI thread.\nThe user may see the application become unresponsive while it runs."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#we-need-more-than-one-thread",
+    "href": "lectures/Week4/Week4.html#we-need-more-than-one-thread",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "We Need More Than One Thread",
+    "text": "We Need More Than One Thread\nOne solution is to perform suitable work away from the UI thread.\nAPPLICATION\n     |\n     +-------------------+-------------------+\n     |                                       |\n UI THREAD                              OTHER THREAD\n     |                                       |\n User input                              Calculation\n UI updates                              Background work\nThe UI thread can remain available while other work is being performed elsewhere.\nWe will come back to this calculation later.\nFirst, let’s look at another common situation where work happens independently of the user."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#timers",
+    "href": "lectures/Week4/Week4.html#timers",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Timers",
+    "text": "Timers\nA timer allows us to perform something repeatedly. (I’ve showed DispatcherTimer last week)\nFor example:\n1 second\n   |\n   v\nDo something\n\n1 second\n   |\n   v\nDo something\n\n1 second\n   |\n   v\nDo something\nTimers are useful for:\n\nGames. Clocks. Counters, Periodic updates, Checking for changes, Background tasks"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#system.timers.timer",
+    "href": "lectures/Week4/Week4.html#system.timers.timer",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "System.Timers.Timer",
+    "text": "System.Timers.Timer\n.NET provides several different timer classes.\nOne of them is:\nSystem.Timers.Timer\nA simple timer can be created like this:\nSystem.Timers.Timer timer;\n\n// Instantiate the object with an interval of 1000ms\ntimer = new System.Timers.Timer{\n    Interval = 1000\n};\n\n// Hook up the EventHandler for it\ntimer.Elapsed += OnTimerElapsed;\n\n// Start the timer\ntimer.Start()\nWe provide a method to handle the timer event:\nprivate void OnTimerElapsed(object? sender,  System.Timers.ElapsedEventArgs e)\n{\n    // This code runs when the timer fires\n}\nWith a one-second interval, this method will normally be called approximately once per second."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-elapsed-event",
+    "href": "lectures/Week4/Week4.html#the-elapsed-event",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The Elapsed Event",
+    "text": "The Elapsed Event\nWe provide a method to handle the timer event:\nprivate void OnTimerElapsed(\n    object? sender,\n    System.Timers.ElapsedEventArgs e)\n{\n    // This code runs when the timer fires\n}\nWith a one-second interval, this method will normally be called approximately once per second."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#which-thread-runs-the-timer",
+    "href": "lectures/Week4/Week4.html#which-thread-runs-the-timer",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Which Thread Runs the Timer?",
+    "text": "Which Thread Runs the Timer?\nThere is an important detail here.\nSystem.Timers.Timer normally raises its Elapsed event on a ThreadPool thread.\nIt is therefore not the UI thread.\nSystem.Timers.Timer\n        |\n        v\n   ThreadPool thread\n        |\n        v\n   OnTimerElapsed()\nWhy does this matter?\nBecause our UI still belongs to the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#we-cannot-simply-update-the-ui",
+    "href": "lectures/Week4/Week4.html#we-cannot-simply-update-the-ui",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "We Cannot Simply Update the UI",
+    "text": "We Cannot Simply Update the UI\nYou would think this would work:\nprivate void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)\n{\n    CounterLabel.Text = \"Hello\";\n}\nBut the timer callback is running away from the UI thread.\nWe should not directly manipulate the UI from there.\nWe need a way to get back to the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-maui-dispatcher",
+    "href": "lectures/Week4/Week4.html#the-maui-dispatcher",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The MAUI Dispatcher",
+    "text": "The MAUI Dispatcher\n.NET MAUI provides a dispatcher.\nThe dispatcher allows us to schedule code to run on the UI thread.\nFor example:\nDispatcher.Dispatch(() =&gt;\n{\n    CounterLabel.Text = \"Hello\";\n});\nThe code inside the Dispatch call will be executed on the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#timer-dispatcher",
+    "href": "lectures/Week4/Week4.html#timer-dispatcher",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Timer + Dispatcher",
+    "text": "Timer + Dispatcher\nWe can therefore do this:\nprivate int counter = 0;\n\nprivate void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)\n{\n    counter++;\n\n    Dispatcher.Dispatch(() =&gt;\n    {\n        CounterLabel.Text = counter.ToString();\n    });\n}\nThe flow is:\nSystem.Timers.Timer\n        |\n        v\n   ThreadPool thread\n        |\n        | Dispatcher.Dispatch(...)\n        v\n      UI thread\n        |\n        v\n  Update the Label"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#a-complete-timer-example",
+    "href": "lectures/Week4/Week4.html#a-complete-timer-example",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "A Complete Timer Example",
+    "text": "A Complete Timer Example\nThe timer can be stored as a field so that we can stop and dispose of it later.\nprivate System.Timers.Timer? timer;\nprivate int counter = 0;\n\npublic MainPage()\n{\n    InitializeComponent();\n\n    timer = new System.Timers.Timer(1000);\n\n    timer.Elapsed += OnTimerElapsed;\n    timer.Start();\n}\n\nprivate void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)\n{\n    counter++;\n\n    Dispatcher.Dispatch(() =&gt;\n    {\n        CounterLabel.Text = counter.ToString();\n    });\n}\nThe timer performs its work away from the UI thread.\nThe dispatcher brings the UI update back to the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#stopping-the-timer",
+    "href": "lectures/Week4/Week4.html#stopping-the-timer",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Stopping the Timer",
+    "text": "Stopping the Timer\nA timer that is no longer needed should be stopped.\ntimer?.Stop();\ntimer?.Dispose();\ntimer = null;\nWhy?\nBecause we do not want a timer continuing to fire after the page is no longer using it.\nIt is important to think about the lifetime of timers."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#but-do-we-always-need-this",
+    "href": "lectures/Week4/Week4.html#but-do-we-always-need-this",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "But Do We Always Need This?",
+    "text": "But Do We Always Need This?\nNot necessarily.\nWe saw last week DispatcherTimer\nWe can create one using:\nIDispatcherTimer timer = Dispatcher.CreateTimer();\n\ntimer.Interval = TimeSpan.FromSeconds(1);\n\ntimer.Tick += OnTimerTick;\n\ntimer.Start();\nThe important difference is that the MAUI dispatcher timer runs its tick on the UI dispatcher.\nWe can therefore update the UI directly."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-maui-dispatcher-timer",
+    "href": "lectures/Week4/Week4.html#the-maui-dispatcher-timer",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The MAUI Dispatcher Timer",
+    "text": "The MAUI Dispatcher Timer\nThe callback looks like this:\nprivate void OnTimerTick(\n    object? sender,\n    EventArgs e)\n{\n    CounterLabel.Text =\n        DateTime.Now.ToLongTimeString();\n}\nThe important difference is that the MAUI dispatcher timer runs its tick on the UI dispatcher.\nWe can therefore update the UI directly."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#two-different-timer-approaches",
+    "href": "lectures/Week4/Week4.html#two-different-timer-approaches",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Two Different Timer Approaches",
+    "text": "Two Different Timer Approaches\nSystem.Timers.Timer\n\n       |\n       v\n ThreadPool thread\n       |\n       v\nDispatcher.Dispatch()\n       |\n       v\n   UI thread\nversus:\nMAUI Dispatcher Timer\n\n       |\n       v\n   UI thread\nBoth are useful.\nThey simply solve slightly different problems.\n\n\n\n\n\n\nWarning\n\n\nIf you have a lot of calculations on each “tick” then the DispatcherTimer can lock up the UI Thread.\nSystem.Timers.Timer can be used to do calculations away from the UI thread and only dispatch the result when it absolutely needs to."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#which-timer-should-we-use",
+    "href": "lectures/Week4/Week4.html#which-timer-should-we-use",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Which Timer Should We Use?",
+    "text": "Which Timer Should We Use?\nFor work that naturally belongs with the UI:\nDispatcher.CreateTimer()\nis often convenient.\nFor a general-purpose timer where the callback does not need to run on the UI thread:\nSystem.Timers.Timer\ncan be appropriate.\nIf the callback needs to update the UI, use the dispatcher to get back onto the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#a-bigger-question",
+    "href": "lectures/Week4/Week4.html#a-bigger-question",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "A Bigger Question",
+    "text": "A Bigger Question\nWe have now seen two related problems.\nProblem 1:\nThe UI thread can become blocked by work that takes a long time.\nProblem 2:\nWork happening away from the UI thread cannot simply update the UI directly.\nThere is another programming technique designed to help us deal with operations that take time.\nThat technique is:\nasynchronous programming"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#asynchronous-programming",
+    "href": "lectures/Week4/Week4.html#asynchronous-programming",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Asynchronous Programming",
+    "text": "Asynchronous Programming\nAsynchronous programming allows our application to start an operation and not block the thread while waiting for it to finish.\nThis is particularly useful for operations such as:\n\nWaiting for a file\nWaiting for a network response\nWaiting for a timer\nLoading data\nTalking to another service\n\nThe keywords we will use are:\nasync\nawait"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#what-is-a-task",
+    "href": "lectures/Week4/Week4.html#what-is-a-task",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "What Is a Task?",
+    "text": "What Is a Task?\nA Task represents work that will complete in the future.\nThink of it as a representation of an operation that has not necessarily finished yet.\nSTART\n  |\n  v\nTask\n  |\n  |   operation in progress\n  |\n  v\nFINISHED\nA method can return a Task rather than waiting for the operation to finish."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#taskt",
+    "href": "lectures/Week4/Week4.html#taskt",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Task<T>",
+    "text": "Task&lt;T&gt;\nA task can also produce a result.\nFor example:\nTask&lt;int&gt;\nmeans:\n\nA task that will eventually produce an int.\n\nSimilarly:\nTask&lt;string&gt;\nmeans:\n\nA task that will eventually produce a string."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-async-keyword",
+    "href": "lectures/Week4/Week4.html#the-async-keyword",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The async Keyword",
+    "text": "The async Keyword\nWe mark a method as asynchronous using:\nasync\nFor example:\nprivate async Task DoSomethingAsync()\n{\n    // Asynchronous work\n}\nAn asynchronous method commonly returns:\nTask\nTask&lt;T&gt;\nEvent handlers are a common exception."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-await-keyword",
+    "href": "lectures/Week4/Week4.html#the-await-keyword",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The await Keyword",
+    "text": "The await Keyword\nawait allows us to wait for a task to complete without blocking the current thread.\nFor example:\nawait SomeOperationAsync();\nConceptually:\nStart operation\n      |\n      v\n   await\n      |\n      | UI thread is free\n      |\n      v\nOperation completes\n      |\n      v\nContinue here"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#await-does-not-mean-use-another-thread",
+    "href": "lectures/Week4/Week4.html#await-does-not-mean-use-another-thread",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "await Does Not Mean “Use Another Thread”",
+    "text": "await Does Not Mean “Use Another Thread”\nThis is important.\nawait does not automatically create another thread.\nFor example:\nawait Task.Delay(5000);\ndoes not mean:\n\n“Create another thread and make it sleep.”\n\nInstead, the method can pause at the await while the UI thread is free to do other work.\nWhen the operation completes, the method continues."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#task.delay",
+    "href": "lectures/Week4/Week4.html#task.delay",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Task.Delay",
+    "text": "Task.Delay\nA simple example is:\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    StatusLabel.Text = \"Starting...\";\n\n    await Task.Delay(5000);\n\n    StatusLabel.Text = \"Finished!\";\n}\nThe application does not freeze for five seconds.\nThe UI thread is available while we wait."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#try-it-1",
+    "href": "lectures/Week4/Week4.html#try-it-1",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Try It",
+    "text": "Try It\nWhile the five seconds are passing:\n\nPress another button\nType into an Entry\nInteract with the page\n\nThe application remains responsive.\nCompare this with:\nThread.Sleep(5000);"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#blocking-vs-asynchronous-waiting",
+    "href": "lectures/Week4/Week4.html#blocking-vs-asynchronous-waiting",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Blocking vs Asynchronous Waiting",
+    "text": "Blocking vs Asynchronous Waiting\nBlocking\nThread.Sleep(5000);\nUI THREAD\n   |\n   |------ blocked ------|\n   |\nThe UI thread cannot do anything else.\nAsynchronous\nawait Task.Delay(5000);\nUI THREAD\n   |\n   |-- free to process UI --|\n   |\n   v\ncontinue\nThe UI thread remains available."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#async-and-await-work-together",
+    "href": "lectures/Week4/Week4.html#async-and-await-work-together",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "async and await Work Together",
+    "text": "async and await Work Together\nConsider:\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    StatusLabel.Text = \"Starting...\";\n\n    await Task.Delay(5000);\n\n    StatusLabel.Text = \"Finished!\";\n}\nasync allows the method to use await.\nawait allows us to wait for an asynchronous operation without blocking the thread.\nThey are commonly used together."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#returning-a-result",
+    "href": "lectures/Week4/Week4.html#returning-a-result",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Returning a Result",
+    "text": "Returning a Result\nAn asynchronous method can also return a result.\nFor example:\nprivate async Task&lt;string&gt; GetMessageAsync()\n{\n    await Task.Delay(2000);\n\n    return \"Finished!\";\n}\nThe method returns:\nTask&lt;string&gt;\nThe eventual result will be a string."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#using-the-result",
+    "href": "lectures/Week4/Week4.html#using-the-result",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Using the Result",
+    "text": "Using the Result\nWe can await the method:\nstring message = await GetMessageAsync();\n\nStatusLabel.Text = message;\nThe method waits for the task to complete.\nOnce it has completed, message contains the returned string."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#task-vs-taskt",
+    "href": "lectures/Week4/Week4.html#task-vs-taskt",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Task vs Task<T>",
+    "text": "Task vs Task&lt;T&gt;\nThe distinction is straightforward.\nTask\nAn asynchronous operation that does not return a value.\nTask&lt;string&gt;\nAn asynchronous operation that eventually returns a string.\nTask&lt;int&gt;\nAn asynchronous operation that eventually returns an int."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#async-event-handlers",
+    "href": "lectures/Week4/Week4.html#async-event-handlers",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Async Event Handlers",
+    "text": "Async Event Handlers\nButton event handlers are commonly written as:\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    await SomeOperationAsync();\n}\nNormally, asynchronous methods should return Task or Task&lt;T&gt;.\nEvent handlers are a common exception because the event system expects a void method."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#async-and-the-ui",
+    "href": "lectures/Week4/Week4.html#async-and-the-ui",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Async and the UI",
+    "text": "Async and the UI\nAn important feature of await in a MAUI event handler is that, after the awaited operation completes, execution can continue in the UI context.\nFor example:\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    await Task.Delay(2000);\n\n    StatusLabel.Text = \"Finished!\";\n}\nThe UI update can be made after the await.\nThis is one reason asynchronous programming is so useful in UI applications."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#back-to-our-calculation",
+    "href": "lectures/Week4/Week4.html#back-to-our-calculation",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Back to Our Calculation",
+    "text": "Back to Our Calculation\nEarlier we had this problem:\nprivate void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    long total = 0;\n\n    for (long i = 0; i &lt; 5000000000; i++)\n    {\n        total += i;\n    }\n\n    ResultLabel.Text = total.ToString();\n}\nThe calculation runs on the UI thread.\nThe UI can become unresponsive.\nSo how do we solve this?"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#a-solution-task.run",
+    "href": "lectures/Week4/Week4.html#a-solution-task.run",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "A Solution: Task.Run()",
+    "text": "A Solution: Task.Run()\nTask.Run() can be used to perform CPU-bound work on a ThreadPool thread.\nprivate async void ButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    ResultLabel.Text = \"Calculating...\";\n\n    long total = await Task.Run(() =&gt;\n    {\n        long result = 0;\n\n        for (long i = 0; i &lt; 5000000000; i++)\n        {\n            result += i;\n        }\n\n        return result;\n    });\n\n    ResultLabel.Text = total.ToString();\n}"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#what-is-happening",
+    "href": "lectures/Week4/Week4.html#what-is-happening",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "What Is Happening?",
+    "text": "What Is Happening?\nThe important part is:\nlong total = await Task.Run(() =&gt;\n{\n    // Long-running calculation\n\n    return result;\n});\nThe calculation is handed off to another thread.\nUI THREAD\n    |\n    | Task.Run()\n    v\nThreadPool thread\n    |\n    | calculation\n    v\n  result\n    |\n    | await\n    v\nUI THREAD\n    |\n    v\nUpdate the UI\nThe UI thread is not stuck performing the calculation."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#task.run-is-not-needed-for-everything",
+    "href": "lectures/Week4/Week4.html#task.run-is-not-needed-for-everything",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Task.Run() Is Not Needed for Everything",
+    "text": "Task.Run() Is Not Needed for Everything\nWe should not automatically wrap every operation in:\nTask.Run(...)\nFor example:\nawait Task.Delay(5000);\ndoes not need Task.Run().\nThere is no long-running calculation that needs another thread.\nTask.Run() is particularly useful for CPU-bound work that would otherwise occupy the UI thread."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#await-vs-task.run",
+    "href": "lectures/Week4/Week4.html#await-vs-task.run",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "await vs Task.Run()",
+    "text": "await vs Task.Run()\nThese solve related but different problems.\nawait\nAllows us to wait for an asynchronous operation without blocking the current thread.\nawait Task.Delay(5000);\nTask.Run()\nMoves suitable CPU-bound work to the ThreadPool.\nawait Task.Run(() =&gt;\n{\n    // CPU-bound work\n});\nThey can be used together."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#why-this-matters-in-maui",
+    "href": "lectures/Week4/Week4.html#why-this-matters-in-maui",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Why This Matters in MAUI",
+    "text": "Why This Matters in MAUI\nA responsive application should not spend a long time doing CPU-intensive work on the UI thread.\nInstead:\nUI THREAD\n    |\n    | Start calculation\n    |\n    +----------------------+\n                           |\n                           v\n                    THREADPOOL THREAD\n                           |\n                           | Calculation\n                           |\n                           v\n                         Result\n                           |\n                           v\n                       UI THREAD\n                           |\n                           v\n                     Update screen\nThe user can continue interacting with the application while the calculation runs."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#another-form-of-asynchronous-work",
+    "href": "lectures/Week4/Week4.html#another-form-of-asynchronous-work",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Another Form of Asynchronous Work",
+    "text": "Another Form of Asynchronous Work\nSo far we have looked at waiting and calculations.\nBut there is another place where asynchronous programming appears frequently in MAUI:\nanimations.\nAnimations take time.\nWe do not want to freeze the UI while an animation is running."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#animations",
+    "href": "lectures/Week4/Week4.html#animations",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Animations",
+    "text": "Animations\n.NET MAUI provides built-in animations for visual elements.\nFor example:\n\nMove an element\nFade an element\nScale an element\nRotate an element\n\nThese animations are asynchronous."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#a-box-to-animate",
+    "href": "lectures/Week4/Week4.html#a-box-to-animate",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "A Box to Animate",
+    "text": "A Box to Animate\nFor example:\n&lt;BoxView\n    x:Name=\"MyBox\"\n    WidthRequest=\"100\"\n    HeightRequest=\"100\"\n    HorizontalOptions=\"Start\"\n    VerticalOptions=\"Start\" /&gt;\nWe can move this box across the screen."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#moving-an-element",
+    "href": "lectures/Week4/Week4.html#moving-an-element",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Moving an Element",
+    "text": "Moving an Element\nIn .NET 10, use:\nTranslateToAsync()\nFor example:\nprivate async void MoveButtonClicked(\n    object sender,\n    EventArgs e)\n{\n    await MyBox.TranslateToAsync(\n        100,\n        0,\n        1000);\n}\nThe arguments are:\nX position\nY position\nDuration in milliseconds\nSo this means:\n\nMove 100 pixels horizontally over 1 second."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#why-await-the-animation",
+    "href": "lectures/Week4/Week4.html#why-await-the-animation",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Why await the Animation?",
+    "text": "Why await the Animation?\nThe animation takes time.\nawait MyBox.TranslateToAsync(\n    100,\n    0,\n    1000);\nWe can allow the animation to finish before continuing.\nFor example:\nawait MyBox.TranslateToAsync(100, 0, 1000);\n\nStatusLabel.Text = \"Finished!\";\nThe label is updated after the animation completes."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#chaining-animations",
+    "href": "lectures/Week4/Week4.html#chaining-animations",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Chaining Animations",
+    "text": "Chaining Animations\nBecause animations are asynchronous, we can easily run them one after another.\nawait MyBox.TranslateToAsync(100, 0, 1000);\n\nawait MyBox.TranslateToAsync(100, 100, 1000);\n\nawait MyBox.TranslateToAsync(0, 100, 1000);\n\nawait MyBox.TranslateToAsync(0, 0, 1000);\nThe box moves:\nSTART\n  |\n  v\nRIGHT\n  |\n  v\nDOWN\n  |\n  v\nLEFT\n  |\n  v\nUP\n  |\n  v\nSTART\nEach animation waits for the previous one to finish."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#fading",
+    "href": "lectures/Week4/Week4.html#fading",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Fading",
+    "text": "Fading\nWe can also change the opacity of an element.\nawait MyBox.FadeToAsync(0, 1000);\nawait MyBox.FadeToAsync(1, 1000);\nThe first line fades the element out.\nThe second line fades it back in.\n1 means fully visible.\n0 means invisible."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#scaling",
+    "href": "lectures/Week4/Week4.html#scaling",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Scaling",
+    "text": "Scaling\nWe can make an element larger or smaller.\nawait MyBox.ScaleToAsync(2, 1000);\nawait MyBox.ScaleToAsync(1, 1000);\nA scale of:\n1 = normal size\n2 = twice the size\n0.5 = half the size"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#rotation",
+    "href": "lectures/Week4/Week4.html#rotation",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Rotation",
+    "text": "Rotation\nWe can rotate an element:\nawait MyBox.RotateToAsync(\n    360,\n    1000);\nThis rotates the element through 360 degrees over one second."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#running-animations-together",
+    "href": "lectures/Week4/Week4.html#running-animations-together",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Running Animations Together",
+    "text": "Running Animations Together\nSo far, our animations have run one after another.\nWe can also start several animations at the same time.\nFor example:\nawait Task.WhenAll(\n    MyBox.RotateToAsync(360, 1000),\n    MyBox.ScaleToAsync(2, 1000)\n);\nThe box rotates and scales at the same time."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#task.whenall",
+    "href": "lectures/Week4/Week4.html#task.whenall",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Task.WhenAll",
+    "text": "Task.WhenAll\nTask.WhenAll() waits until all of the supplied tasks have completed.\n             +-- Rotate --------+\n             |                  |\nSTART -------+                  +---- FINISHED\n             |                  |\n             +-- Scale ---------+\nThis is useful when several independent asynchronous operations can happen simultaneously."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#sequential-vs-simultaneous",
+    "href": "lectures/Week4/Week4.html#sequential-vs-simultaneous",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Sequential vs Simultaneous",
+    "text": "Sequential vs Simultaneous\nSequential\nawait MyBox.RotateToAsync(360, 1000);\nawait MyBox.ScaleToAsync(2, 1000);\nFirst rotate.\nThen scale.\nSimultaneous\nawait Task.WhenAll(\n    MyBox.RotateToAsync(360, 1000),\n    MyBox.ScaleToAsync(2, 1000)\n);\nRotate and scale at the same time."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#combining-animations",
+    "href": "lectures/Week4/Week4.html#combining-animations",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Combining Animations",
+    "text": "Combining Animations\nWe can combine several animations into a sequence.\nFor example:\nawait Task.WhenAll(\n    MyBox.RotateToAsync(360, 1000),\n    MyBox.ScaleToAsync(2, 1000)\n);\n\nawait MyBox.FadeToAsync(0, 500);\n\nawait MyBox.FadeToAsync(1, 500);\nThis gives us:\nRotate + Scale\n       |\n       v\n     Fade out\n       |\n       v\n     Fade in"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#cancelling-animations",
+    "href": "lectures/Week4/Week4.html#cancelling-animations",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Cancelling Animations",
+    "text": "Cancelling Animations\nAn animation can also be cancelled.\nMyBox.CancelAnimations();\nThis is useful if the user starts another action and we no longer want the current animation to continue."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#pop-ups-are-asynchronous-too",
+    "href": "lectures/Week4/Week4.html#pop-ups-are-asynchronous-too",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Pop-Ups Are Asynchronous Too",
+    "text": "Pop-Ups Are Asynchronous Too\nWe have already seen methods such as:\nawait DisplayAlertAsync(\n    \"Alert\",\n    \"You have been alerted\",\n    \"OK\");\nThe alert takes control of the UI while the user decides what to do.\nWe can await the result."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#getting-an-answer",
+    "href": "lectures/Week4/Week4.html#getting-an-answer",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Getting an Answer",
+    "text": "Getting an Answer\nFor example:\nbool answer = await DisplayAlertAsync(\n    \"Play?\",\n    \"Would you like to play a game?\",\n    \"Yes\",\n    \"No\");\n\nif (answer)\n{\n    // Start the game\n}\nThe method returns:\ntrue  → Yes\nfalse → No\nThe application can continue once the user has made their choice."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#asking-for-text",
+    "href": "lectures/Week4/Week4.html#asking-for-text",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Asking for Text",
+    "text": "Asking for Text\nWe can also use:\nstring? name = await DisplayPromptAsync(\n    \"Question\",\n    \"What's your name?\");\nThe user enters some text.\nThe method completes when the user responds.\nThe result is returned as a string."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#the-bigger-picture",
+    "href": "lectures/Week4/Week4.html#the-bigger-picture",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "The Bigger Picture",
+    "text": "The Bigger Picture\nWe have now seen several different situations where operations take time.\nCALCULATION\n    |\n    | Task.Run()\n    v\nOTHER THREAD\n\n\nWAITING\n    |\n    | await\n    v\nUI THREAD REMAINS AVAILABLE\n\n\nANIMATION\n    |\n    | await\n    v\nUI REMAINS RESPONSIVE\n\n\nTIMER\n    |\n    | dispatcher\n    v\nUI THREAD\nThe key is understanding where the work happens and whether the UI thread is being blocked."
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#three-things-to-remember",
+    "href": "lectures/Week4/Week4.html#three-things-to-remember",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "Three Things to Remember",
+    "text": "Three Things to Remember\n1. The UI thread matters\nLong-running work on the UI thread can make an application appear frozen.\n2. async / await\nAllows us to wait for asynchronous operations without blocking the UI thread.\n3. Task.Run()\nCan move suitable CPU-bound work away from the UI thread.\nawait Task.Run(() =&gt;\n{\n    // CPU-bound work\n});"
+  },
+  {
+    "objectID": "lectures/Week4/Week4.html#this-week-1",
+    "href": "lectures/Week4/Week4.html#this-week-1",
+    "title": "Week 4 Threads, Async/Await and Animations",
+    "section": "This Week",
+    "text": "This Week\nWe have looked at:\n\nThreads\nThe UI thread\nSystem.Timers.Timer\nThe MAUI dispatcher\nDispatcher.CreateTimer()\nasync\nawait\nTask\nTask.Run()\nTask.WhenAll()\nMAUI animations\n\nNext, we will use these ideas in our applications."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#dispose-timer",
+    "href": "lectures/Week3/Week3.html#dispose-timer",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "Dispose Timer",
+    "text": "Dispose Timer\nWhen you are finished with a timer, you may want to free up some memory and Dispose of the timer\nprivate void DisposeTimer{\n    _timer.Dispose();\n    _timer = null;\n}\nDispose() releases resources used by the timer. Once a timer has been disposed, you should not use that timer again. If you need a timer later, create a new one.\n\nDispose() releases the resources used by the timer.\nThe garbage collector can reclaim the timer object later when there are no remaining references to it.\nSetting the field to null removes this reference to the timer object.\n\nYou can reuse the _timer field later by creating a new timer if you wish."
+  },
+  {
+    "objectID": "lectures/Week3/Week3.html#what-does-out-mean",
+    "href": "lectures/Week3/Week3.html#what-does-out-mean",
+    "title": "Week 3 Event-Driven Programming",
+    "section": "What Does out Mean?",
+    "text": "What Does out Mean?\nThere is something new in the TryParse example:\nout double quantity\nThe out keyword means that the method can put a value into the variable. (double is declaring quantity as type double)\nThink of it as giving the method a variable to fill in, for example:\nif (double.TryParse(txtQuantity.Text, out double quantity))\n{\n    // quantity now contains the converted number\n}\nIf the conversion succeeds, TryParse puts the converted number into quantity.\nIf the conversion fails, TryParse returns false and quantity is assigned 0.\nThe important point is that TryParse gives us two pieces of information:\n\ntrue or false — did the conversion succeed?\nquantity — what was the converted value?\n\n\n\n\n\n\n\nNote\n\n\nout is used when a method needs to return a value through a parameter, in addition to its normal return value."
   }
 ]
