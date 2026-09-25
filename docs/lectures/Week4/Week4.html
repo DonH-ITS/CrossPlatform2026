@@ -341,78 +341,48 @@
 <p>We will come back to this calculation later.</p>
 <p>First, let’s look at another common situation where work happens independently of the user.</p>
 </section>
-<section id="timers" class="slide level2">
-<h2>Timers</h2>
-<p>A timer allows us to perform something repeatedly. (I’ve showed DispatcherTimer last week)</p>
-<p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a aria-label="1"></a>1 second</span>
-<span id="cb8-2"><a aria-label="2"></a>   |</span>
-<span id="cb8-3"><a aria-label="3"></a>   v</span>
-<span id="cb8-4"><a aria-label="4"></a>Do something</span>
-<span id="cb8-5"><a aria-label="5"></a></span>
-<span id="cb8-6"><a aria-label="6"></a>1 second</span>
-<span id="cb8-7"><a aria-label="7"></a>   |</span>
-<span id="cb8-8"><a aria-label="8"></a>   v</span>
-<span id="cb8-9"><a aria-label="9"></a>Do something</span>
-<span id="cb8-10"><a aria-label="10"></a></span>
-<span id="cb8-11"><a aria-label="11"></a>1 second</span>
-<span id="cb8-12"><a aria-label="12"></a>   |</span>
-<span id="cb8-13"><a aria-label="13"></a>   v</span>
-<span id="cb8-14"><a aria-label="14"></a>Do something</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Timers are useful for:</p>
-<ul>
-<li>Games. Clocks. Counters, Periodic updates, Checking for changes, Background tasks</li>
-</ul>
-</section>
 <section id="system.timers.timer" class="slide level2">
 <h2><code>System.Timers.Timer</code></h2>
-<p>.NET provides several different timer classes.</p>
-<p>One of them is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>I showed <code>DispatcherTimer</code> last week, here’s a different one and why we may want to use it instead.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb8-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A simple timer can be created like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span> timer<span class="op">;</span></span>
-<span id="cb10-2"><a aria-label="2"></a></span>
-<span id="cb10-3"><a aria-label="3"></a><span class="co">// Instantiate the object with an interval of 1000ms</span></span>
-<span id="cb10-4"><a aria-label="4"></a>timer <span class="op">=</span> <span class="kw">new</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span><span class="op">{</span></span>
-<span id="cb10-5"><a aria-label="5"></a>    Interval <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb10-6"><a aria-label="6"></a><span class="op">};</span></span>
-<span id="cb10-7"><a aria-label="7"></a></span>
-<span id="cb10-8"><a aria-label="8"></a><span class="co">// Hook up the EventHandler for it</span></span>
-<span id="cb10-9"><a aria-label="9"></a>timer<span class="op">.</span><span class="fu">Elapsed</span> <span class="op">+=</span> OnTimerElapsed<span class="op">;</span></span>
-<span id="cb10-10"><a aria-label="10"></a></span>
-<span id="cb10-11"><a aria-label="11"></a><span class="co">// Start the timer</span></span>
-<span id="cb10-12"><a aria-label="12"></a>timer<span class="op">.</span><span class="fu">Start</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We provide a method to handle the timer event:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span>  System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
-<span id="cb11-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb11-3"><a aria-label="3"></a>    <span class="co">// This code runs when the timer fires</span></span>
-<span id="cb11-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>With a one-second interval, this method will normally be called approximately once per second.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span> timer<span class="op">;</span></span>
+<span id="cb9-2"><a aria-label="2"></a></span>
+<span id="cb9-3"><a aria-label="3"></a><span class="co">// Instantiate the object with an interval of 1000ms</span></span>
+<span id="cb9-4"><a aria-label="4"></a>timer <span class="op">=</span> <span class="kw">new</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span><span class="op">{</span></span>
+<span id="cb9-5"><a aria-label="5"></a>    Interval <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb9-6"><a aria-label="6"></a><span class="op">};</span></span>
+<span id="cb9-7"><a aria-label="7"></a></span>
+<span id="cb9-8"><a aria-label="8"></a><span class="co">// Hook up the EventHandler for it</span></span>
+<span id="cb9-9"><a aria-label="9"></a>timer<span class="op">.</span><span class="fu">Elapsed</span> <span class="op">+=</span> OnTimerElapsed<span class="op">;</span></span>
+<span id="cb9-10"><a aria-label="10"></a></span>
+<span id="cb9-11"><a aria-label="11"></a><span class="co">// Start the timer</span></span>
+<span id="cb9-12"><a aria-label="12"></a>timer<span class="op">?.</span><span class="fu">Start</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="which-thread-runs-the-timer" class="slide level2">
 <h2>Which Thread Runs the Timer?</h2>
 <p>There is an important detail here.</p>
 <p><code>System.Timers.Timer</code> normally raises its <code>Elapsed</code> event on a <strong>ThreadPool thread</strong>.</p>
-<p>It is therefore not the UI thread.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a aria-label="1"></a>System.Timers.Timer</span>
-<span id="cb12-2"><a aria-label="2"></a>        |</span>
-<span id="cb12-3"><a aria-label="3"></a>        v</span>
-<span id="cb12-4"><a aria-label="4"></a>   ThreadPool thread</span>
-<span id="cb12-5"><a aria-label="5"></a>        |</span>
-<span id="cb12-6"><a aria-label="6"></a>        v</span>
-<span id="cb12-7"><a aria-label="7"></a>   OnTimerElapsed()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means the event handler is normally not running on the UI thread.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a aria-label="1"></a>System.Timers.Timer</span>
+<span id="cb10-2"><a aria-label="2"></a>        |</span>
+<span id="cb10-3"><a aria-label="3"></a>        v</span>
+<span id="cb10-4"><a aria-label="4"></a>   ThreadPool thread</span>
+<span id="cb10-5"><a aria-label="5"></a>        |</span>
+<span id="cb10-6"><a aria-label="6"></a>        v</span>
+<span id="cb10-7"><a aria-label="7"></a>   OnTimerElapsed()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Why does this matter?</p>
 <p>Because our UI still belongs to the UI thread.</p>
 </section>
 <section id="we-cannot-simply-update-the-ui" class="slide level2">
 <h2>We Cannot Simply Update the UI</h2>
 <p>You would think this would work:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
-<span id="cb13-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb13-3"><a aria-label="3"></a>    CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello"</span><span class="op">;</span></span>
-<span id="cb13-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
+<span id="cb11-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb11-3"><a aria-label="3"></a>    CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello"</span><span class="op">;</span></span>
+<span id="cb11-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But the timer callback is running away from the UI thread.</p>
-<p>We should not directly manipulate the UI from there.</p>
+<p>We can not directly manipulate the UI from there.</p>
 <p>We need a way to get back to the UI thread.</p>
 </section>
 <section id="the-maui-dispatcher" class="slide level2">
@@ -420,111 +390,93 @@
 <p>.NET MAUI provides a <strong>dispatcher</strong>.</p>
 <p>The dispatcher allows us to schedule code to run on the UI thread.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a aria-label="1"></a>Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb14-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb14-3"><a aria-label="3"></a>    CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello"</span><span class="op">;</span></span>
-<span id="cb14-4"><a aria-label="4"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a aria-label="1"></a>Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb12-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb12-3"><a aria-label="3"></a>    CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello"</span><span class="op">;</span></span>
+<span id="cb12-4"><a aria-label="4"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The code inside the <code>Dispatch</code> call will be executed on the UI thread.</p>
 </section>
 <section id="timer-dispatcher" class="slide level2">
 <h2>Timer + Dispatcher</h2>
 <p>We can therefore do this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">int</span> counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb15-2"><a aria-label="2"></a></span>
-<span id="cb15-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
-<span id="cb15-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb15-5"><a aria-label="5"></a>    counter<span class="op">++;</span></span>
-<span id="cb15-6"><a aria-label="6"></a></span>
-<span id="cb15-7"><a aria-label="7"></a>    Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb15-8"><a aria-label="8"></a>    <span class="op">{</span></span>
-<span id="cb15-9"><a aria-label="9"></a>        CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> counter<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
-<span id="cb15-10"><a aria-label="10"></a>    <span class="op">});</span></span>
-<span id="cb15-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">int</span> counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-2"><a aria-label="2"></a></span>
+<span id="cb13-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
+<span id="cb13-4"><a aria-label="4"></a><span class="op">{</span></span>
+<span id="cb13-5"><a aria-label="5"></a>    counter<span class="op">++;</span></span>
+<span id="cb13-6"><a aria-label="6"></a></span>
+<span id="cb13-7"><a aria-label="7"></a>    Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb13-8"><a aria-label="8"></a>    <span class="op">{</span></span>
+<span id="cb13-9"><a aria-label="9"></a>        CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> counter<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
+<span id="cb13-10"><a aria-label="10"></a>    <span class="op">});</span></span>
+<span id="cb13-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The flow is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a aria-label="1"></a>System.Timers.Timer</span>
-<span id="cb16-2"><a aria-label="2"></a>        |</span>
-<span id="cb16-3"><a aria-label="3"></a>        v</span>
-<span id="cb16-4"><a aria-label="4"></a>   ThreadPool thread</span>
-<span id="cb16-5"><a aria-label="5"></a>        |</span>
-<span id="cb16-6"><a aria-label="6"></a>        | Dispatcher.Dispatch(...)</span>
-<span id="cb16-7"><a aria-label="7"></a>        v</span>
-<span id="cb16-8"><a aria-label="8"></a>      UI thread</span>
-<span id="cb16-9"><a aria-label="9"></a>        |</span>
-<span id="cb16-10"><a aria-label="10"></a>        v</span>
-<span id="cb16-11"><a aria-label="11"></a>  Update the Label</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a aria-label="1"></a>System.Timers.Timer</span>
+<span id="cb14-2"><a aria-label="2"></a>        |</span>
+<span id="cb14-3"><a aria-label="3"></a>        v</span>
+<span id="cb14-4"><a aria-label="4"></a>   ThreadPool thread</span>
+<span id="cb14-5"><a aria-label="5"></a>        |</span>
+<span id="cb14-6"><a aria-label="6"></a>        | Dispatcher.Dispatch(...)</span>
+<span id="cb14-7"><a aria-label="7"></a>        v</span>
+<span id="cb14-8"><a aria-label="8"></a>      UI thread</span>
+<span id="cb14-9"><a aria-label="9"></a>        |</span>
+<span id="cb14-10"><a aria-label="10"></a>        v</span>
+<span id="cb14-11"><a aria-label="11"></a>  Update the Label</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="a-complete-timer-example" class="slide level2">
 <h2>A Complete Timer Example</h2>
 <p>The timer can be stored as a field so that we can stop and dispose of it later.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a aria-label="1"></a><span class="kw">private</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span><span class="op">?</span> timer<span class="op">;</span></span>
-<span id="cb17-2"><a aria-label="2"></a><span class="kw">private</span> <span class="dt">int</span> counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb17-3"><a aria-label="3"></a></span>
-<span id="cb17-4"><a aria-label="4"></a><span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
-<span id="cb17-5"><a aria-label="5"></a><span class="op">{</span></span>
-<span id="cb17-6"><a aria-label="6"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
-<span id="cb17-7"><a aria-label="7"></a></span>
-<span id="cb17-8"><a aria-label="8"></a>    timer <span class="op">=</span> <span class="kw">new</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span><span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb17-9"><a aria-label="9"></a></span>
-<span id="cb17-10"><a aria-label="10"></a>    timer<span class="op">.</span><span class="fu">Elapsed</span> <span class="op">+=</span> OnTimerElapsed<span class="op">;</span></span>
-<span id="cb17-11"><a aria-label="11"></a>    timer<span class="op">.</span><span class="fu">Start</span><span class="op">();</span></span>
-<span id="cb17-12"><a aria-label="12"></a><span class="op">}</span></span>
-<span id="cb17-13"><a aria-label="13"></a></span>
-<span id="cb17-14"><a aria-label="14"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
-<span id="cb17-15"><a aria-label="15"></a><span class="op">{</span></span>
-<span id="cb17-16"><a aria-label="16"></a>    counter<span class="op">++;</span></span>
-<span id="cb17-17"><a aria-label="17"></a></span>
-<span id="cb17-18"><a aria-label="18"></a>    Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb17-19"><a aria-label="19"></a>    <span class="op">{</span></span>
-<span id="cb17-20"><a aria-label="20"></a>        CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> counter<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
-<span id="cb17-21"><a aria-label="21"></a>    <span class="op">});</span></span>
-<span id="cb17-22"><a aria-label="22"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a aria-label="1"></a><span class="kw">private</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span><span class="op">?</span> _timer<span class="op">;</span></span>
+<span id="cb15-2"><a aria-label="2"></a><span class="kw">private</span> <span class="dt">int</span> _counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-3"><a aria-label="3"></a></span>
+<span id="cb15-4"><a aria-label="4"></a><span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb15-5"><a aria-label="5"></a><span class="op">{</span></span>
+<span id="cb15-6"><a aria-label="6"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb15-7"><a aria-label="7"></a></span>
+<span id="cb15-8"><a aria-label="8"></a>    _timer <span class="op">=</span> <span class="kw">new</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span><span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb15-9"><a aria-label="9"></a></span>
+<span id="cb15-10"><a aria-label="10"></a>    _timer<span class="op">.</span><span class="fu">Elapsed</span> <span class="op">+=</span> OnTimerElapsed<span class="op">;</span></span>
+<span id="cb15-11"><a aria-label="11"></a>    _timer<span class="op">?.</span><span class="fu">Start</span><span class="op">();</span></span>
+<span id="cb15-12"><a aria-label="12"></a><span class="op">}</span></span>
+<span id="cb15-13"><a aria-label="13"></a></span>
+<span id="cb15-14"><a aria-label="14"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerElapsed</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">ElapsedEventArgs</span> e<span class="op">)</span></span>
+<span id="cb15-15"><a aria-label="15"></a><span class="op">{</span></span>
+<span id="cb15-16"><a aria-label="16"></a>    _counter<span class="op">++;</span></span>
+<span id="cb15-17"><a aria-label="17"></a></span>
+<span id="cb15-18"><a aria-label="18"></a>    Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb15-19"><a aria-label="19"></a>    <span class="op">{</span></span>
+<span id="cb15-20"><a aria-label="20"></a>        CounterLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> _counter<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
+<span id="cb15-21"><a aria-label="21"></a>    <span class="op">});</span></span>
+<span id="cb15-22"><a aria-label="22"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The timer performs its work away from the UI thread.</p>
 <p>The dispatcher brings the UI update back to the UI thread.</p>
-</section>
-<section id="stopping-the-timer" class="slide level2">
-<h2>Stopping the Timer</h2>
-<p>A timer that is no longer needed should be stopped.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a aria-label="1"></a>timer<span class="op">?.</span><span class="fu">Stop</span><span class="op">();</span></span>
-<span id="cb18-2"><a aria-label="2"></a>timer<span class="op">?.</span><span class="fu">Dispose</span><span class="op">();</span></span>
-<span id="cb18-3"><a aria-label="3"></a>timer <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Why?</p>
-<p>Because we do not want a timer continuing to fire after the page is no longer using it.</p>
-<p>It is important to think about the lifetime of timers.</p>
 </section>
 <section id="but-do-we-always-need-this" class="slide level2">
 <h2>But Do We Always Need This?</h2>
 <p>Not necessarily.</p>
-<p>We saw last week DispatcherTimer</p>
-<p>We can create one using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb19-1"><a aria-label="1"></a>IDispatcherTimer timer <span class="op">=</span> Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">();</span></span>
-<span id="cb19-2"><a aria-label="2"></a></span>
-<span id="cb19-3"><a aria-label="3"></a>timer<span class="op">.</span><span class="fu">Interval</span> <span class="op">=</span> TimeSpan<span class="op">.</span><span class="fu">FromSeconds</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb19-4"><a aria-label="4"></a></span>
-<span id="cb19-5"><a aria-label="5"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span>
-<span id="cb19-6"><a aria-label="6"></a></span>
-<span id="cb19-7"><a aria-label="7"></a>timer<span class="op">.</span><span class="fu">Start</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Recall: last week DispatcherTimer</p>
 <p>The important difference is that the MAUI dispatcher timer runs its tick on the UI dispatcher.</p>
 <p>We can therefore update the UI directly.</p>
 </section>
 <section id="two-different-timer-approaches" class="slide level2">
 <h2>Two Different Timer Approaches</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb20-1"><a aria-label="1"></a>System.Timers.Timer</span>
-<span id="cb20-2"><a aria-label="2"></a></span>
-<span id="cb20-3"><a aria-label="3"></a>       |</span>
-<span id="cb20-4"><a aria-label="4"></a>       v</span>
-<span id="cb20-5"><a aria-label="5"></a> ThreadPool thread</span>
-<span id="cb20-6"><a aria-label="6"></a>       |</span>
-<span id="cb20-7"><a aria-label="7"></a>       v</span>
-<span id="cb20-8"><a aria-label="8"></a>Dispatcher.Dispatch()</span>
-<span id="cb20-9"><a aria-label="9"></a>       |</span>
-<span id="cb20-10"><a aria-label="10"></a>       v</span>
-<span id="cb20-11"><a aria-label="11"></a>   UI thread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a aria-label="1"></a>System.Timers.Timer</span>
+<span id="cb16-2"><a aria-label="2"></a></span>
+<span id="cb16-3"><a aria-label="3"></a>       |</span>
+<span id="cb16-4"><a aria-label="4"></a>       v</span>
+<span id="cb16-5"><a aria-label="5"></a> ThreadPool thread</span>
+<span id="cb16-6"><a aria-label="6"></a>       |</span>
+<span id="cb16-7"><a aria-label="7"></a>       v</span>
+<span id="cb16-8"><a aria-label="8"></a>Dispatcher.Dispatch()</span>
+<span id="cb16-9"><a aria-label="9"></a>       |</span>
+<span id="cb16-10"><a aria-label="10"></a>       v</span>
+<span id="cb16-11"><a aria-label="11"></a>   UI thread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>versus:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a aria-label="1"></a>MAUI Dispatcher Timer</span>
-<span id="cb21-2"><a aria-label="2"></a></span>
-<span id="cb21-3"><a aria-label="3"></a>       |</span>
-<span id="cb21-4"><a aria-label="4"></a>       v</span>
-<span id="cb21-5"><a aria-label="5"></a>   UI thread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb17-1"><a aria-label="1"></a>MAUI Dispatcher Timer</span>
+<span id="cb17-2"><a aria-label="2"></a></span>
+<span id="cb17-3"><a aria-label="3"></a>       |</span>
+<span id="cb17-4"><a aria-label="4"></a>       v</span>
+<span id="cb17-5"><a aria-label="5"></a>   UI thread</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Both are useful.</p>
 <p>They simply solve slightly different problems.</p>
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -545,10 +497,10 @@
 <section id="which-timer-should-we-use" class="slide level2">
 <h2>Which Timer Should We Use?</h2>
 <p>For work that naturally belongs with the UI:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a aria-label="1"></a>Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a aria-label="1"></a>Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>is often convenient.</p>
 <p>For a general-purpose timer where the callback does not need to run on the UI thread:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb19-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Timers</span><span class="op">.</span><span class="fu">Timer</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>can be appropriate.</p>
 <p>If the callback needs to update the UI, use the dispatcher to get back onto the UI thread.</p>
 </section>
@@ -560,8 +512,7 @@
 <p><strong>Problem 2:</strong></p>
 <p>Work happening away from the UI thread cannot simply update the UI directly.</p>
 <p>There is another programming technique designed to help us deal with operations that take time.</p>
-<p>That technique is:</p>
-<p><strong>asynchronous programming</strong></p>
+<p>That technique is: <strong>asynchronous programming</strong></p>
 </section>
 <section id="asynchronous-programming" class="slide level2">
 <h2>Asynchronous Programming</h2>
@@ -575,79 +526,95 @@
 <li>Talking to another service</li>
 </ul>
 <p>The keywords we will use are:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb24-1"><a aria-label="1"></a>async</span>
-<span id="cb24-2"><a aria-label="2"></a>await</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb20-1"><a aria-label="1"></a>async</span>
+<span id="cb20-2"><a aria-label="2"></a>await</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="what-is-a-task" class="slide level2">
 <h2>What Is a <code>Task</code>?</h2>
 <p>A <code>Task</code> represents work that will complete in the future.</p>
 <p>Think of it as a representation of an operation that has not necessarily finished yet.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb25-1"><a aria-label="1"></a>START</span>
-<span id="cb25-2"><a aria-label="2"></a>  |</span>
-<span id="cb25-3"><a aria-label="3"></a>  v</span>
-<span id="cb25-4"><a aria-label="4"></a>Task</span>
-<span id="cb25-5"><a aria-label="5"></a>  |</span>
-<span id="cb25-6"><a aria-label="6"></a>  |   operation in progress</span>
-<span id="cb25-7"><a aria-label="7"></a>  |</span>
-<span id="cb25-8"><a aria-label="8"></a>  v</span>
-<span id="cb25-9"><a aria-label="9"></a>FINISHED</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a aria-label="1"></a>START</span>
+<span id="cb21-2"><a aria-label="2"></a>  |</span>
+<span id="cb21-3"><a aria-label="3"></a>  v</span>
+<span id="cb21-4"><a aria-label="4"></a>Task</span>
+<span id="cb21-5"><a aria-label="5"></a>  |</span>
+<span id="cb21-6"><a aria-label="6"></a>  |   operation in progress</span>
+<span id="cb21-7"><a aria-label="7"></a>  |</span>
+<span id="cb21-8"><a aria-label="8"></a>  v</span>
+<span id="cb21-9"><a aria-label="9"></a>FINISHED</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A method can return a <code>Task</code> rather than waiting for the operation to finish.</p>
 </section>
 <section id="taskt" class="slide level2">
 <h2><code>Task&lt;T&gt;</code></h2>
 <p>A task can also produce a result.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>means:</p>
 <blockquote>
 <p>A task that will eventually produce an <code>int</code>.</p>
 </blockquote>
 <p>Similarly:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>means:</p>
 <blockquote>
 <p>A task that will eventually produce a <code>string</code>.</p>
 </blockquote>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The <code>Task&lt;T&gt;</code> is because <code>Task</code> is templated</p>
+<p>The <code>T</code> can be replaced by any object or data type and the methods will be fine.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-async-keyword" class="slide level2">
 <h2>The <code>async</code> Keyword</h2>
 <p>We mark a method as asynchronous using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a aria-label="1"></a>async</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a aria-label="1"></a>async</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a aria-label="1"></a><span class="kw">private</span> async Task <span class="fu">DoSomethingAsync</span><span class="op">()</span></span>
-<span id="cb29-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb29-3"><a aria-label="3"></a>    <span class="co">// Asynchronous work</span></span>
-<span id="cb29-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a aria-label="1"></a><span class="kw">private</span> async Task <span class="fu">DoSomethingAsync</span><span class="op">()</span></span>
+<span id="cb25-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb25-3"><a aria-label="3"></a>    <span class="co">// Asynchronous work</span></span>
+<span id="cb25-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>An asynchronous method commonly returns:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb30-1"><a aria-label="1"></a>Task</span>
-<span id="cb30-2"><a aria-label="2"></a>Task&lt;T&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Event handlers are a common exception.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb26-1"><a aria-label="1"></a>Task</span>
+<span id="cb26-2"><a aria-label="2"></a>Task&lt;T&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Event handlers are a common exception - they are often <code>void</code>.</p>
+<p>You can have any async method returning void if you want.</p>
 </section>
 <section id="the-await-keyword" class="slide level2">
 <h2>The <code>await</code> Keyword</h2>
 <p><code>await</code> allows us to wait for a task to complete without blocking the current thread.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a aria-label="1"></a>await <span class="fu">SomeOperationAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a>await <span class="fu">SomeOperationAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Conceptually:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb32-1"><a aria-label="1"></a>Start operation</span>
-<span id="cb32-2"><a aria-label="2"></a>      |</span>
-<span id="cb32-3"><a aria-label="3"></a>      v</span>
-<span id="cb32-4"><a aria-label="4"></a>   await</span>
-<span id="cb32-5"><a aria-label="5"></a>      |</span>
-<span id="cb32-6"><a aria-label="6"></a>      | UI thread is free</span>
-<span id="cb32-7"><a aria-label="7"></a>      |</span>
-<span id="cb32-8"><a aria-label="8"></a>      v</span>
-<span id="cb32-9"><a aria-label="9"></a>Operation completes</span>
-<span id="cb32-10"><a aria-label="10"></a>      |</span>
-<span id="cb32-11"><a aria-label="11"></a>      v</span>
-<span id="cb32-12"><a aria-label="12"></a>Continue here</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb28-1"><a aria-label="1"></a>Start operation</span>
+<span id="cb28-2"><a aria-label="2"></a>      |</span>
+<span id="cb28-3"><a aria-label="3"></a>      v</span>
+<span id="cb28-4"><a aria-label="4"></a>   await</span>
+<span id="cb28-5"><a aria-label="5"></a>      |</span>
+<span id="cb28-6"><a aria-label="6"></a>      | UI thread is free</span>
+<span id="cb28-7"><a aria-label="7"></a>      |</span>
+<span id="cb28-8"><a aria-label="8"></a>      v</span>
+<span id="cb28-9"><a aria-label="9"></a>Operation completes</span>
+<span id="cb28-10"><a aria-label="10"></a>      |</span>
+<span id="cb28-11"><a aria-label="11"></a>      v</span>
+<span id="cb28-12"><a aria-label="12"></a>Continue here</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So the operation is started, it gets to the await part, the UI thread can do whatever it wants, when the awaited Task finishes, it returns to complete the rest of the method line by line.</p>
 </section>
 <section id="await-does-not-mean-use-another-thread" class="slide level2">
 <h2><code>await</code> Does Not Mean “Use Another Thread”</h2>
 <p>This is important.</p>
 <p><code>await</code> does <strong>not</strong> automatically create another thread.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>does not mean:</p>
 <blockquote>
 <p>“Create another thread and make it sleep.”</p>
@@ -658,16 +625,14 @@
 <section id="task.delay" class="slide level2">
 <h2><code>Task.Delay</code></h2>
 <p>A simple example is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span></span>
-<span id="cb34-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb34-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb34-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb34-5"><a aria-label="5"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Starting..."</span><span class="op">;</span></span>
-<span id="cb34-6"><a aria-label="6"></a></span>
-<span id="cb34-7"><a aria-label="7"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span>
-<span id="cb34-8"><a aria-label="8"></a></span>
-<span id="cb34-9"><a aria-label="9"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
-<span id="cb34-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span> <span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb30-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb30-3"><a aria-label="3"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Starting..."</span><span class="op">;</span></span>
+<span id="cb30-4"><a aria-label="4"></a></span>
+<span id="cb30-5"><a aria-label="5"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span>
+<span id="cb30-6"><a aria-label="6"></a></span>
+<span id="cb30-7"><a aria-label="7"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
+<span id="cb30-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The application does not freeze for five seconds.</p>
 <p>The UI thread is available while we wait.</p>
 </section>
@@ -681,40 +646,137 @@
 </ul>
 <p>The application remains responsive.</p>
 <p>Compare this with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a>Thread<span class="op">.</span><span class="fu">Sleep</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a aria-label="1"></a>Thread<span class="op">.</span><span class="fu">Sleep</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-if-we-forget-await" class="slide level2">
+<h2>What If We Forget <code>await</code>?</h2>
+<p>Consider this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb32-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb32-3"><a aria-label="3"></a>    <span class="fu">DoSomethingAsync</span><span class="op">();</span></span>
+<span id="cb32-4"><a aria-label="4"></a></span>
+<span id="cb32-5"><a aria-label="5"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished"</span><span class="op">;</span></span>
+<span id="cb32-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>DoSomethingAsync()</code> starts an asynchronous operation.</p>
+<p>But we did <strong>not</strong> use <code>await</code>.</p>
+<p>So the code continues immediately.</p>
+</section>
+<section id="what-is-the-task-doing" class="slide level2">
+<h2>What Is the Task Doing?</h2>
+<p>Suppose our asynchronous method updates the UI every second:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a aria-label="1"></a><span class="kw">private</span> async Task <span class="fu">DoSomethingAsync</span><span class="op">()</span></span>
+<span id="cb33-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb33-3"><a aria-label="3"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb33-4"><a aria-label="4"></a>    <span class="op">{</span></span>
+<span id="cb33-5"><a aria-label="5"></a>        await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb33-6"><a aria-label="6"></a></span>
+<span id="cb33-7"><a aria-label="7"></a>        Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb33-8"><a aria-label="8"></a>        <span class="op">{</span></span>
+<span id="cb33-9"><a aria-label="9"></a>            ProgressLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> $<span class="st">"Working... {i}"</span><span class="op">;</span></span>
+<span id="cb33-10"><a aria-label="10"></a>        <span class="op">});</span></span>
+<span id="cb33-11"><a aria-label="11"></a>    <span class="op">}</span></span>
+<span id="cb33-12"><a aria-label="12"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When we call it without <code>await</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a aria-label="1"></a><span class="fu">DoSomethingAsync</span><span class="op">();</span></span>
+<span id="cb34-2"><a aria-label="2"></a></span>
+<span id="cb34-3"><a aria-label="3"></a>ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>we might see:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb35-1"><a aria-label="1"></a>ResultLabel:    Finished</span>
+<span id="cb35-2"><a aria-label="2"></a></span>
+<span id="cb35-3"><a aria-label="3"></a>ProgressLabel:  Working... 1</span>
+<span id="cb35-4"><a aria-label="4"></a>                Working... 2</span>
+<span id="cb35-5"><a aria-label="5"></a>                Working... 3</span>
+<span id="cb35-6"><a aria-label="6"></a>                Working... 4</span>
+<span id="cb35-7"><a aria-label="7"></a>                Working... 5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><code>Finished</code> appears before the Task has finished its work.</strong></p>
+<p>The asynchronous operation is still running in the background while the rest of the method continues.</p>
+</section>
+<section id="now-add-await" class="slide level2">
+<h2>Now Add <code>await</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb36-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb36-3"><a aria-label="3"></a>    await <span class="fu">DoSomethingAsync</span><span class="op">();</span></span>
+<span id="cb36-4"><a aria-label="4"></a></span>
+<span id="cb36-5"><a aria-label="5"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished"</span><span class="op">;</span></span>
+<span id="cb36-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now the order changes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a aria-label="1"></a>ProgressLabel:  Working... 1</span>
+<span id="cb37-2"><a aria-label="2"></a>                Working... 2</span>
+<span id="cb37-3"><a aria-label="3"></a>                Working... 3</span>
+<span id="cb37-4"><a aria-label="4"></a>                Working... 4</span>
+<span id="cb37-5"><a aria-label="5"></a>                Working... 5</span>
+<span id="cb37-6"><a aria-label="6"></a></span>
+<span id="cb37-7"><a aria-label="7"></a>ResultLabel:    Finished</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The calling method waits at <code>await</code> until the Task completes.</p>
+</section>
+<section id="the-important-difference" class="slide level2">
+<h2>The Important Difference</h2>
+<p>Without <code>await</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb38-1"><a aria-label="1"></a>Start Task</span>
+<span id="cb38-2"><a aria-label="2"></a>    ↓</span>
+<span id="cb38-3"><a aria-label="3"></a>Continue immediately</span>
+<span id="cb38-4"><a aria-label="4"></a>    ↓</span>
+<span id="cb38-5"><a aria-label="5"></a>"Finished"</span>
+<span id="cb38-6"><a aria-label="6"></a>    ↓</span>
+<span id="cb38-7"><a aria-label="7"></a>Task continues running</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With <code>await</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb39-1"><a aria-label="1"></a>Start Task</span>
+<span id="cb39-2"><a aria-label="2"></a>    ↓</span>
+<span id="cb39-3"><a aria-label="3"></a>      await</span>
+<span id="cb39-4"><a aria-label="4"></a>    ↓</span>
+<span id="cb39-5"><a aria-label="5"></a>Task continues running</span>
+<span id="cb39-6"><a aria-label="6"></a>    ↓</span>
+<span id="cb39-7"><a aria-label="7"></a>Task completes</span>
+<span id="cb39-8"><a aria-label="8"></a>    ↓</span>
+<span id="cb39-9"><a aria-label="9"></a>Continue here</span>
+<span id="cb39-10"><a aria-label="10"></a>    ↓</span>
+<span id="cb39-11"><a aria-label="11"></a>"Finished"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><code>await</code> does not start the asynchronous operation.</p>
+<p>Calling the method starts the operation.</p>
+<p><code>await</code> tells the current method to wait for that <code>Task</code> to complete before continuing.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="blocking-vs-asynchronous-waiting" class="slide level2">
 <h2>Blocking vs Asynchronous Waiting</h2>
 <h3 id="blocking">Blocking</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a>Thread<span class="op">.</span><span class="fu">Sleep</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a aria-label="1"></a>UI THREAD</span>
-<span id="cb37-2"><a aria-label="2"></a>   |</span>
-<span id="cb37-3"><a aria-label="3"></a>   |------ blocked ------|</span>
-<span id="cb37-4"><a aria-label="4"></a>   |</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a aria-label="1"></a>Thread<span class="op">.</span><span class="fu">Sleep</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb41-1"><a aria-label="1"></a>UI THREAD</span>
+<span id="cb41-2"><a aria-label="2"></a>   |</span>
+<span id="cb41-3"><a aria-label="3"></a>   |------ blocked ------|</span>
+<span id="cb41-4"><a aria-label="4"></a>   |</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The UI thread cannot do anything else.</p>
 <h3 id="asynchronous">Asynchronous</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb38-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb39-1"><a aria-label="1"></a>UI THREAD</span>
-<span id="cb39-2"><a aria-label="2"></a>   |</span>
-<span id="cb39-3"><a aria-label="3"></a>   |-- free to process UI --|</span>
-<span id="cb39-4"><a aria-label="4"></a>   |</span>
-<span id="cb39-5"><a aria-label="5"></a>   v</span>
-<span id="cb39-6"><a aria-label="6"></a>continue</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb42-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb43-1"><a aria-label="1"></a>UI THREAD</span>
+<span id="cb43-2"><a aria-label="2"></a>   |</span>
+<span id="cb43-3"><a aria-label="3"></a>   |-- free to process UI --|</span>
+<span id="cb43-4"><a aria-label="4"></a>   |</span>
+<span id="cb43-5"><a aria-label="5"></a>   v</span>
+<span id="cb43-6"><a aria-label="6"></a>continue</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The UI thread remains available.</p>
 </section>
 <section id="async-and-await-work-together" class="slide level2">
 <h2><code>async</code> and <code>await</code> Work Together</h2>
 <p>Consider:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span></span>
-<span id="cb40-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb40-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb40-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb40-5"><a aria-label="5"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Starting..."</span><span class="op">;</span></span>
-<span id="cb40-6"><a aria-label="6"></a></span>
-<span id="cb40-7"><a aria-label="7"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span>
-<span id="cb40-8"><a aria-label="8"></a></span>
-<span id="cb40-9"><a aria-label="9"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
-<span id="cb40-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb44-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb44-3"><a aria-label="3"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Starting..."</span><span class="op">;</span></span>
+<span id="cb44-4"><a aria-label="4"></a></span>
+<span id="cb44-5"><a aria-label="5"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span>
+<span id="cb44-6"><a aria-label="6"></a></span>
+<span id="cb44-7"><a aria-label="7"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
+<span id="cb44-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>async</code> allows the method to use <code>await</code>.</p>
 <p><code>await</code> allows us to wait for an asynchronous operation without blocking the thread.</p>
 <p>They are commonly used together.</p>
@@ -723,44 +785,42 @@
 <h2>Returning a Result</h2>
 <p>An asynchronous method can also return a result.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb41-1"><a aria-label="1"></a><span class="kw">private</span> async Task<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> <span class="fu">GetMessageAsync</span><span class="op">()</span></span>
-<span id="cb41-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb41-3"><a aria-label="3"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">2000</span><span class="op">);</span></span>
-<span id="cb41-4"><a aria-label="4"></a></span>
-<span id="cb41-5"><a aria-label="5"></a>    <span class="kw">return</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
-<span id="cb41-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a><span class="kw">private</span> async Task<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> <span class="fu">GetMessageAsync</span><span class="op">()</span></span>
+<span id="cb45-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb45-3"><a aria-label="3"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">2000</span><span class="op">);</span></span>
+<span id="cb45-4"><a aria-label="4"></a></span>
+<span id="cb45-5"><a aria-label="5"></a>    <span class="kw">return</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
+<span id="cb45-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The method returns:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb42-1"><a aria-label="1"></a>Task&lt;string&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb46-1"><a aria-label="1"></a>Task&lt;string&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The eventual result will be a <code>string</code>.</p>
 </section>
 <section id="using-the-result" class="slide level2">
 <h2>Using the Result</h2>
 <p>We can await the method:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a aria-label="1"></a><span class="dt">string</span> message <span class="op">=</span> await <span class="fu">GetMessageAsync</span><span class="op">();</span></span>
-<span id="cb43-2"><a aria-label="2"></a></span>
-<span id="cb43-3"><a aria-label="3"></a>StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> message<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a><span class="dt">string</span> message <span class="op">=</span> await <span class="fu">GetMessageAsync</span><span class="op">();</span></span>
+<span id="cb47-2"><a aria-label="2"></a></span>
+<span id="cb47-3"><a aria-label="3"></a>StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> message<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The method waits for the task to complete.</p>
 <p>Once it has completed, <code>message</code> contains the returned string.</p>
 </section>
 <section id="task-vs-taskt" class="slide level2">
 <h2><code>Task</code> vs <code>Task&lt;T&gt;</code></h2>
 <p>The distinction is straightforward.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a>Task</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a>Task</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>An asynchronous operation that does not return a value.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb49-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>An asynchronous operation that eventually returns a <code>string</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb46-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb50-1"><a aria-label="1"></a>Task<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>An asynchronous operation that eventually returns an <code>int</code>.</p>
 </section>
 <section id="async-event-handlers" class="slide level2">
 <h2>Async Event Handlers</h2>
 <p>Button event handlers are commonly written as:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span></span>
-<span id="cb47-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb47-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb47-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb47-5"><a aria-label="5"></a>    await <span class="fu">SomeOperationAsync</span><span class="op">();</span></span>
-<span id="cb47-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb51-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb51-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb51-3"><a aria-label="3"></a>    await <span class="fu">SomeOperationAsync</span><span class="op">();</span></span>
+<span id="cb51-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Normally, asynchronous methods should return <code>Task</code> or <code>Task&lt;T&gt;</code>.</p>
 <p>Event handlers are a common exception because the event system expects a <code>void</code> method.</p>
 </section>
@@ -768,33 +828,29 @@
 <h2>Async and the UI</h2>
 <p>An important feature of <code>await</code> in a MAUI event handler is that, after the awaited operation completes, execution can continue in the UI context.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span></span>
-<span id="cb48-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb48-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb48-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb48-5"><a aria-label="5"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">2000</span><span class="op">);</span></span>
-<span id="cb48-6"><a aria-label="6"></a></span>
-<span id="cb48-7"><a aria-label="7"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
-<span id="cb48-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb52-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb52-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb52-3"><a aria-label="3"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">2000</span><span class="op">);</span></span>
+<span id="cb52-4"><a aria-label="4"></a></span>
+<span id="cb52-5"><a aria-label="5"></a>    StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span>
+<span id="cb52-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The UI update can be made after the <code>await</code>.</p>
 <p>This is one reason asynchronous programming is so useful in UI applications.</p>
 </section>
 <section id="back-to-our-calculation" class="slide level2">
 <h2>Back to Our Calculation</h2>
 <p>Earlier we had this problem:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb49-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span></span>
-<span id="cb49-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb49-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb49-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb49-5"><a aria-label="5"></a>    <span class="dt">long</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb49-6"><a aria-label="6"></a></span>
-<span id="cb49-7"><a aria-label="7"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5000000000</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb49-8"><a aria-label="8"></a>    <span class="op">{</span></span>
-<span id="cb49-9"><a aria-label="9"></a>        total <span class="op">+=</span> i<span class="op">;</span></span>
-<span id="cb49-10"><a aria-label="10"></a>    <span class="op">}</span></span>
-<span id="cb49-11"><a aria-label="11"></a></span>
-<span id="cb49-12"><a aria-label="12"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> total<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
-<span id="cb49-13"><a aria-label="13"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb53-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb53-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb53-3"><a aria-label="3"></a>    <span class="dt">long</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb53-4"><a aria-label="4"></a></span>
+<span id="cb53-5"><a aria-label="5"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5000000000</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb53-6"><a aria-label="6"></a>    <span class="op">{</span></span>
+<span id="cb53-7"><a aria-label="7"></a>        total <span class="op">+=</span> i<span class="op">;</span></span>
+<span id="cb53-8"><a aria-label="8"></a>    <span class="op">}</span></span>
+<span id="cb53-9"><a aria-label="9"></a></span>
+<span id="cb53-10"><a aria-label="10"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> total<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
+<span id="cb53-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The calculation runs on the UI thread.</p>
 <p>The UI can become unresponsive.</p>
 <p>So how do we solve this?</p>
@@ -802,61 +858,59 @@
 <section id="a-solution-task.run" class="slide level2">
 <h2>A Solution: <code>Task.Run()</code></h2>
 <p><code>Task.Run()</code> can be used to perform <strong>CPU-bound work</strong> on a ThreadPool thread.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb50-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span></span>
-<span id="cb50-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb50-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb50-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb50-5"><a aria-label="5"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Calculating..."</span><span class="op">;</span></span>
-<span id="cb50-6"><a aria-label="6"></a></span>
-<span id="cb50-7"><a aria-label="7"></a>    <span class="dt">long</span> total <span class="op">=</span> await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb50-8"><a aria-label="8"></a>    <span class="op">{</span></span>
-<span id="cb50-9"><a aria-label="9"></a>        <span class="dt">long</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb50-10"><a aria-label="10"></a></span>
-<span id="cb50-11"><a aria-label="11"></a>        <span class="kw">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5000000000</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb50-12"><a aria-label="12"></a>        <span class="op">{</span></span>
-<span id="cb50-13"><a aria-label="13"></a>            result <span class="op">+=</span> i<span class="op">;</span></span>
-<span id="cb50-14"><a aria-label="14"></a>        <span class="op">}</span></span>
-<span id="cb50-15"><a aria-label="15"></a></span>
-<span id="cb50-16"><a aria-label="16"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
-<span id="cb50-17"><a aria-label="17"></a>    <span class="op">});</span></span>
-<span id="cb50-18"><a aria-label="18"></a></span>
-<span id="cb50-19"><a aria-label="19"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> total<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
-<span id="cb50-20"><a aria-label="20"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb54-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb54-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb54-3"><a aria-label="3"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Calculating..."</span><span class="op">;</span></span>
+<span id="cb54-4"><a aria-label="4"></a></span>
+<span id="cb54-5"><a aria-label="5"></a>    <span class="dt">long</span> total <span class="op">=</span> await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb54-6"><a aria-label="6"></a>    <span class="op">{</span></span>
+<span id="cb54-7"><a aria-label="7"></a>        <span class="dt">long</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb54-8"><a aria-label="8"></a></span>
+<span id="cb54-9"><a aria-label="9"></a>        <span class="kw">for</span> <span class="op">(</span><span class="dt">long</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5000000000</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb54-10"><a aria-label="10"></a>        <span class="op">{</span></span>
+<span id="cb54-11"><a aria-label="11"></a>            result <span class="op">+=</span> i<span class="op">;</span></span>
+<span id="cb54-12"><a aria-label="12"></a>        <span class="op">}</span></span>
+<span id="cb54-13"><a aria-label="13"></a></span>
+<span id="cb54-14"><a aria-label="14"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
+<span id="cb54-15"><a aria-label="15"></a>    <span class="op">});</span></span>
+<span id="cb54-16"><a aria-label="16"></a></span>
+<span id="cb54-17"><a aria-label="17"></a>    ResultLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> total<span class="op">.</span><span class="fu">ToString</span><span class="op">();</span></span>
+<span id="cb54-18"><a aria-label="18"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="what-is-happening" class="slide level2">
 <h2>What Is Happening?</h2>
 <p>The important part is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb51-1"><a aria-label="1"></a><span class="dt">long</span> total <span class="op">=</span> await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb51-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb51-3"><a aria-label="3"></a>    <span class="co">// Long-running calculation</span></span>
-<span id="cb51-4"><a aria-label="4"></a></span>
-<span id="cb51-5"><a aria-label="5"></a>    <span class="kw">return</span> result<span class="op">;</span></span>
-<span id="cb51-6"><a aria-label="6"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb55-1"><a aria-label="1"></a><span class="dt">long</span> total <span class="op">=</span> await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb55-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb55-3"><a aria-label="3"></a>    <span class="co">// Long-running calculation</span></span>
+<span id="cb55-4"><a aria-label="4"></a></span>
+<span id="cb55-5"><a aria-label="5"></a>    <span class="kw">return</span> result<span class="op">;</span></span>
+<span id="cb55-6"><a aria-label="6"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The calculation is handed off to another thread.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb52-1"><a aria-label="1"></a>UI THREAD</span>
-<span id="cb52-2"><a aria-label="2"></a>    |</span>
-<span id="cb52-3"><a aria-label="3"></a>    | Task.Run()</span>
-<span id="cb52-4"><a aria-label="4"></a>    v</span>
-<span id="cb52-5"><a aria-label="5"></a>ThreadPool thread</span>
-<span id="cb52-6"><a aria-label="6"></a>    |</span>
-<span id="cb52-7"><a aria-label="7"></a>    | calculation</span>
-<span id="cb52-8"><a aria-label="8"></a>    v</span>
-<span id="cb52-9"><a aria-label="9"></a>  result</span>
-<span id="cb52-10"><a aria-label="10"></a>    |</span>
-<span id="cb52-11"><a aria-label="11"></a>    | await</span>
-<span id="cb52-12"><a aria-label="12"></a>    v</span>
-<span id="cb52-13"><a aria-label="13"></a>UI THREAD</span>
-<span id="cb52-14"><a aria-label="14"></a>    |</span>
-<span id="cb52-15"><a aria-label="15"></a>    v</span>
-<span id="cb52-16"><a aria-label="16"></a>Update the UI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb56-1"><a aria-label="1"></a>UI THREAD</span>
+<span id="cb56-2"><a aria-label="2"></a>    |</span>
+<span id="cb56-3"><a aria-label="3"></a>    | Task.Run()</span>
+<span id="cb56-4"><a aria-label="4"></a>    v</span>
+<span id="cb56-5"><a aria-label="5"></a>ThreadPool thread</span>
+<span id="cb56-6"><a aria-label="6"></a>    |</span>
+<span id="cb56-7"><a aria-label="7"></a>    | calculation</span>
+<span id="cb56-8"><a aria-label="8"></a>    v</span>
+<span id="cb56-9"><a aria-label="9"></a>  result</span>
+<span id="cb56-10"><a aria-label="10"></a>    |</span>
+<span id="cb56-11"><a aria-label="11"></a>    | await</span>
+<span id="cb56-12"><a aria-label="12"></a>    v</span>
+<span id="cb56-13"><a aria-label="13"></a>UI THREAD</span>
+<span id="cb56-14"><a aria-label="14"></a>    |</span>
+<span id="cb56-15"><a aria-label="15"></a>    v</span>
+<span id="cb56-16"><a aria-label="16"></a>Update the UI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The UI thread is not stuck performing the calculation.</p>
 </section>
 <section id="task.run-is-not-needed-for-everything" class="slide level2">
 <h2><code>Task.Run()</code> Is Not Needed for Everything</h2>
 <p>We should not automatically wrap every operation in:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb53-1"><a aria-label="1"></a>Task<span class="op">.</span><span class="fu">Run</span><span class="op">(...)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb57-1"><a aria-label="1"></a>Task<span class="op">.</span><span class="fu">Run</span><span class="op">(...)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb54-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb58-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>does not need <code>Task.Run()</code>.</p>
 <p>There is no long-running calculation that needs another thread.</p>
 <p><code>Task.Run()</code> is particularly useful for <strong>CPU-bound work</strong> that would otherwise occupy the UI thread.</p>
@@ -866,45 +920,44 @@
 <p>These solve related but different problems.</p>
 <h3 id="await"><code>await</code></h3>
 <p>Allows us to wait for an asynchronous operation without blocking the current thread.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb55-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb59-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">5000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h3 id="task.run"><code>Task.Run()</code></h3>
 <p>Moves suitable CPU-bound work to the ThreadPool.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb56-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb56-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb56-3"><a aria-label="3"></a>    <span class="co">// CPU-bound work</span></span>
-<span id="cb56-4"><a aria-label="4"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb60-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb60-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb60-3"><a aria-label="3"></a>    <span class="co">// CPU-bound work</span></span>
+<span id="cb60-4"><a aria-label="4"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>They can be used together.</p>
 </section>
 <section id="why-this-matters-in-maui" class="slide level2">
 <h2>Why This Matters in MAUI</h2>
 <p>A responsive application should not spend a long time doing CPU-intensive work on the UI thread.</p>
 <p>Instead:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb57-1"><a aria-label="1"></a>UI THREAD</span>
-<span id="cb57-2"><a aria-label="2"></a>    |</span>
-<span id="cb57-3"><a aria-label="3"></a>    | Start calculation</span>
-<span id="cb57-4"><a aria-label="4"></a>    |</span>
-<span id="cb57-5"><a aria-label="5"></a>    +----------------------+</span>
-<span id="cb57-6"><a aria-label="6"></a>                           |</span>
-<span id="cb57-7"><a aria-label="7"></a>                           v</span>
-<span id="cb57-8"><a aria-label="8"></a>                    THREADPOOL THREAD</span>
-<span id="cb57-9"><a aria-label="9"></a>                           |</span>
-<span id="cb57-10"><a aria-label="10"></a>                           | Calculation</span>
-<span id="cb57-11"><a aria-label="11"></a>                           |</span>
-<span id="cb57-12"><a aria-label="12"></a>                           v</span>
-<span id="cb57-13"><a aria-label="13"></a>                         Result</span>
-<span id="cb57-14"><a aria-label="14"></a>                           |</span>
-<span id="cb57-15"><a aria-label="15"></a>                           v</span>
-<span id="cb57-16"><a aria-label="16"></a>                       UI THREAD</span>
-<span id="cb57-17"><a aria-label="17"></a>                           |</span>
-<span id="cb57-18"><a aria-label="18"></a>                           v</span>
-<span id="cb57-19"><a aria-label="19"></a>                     Update screen</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb61-1"><a aria-label="1"></a>UI THREAD</span>
+<span id="cb61-2"><a aria-label="2"></a>    |</span>
+<span id="cb61-3"><a aria-label="3"></a>    | Start calculation</span>
+<span id="cb61-4"><a aria-label="4"></a>    |</span>
+<span id="cb61-5"><a aria-label="5"></a>    +----------------------+</span>
+<span id="cb61-6"><a aria-label="6"></a>                           |</span>
+<span id="cb61-7"><a aria-label="7"></a>                           v</span>
+<span id="cb61-8"><a aria-label="8"></a>                    THREADPOOL THREAD</span>
+<span id="cb61-9"><a aria-label="9"></a>                           |</span>
+<span id="cb61-10"><a aria-label="10"></a>                           | Calculation</span>
+<span id="cb61-11"><a aria-label="11"></a>                           |</span>
+<span id="cb61-12"><a aria-label="12"></a>                           v</span>
+<span id="cb61-13"><a aria-label="13"></a>                         Result</span>
+<span id="cb61-14"><a aria-label="14"></a>                           |</span>
+<span id="cb61-15"><a aria-label="15"></a>                           v</span>
+<span id="cb61-16"><a aria-label="16"></a>                       UI THREAD</span>
+<span id="cb61-17"><a aria-label="17"></a>                           |</span>
+<span id="cb61-18"><a aria-label="18"></a>                           v</span>
+<span id="cb61-19"><a aria-label="19"></a>                     Update screen</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The user can continue interacting with the application while the calculation runs.</p>
 </section>
 <section id="another-form-of-asynchronous-work" class="slide level2">
 <h2>Another Form of Asynchronous Work</h2>
 <p>So far we have looked at waiting and calculations.</p>
-<p>But there is another place where asynchronous programming appears frequently in MAUI:</p>
-<p><strong>animations.</strong></p>
+<p>But there is another place where asynchronous programming appears frequently in MAUI: <strong>animations.</strong></p>
 <p>Animations take time.</p>
 <p>We do not want to freeze the UI while an animation is running.</p>
 </section>
@@ -923,85 +976,83 @@
 <section id="a-box-to-animate" class="slide level2">
 <h2>A Box to Animate</h2>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb58-1"><a aria-label="1"></a>&lt;<span class="kw">BoxView</span></span>
-<span id="cb58-2"><a aria-label="2"></a>    <span class="ot">x:Name=</span><span class="st">"MyBox"</span></span>
-<span id="cb58-3"><a aria-label="3"></a>    <span class="ot">WidthRequest=</span><span class="st">"100"</span></span>
-<span id="cb58-4"><a aria-label="4"></a>    <span class="ot">HeightRequest=</span><span class="st">"100"</span></span>
-<span id="cb58-5"><a aria-label="5"></a>    <span class="ot">HorizontalOptions=</span><span class="st">"Start"</span></span>
-<span id="cb58-6"><a aria-label="6"></a>    <span class="ot">VerticalOptions=</span><span class="st">"Start"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb62-1"><a aria-label="1"></a>&lt;<span class="kw">BoxView</span></span>
+<span id="cb62-2"><a aria-label="2"></a>    <span class="ot">x:Name=</span><span class="st">"MyBox"</span></span>
+<span id="cb62-3"><a aria-label="3"></a>    <span class="ot">WidthRequest=</span><span class="st">"100"</span></span>
+<span id="cb62-4"><a aria-label="4"></a>    <span class="ot">HeightRequest=</span><span class="st">"100"</span></span>
+<span id="cb62-5"><a aria-label="5"></a>    <span class="ot">HorizontalOptions=</span><span class="st">"Start"</span></span>
+<span id="cb62-6"><a aria-label="6"></a>    <span class="ot">VerticalOptions=</span><span class="st">"Start"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can move this box across the screen.</p>
 </section>
 <section id="moving-an-element" class="slide level2">
 <h2>Moving an Element</h2>
 <p>In .NET 10, use:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb59-1"><a aria-label="1"></a><span class="fu">TranslateToAsync</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb63-1"><a aria-label="1"></a><span class="fu">TranslateToAsync</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb60-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">MoveButtonClicked</span><span class="op">(</span></span>
-<span id="cb60-2"><a aria-label="2"></a>    <span class="dt">object</span> sender<span class="op">,</span></span>
-<span id="cb60-3"><a aria-label="3"></a>    EventArgs e<span class="op">)</span></span>
-<span id="cb60-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb60-5"><a aria-label="5"></a>    await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span></span>
-<span id="cb60-6"><a aria-label="6"></a>        <span class="dv">100</span><span class="op">,</span></span>
-<span id="cb60-7"><a aria-label="7"></a>        <span class="dv">0</span><span class="op">,</span></span>
-<span id="cb60-8"><a aria-label="8"></a>        <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb60-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb64-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">MoveButtonClicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb64-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb64-3"><a aria-label="3"></a>    await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span></span>
+<span id="cb64-4"><a aria-label="4"></a>        <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb64-5"><a aria-label="5"></a>        <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb64-6"><a aria-label="6"></a>        <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb64-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The arguments are:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb61-1"><a aria-label="1"></a>X position</span>
-<span id="cb61-2"><a aria-label="2"></a>Y position</span>
-<span id="cb61-3"><a aria-label="3"></a>Duration in milliseconds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb65-1"><a aria-label="1"></a>X position</span>
+<span id="cb65-2"><a aria-label="2"></a>Y position</span>
+<span id="cb65-3"><a aria-label="3"></a>Duration in milliseconds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>So this means:</p>
 <blockquote>
-<p>Move 100 pixels horizontally over 1 second.</p>
+<p>Move to position 100 pixels horizontally over 1 second.</p>
 </blockquote>
 </section>
 <section id="why-await-the-animation" class="slide level2">
 <h2>Why <code>await</code> the Animation?</h2>
 <p>The animation takes time.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb62-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span></span>
-<span id="cb62-2"><a aria-label="2"></a>    <span class="dv">100</span><span class="op">,</span></span>
-<span id="cb62-3"><a aria-label="3"></a>    <span class="dv">0</span><span class="op">,</span></span>
-<span id="cb62-4"><a aria-label="4"></a>    <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb66-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span></span>
+<span id="cb66-2"><a aria-label="2"></a>    <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb66-3"><a aria-label="3"></a>    <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb66-4"><a aria-label="4"></a>    <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can allow the animation to finish before continuing.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb63-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb63-2"><a aria-label="2"></a></span>
-<span id="cb63-3"><a aria-label="3"></a>StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb67-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb67-2"><a aria-label="2"></a></span>
+<span id="cb67-3"><a aria-label="3"></a>StatusLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Finished!"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The label is updated after the animation completes.</p>
 </section>
 <section id="chaining-animations" class="slide level2">
 <h2>Chaining Animations</h2>
 <p>Because animations are asynchronous, we can easily run them one after another.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb64-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb64-2"><a aria-label="2"></a></span>
-<span id="cb64-3"><a aria-label="3"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb64-4"><a aria-label="4"></a></span>
-<span id="cb64-5"><a aria-label="5"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb64-6"><a aria-label="6"></a></span>
-<span id="cb64-7"><a aria-label="7"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb68-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb68-2"><a aria-label="2"></a></span>
+<span id="cb68-3"><a aria-label="3"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb68-4"><a aria-label="4"></a></span>
+<span id="cb68-5"><a aria-label="5"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb68-6"><a aria-label="6"></a></span>
+<span id="cb68-7"><a aria-label="7"></a>await MyBox<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The box moves:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb65-1"><a aria-label="1"></a>START</span>
-<span id="cb65-2"><a aria-label="2"></a>  |</span>
-<span id="cb65-3"><a aria-label="3"></a>  v</span>
-<span id="cb65-4"><a aria-label="4"></a>RIGHT</span>
-<span id="cb65-5"><a aria-label="5"></a>  |</span>
-<span id="cb65-6"><a aria-label="6"></a>  v</span>
-<span id="cb65-7"><a aria-label="7"></a>DOWN</span>
-<span id="cb65-8"><a aria-label="8"></a>  |</span>
-<span id="cb65-9"><a aria-label="9"></a>  v</span>
-<span id="cb65-10"><a aria-label="10"></a>LEFT</span>
-<span id="cb65-11"><a aria-label="11"></a>  |</span>
-<span id="cb65-12"><a aria-label="12"></a>  v</span>
-<span id="cb65-13"><a aria-label="13"></a>UP</span>
-<span id="cb65-14"><a aria-label="14"></a>  |</span>
-<span id="cb65-15"><a aria-label="15"></a>  v</span>
-<span id="cb65-16"><a aria-label="16"></a>START</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb69-1"><a aria-label="1"></a>START</span>
+<span id="cb69-2"><a aria-label="2"></a>  |</span>
+<span id="cb69-3"><a aria-label="3"></a>  v</span>
+<span id="cb69-4"><a aria-label="4"></a>RIGHT</span>
+<span id="cb69-5"><a aria-label="5"></a>  |</span>
+<span id="cb69-6"><a aria-label="6"></a>  v</span>
+<span id="cb69-7"><a aria-label="7"></a>DOWN</span>
+<span id="cb69-8"><a aria-label="8"></a>  |</span>
+<span id="cb69-9"><a aria-label="9"></a>  v</span>
+<span id="cb69-10"><a aria-label="10"></a>LEFT</span>
+<span id="cb69-11"><a aria-label="11"></a>  |</span>
+<span id="cb69-12"><a aria-label="12"></a>  v</span>
+<span id="cb69-13"><a aria-label="13"></a>UP</span>
+<span id="cb69-14"><a aria-label="14"></a>  |</span>
+<span id="cb69-15"><a aria-label="15"></a>  v</span>
+<span id="cb69-16"><a aria-label="16"></a>START</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each animation waits for the previous one to finish.</p>
 </section>
 <section id="fading" class="slide level2">
 <h2>Fading</h2>
 <p>We can also change the opacity of an element.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb66-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb66-2"><a aria-label="2"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb70-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb70-2"><a aria-label="2"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The first line fades the element out.</p>
 <p>The second line fades it back in.</p>
 <p><code>1</code> means fully visible.</p>
@@ -1010,19 +1061,19 @@
 <section id="scaling" class="slide level2">
 <h2>Scaling</h2>
 <p>We can make an element larger or smaller.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb67-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb67-2"><a aria-label="2"></a>await MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb71-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb71-2"><a aria-label="2"></a>await MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A scale of:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb68-1"><a aria-label="1"></a>1 = normal size</span>
-<span id="cb68-2"><a aria-label="2"></a>2 = twice the size</span>
-<span id="cb68-3"><a aria-label="3"></a>0.5 = half the size</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb72-1"><a aria-label="1"></a>1 = normal size</span>
+<span id="cb72-2"><a aria-label="2"></a>2 = twice the size</span>
+<span id="cb72-3"><a aria-label="3"></a>0.5 = half the size</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="rotation" class="slide level2">
 <h2>Rotation</h2>
 <p>We can rotate an element:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb69-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span></span>
-<span id="cb69-2"><a aria-label="2"></a>    <span class="dv">360</span><span class="op">,</span></span>
-<span id="cb69-3"><a aria-label="3"></a>    <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb73-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span></span>
+<span id="cb73-2"><a aria-label="2"></a>    <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb73-3"><a aria-label="3"></a>    <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This rotates the element through 360 degrees over one second.</p>
 </section>
 <section id="running-animations-together" class="slide level2">
@@ -1030,97 +1081,98 @@
 <p>So far, our animations have run one after another.</p>
 <p>We can also start several animations at the same time.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb70-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
-<span id="cb70-2"><a aria-label="2"></a>    MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">),</span></span>
-<span id="cb70-3"><a aria-label="3"></a>    MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">)</span></span>
-<span id="cb70-4"><a aria-label="4"></a><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
+<span id="cb74-2"><a aria-label="2"></a>    MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">),</span></span>
+<span id="cb74-3"><a aria-label="3"></a>    MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">)</span></span>
+<span id="cb74-4"><a aria-label="4"></a><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The box rotates and scales at the same time.</p>
 </section>
 <section id="task.whenall" class="slide level2">
 <h2><code>Task.WhenAll</code></h2>
 <p><code>Task.WhenAll()</code> waits until <strong>all</strong> of the supplied tasks have completed.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb71-1"><a aria-label="1"></a>             +-- Rotate --------+</span>
-<span id="cb71-2"><a aria-label="2"></a>             |                  |</span>
-<span id="cb71-3"><a aria-label="3"></a>START -------+                  +---- FINISHED</span>
-<span id="cb71-4"><a aria-label="4"></a>             |                  |</span>
-<span id="cb71-5"><a aria-label="5"></a>             +-- Scale ---------+</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb75-1"><a aria-label="1"></a>             +-- Rotate --------+</span>
+<span id="cb75-2"><a aria-label="2"></a>             |                  |</span>
+<span id="cb75-3"><a aria-label="3"></a>START -------+                  +---- FINISHED</span>
+<span id="cb75-4"><a aria-label="4"></a>             |                  |</span>
+<span id="cb75-5"><a aria-label="5"></a>             +-- Scale ---------+</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is useful when several independent asynchronous operations can happen simultaneously.</p>
 </section>
 <section id="sequential-vs-simultaneous" class="slide level2">
 <h2>Sequential vs Simultaneous</h2>
 <h3 id="sequential">Sequential</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb72-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb72-2"><a aria-label="2"></a>await MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb76-1"><a aria-label="1"></a>await MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb76-2"><a aria-label="2"></a>await MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>First rotate.</p>
 <p>Then scale.</p>
 <h3 id="simultaneous">Simultaneous</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb73-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
-<span id="cb73-2"><a aria-label="2"></a>    MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">),</span></span>
-<span id="cb73-3"><a aria-label="3"></a>    MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">)</span></span>
-<span id="cb73-4"><a aria-label="4"></a><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
+<span id="cb77-2"><a aria-label="2"></a>    MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">),</span></span>
+<span id="cb77-3"><a aria-label="3"></a>    MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">)</span></span>
+<span id="cb77-4"><a aria-label="4"></a><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Rotate and scale at the same time.</p>
 </section>
 <section id="combining-animations" class="slide level2">
 <h2>Combining Animations</h2>
 <p>We can combine several animations into a sequence.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
-<span id="cb74-2"><a aria-label="2"></a>    MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">),</span></span>
-<span id="cb74-3"><a aria-label="3"></a>    MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">)</span></span>
-<span id="cb74-4"><a aria-label="4"></a><span class="op">);</span></span>
-<span id="cb74-5"><a aria-label="5"></a></span>
-<span id="cb74-6"><a aria-label="6"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">500</span><span class="op">);</span></span>
-<span id="cb74-7"><a aria-label="7"></a></span>
-<span id="cb74-8"><a aria-label="8"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">500</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
+<span id="cb78-2"><a aria-label="2"></a>    MyBox<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">1000</span><span class="op">),</span></span>
+<span id="cb78-3"><a aria-label="3"></a>    MyBox<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">1000</span><span class="op">)</span></span>
+<span id="cb78-4"><a aria-label="4"></a><span class="op">);</span></span>
+<span id="cb78-5"><a aria-label="5"></a></span>
+<span id="cb78-6"><a aria-label="6"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">500</span><span class="op">);</span></span>
+<span id="cb78-7"><a aria-label="7"></a></span>
+<span id="cb78-8"><a aria-label="8"></a>await MyBox<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">500</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This gives us:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb75-1"><a aria-label="1"></a>Rotate + Scale</span>
-<span id="cb75-2"><a aria-label="2"></a>       |</span>
-<span id="cb75-3"><a aria-label="3"></a>       v</span>
-<span id="cb75-4"><a aria-label="4"></a>     Fade out</span>
-<span id="cb75-5"><a aria-label="5"></a>       |</span>
-<span id="cb75-6"><a aria-label="6"></a>       v</span>
-<span id="cb75-7"><a aria-label="7"></a>     Fade in</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb79-1"><a aria-label="1"></a>Rotate + Scale</span>
+<span id="cb79-2"><a aria-label="2"></a>       |</span>
+<span id="cb79-3"><a aria-label="3"></a>       v</span>
+<span id="cb79-4"><a aria-label="4"></a>     Fade out</span>
+<span id="cb79-5"><a aria-label="5"></a>       |</span>
+<span id="cb79-6"><a aria-label="6"></a>       v</span>
+<span id="cb79-7"><a aria-label="7"></a>     Fade in</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="cancelling-animations" class="slide level2">
 <h2>Cancelling Animations</h2>
 <p>An animation can also be cancelled.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb76-1"><a aria-label="1"></a>MyBox<span class="op">.</span><span class="fu">CancelAnimations</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb80-1"><a aria-label="1"></a>MyBox<span class="op">.</span><span class="fu">CancelAnimations</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is useful if the user starts another action and we no longer want the current animation to continue.</p>
 </section>
 <section id="pop-ups-are-asynchronous-too" class="slide level2">
 <h2>Pop-Ups Are Asynchronous Too</h2>
-<p>We have already seen methods such as:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a>await <span class="fu">DisplayAlertAsync</span><span class="op">(</span></span>
-<span id="cb77-2"><a aria-label="2"></a>    <span class="st">"Alert"</span><span class="op">,</span></span>
-<span id="cb77-3"><a aria-label="3"></a>    <span class="st">"You have been alerted"</span><span class="op">,</span></span>
-<span id="cb77-4"><a aria-label="4"></a>    <span class="st">"OK"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Sometimes we don’t need a whole new page to display or retrieve information to/from a user.</p>
+<p>Say we just want to pop up a warning message to a user such as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb81-1"><a aria-label="1"></a>await <span class="fu">DisplayAlertAsync</span><span class="op">(</span></span>
+<span id="cb81-2"><a aria-label="2"></a>    <span class="st">"Alert"</span><span class="op">,</span></span>
+<span id="cb81-3"><a aria-label="3"></a>    <span class="st">"You have been alerted"</span><span class="op">,</span></span>
+<span id="cb81-4"><a aria-label="4"></a>    <span class="st">"OK"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The alert takes control of the UI while the user decides what to do.</p>
 <p>We can await the result.</p>
 </section>
 <section id="getting-an-answer" class="slide level2">
 <h2>Getting an Answer</h2>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a><span class="dt">bool</span> answer <span class="op">=</span> await <span class="fu">DisplayAlertAsync</span><span class="op">(</span></span>
-<span id="cb78-2"><a aria-label="2"></a>    <span class="st">"Play?"</span><span class="op">,</span></span>
-<span id="cb78-3"><a aria-label="3"></a>    <span class="st">"Would you like to play a game?"</span><span class="op">,</span></span>
-<span id="cb78-4"><a aria-label="4"></a>    <span class="st">"Yes"</span><span class="op">,</span></span>
-<span id="cb78-5"><a aria-label="5"></a>    <span class="st">"No"</span><span class="op">);</span></span>
-<span id="cb78-6"><a aria-label="6"></a></span>
-<span id="cb78-7"><a aria-label="7"></a><span class="kw">if</span> <span class="op">(</span>answer<span class="op">)</span></span>
-<span id="cb78-8"><a aria-label="8"></a><span class="op">{</span></span>
-<span id="cb78-9"><a aria-label="9"></a>    <span class="co">// Start the game</span></span>
-<span id="cb78-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb82-1"><a aria-label="1"></a><span class="dt">bool</span> answer <span class="op">=</span> await <span class="fu">DisplayAlertAsync</span><span class="op">(</span></span>
+<span id="cb82-2"><a aria-label="2"></a>    <span class="st">"Play?"</span><span class="op">,</span></span>
+<span id="cb82-3"><a aria-label="3"></a>    <span class="st">"Would you like to play a game?"</span><span class="op">,</span></span>
+<span id="cb82-4"><a aria-label="4"></a>    <span class="st">"Yes"</span><span class="op">,</span></span>
+<span id="cb82-5"><a aria-label="5"></a>    <span class="st">"No"</span><span class="op">);</span></span>
+<span id="cb82-6"><a aria-label="6"></a></span>
+<span id="cb82-7"><a aria-label="7"></a><span class="kw">if</span> <span class="op">(</span>answer<span class="op">)</span></span>
+<span id="cb82-8"><a aria-label="8"></a><span class="op">{</span></span>
+<span id="cb82-9"><a aria-label="9"></a>    <span class="co">// Start the game</span></span>
+<span id="cb82-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The method returns:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb79-1"><a aria-label="1"></a>true  → Yes</span>
-<span id="cb79-2"><a aria-label="2"></a>false → No</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb83-1"><a aria-label="1"></a>true  → Yes</span>
+<span id="cb83-2"><a aria-label="2"></a>false → No</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The application can continue once the user has made their choice.</p>
 </section>
 <section id="asking-for-text" class="slide level2">
 <h2>Asking for Text</h2>
 <p>We can also use:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb80-1"><a aria-label="1"></a><span class="dt">string</span><span class="op">?</span> name <span class="op">=</span> await <span class="fu">DisplayPromptAsync</span><span class="op">(</span></span>
-<span id="cb80-2"><a aria-label="2"></a>    <span class="st">"Question"</span><span class="op">,</span></span>
-<span id="cb80-3"><a aria-label="3"></a>    <span class="st">"What's your name?"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb84-1"><a aria-label="1"></a><span class="dt">string</span><span class="op">?</span> name <span class="op">=</span> await <span class="fu">DisplayPromptAsync</span><span class="op">(</span></span>
+<span id="cb84-2"><a aria-label="2"></a>    <span class="st">"Question"</span><span class="op">,</span></span>
+<span id="cb84-3"><a aria-label="3"></a>    <span class="st">"What's your name?"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The user enters some text.</p>
 <p>The method completes when the user responds.</p>
 <p>The result is returned as a <code>string</code>.</p>
@@ -1128,32 +1180,32 @@
 <section id="the-bigger-picture" class="slide level2">
 <h2>The Bigger Picture</h2>
 <p>We have now seen several different situations where operations take time.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb81-1"><a aria-label="1"></a>CALCULATION</span>
-<span id="cb81-2"><a aria-label="2"></a>    |</span>
-<span id="cb81-3"><a aria-label="3"></a>    | Task.Run()</span>
-<span id="cb81-4"><a aria-label="4"></a>    v</span>
-<span id="cb81-5"><a aria-label="5"></a>OTHER THREAD</span>
-<span id="cb81-6"><a aria-label="6"></a></span>
-<span id="cb81-7"><a aria-label="7"></a></span>
-<span id="cb81-8"><a aria-label="8"></a>WAITING</span>
-<span id="cb81-9"><a aria-label="9"></a>    |</span>
-<span id="cb81-10"><a aria-label="10"></a>    | await</span>
-<span id="cb81-11"><a aria-label="11"></a>    v</span>
-<span id="cb81-12"><a aria-label="12"></a>UI THREAD REMAINS AVAILABLE</span>
-<span id="cb81-13"><a aria-label="13"></a></span>
-<span id="cb81-14"><a aria-label="14"></a></span>
-<span id="cb81-15"><a aria-label="15"></a>ANIMATION</span>
-<span id="cb81-16"><a aria-label="16"></a>    |</span>
-<span id="cb81-17"><a aria-label="17"></a>    | await</span>
-<span id="cb81-18"><a aria-label="18"></a>    v</span>
-<span id="cb81-19"><a aria-label="19"></a>UI REMAINS RESPONSIVE</span>
-<span id="cb81-20"><a aria-label="20"></a></span>
-<span id="cb81-21"><a aria-label="21"></a></span>
-<span id="cb81-22"><a aria-label="22"></a>TIMER</span>
-<span id="cb81-23"><a aria-label="23"></a>    |</span>
-<span id="cb81-24"><a aria-label="24"></a>    | dispatcher</span>
-<span id="cb81-25"><a aria-label="25"></a>    v</span>
-<span id="cb81-26"><a aria-label="26"></a>UI THREAD</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb85-1"><a aria-label="1"></a>CALCULATION</span>
+<span id="cb85-2"><a aria-label="2"></a>    |</span>
+<span id="cb85-3"><a aria-label="3"></a>    | Task.Run()</span>
+<span id="cb85-4"><a aria-label="4"></a>    v</span>
+<span id="cb85-5"><a aria-label="5"></a>OTHER THREAD</span>
+<span id="cb85-6"><a aria-label="6"></a></span>
+<span id="cb85-7"><a aria-label="7"></a></span>
+<span id="cb85-8"><a aria-label="8"></a>WAITING</span>
+<span id="cb85-9"><a aria-label="9"></a>    |</span>
+<span id="cb85-10"><a aria-label="10"></a>    | await</span>
+<span id="cb85-11"><a aria-label="11"></a>    v</span>
+<span id="cb85-12"><a aria-label="12"></a>UI THREAD REMAINS AVAILABLE</span>
+<span id="cb85-13"><a aria-label="13"></a></span>
+<span id="cb85-14"><a aria-label="14"></a></span>
+<span id="cb85-15"><a aria-label="15"></a>ANIMATION</span>
+<span id="cb85-16"><a aria-label="16"></a>    |</span>
+<span id="cb85-17"><a aria-label="17"></a>    | await</span>
+<span id="cb85-18"><a aria-label="18"></a>    v</span>
+<span id="cb85-19"><a aria-label="19"></a>UI REMAINS RESPONSIVE</span>
+<span id="cb85-20"><a aria-label="20"></a></span>
+<span id="cb85-21"><a aria-label="21"></a></span>
+<span id="cb85-22"><a aria-label="22"></a>TIMER</span>
+<span id="cb85-23"><a aria-label="23"></a>    |</span>
+<span id="cb85-24"><a aria-label="24"></a>    | dispatcher</span>
+<span id="cb85-25"><a aria-label="25"></a>    v</span>
+<span id="cb85-26"><a aria-label="26"></a>UI THREAD</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The key is understanding <strong>where the work happens</strong> and <strong>whether the UI thread is being blocked</strong>.</p>
 </section>
 <section id="three-things-to-remember" class="slide level2">
@@ -1164,10 +1216,10 @@
 <p>Allows us to wait for asynchronous operations without blocking the UI thread.</p>
 <h3 id="task.run-1">3. <code>Task.Run()</code></h3>
 <p>Can move suitable CPU-bound work away from the UI thread.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb82-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
-<span id="cb82-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb82-3"><a aria-label="3"></a>    <span class="co">// CPU-bound work</span></span>
-<span id="cb82-4"><a aria-label="4"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb86-1"><a aria-label="1"></a>await Task<span class="op">.</span><span class="fu">Run</span><span class="op">(()</span> <span class="op">=&gt;</span></span>
+<span id="cb86-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb86-3"><a aria-label="3"></a>    <span class="co">// CPU-bound work</span></span>
+<span id="cb86-4"><a aria-label="4"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="this-week-1" class="slide level2">
 <h2>This Week</h2>

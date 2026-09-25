@@ -235,7 +235,7 @@
 <section>
 <section id="net-maui" class="title-slide slide level1 center">
 <h1>.NET MAUI</h1>
-<p>A sample of the controls discussed here is available at <a href="https://github.com/DonH-ITS/CrossPlatform2026/tree/main/Week2">https://github.com/DonH-ITS/CrossPlatform2026/tree/main/Week2</a></p>
+<p>A sample of the controls discussed here is available at <a href="https://github.com/DonH-ITS/CrossPlatform2026/tree/main/Week2">https://github.com/DonH-ITS/CrossPlatform2026/tree/main/Week02</a></p>
 <p>That repository will contain the samples from lectures in the future too.</p>
 </section>
 <section id="why-.net-maui" class="slide level2">
@@ -1401,121 +1401,6 @@
 <p><strong>The documentation is your reference</strong></p>
 <p>You do <strong>not</strong> need to memorise every property.</p>
 <p>Know how to find the documentation and understand what you are looking at.</p>
-</section></section>
-<section>
-<section id="creating-controls-in-c" class="title-slide slide level1 center">
-<h1>Creating controls in C#</h1>
-
-</section>
-<section id="xaml-creates-objects" class="slide level2">
-<h2>XAML creates objects</h2>
-<p>When we write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb67-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span>
-<span id="cb67-2"><a aria-label="2"></a></span>
-<span id="cb67-3"><a aria-label="3"></a>&lt;<span class="kw">Entry</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>objects of those classes are being created.</p>
-<p>The Label is a <code>Label</code> object.</p>
-<p>The Entry is an <code>Entry</code> object.</p>
-<p>They become part of the UI object tree for our <code>MainPage</code>.</p>
-</section>
-<section id="working-with-those-objects-from-c" class="slide level2">
-<h2>Working with those objects from C#</h2>
-<p>Because these objects are part of our <code>MainPage</code> UI, our C# code can work with them.</p>
-<p>We could search through the UI object tree at runtime to find a particular object.</p>
-<p>But that would be cumbersome.</p>
-<p>We need an easier way to refer to important controls.</p>
-<p>Those controls are objects belonging to the MainPage class, so we need a reference to those objects</p>
-</section>
-<section id="xname" class="slide level2">
-<h2><code>x:Name</code></h2>
-<p><code>x:Name</code> gives a XAML-created object a name that we can use from code.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb68-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"GreetingLabel"</span> <span class="ot">Text=</span><span class="st">"Hello!"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now the code-behind can refer to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb69-1"><a aria-label="1"></a>GreetingLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Hello, world!"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb70-1"><a aria-label="1"></a>MainPage.xaml                                    MainPage.xaml.cs</span>
-<span id="cb70-2"><a aria-label="2"></a></span>
-<span id="cb70-3"><a aria-label="3"></a>┌───────────────────────────────┐                ┌───────────────────────────────┐</span>
-<span id="cb70-4"><a aria-label="4"></a>│ &lt;Label                        │                │ GreetingLabel                 │</span>
-<span id="cb70-5"><a aria-label="5"></a>│   x:Name="GreetingLabel"      │ ──x:Name──────►│   .Text = "Hello, world!";    │</span>
-<span id="cb70-6"><a aria-label="6"></a>│   Text="Hello!" /&gt;            │                │ (the same object)             │</span>
-<span id="cb70-7"><a aria-label="7"></a>└───────────────────────────────┘                └───────────────────────────────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Behind the scenes, <code>x:Name</code> is roughly equivalent to declaring a field at the top of the partial class:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb71-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
-<span id="cb71-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb71-3"><a aria-label="3"></a>    <span class="kw">private</span> Label GreetingLabel<span class="op">;</span></span>
-<span id="cb71-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You never write this yourself. When <code>InitializeComponent()</code> runs, it creates the <code>Label</code> from the XAML and assigns it to a field with exactly this name - that’s the “same object” in the diagram above.</p>
-<p><strong>XAML creates the object. <code>x:Name</code> gives us a reference to it.</strong></p>
-</section>
-<section id="creating-a-label-in-c" class="slide level2">
-<h2>Creating a Label in C#</h2>
-<p>We don’t have to use XAML.</p>
-<p>The same type of object can be created directly in C#:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb72-1"><a aria-label="1"></a>Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb72-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb72-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span></span>
-<span id="cb72-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can then add it to a layout:</p>
-<pre><code>&lt;VerticalStackLayout
-    x:Name="MainVerticalLayout"&gt;
-    &lt;!--
-
-    --&gt;
-&lt;/VerticalStackLayout&gt;</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a>MainVerticalLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-caution callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Caution</strong></p>
-</div>
-<div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb75-1"><a aria-label="1"></a><span class="kw">new</span> <span class="fu">Label</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>creates a new <code>Label</code> object.</p>
-<p>Every time that statement runs, a new object is created.</p>
-<p>So if you’re writing loops, be careful!</p>
-</div>
-</div>
-</div>
-</section>
-<section id="xaml-or-c" class="slide level2">
-<h2>XAML or C#?</h2>
-<p>We can configure a Label in XAML:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb76-1"><a aria-label="1"></a>&lt;<span class="kw">Label</span></span>
-<span id="cb76-2"><a aria-label="2"></a>    <span class="ot">Text=</span><span class="st">"Hello!"</span></span>
-<span id="cb76-3"><a aria-label="3"></a>    <span class="ot">FontSize=</span><span class="st">"24"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or in C#:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a>Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb77-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb77-3"><a aria-label="3"></a>    Text <span class="op">=</span> <span class="st">"Hello!"</span><span class="op">,</span></span>
-<span id="cb77-4"><a aria-label="4"></a>    FontSize <span class="op">=</span> <span class="dv">24</span></span>
-<span id="cb77-5"><a aria-label="5"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<h3 id="so-why-use-xaml">So why use XAML?</h3>
-<p>XAML is particularly good at describing:</p>
-<ul>
-<li>hierarchy, layout, properties, the static structure of the UI</li>
-</ul>
-<p>C# is particularly useful for:</p>
-<ul>
-<li>application logic, calculations, interaction, dynamic UI</li>
-</ul>
-</section>
-<section id="dynamic-ui" class="slide level2">
-<h2>Dynamic UI</h2>
-<p>Because controls are objects, we can create them dynamically.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb78-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb78-3"><a aria-label="3"></a>    Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb78-4"><a aria-label="4"></a>    <span class="op">{</span></span>
-<span id="cb78-5"><a aria-label="5"></a>        Text <span class="op">=</span> $<span class="st">"Item {i}"</span></span>
-<span id="cb78-6"><a aria-label="6"></a>    <span class="op">};</span></span>
-<span id="cb78-7"><a aria-label="7"></a></span>
-<span id="cb78-8"><a aria-label="8"></a>    MainVerticalLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span>
-<span id="cb78-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The application creates five separate Label objects.</p>
-<p><strong>This is useful when the UI depends on runtime information.</strong></p>
 
 
 </section></section>

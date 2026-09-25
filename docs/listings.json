@@ -3,13 +3,15 @@
     "listing": "/lectures.html",
     "items": [
       "/lectures/Week1/Week1.html",
-      "/lectures/Week2/Week2.html"
+      "/lectures/Week2/Week2.html",
+      "/lectures/Week3/Week3.html"
     ]
   },
   {
     "listing": "/labs.html",
     "items": [
-      "/labs/Lab 1 - Command Line.html"
+      "/labs/Lab 1 - Command Line.html",
+      "/labs/Lab 2 - Building a UI with XAML.html"
     ]
   }
 ]

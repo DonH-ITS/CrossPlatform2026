@@ -177,8 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="lab-3-first-.net-maui-application" class="level1">
-<h1>Lab 3 — First .NET MAUI Application</h1>
+<section id="lab-3---first-.net-maui-application" class="level1">
+<h1>Lab 3 - First .NET MAUI Application</h1>
 <section id="aim" class="level2">
 <h2 class="anchored" data-anchor-id="aim">Aim</h2>
 <p>In the previous lab you worked with XAML and created user interfaces using different layouts and controls.</p>
@@ -494,77 +494,183 @@ Application responds</code></pre>
 <p>Modify your application so that invalid input is handled sensibly.</p>
 <p>For example, you could display an error message in your answer <code>Label</code>.</p>
 <hr>
-<section id="adding-a-timer" class="level2">
-<h2 class="anchored" data-anchor-id="adding-a-timer">12. Adding a Timer</h2>
-<p>Add a timer to your application that displays the number of seconds since the application started.</p>
-<p>The timer is independent of the conversion itself. The purpose of this exercise is to practise using an event that occurs automatically at regular intervals.</p>
-<section id="create-the-timer" class="level3">
-<h3 class="anchored" data-anchor-id="create-the-timer">1. Create the timer</h3>
-<p>Add fields to keep track of the timer and the number of seconds:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> IDispatcherTimer _timer<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should be able to figure out seconds!</p>
-<p>Create the timer using the page’s <code>Dispatcher</code>: - Think where the creation of the timer should go - I think it should go in its own method <code>void CreateTimer()</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>_timer <span class="op">=</span> Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Set the timer to tick once every second:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Interval</span> <span class="op">=</span> TimeSpan<span class="op">.</span><span class="fu">FromSeconds</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="handle-the-tick-event" class="level3">
-<h3 class="anchored" data-anchor-id="handle-the-tick-event">2. Handle the Tick event</h3>
-<p>The timer has a <code>Tick</code> event, just like a Button has a <code>Clicked</code> event.</p>
-<p>Subscribe to the event:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now create the event handler yourself.</p>
-<p>Each time the timer ticks:</p>
-<ul>
-<li>increase <code>_seconds</code> by 1</li>
-<li>update a Label in your application to show the current number of seconds</li>
-</ul>
-<p>For example, your application might display:</p>
-<pre class="text"><code>Time running: 12 seconds</code></pre>
-<p><code>CreateTimer</code> should probably be called as part of the MainPage constructor, after <code>InitializeComponents</code></p>
-</section>
-<section id="start-the-timer" class="level3">
-<h3 class="anchored" data-anchor-id="start-the-timer">3. Start the timer</h3>
-<p>Once your timer has been created and configured, start it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Start</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The timer should start when your application starts.</p>
-<p>Think about <strong>where</strong> this code should go. You already have code that runs when the page is created, so this is a good opportunity to decide where the timer setup belongs.</p>
-</section>
-<section id="add-a-stop-button" class="level3">
-<h3 class="anchored" data-anchor-id="add-a-stop-button">4. Add a Stop button</h3>
-<p>Add a Button to your application:</p>
-<pre class="text"><code>Stop Timer</code></pre>
-<p>When the button is clicked, stop the timer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>_timer<span class="op">.</span><span class="fu">Stop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The number of seconds should stop increasing.</p>
-</section>
-<section id="add-a-start-button" class="level3">
-<h3 class="anchored" data-anchor-id="add-a-start-button">5. Add a Start button</h3>
-<p>Add another Button:</p>
-<pre class="text"><code>Start Timer</code></pre>
-<p>Use it to start the timer again.</p>
-<p>The timer should continue counting from where it stopped.</p>
+<section id="create-a-grid-at-runtime" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-grid-at-runtime">12. Create a Grid at Runtime</h2>
+<p>So far, we have created our user interface using XAML.</p>
+<p>However, we can also create parts of our user interface using C# at runtime.</p>
+<p>In this exercise, you will create a <code>Grid</code> containing <code>Border</code>s using C#.</p>
+<p>We will make the size of the grid configurable, so the same method can create a 3 × 3, 4 × 4 or 5 × 5 grid.</p>
+<section id="add-a-button" class="level3">
+<h3 class="anchored" data-anchor-id="add-a-button">12.1. Add a Button</h3>
+<p>First, add a Button to your XAML that will allow you to create the grid.</p>
+<p>Give it a <code>Clicked</code> event.</p>
 <p>For example:</p>
-<pre class="text"><code>Time running: 18 seconds
-
-[ Stop Timer ]   [ Start Timer ]</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Text=</span><span class="st">"Create Grid"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Clicked=</span><span class="st">"CreateGrid_Clicked"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use Visual Studio to create the event handler.</p>
+<p>For now, you can make the event handler call:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateGrid</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We will write the <code>CreateGrid</code> method next.</p>
 </section>
-<section id="challenge" class="level3">
-<h3 class="anchored" data-anchor-id="challenge">Challenge</h3>
-<p>Modify your timer so that it can be <strong>reset</strong>.</p>
-<p>Add a <code>Reset Timer</code> button which:</p>
+<section id="create-the-method" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-method">12.2. Create the Method</h3>
+<p>Create a new method called <code>CreateGrid</code>.</p>
+<p>It should take an <code>int</code> parameter called <code>size</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">CreateGrid</span><span class="op">(</span><span class="dt">int</span> size<span class="op">)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>size</code> parameter tells the method how large the grid should be.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateGrid</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>should eventually create a 3 × 3 grid.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateGrid</span><span class="op">(</span><span class="dv">5</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>should eventually create a 5 × 5 grid.</p>
+</section>
+<section id="create-the-grid" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-grid">12.3. Create the Grid</h3>
+<p>Inside the method, create a new <code>Grid</code> object.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Grid grid <span class="op">=</span> <span class="kw">new</span> <span class="fu">Grid</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>At the moment, this grid has no rows or columns.</p>
+<p>We need to add them.</p>
+</section>
+<section id="add-the-rows" class="level3">
+<h3 class="anchored" data-anchor-id="add-the-rows">12.4. Add the Rows</h3>
+<p>We know how many rows we need because the <code>size</code> parameter tells us.</p>
+<p>Use a <code>for</code> loop to add the rows.</p>
+<p>The following code shows you how to add <strong>one row</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">RowDefinitions</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> <span class="fu">RowDefinition</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your task is to put this inside a loop so that the correct number of rows is created.</p>
+<p>For example, if <code>size</code> is <code>3</code>, your loop should add three rows.</p>
+<p><strong>Try this yourself before looking at the next section.</strong></p>
+</section>
+<section id="add-the-columns" class="level3">
+<h3 class="anchored" data-anchor-id="add-the-columns">12.5. Add the Columns</h3>
+<p>Now we need to do the same thing for the columns.</p>
+<p>We use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">ColumnDefinitions</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> <span class="fu">ColumnDefinition</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add the appropriate <code>for</code> loop to your method.</p>
+<p><strong>Think about it:</strong></p>
 <ul>
-<li>stops the timer</li>
-<li>sets the number of seconds back to zero</li>
-<li>updates the Label</li>
-<li>starts the timer again</li>
+<li>How many columns do you need?</li>
+<li>Which variable tells you that?</li>
+<li>Is this loop very similar to the one you just wrote for the rows?</li>
 </ul>
-<p>Try to decide which parts of this should be placed in separate methods rather than putting everything directly into the Button event handlers.</p>
+<p>You should now have a <code>Grid</code> with the correct number of rows and columns.</p>
+</section>
+<section id="create-a-border" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-border">12.6. Create a Border</h3>
+<p>Now we need something to put inside the grid.</p>
+<p>We are going to use a <code>Border</code>.</p>
+<p>A <code>Border</code> can have a stroke, a background colour and rounded corners.</p>
+<p>Try creating one with the following properties:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Border border <span class="op">=</span> <span class="kw">new</span> Border</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    Stroke <span class="op">=</span> Colors<span class="op">.</span><span class="fu">DarkBlue</span><span class="op">,</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    StrokeThickness <span class="op">=</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    BackgroundColor <span class="op">=</span> Colors<span class="op">.</span><span class="fu">LightBlue</span><span class="op">,</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    StrokeShape <span class="op">=</span> <span class="kw">new</span> RoundRectangle</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        CornerRadius <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">},</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    Margin <span class="op">=</span> <span class="kw">new</span> <span class="fu">Thickness</span><span class="op">(</span><span class="dv">3</span><span class="op">)</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You now have a <code>Border</code> object, but it is not yet part of the grid.</p>
+</section>
+<section id="add-the-border-to-the-grid" class="level3">
+<h3 class="anchored" data-anchor-id="add-the-border-to-the-grid">12.7. Add the Border to the Grid</h3>
+<p>We can add an element to a particular row and column using an overloaded version of <code>Grid.Children.Add()</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The two numbers specify:</p>
+<pre class="text"><code>             column
+                ↓
+grid.Children.Add(border, 0, 0);
+                         ↑
+                        row</code></pre>
+<p>So:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>would put the <code>Border</code> in row <code>2</code>, column <code>1</code>.</p>
+<p>Notice that this is different from adding an element to the grid without specifying its position.</p>
+<p>We are using the overloaded <code>Add()</code> method to tell the grid where the element belongs.</p>
+</section>
+<section id="try-one-border" class="level3">
+<h3 class="anchored" data-anchor-id="try-one-border">12.8. Try One Border</h3>
+<p>Before creating the whole grid, try adding just one <code>Border</code>.</p>
+<p>Add it to the first cell:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now you need to add the <code>Grid</code> itself to your page.</p>
+<p>Find an appropriate layout in your XAML and give it an <code>x:Name</code>.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">VerticalStackLayout</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">x:Name=</span><span class="st">"MainLayout"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can then add the grid to it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>MainLayout<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>grid<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the application and press your <strong>Create Grid</strong> button.</p>
+<p>You should see your <code>Border</code> in the first cell of the grid.</p>
+</section>
+<section id="create-all-the-borders" class="level3">
+<h3 class="anchored" data-anchor-id="create-all-the-borders">12.9. Create All the Borders</h3>
+<p>We don’t want to write this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Especially because we want our method to work with different grid sizes.</p>
+<p>Instead, we can use <strong>nested loops</strong>.</p>
+<p>You have already used a loop to create the rows and another loop to create the columns.</p>
+<p>Now we need:</p>
+<pre class="text"><code>For each row
+    For each column
+        Create a Border
+        Add it to that row and column</code></pre>
+<p>Start by writing the two loops yourself.</p>
+<p>You will need:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> row <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> row <span class="op">&lt;</span> size<span class="op">;</span> row<span class="op">++)</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> column <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> column <span class="op">&lt;</span> size<span class="op">;</span> column<span class="op">++)</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Create a Border</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Add the Border to the Grid</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Inside the loops, create your <code>Border</code>.</p>
+<p>Then use the overloaded version of <code>Children.Add()</code> to put it in the correct position.</p>
+<p><strong>Hint:</strong> the variables <code>row</code> and <code>column</code> are exactly the values you need.</p>
+</section>
+<section id="put-it-all-together" class="level3">
+<h3 class="anchored" data-anchor-id="put-it-all-together">12.10. Put It All Together</h3>
+<p>At this point, you should have written most of the method yourself.</p>
+<p>Your method needs to do the following, in this order:</p>
+<ol type="1">
+<li>Create a <code>Grid</code>.</li>
+<li>Add <code>size</code> rows.</li>
+<li>Add <code>size</code> columns.</li>
+<li>Use nested loops to visit every cell.</li>
+<li>Create a <code>Border</code> for each cell.</li>
+<li>Add each <code>Border</code> to the appropriate row and column.</li>
+<li>Add the completed <code>Grid</code> to your page.</li>
+</ol>
+<p>Do not worry if you need to move some of your code around to get this working.</p>
+<p>The important thing is that you understand what each part is doing.</p>
+</section>
+<section id="try-different-sizes" class="level3">
+<h3 class="anchored" data-anchor-id="try-different-sizes">12.11. Try Different Sizes</h3>
+<p>Once your grid is working, change the value passed to <code>CreateGrid()</code>.</p>
+<p>Try:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateGrid</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then try:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateGrid</span><span class="op">(</span><span class="dv">4</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateGrid</span><span class="op">(</span><span class="dv">5</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should not need to change the <code>CreateGrid</code> method itself.</p>
+<p>The <code>size</code> parameter controls the size of the grid.</p>
 <hr>
 </section>
 </section>
 <section id="try-it-on-different-platforms" class="level2">
-<h2 class="anchored" data-anchor-id="try-it-on-different-platforms">14. Try It on Different Platforms</h2>
+<h2 class="anchored" data-anchor-id="try-it-on-different-platforms">13. Try It on Different Platforms</h2>
 <p>Once your application works on Windows, try running it on Android.</p>
 <p>The exact setup will depend on your computer and Android device.</p>
 <p>You can try:</p>

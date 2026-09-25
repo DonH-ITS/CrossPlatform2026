@@ -42,19 +42,19 @@
             <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
 
                 <Border Grid.Column="0" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
-                    <Label Text="Start" HorizontalOptions="Start" VerticalOptions="Center" />
+                    <Label Text="Start" BackgroundColor="Red" HorizontalOptions="Start" VerticalOptions="Center" />
                 </Border>
 
                 <Border Grid.Column="1" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
-                    <Label Text="Center" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Center" BackgroundColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
 
                 <Border Grid.Column="2" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
-                    <Label Text="End" HorizontalOptions="End" VerticalOptions="Center" />
+                    <Label Text="End" BackgroundColor="Red" HorizontalOptions="End" VerticalOptions="Center" />
                 </Border>
 
                 <Border Grid.Column="3" Stroke="Gray" StrokeThickness="1" HeightRequest="60">
-                    <Label Text="Fill" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                    <Label Text="Fill" BackgroundColor="Red" HorizontalOptions="Fill" HorizontalTextAlignment="Center" VerticalOptions="Center" />
                 </Border>
 
             </Grid>
