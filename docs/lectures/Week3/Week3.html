@@ -1006,30 +1006,15 @@
 </div>
 </div>
 </section>
-<section id="dispose-timer" class="slide level2">
-<h2>Dispose Timer</h2>
-<p>When you are finished with a timer, you may want to free up some memory and <code>Dispose</code> of the timer</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb73-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> DisposeTimer<span class="op">{</span></span>
-<span id="cb73-2"><a aria-label="2"></a>    _timer<span class="op">.</span><span class="fu">Dispose</span><span class="op">();</span></span>
-<span id="cb73-3"><a aria-label="3"></a>    _timer <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
-<span id="cb73-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>Dispose()</code> releases resources used by the timer. Once a timer has been disposed, you should not use that timer again. If you need a timer later, create a new one.</p>
-<ul>
-<li><code>Dispose()</code> releases the resources used by the timer.</li>
-<li>The garbage collector can reclaim the timer object later when there are no remaining references to it.</li>
-<li>Setting the field to <code>null</code> removes this reference to the timer object.</li>
-</ul>
-<p>You can reuse the <code>_timer</code> field later by creating a new timer if you wish.</p>
-</section>
 <section id="anonymous-functions" class="slide level2">
 <h2>Anonymous Functions</h2>
 <p>We have written a separate method for every event:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb73-1"><a aria-label="1"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb75-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerTick</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
-<span id="cb75-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb75-3"><a aria-label="3"></a>    lblTime<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> DateTime<span class="op">.</span><span class="fu">Now</span><span class="op">.</span><span class="fu">ToLongTimeString</span><span class="op">();</span></span>
-<span id="cb75-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerTick</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb74-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb74-3"><a aria-label="3"></a>    lblTime<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> DateTime<span class="op">.</span><span class="fu">Now</span><span class="op">.</span><span class="fu">ToLongTimeString</span><span class="op">();</span></span>
+<span id="cb74-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But sometimes an event handler is very small and is only used once.</p>
 <p>C# allows us to write the function directly where we subscribe to the event.</p>
 <p>This is an <strong>anonymous function</strong>.</p>
@@ -1038,33 +1023,33 @@
 <h2>Lambda Expressions</h2>
 <p>In C#, anonymous functions are commonly written using <strong>lambda expressions</strong>.</p>
 <p>A basic lambda looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb76-1"><a aria-label="1"></a><span class="op">(</span>parameters<span class="op">)</span> <span class="op">=&gt;</span> expression</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb75-1"><a aria-label="1"></a><span class="op">(</span>parameters<span class="op">)</span> <span class="op">=&gt;</span> expression</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a><span class="op">(</span>parameters<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb77-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb77-3"><a aria-label="3"></a>    <span class="co">// statements</span></span>
-<span id="cb77-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb76-1"><a aria-label="1"></a><span class="op">(</span>parameters<span class="op">)</span> <span class="op">=&gt;</span></span>
+<span id="cb76-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb76-3"><a aria-label="3"></a>    <span class="co">// statements</span></span>
+<span id="cb76-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a>button<span class="op">.</span><span class="fu">Clicked</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> e<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb78-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb78-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Button clicked!"</span><span class="op">;</span></span>
-<span id="cb78-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a>button<span class="op">.</span><span class="fu">Clicked</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> e<span class="op">)</span> <span class="op">=&gt;</span></span>
+<span id="cb77-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb77-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Button clicked!"</span><span class="op">;</span></span>
+<span id="cb77-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>There is no separate method called <code>OnButtonClicked</code>.</p>
 </section>
 <section id="lambda-expression-example" class="slide level2">
 <h2>Lambda Expression Example</h2>
 <p>Instead of:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb79-1"><a aria-label="1"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span>
-<span id="cb79-2"><a aria-label="2"></a></span>
-<span id="cb79-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerTick</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
-<span id="cb79-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb79-5"><a aria-label="5"></a>    lblTime<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> DateTime<span class="op">.</span><span class="fu">Now</span><span class="op">.</span><span class="fu">ToLongTimeString</span><span class="op">();</span></span>
-<span id="cb79-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> OnTimerTick<span class="op">;</span></span>
+<span id="cb78-2"><a aria-label="2"></a></span>
+<span id="cb78-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnTimerTick</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb78-4"><a aria-label="4"></a><span class="op">{</span></span>
+<span id="cb78-5"><a aria-label="5"></a>    lblTime<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> DateTime<span class="op">.</span><span class="fu">Now</span><span class="op">.</span><span class="fu">ToLongTimeString</span><span class="op">();</span></span>
+<span id="cb78-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>we could write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb80-1"><a aria-label="1"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> e<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb80-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb80-3"><a aria-label="3"></a>    lblTime<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> DateTime<span class="op">.</span><span class="fu">Now</span><span class="op">.</span><span class="fu">ToLongTimeString</span><span class="op">();</span></span>
-<span id="cb80-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb79-1"><a aria-label="1"></a>timer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> e<span class="op">)</span> <span class="op">=&gt;</span></span>
+<span id="cb79-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb79-3"><a aria-label="3"></a>    lblTime<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> DateTime<span class="op">.</span><span class="fu">Now</span><span class="op">.</span><span class="fu">ToLongTimeString</span><span class="op">();</span></span>
+<span id="cb79-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The event still works in exactly the same way.</p>
 <p>The only difference is where the event-handling code is written.</p>
 </section>
@@ -1103,44 +1088,44 @@
 <h2>Tap Gesture</h2>
 <p>A tap gesture can be added to a control in XAML.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb81-1"><a aria-label="1"></a>&lt;<span class="kw">Image</span> <span class="ot">x:Name=</span><span class="st">"img1"</span></span>
-<span id="cb81-2"><a aria-label="2"></a>       <span class="ot">Source=</span><span class="st">"Images/Mastermind.png"</span>&gt;</span>
-<span id="cb81-3"><a aria-label="3"></a></span>
-<span id="cb81-4"><a aria-label="4"></a>    &lt;<span class="kw">Image.GestureRecognizers</span>&gt;</span>
-<span id="cb81-5"><a aria-label="5"></a>        &lt;<span class="kw">TapGestureRecognizer</span> <span class="ot">Tapped=</span><span class="st">"OnImageTapped"</span> /&gt;</span>
-<span id="cb81-6"><a aria-label="6"></a>    &lt;/<span class="kw">Image.GestureRecognizers</span>&gt;</span>
-<span id="cb81-7"><a aria-label="7"></a></span>
-<span id="cb81-8"><a aria-label="8"></a>&lt;/<span class="kw">Image</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb80-1"><a aria-label="1"></a>&lt;<span class="kw">Image</span> <span class="ot">x:Name=</span><span class="st">"img1"</span></span>
+<span id="cb80-2"><a aria-label="2"></a>       <span class="ot">Source=</span><span class="st">"Images/Mastermind.png"</span>&gt;</span>
+<span id="cb80-3"><a aria-label="3"></a></span>
+<span id="cb80-4"><a aria-label="4"></a>    &lt;<span class="kw">Image.GestureRecognizers</span>&gt;</span>
+<span id="cb80-5"><a aria-label="5"></a>        &lt;<span class="kw">TapGestureRecognizer</span> <span class="ot">Tapped=</span><span class="st">"OnImageTapped"</span> /&gt;</span>
+<span id="cb80-6"><a aria-label="6"></a>    &lt;/<span class="kw">Image.GestureRecognizers</span>&gt;</span>
+<span id="cb80-7"><a aria-label="7"></a></span>
+<span id="cb80-8"><a aria-label="8"></a>&lt;/<span class="kw">Image</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When the image is tapped:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb82-1"><a aria-label="1"></a>User taps image</span>
-<span id="cb82-2"><a aria-label="2"></a>      ↓</span>
-<span id="cb82-3"><a aria-label="3"></a>TapGestureRecognizer detects tap</span>
-<span id="cb82-4"><a aria-label="4"></a>      ↓</span>
-<span id="cb82-5"><a aria-label="5"></a>Tapped event is raised</span>
-<span id="cb82-6"><a aria-label="6"></a>      ↓</span>
-<span id="cb82-7"><a aria-label="7"></a>OnImageTapped() runs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb81-1"><a aria-label="1"></a>User taps image</span>
+<span id="cb81-2"><a aria-label="2"></a>      ↓</span>
+<span id="cb81-3"><a aria-label="3"></a>TapGestureRecognizer detects tap</span>
+<span id="cb81-4"><a aria-label="4"></a>      ↓</span>
+<span id="cb81-5"><a aria-label="5"></a>Tapped event is raised</span>
+<span id="cb81-6"><a aria-label="6"></a>      ↓</span>
+<span id="cb81-7"><a aria-label="7"></a>OnImageTapped() runs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="handling-a-tap" class="slide level2">
 <h2>Handling a Tap</h2>
 <p>The event handler can be written like any other event handler.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb83-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnImageTapped</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> TappedEventArgs e<span class="op">)</span></span>
-<span id="cb83-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb83-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Image tapped!"</span><span class="op">;</span></span>
-<span id="cb83-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb82-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnImageTapped</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> TappedEventArgs e<span class="op">)</span></span>
+<span id="cb82-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb82-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Image tapped!"</span><span class="op">;</span></span>
+<span id="cb82-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice that this event uses:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb84-1"><a aria-label="1"></a>TappedEventArgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb83-1"><a aria-label="1"></a>TappedEventArgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>rather than the generic:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb85-1"><a aria-label="1"></a>EventArgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb84-1"><a aria-label="1"></a>EventArgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The specialised event arguments can contain additional information about the gesture.</p>
 </section>
 <section id="adding-a-gesture-at-runtime" class="slide level2">
 <h2>Adding a Gesture at Runtime</h2>
 <p>We can also create the gesture recogniser using C#.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb86-1"><a aria-label="1"></a>TapGestureRecognizer tapGestureRecognizer <span class="op">=</span> <span class="kw">new</span> <span class="fu">TapGestureRecognizer</span><span class="op">();</span></span>
-<span id="cb86-2"><a aria-label="2"></a></span>
-<span id="cb86-3"><a aria-label="3"></a>tapGestureRecognizer<span class="op">.</span><span class="fu">Tapped</span> <span class="op">+=</span> OnImageTapped<span class="op">;</span></span>
-<span id="cb86-4"><a aria-label="4"></a></span>
-<span id="cb86-5"><a aria-label="5"></a>img1<span class="op">.</span><span class="fu">GestureRecognizers</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>tapGestureRecognizer<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb85-1"><a aria-label="1"></a>TapGestureRecognizer tapGestureRecognizer <span class="op">=</span> <span class="kw">new</span> <span class="fu">TapGestureRecognizer</span><span class="op">();</span></span>
+<span id="cb85-2"><a aria-label="2"></a></span>
+<span id="cb85-3"><a aria-label="3"></a>tapGestureRecognizer<span class="op">.</span><span class="fu">Tapped</span> <span class="op">+=</span> OnImageTapped<span class="op">;</span></span>
+<span id="cb85-4"><a aria-label="4"></a></span>
+<span id="cb85-5"><a aria-label="5"></a>img1<span class="op">.</span><span class="fu">GestureRecognizers</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>tapGestureRecognizer<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is another example of the relationship between XAML and runtime C#.</p>
 <p>The XAML version defines the initial UI.</p>
 <p>The C# version can create and attach the same type of functionality while the application is running.</p>
@@ -1163,7 +1148,7 @@
 <li><code>Secondary</code> — normally the right mouse button</li>
 <li><code>Both</code> — either button</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb87-1"><a aria-label="1"></a>Buttons="Primary,Secondary"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb86-1"><a aria-label="1"></a>Buttons="Primary,Secondary"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="tappedeventargs-e" class="slide level2">
 <h2>TappedEventArgs e</h2>
@@ -1173,65 +1158,65 @@
 <li><code>e.Buttons</code> can tell us which mouse button was used</li>
 <li><code>e.GetPosition(...)</code> can tell us where the tap occurred</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb88-1"><a aria-label="1"></a><span class="dt">void</span> <span class="fu">OnTapGestureRecognizerTapped</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> TappedEventArgs e<span class="op">)</span></span>
-<span id="cb88-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb88-3"><a aria-label="3"></a>    <span class="co">// Position inside the window</span></span>
-<span id="cb88-4"><a aria-label="4"></a>    Point<span class="op">?</span> windowPosition <span class="op">=</span> e<span class="op">.</span><span class="fu">GetPosition</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span></span>
-<span id="cb88-5"><a aria-label="5"></a></span>
-<span id="cb88-6"><a aria-label="6"></a>    <span class="co">// Position relative to an Image</span></span>
-<span id="cb88-7"><a aria-label="7"></a>    Point<span class="op">?</span> relativeToImagePosition <span class="op">=</span> e<span class="op">.</span><span class="fu">GetPosition</span><span class="op">(</span>image<span class="op">);</span></span>
-<span id="cb88-8"><a aria-label="8"></a></span>
-<span id="cb88-9"><a aria-label="9"></a>    <span class="co">// Position relative to the container view</span></span>
-<span id="cb88-10"><a aria-label="10"></a>    Point<span class="op">?</span> relativeToContainerPosition <span class="op">=</span> e<span class="op">.</span><span class="fu">GetPosition</span><span class="op">((</span>View<span class="op">)</span>sender<span class="op">);</span></span>
-<span id="cb88-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb87-1"><a aria-label="1"></a><span class="dt">void</span> <span class="fu">OnTapGestureRecognizerTapped</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> TappedEventArgs e<span class="op">)</span></span>
+<span id="cb87-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb87-3"><a aria-label="3"></a>    <span class="co">// Position inside the window</span></span>
+<span id="cb87-4"><a aria-label="4"></a>    Point<span class="op">?</span> windowPosition <span class="op">=</span> e<span class="op">.</span><span class="fu">GetPosition</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span></span>
+<span id="cb87-5"><a aria-label="5"></a></span>
+<span id="cb87-6"><a aria-label="6"></a>    <span class="co">// Position relative to an Image</span></span>
+<span id="cb87-7"><a aria-label="7"></a>    Point<span class="op">?</span> relativeToImagePosition <span class="op">=</span> e<span class="op">.</span><span class="fu">GetPosition</span><span class="op">(</span>image<span class="op">);</span></span>
+<span id="cb87-8"><a aria-label="8"></a></span>
+<span id="cb87-9"><a aria-label="9"></a>    <span class="co">// Position relative to the container view</span></span>
+<span id="cb87-10"><a aria-label="10"></a>    Point<span class="op">?</span> relativeToContainerPosition <span class="op">=</span> e<span class="op">.</span><span class="fu">GetPosition</span><span class="op">((</span>View<span class="op">)</span>sender<span class="op">);</span></span>
+<span id="cb87-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The argument to <code>GetPosition()</code> determines <strong>what the position is relative to</strong>.</p>
 </section>
 <section id="swipe-gestures" class="slide level2">
 <h2>Swipe Gestures</h2>
 <p>A swipe recogniser can detect the direction of a swipe.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb89"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb89-1"><a aria-label="1"></a>&lt;<span class="kw">BoxView</span> <span class="ot">Color=</span><span class="st">"Red"</span></span>
-<span id="cb89-2"><a aria-label="2"></a>         <span class="ot">HeightRequest=</span><span class="st">"200"</span></span>
-<span id="cb89-3"><a aria-label="3"></a>         <span class="ot">WidthRequest=</span><span class="st">"200"</span>&gt;</span>
-<span id="cb89-4"><a aria-label="4"></a></span>
-<span id="cb89-5"><a aria-label="5"></a>    &lt;<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
-<span id="cb89-6"><a aria-label="6"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
-<span id="cb89-7"><a aria-label="7"></a>                                <span class="ot">Direction=</span><span class="st">"Left"</span> /&gt;</span>
-<span id="cb89-8"><a aria-label="8"></a>    &lt;/<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
-<span id="cb89-9"><a aria-label="9"></a></span>
-<span id="cb89-10"><a aria-label="10"></a>&lt;/<span class="kw">BoxView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb88-1"><a aria-label="1"></a>&lt;<span class="kw">BoxView</span> <span class="ot">Color=</span><span class="st">"Red"</span></span>
+<span id="cb88-2"><a aria-label="2"></a>         <span class="ot">HeightRequest=</span><span class="st">"200"</span></span>
+<span id="cb88-3"><a aria-label="3"></a>         <span class="ot">WidthRequest=</span><span class="st">"200"</span>&gt;</span>
+<span id="cb88-4"><a aria-label="4"></a></span>
+<span id="cb88-5"><a aria-label="5"></a>    &lt;<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
+<span id="cb88-6"><a aria-label="6"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
+<span id="cb88-7"><a aria-label="7"></a>                                <span class="ot">Direction=</span><span class="st">"Left"</span> /&gt;</span>
+<span id="cb88-8"><a aria-label="8"></a>    &lt;/<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
+<span id="cb88-9"><a aria-label="9"></a></span>
+<span id="cb88-10"><a aria-label="10"></a>&lt;/<span class="kw">BoxView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The event handler can inspect the direction:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb90"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb90-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnSwipeGesture</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> SwipedEventArgs e<span class="op">)</span></span>
-<span id="cb90-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb90-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> $<span class="st">"Swiped {e.Direction}"</span><span class="op">;</span></span>
-<span id="cb90-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb89"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb89-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnSwipeGesture</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> SwipedEventArgs e<span class="op">)</span></span>
+<span id="cb89-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb89-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> $<span class="st">"Swiped {e.Direction}"</span><span class="op">;</span></span>
+<span id="cb89-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="several-swipe-directions" class="slide level2">
 <h2>Several Swipe Directions</h2>
 <p>We can configure multiple recognisers if we want to respond to different directions.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb91-1"><a aria-label="1"></a>&lt;<span class="kw">BoxView</span> <span class="ot">Color=</span><span class="st">"Red"</span></span>
-<span id="cb91-2"><a aria-label="2"></a>         <span class="ot">HeightRequest=</span><span class="st">"200"</span></span>
-<span id="cb91-3"><a aria-label="3"></a>         <span class="ot">WidthRequest=</span><span class="st">"200"</span>&gt;</span>
-<span id="cb91-4"><a aria-label="4"></a></span>
-<span id="cb91-5"><a aria-label="5"></a>    &lt;<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
-<span id="cb91-6"><a aria-label="6"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
-<span id="cb91-7"><a aria-label="7"></a>                                <span class="ot">Direction=</span><span class="st">"Left"</span> /&gt;</span>
-<span id="cb91-8"><a aria-label="8"></a></span>
-<span id="cb91-9"><a aria-label="9"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
-<span id="cb91-10"><a aria-label="10"></a>                                <span class="ot">Direction=</span><span class="st">"Right"</span> /&gt;</span>
-<span id="cb91-11"><a aria-label="11"></a></span>
-<span id="cb91-12"><a aria-label="12"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
-<span id="cb91-13"><a aria-label="13"></a>                                <span class="ot">Direction=</span><span class="st">"Up"</span> /&gt;</span>
-<span id="cb91-14"><a aria-label="14"></a></span>
-<span id="cb91-15"><a aria-label="15"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
-<span id="cb91-16"><a aria-label="16"></a>                                <span class="ot">Direction=</span><span class="st">"Down"</span> /&gt;</span>
-<span id="cb91-17"><a aria-label="17"></a>    &lt;/<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
-<span id="cb91-18"><a aria-label="18"></a></span>
-<span id="cb91-19"><a aria-label="19"></a>&lt;/<span class="kw">BoxView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb90"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb90-1"><a aria-label="1"></a>&lt;<span class="kw">BoxView</span> <span class="ot">Color=</span><span class="st">"Red"</span></span>
+<span id="cb90-2"><a aria-label="2"></a>         <span class="ot">HeightRequest=</span><span class="st">"200"</span></span>
+<span id="cb90-3"><a aria-label="3"></a>         <span class="ot">WidthRequest=</span><span class="st">"200"</span>&gt;</span>
+<span id="cb90-4"><a aria-label="4"></a></span>
+<span id="cb90-5"><a aria-label="5"></a>    &lt;<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
+<span id="cb90-6"><a aria-label="6"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
+<span id="cb90-7"><a aria-label="7"></a>                                <span class="ot">Direction=</span><span class="st">"Left"</span> /&gt;</span>
+<span id="cb90-8"><a aria-label="8"></a></span>
+<span id="cb90-9"><a aria-label="9"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
+<span id="cb90-10"><a aria-label="10"></a>                                <span class="ot">Direction=</span><span class="st">"Right"</span> /&gt;</span>
+<span id="cb90-11"><a aria-label="11"></a></span>
+<span id="cb90-12"><a aria-label="12"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
+<span id="cb90-13"><a aria-label="13"></a>                                <span class="ot">Direction=</span><span class="st">"Up"</span> /&gt;</span>
+<span id="cb90-14"><a aria-label="14"></a></span>
+<span id="cb90-15"><a aria-label="15"></a>        &lt;<span class="kw">SwipeGestureRecognizer</span> <span class="ot">Swiped=</span><span class="st">"OnSwipeGesture"</span></span>
+<span id="cb90-16"><a aria-label="16"></a>                                <span class="ot">Direction=</span><span class="st">"Down"</span> /&gt;</span>
+<span id="cb90-17"><a aria-label="17"></a>    &lt;/<span class="kw">BoxView.GestureRecognizers</span>&gt;</span>
+<span id="cb90-18"><a aria-label="18"></a></span>
+<span id="cb90-19"><a aria-label="19"></a>&lt;/<span class="kw">BoxView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>All four can use the same event handler.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb92"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb92-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnSwipeGesture</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> SwipedEventArgs e<span class="op">)</span></span>
-<span id="cb92-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb92-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> $<span class="st">"Swiped {e.Direction}"</span><span class="op">;</span></span>
-<span id="cb92-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb91-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnSwipeGesture</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> SwipedEventArgs e<span class="op">)</span></span>
+<span id="cb91-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb91-3"><a aria-label="3"></a>    lblMessage<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> $<span class="st">"Swiped {e.Direction}"</span><span class="op">;</span></span>
+<span id="cb91-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The event arguments tell us which direction was detected.</p>
 </section>
 <section id="other-gestures" class="slide level2">
@@ -1239,60 +1224,60 @@
 <p>The same basic idea applies to other gestures.</p>
 <p><strong>Tap</strong></p>
 <p>Detects a tap on a control.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb93-1"><a aria-label="1"></a>TapGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb92"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb92-1"><a aria-label="1"></a>TapGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Swipe</strong></p>
 <p>Detects a swipe in a particular direction.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb94"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb94-1"><a aria-label="1"></a>SwipeGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb93-1"><a aria-label="1"></a>SwipeGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pan</strong></p>
 <p>Detects movement across the screen.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb95"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb95-1"><a aria-label="1"></a>PanGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb94"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb94-1"><a aria-label="1"></a>PanGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Pinch</strong></p>
 <p>Detects a pinch gesture, commonly used for zooming.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb96"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb96-1"><a aria-label="1"></a>PinchGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb95"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb95-1"><a aria-label="1"></a>PinchGestureRecognizer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="the-same-pattern-everywhere" class="slide level2">
 <h2>The Same Pattern Everywhere</h2>
 <p>We have now seen many different event sources:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb97"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb97-1"><a aria-label="1"></a>Button</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb96"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb96-1"><a aria-label="1"></a>Button</span>
+<span id="cb96-2"><a aria-label="2"></a>  ↓</span>
+<span id="cb96-3"><a aria-label="3"></a>Clicked</span>
+<span id="cb96-4"><a aria-label="4"></a>  ↓</span>
+<span id="cb96-5"><a aria-label="5"></a>Event handler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb97"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb97-1"><a aria-label="1"></a>Entry</span>
 <span id="cb97-2"><a aria-label="2"></a>  ↓</span>
-<span id="cb97-3"><a aria-label="3"></a>Clicked</span>
+<span id="cb97-3"><a aria-label="3"></a>TextChanged</span>
 <span id="cb97-4"><a aria-label="4"></a>  ↓</span>
 <span id="cb97-5"><a aria-label="5"></a>Event handler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb98"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb98-1"><a aria-label="1"></a>Entry</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb98"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb98-1"><a aria-label="1"></a>Timer</span>
 <span id="cb98-2"><a aria-label="2"></a>  ↓</span>
-<span id="cb98-3"><a aria-label="3"></a>TextChanged</span>
+<span id="cb98-3"><a aria-label="3"></a>Tick</span>
 <span id="cb98-4"><a aria-label="4"></a>  ↓</span>
 <span id="cb98-5"><a aria-label="5"></a>Event handler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb99"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb99-1"><a aria-label="1"></a>Timer</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb99"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb99-1"><a aria-label="1"></a>Gesture recogniser</span>
 <span id="cb99-2"><a aria-label="2"></a>  ↓</span>
-<span id="cb99-3"><a aria-label="3"></a>Tick</span>
+<span id="cb99-3"><a aria-label="3"></a>Tapped / Swiped / PanUpdated</span>
 <span id="cb99-4"><a aria-label="4"></a>  ↓</span>
 <span id="cb99-5"><a aria-label="5"></a>Event handler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb100"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb100-1"><a aria-label="1"></a>Gesture recogniser</span>
-<span id="cb100-2"><a aria-label="2"></a>  ↓</span>
-<span id="cb100-3"><a aria-label="3"></a>Tapped / Swiped / PanUpdated</span>
-<span id="cb100-4"><a aria-label="4"></a>  ↓</span>
-<span id="cb100-5"><a aria-label="5"></a>Event handler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The details differ, but the underlying model is the same.</p>
 </section>
 <section id="event-driven-programming-in-maui" class="slide level2">
 <h2>Event-Driven Programming in MAUI</h2>
 <p>.NET MAUI applications are largely event-driven.</p>
 <p>The application starts and waits for things to happen.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb101"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb101-1"><a aria-label="1"></a>                ┌── Button clicked</span>
-<span id="cb101-2"><a aria-label="2"></a>                │</span>
-<span id="cb101-3"><a aria-label="3"></a>                ├── Text changed</span>
-<span id="cb101-4"><a aria-label="4"></a>Application ────┼── Timer tick</span>
-<span id="cb101-5"><a aria-label="5"></a>                │</span>
-<span id="cb101-6"><a aria-label="6"></a>                ├── Tap gesture</span>
-<span id="cb101-7"><a aria-label="7"></a>                │</span>
-<span id="cb101-8"><a aria-label="8"></a>                └── Swipe gesture</span>
-<span id="cb101-9"><a aria-label="9"></a>                         ↓</span>
-<span id="cb101-10"><a aria-label="10"></a>                  Event handler</span>
-<span id="cb101-11"><a aria-label="11"></a>                         ↓</span>
-<span id="cb101-12"><a aria-label="12"></a>                   C# code runs</span>
-<span id="cb101-13"><a aria-label="13"></a>                         ↓</span>
-<span id="cb101-14"><a aria-label="14"></a>                    UI changes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb100"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb100-1"><a aria-label="1"></a>                ┌── Button clicked</span>
+<span id="cb100-2"><a aria-label="2"></a>                │</span>
+<span id="cb100-3"><a aria-label="3"></a>                ├── Text changed</span>
+<span id="cb100-4"><a aria-label="4"></a>Application ────┼── Timer tick</span>
+<span id="cb100-5"><a aria-label="5"></a>                │</span>
+<span id="cb100-6"><a aria-label="6"></a>                ├── Tap gesture</span>
+<span id="cb100-7"><a aria-label="7"></a>                │</span>
+<span id="cb100-8"><a aria-label="8"></a>                └── Swipe gesture</span>
+<span id="cb100-9"><a aria-label="9"></a>                         ↓</span>
+<span id="cb100-10"><a aria-label="10"></a>                  Event handler</span>
+<span id="cb100-11"><a aria-label="11"></a>                         ↓</span>
+<span id="cb100-12"><a aria-label="12"></a>                   C# code runs</span>
+<span id="cb100-13"><a aria-label="13"></a>                         ↓</span>
+<span id="cb100-14"><a aria-label="14"></a>                    UI changes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The programmer does not decide exactly when the user will click, type, swipe or tap.</p>
 <p>We write the code that should respond when those events occur.</p>
 </section>
@@ -1306,36 +1291,36 @@
 <li>A timer updating the screen</li>
 </ul>
 <p>The application is constantly waiting for events.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb102"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb102-1"><a aria-label="1"></a>User types</span>
-<span id="cb102-2"><a aria-label="2"></a>    ↓</span>
-<span id="cb102-3"><a aria-label="3"></a>TextChanged event</span>
-<span id="cb102-4"><a aria-label="4"></a></span>
-<span id="cb102-5"><a aria-label="5"></a>User clicks Calculate</span>
-<span id="cb102-6"><a aria-label="6"></a>    ↓</span>
-<span id="cb102-7"><a aria-label="7"></a>Clicked event</span>
-<span id="cb102-8"><a aria-label="8"></a></span>
-<span id="cb102-9"><a aria-label="9"></a>Timer interval expires</span>
-<span id="cb102-10"><a aria-label="10"></a>    ↓</span>
-<span id="cb102-11"><a aria-label="11"></a>Tick event</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb101"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb101-1"><a aria-label="1"></a>User types</span>
+<span id="cb101-2"><a aria-label="2"></a>    ↓</span>
+<span id="cb101-3"><a aria-label="3"></a>TextChanged event</span>
+<span id="cb101-4"><a aria-label="4"></a></span>
+<span id="cb101-5"><a aria-label="5"></a>User clicks Calculate</span>
+<span id="cb101-6"><a aria-label="6"></a>    ↓</span>
+<span id="cb101-7"><a aria-label="7"></a>Clicked event</span>
+<span id="cb101-8"><a aria-label="8"></a></span>
+<span id="cb101-9"><a aria-label="9"></a>Timer interval expires</span>
+<span id="cb101-10"><a aria-label="10"></a>    ↓</span>
+<span id="cb101-11"><a aria-label="11"></a>Tick event</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each event can cause a different piece of C# code to run.</p>
 </section>
 <section id="the-big-picture" class="slide level2">
 <h2>The Big Picture</h2>
 <p>The important idea from this week is not memorising every event.</p>
 <p>It is understanding the pattern:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb103"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb103-1"><a aria-label="1"></a>Something happens</span>
-<span id="cb103-2"><a aria-label="2"></a>       ↓</span>
-<span id="cb103-3"><a aria-label="3"></a>An event is raised</span>
-<span id="cb103-4"><a aria-label="4"></a>       ↓</span>
-<span id="cb103-5"><a aria-label="5"></a>We subscribe to the event</span>
-<span id="cb103-6"><a aria-label="6"></a>       ↓</span>
-<span id="cb103-7"><a aria-label="7"></a>Our event handler runs</span>
-<span id="cb103-8"><a aria-label="8"></a>       ↓</span>
-<span id="cb103-9"><a aria-label="9"></a>We inspect the event</span>
-<span id="cb103-10"><a aria-label="10"></a>       ↓</span>
-<span id="cb103-11"><a aria-label="11"></a>We validate or process data</span>
-<span id="cb103-12"><a aria-label="12"></a>       ↓</span>
-<span id="cb103-13"><a aria-label="13"></a>We change the application</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb102"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb102-1"><a aria-label="1"></a>Something happens</span>
+<span id="cb102-2"><a aria-label="2"></a>       ↓</span>
+<span id="cb102-3"><a aria-label="3"></a>An event is raised</span>
+<span id="cb102-4"><a aria-label="4"></a>       ↓</span>
+<span id="cb102-5"><a aria-label="5"></a>We subscribe to the event</span>
+<span id="cb102-6"><a aria-label="6"></a>       ↓</span>
+<span id="cb102-7"><a aria-label="7"></a>Our event handler runs</span>
+<span id="cb102-8"><a aria-label="8"></a>       ↓</span>
+<span id="cb102-9"><a aria-label="9"></a>We inspect the event</span>
+<span id="cb102-10"><a aria-label="10"></a>       ↓</span>
+<span id="cb102-11"><a aria-label="11"></a>We validate or process data</span>
+<span id="cb102-12"><a aria-label="12"></a>       ↓</span>
+<span id="cb102-13"><a aria-label="13"></a>We change the application</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is the basic model behind much of the interaction in a .NET MAUI application.</p>
 </section>
 <section id="summary" class="slide level2">

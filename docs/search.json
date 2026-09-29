@@ -2126,5 +2126,376 @@
     "title": "Week 4 Threads, Async/Await and Animations",
     "section": "This Week",
     "text": "This Week\nWe have looked at:\n\nThreads\nThe UI thread\nSystem.Timers.Timer\nThe MAUI dispatcher\nDispatcher.CreateTimer()\nasync\nawait\nTask\nTask.Run()\nTask.WhenAll()\nMAUI animations\n\nNext, we will use these ideas in our applications."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#week-5",
+    "href": "lectures/Week5/Week5.html#week-5",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Week 5",
+    "text": "Week 5\nToday we will look at:\n\nResources in a .NET MAUI application\nImages\nDrawing simple shapes\nCollections in C#\nArrays, lists and other collection types\n\nThe second half will concentrate on , which we will use extensively later in the module."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#resources",
+    "href": "lectures/Week5/Week5.html#resources",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Resources",
+    "text": "Resources\nApplications built with .NET MAUI often need to include resources such as:\n\nApplication icons\nSplash screens\nImages\nFonts\nOther files such as text or JSON\n\n.NET MAUI provides a standard structure for organising these resources."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#the-resources-folder",
+    "href": "lectures/Week5/Week5.html#the-resources-folder",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "The Resources Folder",
+    "text": "The Resources Folder\nWe’ll have seen this already: A new .NET MAUI project contains a Resources folder with subfolders such as:\n\nAppIcon\nSplash\nImages\nFonts\nRaw\n\nDifferent types of resources are handled differently by the MAUI build system."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#the-.csproj-file",
+    "href": "lectures/Week5/Week5.html#the-.csproj-file",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "The .csproj File",
+    "text": "The .csproj File\nThe project file defines how resources are included and handled at build time.\nFor example, the default project contains entries similar to:\n&lt;MauiIcon Include=\"Resources\\AppIcon\\appicon.svg\"\n          ForegroundFile=\"Resources\\AppIcon\\appiconfg.svg\"\n          Color=\"#512BD4\" /&gt;\n\n&lt;MauiSplashScreen Include=\"Resources\\Splash\\splash.svg\"\n                  Color=\"#512BD4\"\n                  BaseSize=\"128,128\" /&gt;\nThese entries tell MAUI what the files are used for.\n\n\n\n\n\n\nNote\n\n\nTypically the csproj file is the second thing in Solution Explorer, underneath the solution.\nYou can double-click on this to see the contents.\nWhen we add files to the project’s Resources folder they should be added automatically to the csproj file."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#app-icons",
+    "href": "lectures/Week5/Week5.html#app-icons",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "App Icons",
+    "text": "App Icons\nMauiIcon describes the application’s icon.\n&lt;MauiIcon Include=\"Resources\\AppIcon\\appicon.svg\"\n          ForegroundFile=\"Resources\\AppIcon\\appiconfg.svg\"\n          Color=\"#512BD4\" /&gt;\n\nInclude specifies the main icon.\nForegroundFile can provide a foreground layer.\nColor specifies the background colour.\n\nMAUI generates the platform-specific versions required by Android and Windows.\n\n\n\n\n\n\nNote\n\n\nThis is the icon that appears on the taskbar in Windows.\nOr when you install it on a phone, the icon on the phone."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#splash-screens",
+    "href": "lectures/Week5/Week5.html#splash-screens",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Splash Screens",
+    "text": "Splash Screens\nMauiSplashScreen describes the image shown while the application starts.\n&lt;MauiSplashScreen Include=\"Resources\\Splash\\splash.svg\"\n                  Color=\"#512BD4\"\n                  BaseSize=\"128,128\" /&gt;\n\nInclude specifies the image.\nColor specifies the background.\nBaseSize gives the base size before MAUI generates the platform-specific versions.\n\n\n\n\n\n\n\nNote\n\n\nYou’ll mainly notice the splash image on Android when loading the app. On Windows it is much less noticeable."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#resource-file-names",
+    "href": "lectures/Week5/Week5.html#resource-file-names",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Resource File Names",
+    "text": "Resource File Names\nWhen working with Android resources (icons, splash screens and images), filenames should:\n\nBe lowercase\nContain no spaces\nContain no special characters (underscores _ and digits are fine, hyphens are not)\nStart with a letter, not a digit (alien1.png is fine, 1alien.png is not) (according to Microsoft’s documentation alien1.png is also not fine, but it works!)\n\nFor example:\nappicon.svg\nmy_image.png\nrather than:\nAppIcon.svg\nMy Image.png\nmy-image.png\nThis is particularly important because of Android’s resource naming rules.\n\n\n\n\n\n\nWarning\n\n\nIf you only try compiling the app for Windows and you have bad filenames, the app will compile and run fine.\nBut then when you try compiling it for Android, it fails and you have to make multiple changes….just get it right the first time"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#svg-vs-png",
+    "href": "lectures/Week5/Week5.html#svg-vs-png",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "SVG vs PNG",
+    "text": "SVG vs PNG\nTwo common image formats are:\nSVG\n\nVector graphics\nCan be scaled without becoming pixelated\nParticularly useful for icons and simple graphics\n\nPNG\n\nRaster graphics\nUseful for photographs and detailed artwork\nCan become pixelated when enlarged\n\nFor icons and simple graphics, SVG is often the better choice."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#images",
+    "href": "lectures/Week5/Week5.html#images",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Images",
+    "text": "Images\nImages for a MAUI application are normally placed in:\nResources/Images/\nMAUI processes the images and generates the appropriate platform-specific resources.\nFor example:\nResources\n└── Images\n    ├── dotnet_bot.png\n    └── my_image.svg\n\n\n\n\n\n\nNote\n\n\nSVG files are converted to PNG at build time, so we refer to my_image.svg in our XAML as my_image.png."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#displaying-an-image-in-xaml",
+    "href": "lectures/Week5/Week5.html#displaying-an-image-in-xaml",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Displaying an Image in XAML",
+    "text": "Displaying an Image in XAML\nAn image can be added to a page using the Image control.\n&lt;Image Source=\"dotnet_bot.png\"\n       HorizontalOptions=\"Center\"\n       VerticalOptions=\"Center\" /&gt;\nThe image is referenced by its resource name.\nFor example:\nResources/Images/dotnet_bot.png\nis referenced as:\nSource=\"dotnet_bot.png\""
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#displaying-an-image-in-c",
+    "href": "lectures/Week5/Week5.html#displaying-an-image-in-c",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Displaying an Image in C",
+    "text": "Displaying an Image in C\nThe same control can be created in C#:\nvar image = new Image\n{\n    Source = \"dotnet_bot.png\",\n    HorizontalOptions = LayoutOptions.Center,\n    VerticalOptions = LayoutOptions.Center\n};\nThis is exactly the same idea as creating other MAUI controls programmatically."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#image-size-and-aspect",
+    "href": "lectures/Week5/Week5.html#image-size-and-aspect",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Image Size and Aspect",
+    "text": "Image Size and Aspect\nImages can be controlled using properties such as:\n&lt;Image Source=\"picture.png\"\n       HeightRequest=\"200\"\n       WidthRequest=\"300\"\n       Aspect=\"AspectFit\" /&gt;\nCommon Aspect values include:\n\nAspectFit — show the whole image\nAspectFill — fill the available area, potentially cropping\nFill — stretch the image to the available area"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#raw-resources",
+    "href": "lectures/Week5/Week5.html#raw-resources",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Raw Resources",
+    "text": "Raw Resources\nSometimes we need files that are not images.\nExamples include:\n\nText files\nJSON files\nXML files\nOther data files\n\nThese can be placed in:\nResources/Raw/\nThey can then be accessed at runtime."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#drawing-in-.net-maui",
+    "href": "lectures/Week5/Week5.html#drawing-in-.net-maui",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Drawing in .NET MAUI",
+    "text": "Drawing in .NET MAUI\nThere are several ways of creating visual shapes in a MAUI application.\nWe could use:\n\nBorder\nBoxView\nGraphics / Canvas\nShapes\n\nFor simple shapes, the MAUI Shapes controls are often convenient."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#simple-shapes",
+    "href": "lectures/Week5/Week5.html#simple-shapes",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Simple Shapes",
+    "text": "Simple Shapes\nMAUI provides controls such as:\n\nEllipse\nRectangle\nLine\nPolygon\nPolyline\nPath\n\nFor example:\n&lt;Ellipse Fill=\"DarkBlue\"\n         Stroke=\"Red\"\n         StrokeThickness=\"4\"\n         WidthRequest=\"150\"\n         HeightRequest=\"50\" /&gt;"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#fill-and-stroke",
+    "href": "lectures/Week5/Week5.html#fill-and-stroke",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Fill and Stroke",
+    "text": "Fill and Stroke\nShapes can have both a fill and an outline.\n&lt;Ellipse Fill=\"DarkBlue\"\n         Stroke=\"Red\"\n         StrokeThickness=\"4\"\n         WidthRequest=\"150\"\n         HeightRequest=\"50\" /&gt;\n\nFill controls the inside of the shape.\nStroke controls the outline.\nStrokeThickness controls the width of the outline.\n\nThese properties are common to many of the MAUI Shapes controls."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#shapes-in-c",
+    "href": "lectures/Week5/Week5.html#shapes-in-c",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Shapes in C",
+    "text": "Shapes in C\nShapes can also be created in code.\nusing Microsoft.Maui.Controls.Shapes;\n\nvar ellipse = new Ellipse\n{\n    Stroke = Colors.Black,\n    StrokeThickness = 6,\n    Fill = Colors.Green,\n    VerticalOptions = LayoutOptions.Center\n};\nAs with other MAUI controls, the object can then be added to a layout.\n\n\n\n\n\n\nWarning\n\n\nThe shapes live in the Microsoft.Maui.Controls.Shapes namespace, so you need the using line.\nRectangle can clash with Microsoft.Maui.Graphics.Rectangle. If you get an “ambiguous reference” error, write Shapes.Rectangle or use BoxView."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#paths",
+    "href": "lectures/Week5/Week5.html#paths",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Paths",
+    "text": "Paths\nFor more complex shapes, we can use a Path.\nA simple path can be defined in XAML:\n&lt;Path Data=\"M 10,100 L 100,100 100,50 Z\"\n      Stroke=\"Black\"\n      Aspect=\"Uniform\"\n      HorizontalOptions=\"Start\" /&gt;\nThis draws a triangle.\nThe path uses commands describing how to move and draw lines:\n\nM — move to a point (without drawing)\nL — draw a line to a point\nZ — close the shape by returning to the start\n\nPaths can also be built from PathGeometry objects in XAML. We do not need to become experts in path geometry today; the important point is that MAUI provides controls for drawing shapes when a standard control is not enough."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#paths-and-geometry",
+    "href": "lectures/Week5/Week5.html#paths-and-geometry",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Paths and Geometry",
+    "text": "Paths and Geometry\nPaths can also be defined using more detailed geometry.\nFor example:\n&lt;Path Stroke=\"Red\"\n      Aspect=\"Uniform\"\n      HorizontalOptions=\"Start\"&gt;\n    &lt;Path.Data&gt;\n        &lt;PathGeometry&gt;\n            &lt;PathGeometry.Figures&gt;\n                &lt;PathFigure IsClosed=\"True\"\n                            StartPoint=\"10,100\"&gt;\n                    &lt;PathFigure.Segments&gt;\n                        &lt;PathSegmentCollection&gt;\n                            &lt;LineSegment Point=\"100,100\" /&gt;\n                            &lt;LineSegment Point=\"100,50\" /&gt;\n                        &lt;/PathSegmentCollection&gt;\n                    &lt;/PathFigure.Segments&gt;\n                &lt;/PathFigure&gt;\n            &lt;/PathGeometry.Figures&gt;\n        &lt;/PathGeometry&gt;\n    &lt;/Path.Data&gt;\n&lt;/Path&gt;\nWe do not need to become experts in path geometry today.\nThe important point is that MAUI provides controls for drawing shapes when a standard control is not enough."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#why-collections",
+    "href": "lectures/Week5/Week5.html#why-collections",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Why Collections?",
+    "text": "Why Collections?\nSo far we have seen variables that store individual values:\nint age = 25;\nstring name = \"Alice\";\nBut applications often need to store many values.\nFor example:\nStudents\nProducts\nRecipes\nAnimals\nMessages\nButtons\nC# provides several ways of storing collections of objects."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#arrays",
+    "href": "lectures/Week5/Week5.html#arrays",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Arrays",
+    "text": "Arrays\nAn array is a fixed-size, ordered collection of elements of the same type.\nint[] numbers = new int[5];\nThe size is fixed when the array is created.\nWe can access individual elements using an index:\nnumbers[0] = 10;\nnumbers[1] = 20;\nRemember that indexing starts at 0."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#array-example",
+    "href": "lectures/Week5/Week5.html#array-example",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Array Example",
+    "text": "Array Example\nint[] numbers = new int[5]\n{\n    1, 2, 3, 4, 5\n};\n\nnumbers[2] = 10;\n\nfor (int i = 0; i &lt; numbers.Length; i++)\n{\n    Console.WriteLine(numbers[i]);\n}\nArrays are useful when we know the number of elements we need.\nBut what if the number of elements can change?\n\n\n\n\n\n\nNote\n\n\nIn a MAUI app Console.WriteLine doesn’t show anywhere useful. Use System.Diagnostics.Debug.WriteLine(...) to write to Visual Studio’s Output window, or put the result in a Label.\nWe’ll keep using Console.WriteLine in these slides because it’s short."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#why-use-a-list",
+    "href": "lectures/Week5/Week5.html#why-use-a-list",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Why Use a List?",
+    "text": "Why Use a List?\nSuppose we want to store the names of students.\nWe don’t necessarily know how many students there will be.\nA List&lt;T&gt; can grow and shrink as required.\nList&lt;string&gt; names = new List&lt;string&gt;();\nThe T represents the type of object stored in the list.\nHere:\nList&lt;string&gt;\nmeans:\n\nA list containing string objects."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#adding-items",
+    "href": "lectures/Week5/Week5.html#adding-items",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Adding Items",
+    "text": "Adding Items\nWe can add items using Add().\nList&lt;string&gt; names = new List&lt;string&gt;();\n\nnames.Add(\"Alice\");\nnames.Add(\"Bob\");\nnames.Add(\"Charlie\");\nThe list now contains three strings.\nWe can also initialise a list with values:\nList&lt;string&gt; names = new List&lt;string&gt;\n{\n    \"Alice\",\n    \"Bob\",\n    \"Charlie\"\n};"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#removing-items",
+    "href": "lectures/Week5/Week5.html#removing-items",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Removing Items",
+    "text": "Removing Items\nItems can be removed using Remove().\nnames.Remove(\"Bob\");\nThis removes the first matching “Bob”, so only one item will be removed.\nWe can also remove an item using its index:\nnames.RemoveAt(1);\nOther useful methods include:\nnames.Contains(\"Alice\");\nnames.Clear();\nThese methods make lists much more flexible than fixed-size arrays."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#accessing-items",
+    "href": "lectures/Week5/Week5.html#accessing-items",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Accessing Items",
+    "text": "Accessing Items\nLists use indexing in the same way as arrays.\nConsole.WriteLine(names[0]);\nWe can also find out how many items are currently in the list using Count.\nConsole.WriteLine(names.Count);\nCompare this with an array:\nnumbers.Length\nand a list:\nnames.Count"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#looping-through-a-list",
+    "href": "lectures/Week5/Week5.html#looping-through-a-list",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Looping Through a List",
+    "text": "Looping Through a List\nWe can use a normal for loop:\nfor (int i = 0; i &lt; names.Count; i++)\n{\n    Console.WriteLine(names[i]);\n}\nOr a foreach loop:\nforeach (string name in names)\n{\n    Console.WriteLine(name);\n}\nBoth are useful.\nThe for loop gives us the index; foreach gives us each object directly."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#lists-of-objects",
+    "href": "lectures/Week5/Week5.html#lists-of-objects",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Lists of Objects",
+    "text": "Lists of Objects\nA list does not have to contain simple types such as int or string.\nIt can contain objects.\npublic class Person\n{\n    public string Name { get; set; } = \"\";\n    public int Age { get; set; }\n}\nWe can then create:\nList&lt;Person&gt; people = new List&lt;Person&gt;();\nand add objects:\npeople.Add(new Person\n{\n    Name = \"John\",\n    Age = 35\n});\n\npeople.Add(new Person\n{\n    Name = \"Mary\",\n    Age = 29\n});\nThe list now contains two Person objects."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#looping-through-objects",
+    "href": "lectures/Week5/Week5.html#looping-through-objects",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Looping Through Objects",
+    "text": "Looping Through Objects\nWe can access the properties of each object.\nforeach (Person person in people)\n{\n    Console.WriteLine(person.Name);\n}\nOr using an index:\nfor (int i = 0; i &lt; people.Count; i++)\n{\n    Console.WriteLine(people[i].Name);\n}\nThis is particularly important for applications where we have a collection of domain objects."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#var",
+    "href": "lectures/Week5/Week5.html#var",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "var",
+    "text": "var\nYou may have seen me use the var keyword.\nvar name = \"Alice\";\nvar age = 25;\nThe compiler can infer the type from the expression on the right-hand side, so these are effectively:\nstring name = \"Alice\";\nint age = 25;\nIt is particularly useful when the type is already obvious from the right-hand side.\nInstead of:\nList&lt;string&gt; names = new List&lt;string&gt;();\nwe can write:\nvar names = new List&lt;string&gt;();\nThe compiler knows that names is a List&lt;string&gt;. The code is shorter without losing the type information."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#var-does-not-mean-any-type",
+    "href": "lectures/Week5/Week5.html#var-does-not-mean-any-type",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "var Does Not Mean Any Type",
+    "text": "var Does Not Mean Any Type\nvar does not mean that the variable can contain any type.\nThe compiler still knows the type.\nvar number = 10;\n\nnumber = 20;       // Fine\n\nnumber = \"hello\";  // Error\nnumber is still an int.\nvar is type inference, not dynamic typing.\nIt is also handy in a foreach loop:\nforeach (var person in people)\n{\n    Console.WriteLine(person.Name);\n}\nThe compiler knows that person is a Person."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#var-with-collections",
+    "href": "lectures/Week5/Week5.html#var-with-collections",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "var with Collections",
+    "text": "var with Collections\nvar becomes particularly useful when the type is already obvious from the right-hand side.\nInstead of:\nList&lt;string&gt; names =  new List&lt;string&gt;();\nwe can write:\nvar names = new List&lt;string&gt;();\nThe compiler knows that names is a:\nList&lt;string&gt;\nThis can make code shorter without removing the type information."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#var-with-foreach",
+    "href": "lectures/Week5/Week5.html#var-with-foreach",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "var with foreach",
+    "text": "var with foreach\nIt can also be useful in a foreach loop.\nFor example:\nforeach (var person in people)\n{\n    Console.WriteLine(person.Name);\n}\nThe compiler knows that person is a Person.\nIt can also be useful when working with MAUI collections:\nforeach (var item in GridPageContent.Children)\n{\n    // item is a MAUI View\n}\nThe exact type may not be important to us at that point."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#lists-in-.net-maui",
+    "href": "lectures/Week5/Week5.html#lists-in-.net-maui",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Lists in .NET MAUI",
+    "text": "Lists in .NET MAUI\nA list can be a field in a MAUI page.\npublic partial class MainPage : ContentPage\n{\n    List&lt;string&gt; names;\n\n    public MainPage()\n    {\n        InitializeComponent();\n\n        names = new List&lt;string&gt;();\n    }\n}\nWe can then add to the list from event handlers or other methods:\nnames.Add(\"Alice\");\nnames.Add(\"Bob\");\nThis is a simple example of keeping a collection as part of the state of a page."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#a-note-about",
+    "href": "lectures/Week5/Week5.html#a-note-about",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "A Note About []",
+    "text": "A Note About []\nModern C# also allows:\nnames = [];\nto create an empty collection when the target type is already known.\nSo this:\nList&lt;string&gt; names = [];\nworks.\nHowever, for now I prefer:\nList&lt;string&gt; names;\n\nnames = new List&lt;string&gt;();\nbecause it makes the creation of the List&lt;string&gt; explicit.\nWe will encounter the shorter syntax again as we become more comfortable with C#."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#other-collection-types",
+    "href": "lectures/Week5/Week5.html#other-collection-types",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Other Collection Types",
+    "text": "Other Collection Types\nList&lt;T&gt; is not the only collection available.\nDifferent collections are useful for different situations.\nCommon examples include:\n\nQueue&lt;T&gt;\nStack&lt;T&gt;\nDictionary&lt;TKey, TValue&gt;\nHashSet&lt;T&gt;\n\nWe only need a basic understanding of these for now."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#queue",
+    "href": "lectures/Week5/Week5.html#queue",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Queue",
+    "text": "Queue\nA Queue&lt;T&gt; is a first-in, first-out (FIFO) collection.\nThink of a queue of people: new items join at the back, and the item at the front leaves first.\n first out         front              back          new items in\n     ←        ┌─────┬─────┬─────┐        ←\n              │  1  │  2  │  3  │\n              └─────┴─────┴─────┘\nWe add items using Enqueue():\nQueue&lt;int&gt; numbers = new Queue&lt;int&gt;();\n\nnumbers.Enqueue(1);\nnumbers.Enqueue(2);\nnumbers.Enqueue(3);\nWe remove the first item using:\nint first = numbers.Dequeue();\nWe can look at the next item without removing it:\nint next = numbers.Peek();"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#stack",
+    "href": "lectures/Week5/Week5.html#stack",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Stack",
+    "text": "Stack\nA Stack&lt;T&gt; is a last-in, first-out (LIFO) collection.\nThink of a stack of plates:\n       ┌───┐\n       │ 3 │  ← first out\n       ├───┤\n       │ 2 │\n       ├───┤\n       │ 1 │\n       └───┘\nWe add using Push():\nStack&lt;int&gt; numbers = new Stack&lt;int&gt;();\n\nnumbers.Push(1);\nnumbers.Push(2);\nnumbers.Push(3);\nWe remove the most recently added item using:\nint top = numbers.Pop();\nAnd we can inspect it without removing it:\nint next = numbers.Peek();"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#dictionary",
+    "href": "lectures/Week5/Week5.html#dictionary",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Dictionary",
+    "text": "Dictionary\nA Dictionary&lt;TKey, TValue&gt; stores key/value pairs.\nFor example:\nDictionary&lt;int, string&gt; grades = new Dictionary&lt;int, string&gt;();\n\ngrades.Add(1, \"A\");\ngrades.Add(2, \"B\");\ngrades.Add(3, \"C\");\nThe key identifies the value.\nWe can retrieve a value using its key:\nConsole.WriteLine(grades[1]);\nThis prints:\nA\nUseful when we want to look up a value using a key rather than a numerical position.\n\n\n\n\n\n\nWarning\n\n\nThe 1 above is not an array index, it refers to the key\nYou could have Dictionary&lt;char, string&gt; category = new Dictionary&lt;char, string&gt;(); with category.Add('B',\"Between 60 and 70\");\nThen to retrieve the value you do Console.WriteLine(category['B']);"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#which-collection",
+    "href": "lectures/Week5/Week5.html#which-collection",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Which Collection?",
+    "text": "Which Collection?\nThe collection we choose depends on what we need to do.\n\n\n\nCollection\nMain idea\n\n\n\n\nArray\nFixed-size sequence\n\n\nList&lt;T&gt;\nFlexible ordered collection\n\n\nQueue&lt;T&gt;\nFirst in, first out\n\n\nStack&lt;T&gt;\nLast in, first out\n\n\nDictionary&lt;TKey,TValue&gt;\nKey/value lookup\n\n\nHashSet&lt;T&gt;\nUnique items, no duplicates\n\n\n\nFor most of the applications we build in this module, List&lt;T&gt; will be the collection we use most often."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#looking-ahead",
+    "href": "lectures/Week5/Week5.html#looking-ahead",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Looking Ahead",
+    "text": "Looking Ahead\nToday we have used:\nList&lt;Person&gt;\nto store a collection of objects.\nLater, when we introduce data binding, we will need the interface to be able to react when items are added or removed.\nThat is where we will meet:\nObservableCollection&lt;Person&gt;\nFor now, the important thing is to understand List&lt;T&gt; well.\nWe will build on this knowledge later rather than introducing everything at once."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#summary",
+    "href": "lectures/Week5/Week5.html#summary",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Summary",
+    "text": "Summary\nToday we looked at:\n\nApplication resources, the Resources folder and build actions\nApp icons and splash screens\nImages and image formats\nFonts and raw resources\nShapes and paths\nArrays\nList&lt;T&gt;, lists of objects and common list errors\nvar and type inference\nShowing a list on a page\nQueue&lt;T&gt;, Stack&lt;T&gt;, Dictionary&lt;TKey,TValue&gt; and HashSet&lt;T&gt;"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#changing-icons-and-splash-screens",
+    "href": "lectures/Week5/Week5.html#changing-icons-and-splash-screens",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Changing Icons and Splash Screens",
+    "text": "Changing Icons and Splash Screens\nNothing says “this app is a template/test app”, like leaving the default icons and splash screen.\nYou should ensure your apps have their own icons and splash screens.\nIt’s a simple thing to do, but can make your app look much more complete by changing these.\nSame way leaving the “Home” on the top of the page, makes the app look unfinished."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#build-actions",
+    "href": "lectures/Week5/Week5.html#build-actions",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Build Actions",
+    "text": "Build Actions\nEach kind of resource is handled by a different item in the .csproj file:\n\n\n\nItem\nUsed for\nFolder\n\n\n\n\nMauiIcon\nApp icon\nResources\\AppIcon\n\n\nMauiSplashScreen\nSplash screen\nResources\\Splash\n\n\nMauiImage\nImages\nResources\\Images\n\n\nMauiFont\nFonts\nResources\\Fonts\n\n\nMauiAsset\nRaw files (text, JSON…)\nResources\\Raw\n\n\n\nThis is why putting a file in the right folder matters: the folder decides which item MAUI uses to process it."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#fonts",
+    "href": "lectures/Week5/Week5.html#fonts",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Fonts",
+    "text": "Fonts\nFonts go in Resources/Fonts/ and are registered in MauiProgram.cs:\nbuilder\n    .UseMauiApp&lt;App&gt;()\n    .ConfigureFonts(fonts =&gt;\n    {\n        fonts.AddFont(\"OpenSans-Regular.ttf\", \"OpenSansRegular\");\n    });\nThe second value is the alias we use in our pages:\n&lt;Label Text=\"Hello\"\n       FontFamily=\"OpenSansRegular\"\n       FontSize=\"24\" /&gt;\nTo use your own font, add the .ttf file to Resources/Fonts/ and add another AddFont line."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#reading-a-raw-resource",
+    "href": "lectures/Week5/Week5.html#reading-a-raw-resource",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Reading a Raw Resource",
+    "text": "Reading a Raw Resource\nReading the file is an asynchronous operation, so the method needs to be async:\nprivate async Task LoadData()\n{\n    using var stream =\n        await FileSystem.OpenAppPackageFileAsync(\"mydata.txt\");\n\n    using var reader = new StreamReader(stream);\n\n    string contents = await reader.ReadToEndAsync();\n}\nWe will look at reading and writing files in more detail later."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#simple-shapes-fill-and-stroke",
+    "href": "lectures/Week5/Week5.html#simple-shapes-fill-and-stroke",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Simple Shapes, Fill and Stroke",
+    "text": "Simple Shapes, Fill and Stroke\nMAUI provides controls such as:\n\nEllipse\nRectangle\nLine\nPolygon\nPolyline\nPath\n\nShapes can have both a fill and an outline:\n&lt;Ellipse Fill=\"DarkBlue\"\n         Stroke=\"Red\"\n         StrokeThickness=\"4\"\n         WidthRequest=\"150\"\n         HeightRequest=\"50\" /&gt;\n\nFill controls the inside of the shape.\nStroke controls the outline.\nStrokeThickness controls the width of the outline.\n\nThese properties are common to many of the MAUI Shapes controls."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#common-list-errors",
+    "href": "lectures/Week5/Week5.html#common-list-errors",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Common List Errors",
+    "text": "Common List Errors\nIndex out of range\nvar names = new List&lt;string&gt; { \"Alice\", \"Bob\" };\n\nConsole.WriteLine(names[2]);   // ArgumentOutOfRangeException\nThe valid indexes are 0 to Count - 1.\nChanging the list inside a foreach\nforeach (var name in names)\n{\n    if (name == \"Bob\")\n        names.Remove(name);    // InvalidOperationException\n}\nWe can’t add or remove items while foreach is looping over the list.\nIf we need to remove items while looping, use a for loop that counts backwards, or remove after the loop has finished."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#var-with-maui-collections",
+    "href": "lectures/Week5/Week5.html#var-with-maui-collections",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "var with MAUI Collections",
+    "text": "var with MAUI Collections\nWhen looping through the children of a layout, the exact type isn’t obvious:\nforeach (var item in GridPageContent.Children)\n{\n    // item is an IView, not a Label or a Button\n}\nChildren holds IView objects, so we can’t just write item.Text.\nTo use a property of a specific control, check the type first:\nforeach (var item in GridPageContent.Children)\n{\n    if (item is Label label)\n    {\n        label.TextColor = Colors.Red;\n    }\n}"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#showing-a-list-on-the-page",
+    "href": "lectures/Week5/Week5.html#showing-a-list-on-the-page",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Showing a List on the Page",
+    "text": "Showing a List on the Page\nA list on its own doesn’t appear on screen. To show it, we can create a control for each item.\nIn the XAML:\n&lt;VerticalStackLayout x:Name=\"PeopleLayout\" /&gt;\nIn the code:\nforeach (var person in people)\n{\n    var label = new Label\n    {\n        Text = $\"{person.Name} ({person.Age})\"\n    };\n\n    PeopleLayout.Children.Add(label);\n}\nThis combines a list of objects, creating controls in C#, and var."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#a-note-about-and-new",
+    "href": "lectures/Week5/Week5.html#a-note-about-and-new",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "A Note About [] and new()",
+    "text": "A Note About [] and new()\nModern C# also allows:\nnames = [];\nto create an empty collection when the target type is already known.\nSo this:\nList&lt;string&gt; names = [];\nworks.\nYou will also see this, which Visual Studio and Copilot often suggest:\nList&lt;string&gt; names = new();\nFor now I prefer:\nList&lt;string&gt; names;\n\nnames = new List&lt;string&gt;();\nbecause it makes the creation of the List&lt;string&gt; explicit.\nWe will encounter the shorter syntax again as we become more comfortable with C#."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#hashset",
+    "href": "lectures/Week5/Week5.html#hashset",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "HashSet",
+    "text": "HashSet\nA HashSet&lt;T&gt; stores a collection of unique items, with no duplicates.\nHashSet&lt;string&gt; tags = new HashSet&lt;string&gt;();\n\ntags.Add(\"maui\");\ntags.Add(\"csharp\");\ntags.Add(\"maui\");      // ignored, already in the set\n\nConsole.WriteLine(tags.Count);   // 2\n\nAdd() returns false if the item was already there.\nContains() is very fast, even for large sets.\nThere is no index: tags[0] isn’t allowed, and the order isn’t guaranteed.\n\nUseful when we only care whether something is present, for example the set of tags used, or the ids we have already seen."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#common-errors-with-queue-stack-and-dictionary",
+    "href": "lectures/Week5/Week5.html#common-errors-with-queue-stack-and-dictionary",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Common Errors with Queue, Stack and Dictionary",
+    "text": "Common Errors with Queue, Stack and Dictionary\nRemoving from an empty Queue or Stack\nvar queue = new Queue&lt;int&gt;();\n\nint x = queue.Dequeue();   // InvalidOperationException\nCheck queue.Count &gt; 0 first. The same applies to Pop() and Peek() on a Stack.\nDictionary keys\ngrades.Add(1, \"A\");         // ArgumentException: key already exists\n\nConsole.WriteLine(grades[9]);  // KeyNotFoundException\nCheck first with ContainsKey, or use TryGetValue:\nif (grades.TryGetValue(9, out string? grade))\n{\n    Console.WriteLine(grade);\n}"
   }
 ]

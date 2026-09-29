@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Week3Lecture.MainPage"
+             Title="Week 3 Lecture Demo">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="20">
+
+            <Label
+                Text="Event Driven Programming"
+                FontSize="28"
+                FontAttributes="Bold" />
+
+            <Label
+                Text="A small .NET MAUI demonstration of events, validation, timers and gestures."
+                FontSize="16" />
+
+            <!-- Button events -->
+            <Border
+                StrokeThickness="1"
+                Padding="15">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="1. Button Events"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Label
+                        x:Name="lblMessage"
+                        Text="Waiting for an event..." />
+
+                    <HorizontalStackLayout Spacing="10">
+
+                        <Button
+                            Text="Red"
+                            Clicked="OnColourButtonClicked" />
+
+                        <Button
+                            Text="Blue"
+                            Clicked="OnColourButtonClicked" />
+
+                    </HorizontalStackLayout>
+
+                    <Button
+                        Text="Lambda Button" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+
+            <!-- Entry and validation -->
+            <Border
+                StrokeThickness="1"
+                Padding="15">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="2. Input and Validation"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Entry
+                        x:Name="txtQuantity"
+                        Placeholder="Enter a quantity"
+                        Keyboard="Numeric"
+                        TextChanged="OnQuantityTextChanged" />
+
+                    <Label
+                        x:Name="lblInput"
+                        Text="Enter a number." />
+
+                    <Button
+                        Text="Validate"
+                        Clicked="OnValidateClicked" />
+
+                    <Label
+                        x:Name="lblResult"
+                        Text="Result will appear here." />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+
+            <!-- Runtime UI -->
+            <Border
+                StrokeThickness="1"
+                Padding="15">
+
+                <VerticalStackLayout
+                    x:Name="MainVerticalLayout"
+                    Spacing="10">
+
+                    <Label
+                        Text="3. Runtime UI"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Button
+                        Text="Create Label"
+                        Clicked="OnCreateLabelClicked" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+
+            <!-- Timer -->
+            <Border
+                StrokeThickness="1"
+                Padding="15">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="4. DispatcherTimer"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Label
+                        x:Name="lblTime"
+                        Text="Timer not running"
+                        FontSize="18" />
+
+                    <HorizontalStackLayout Spacing="10">
+
+                        <Button
+                            Text="Start"
+                            Clicked="OnStartTimerClicked" />
+
+                        <Button
+                            Text="Stop"
+                            Clicked="OnStopTimerClicked" />
+
+                    </HorizontalStackLayout>
+
+                    <Button
+                        Text="Dispose Timer"
+                        Clicked="OnDisposeTimerClicked" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+
+            <!-- Gestures -->
+            <Border
+                StrokeThickness="1"
+                Padding="15">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="5. Gestures"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Label
+                        x:Name="lblGesture"
+                        Text="Tap or swipe the box." />
+
+                    <Border
+                        HeightRequest="180"
+                        BackgroundColor="LightGray"
+                        StrokeThickness="2">
+
+                        <Label
+                            Text="TAP / SWIPE"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            FontSize="24" />
+
+                        <Border.GestureRecognizers>
+
+                            <TapGestureRecognizer
+                                Tapped="OnBoxTapped"
+                                NumberOfTapsRequired="1" />
+
+                            <SwipeGestureRecognizer
+                                Swiped="OnSwipeGesture"
+                                Direction="Left" />
+
+                            <SwipeGestureRecognizer
+                                Swiped="OnSwipeGesture"
+                                Direction="Right" />
+
+                            <SwipeGestureRecognizer
+                                Swiped="OnSwipeGesture"
+                                Direction="Up" />
+
+                            <SwipeGestureRecognizer
+                                Swiped="OnSwipeGesture"
+                                Direction="Down" />
+
+                        </Border.GestureRecognizers>
+
+                    </Border>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+
+            <!-- Lambda demonstration -->
+            <Border
+                StrokeThickness="1"
+                Padding="15">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="6. Lambda Event Handler"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+
+                    <Label
+                        x:Name="lblLambda"
+                        Text="The lambda button has not been clicked." />
+
+                    <Button
+                        x:Name="btnLambda"
+                        Text="Click Me" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
