@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Week4Demo.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label x:Name="StatusLabel"
+                   Text="Ready"
+                   FontSize="18" />
+
+            <Label Text="Threads, Async/Await and Animations"
+                   FontSize="24"
+                   FontAttributes="Bold" />
+
+            <!-- Blocking vs asynchronous work -->
+            <Label Text="Blocking vs Async"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Button Text="Block UI for 5 seconds"
+                    Clicked="BlockButton_Clicked" />
+
+            <Button Text="Async delay for 5 seconds"
+                    Clicked="AsyncButton_Clicked" />
+
+            <Button Text="CPU calculation"
+                    Clicked="CalculateButton_Clicked" />
+
+            <!-- Timers -->
+            <Label Text="Timers"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Button Text="Start Timers"
+                    Clicked="StartTimers" />
+
+            <Button Text="Start Bad DispatcherTimer"
+                    Clicked="StartBadDispatcherTimer" />
+
+            <Button Text="Stop Timers"
+                    Clicked="StopTimers" />
+
+            <Label x:Name="SystemTimerLabel"
+                   Text="System timer: 0"
+                   FontSize="18" />
+
+            <Label x:Name="DispatcherTimerLabel"
+                   Text="Dispatcher timer: 0"
+                   FontSize="18" />
+
+            <!-- Animations -->
+            <Label Text="Animations"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Border StrokeThickness="1"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    HorizontalOptions="Center">
+
+                <BoxView x:Name="AnimationBox"
+                         Color="CornflowerBlue" />
+
+            </Border>
+
+            <Button Text="Move"
+                    Clicked="MoveButton_Clicked" />
+
+            <Button Text="Fade"
+                    Clicked="FadeButton_Clicked" />
+
+            <Button Text="Scale"
+                    Clicked="ScaleButton_Clicked" />
+
+            <Button Text="Simultaneous animations"
+                    Clicked="SimultaneousButton_Clicked" />
+
+            <Button Text="Animation sequence"
+                    Clicked="SequenceButton_Clicked" />
+
+            <!-- Dialogs -->
+            <Label Text="Dialogs"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Button Text="Show Alert"
+                    Clicked="AlertButton_Clicked" />
+
+            <Button Text="Ask Name"
+                    Clicked="NameButton_Clicked" />
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
+
+</ContentPage>

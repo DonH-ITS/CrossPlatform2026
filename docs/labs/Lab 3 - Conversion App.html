@@ -580,17 +580,17 @@ Application responds</code></pre>
 </section>
 <section id="add-the-border-to-the-grid" class="level3">
 <h3 class="anchored" data-anchor-id="add-the-border-to-the-grid">12.7. Add the Border to the Grid</h3>
-<p>We can add an element to a particular row and column using an overloaded version of <code>Grid.Children.Add()</code>.</p>
+<p>We can add an element to a particular row and column using an overloaded version of <code>Grid.Add()</code>.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The two numbers specify:</p>
 <pre class="text"><code>             column
                 ↓
-grid.Children.Add(border, 0, 0);
-                         ↑
-                        row</code></pre>
+grid.Add(border, 0, 0);
+                    ↑
+                    row</code></pre>
 <p>So:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>would put the <code>Border</code> in row <code>2</code>, column <code>1</code>.</p>
 <p>Notice that this is different from adding an element to the grid without specifying its position.</p>
 <p>We are using the overloaded <code>Add()</code> method to tell the grid where the element belongs.</p>
@@ -599,23 +599,23 @@ grid.Children.Add(border, 0, 0);
 <h3 class="anchored" data-anchor-id="try-one-border">12.8. Try One Border</h3>
 <p>Before creating the whole grid, try adding just one <code>Border</code>.</p>
 <p>Add it to the first cell:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now you need to add the <code>Grid</code> itself to your page.</p>
 <p>Find an appropriate layout in your XAML and give it an <code>x:Name</code>.</p>
 <p>For example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">VerticalStackLayout</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">x:Name=</span><span class="st">"MainLayout"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can then add the grid to it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>MainLayout<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>grid<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>MainLayout<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>grid<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run the application and press your <strong>Create Grid</strong> button.</p>
 <p>You should see your <code>Border</code> in the first cell of the grid.</p>
 </section>
 <section id="create-all-the-borders" class="level3">
 <h3 class="anchored" data-anchor-id="create-all-the-borders">12.9. Create All the Borders</h3>
 <p>We don’t want to write this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>grid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Especially because we want our method to work with different grid sizes.</p>
 <p>Instead, we can use <strong>nested loops</strong>.</p>
 <p>You have already used a loop to create the rows and another loop to create the columns.</p>

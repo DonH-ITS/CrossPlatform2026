@@ -448,7 +448,7 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb10-1"><a aria-label="1"></a>Source="dotnet_bot.png"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="displaying-an-image-in-c" class="slide level2">
-<h2>Displaying an Image in C</h2>
+<h2>Displaying an Image in C#</h2>
 <p>The same control can be created in C#:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a aria-label="1"></a><span class="dt">var</span> image <span class="op">=</span> <span class="kw">new</span> Image</span>
 <span id="cb11-2"><a aria-label="2"></a><span class="op">{</span></span>
@@ -513,7 +513,8 @@
 <span id="cb16-7"><a aria-label="7"></a></span>
 <span id="cb16-8"><a aria-label="8"></a>    <span class="dt">string</span> contents <span class="op">=</span> await reader<span class="op">.</span><span class="fu">ReadToEndAsync</span><span class="op">();</span></span>
 <span id="cb16-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We will look at reading and writing files in more detail later.</p>
+<p>This is for <strong>files packaged with the application</strong>.</p>
+<p>Later we will look at files that our application creates and modifies itself.</p>
 </section>
 <section id="drawing-in-.net-maui" class="slide level2">
 <h2>Drawing in .NET MAUI</h2>
@@ -597,6 +598,709 @@
 <p>Paths can also be built from <code>PathGeometry</code> objects in XAML. We do not need to become experts in path geometry today; the important point is that MAUI provides controls for drawing shapes when a standard control is not enough.</p>
 </section></section>
 <section>
+<section id="persistent-data" class="title-slide slide level1 center">
+<h1>Persistent Data</h1>
+
+</section>
+<section id="remembering-information" class="slide level2">
+<h2>Remembering Information</h2>
+<p>So far, information in our application has existed only while the application is running.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a aria-label="1"></a><span class="dt">int</span> score <span class="op">=</span> <span class="dv">125</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What happens when the application closes?</p>
+<p>The variable disappears.</p>
+<p>What if we want our application to remember something?</p>
+<p>For example:</p>
+<ul>
+<li>A high score</li>
+<li>A username</li>
+<li>A setting</li>
+<li>A player’s progress</li>
+<li>Saved application data</li>
+</ul>
+<p>We need <strong>persistent storage</strong>.</p>
+</section>
+<section id="two-simple-approaches" class="slide level2">
+<h2>Two Simple Approaches</h2>
+<p>For the applications we are building, there are two important approaches:</p>
+<p><strong>Preferences</strong></p>
+<p>Good for small pieces of simple data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a aria-label="1"></a>HighScore → 125</span>
+<span id="cb21-2"><a aria-label="2"></a>SoundEnabled → true</span>
+<span id="cb21-3"><a aria-label="3"></a>PlayerName → "Alice"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Files</strong></p>
+<p>Good for larger or more structured data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a aria-label="1"></a>GameData</span>
+<span id="cb22-2"><a aria-label="2"></a>├── PlayerName</span>
+<span id="cb22-3"><a aria-label="3"></a>├── HighScore</span>
+<span id="cb22-4"><a aria-label="4"></a>└── GamesPlayed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Later we can use JSON to store objects in files.</p>
+</section></section>
+<section>
+<section id="preferences" class="title-slide slide level1 center">
+<h1>Preferences</h1>
+
+</section>
+<section id="what-are-preferences" class="slide level2">
+<h2>What are Preferences?</h2>
+<p>Preferences in .NET MAUI provide a simple way to store <strong>key-value pairs</strong> that persist between application sessions.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb23-1"><a aria-label="1"></a>"HighScore" → 125</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The value remains available when the application is closed and opened again.</p>
+<p>Preferences are suitable for <strong>small and simple values</strong>.</p>
+</section>
+<section id="when-to-use-preferences" class="slide level2">
+<h2>When to Use Preferences</h2>
+<p>Good examples include:</p>
+<ul>
+<li>A high score</li>
+<li>A username</li>
+<li>A setting</li>
+<li>Whether sound is enabled</li>
+<li>Whether the user has seen a particular screen</li>
+</ul>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb24-1"><a aria-label="1"></a>HighScore → 125</span>
+<span id="cb24-2"><a aria-label="2"></a>SoundEnabled → true</span>
+<span id="cb24-3"><a aria-label="3"></a>PlayerName → "Alice"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Preferences are not intended to replace a database or a general-purpose file format.</p>
+</section>
+<section id="setting-a-preference" class="slide level2">
+<h2>Setting a Preference</h2>
+<p>The <code>Preferences</code> API is available through <code>Microsoft.Maui.Storage</code>.</p>
+<p>Use <code>Preferences.Default</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a aria-label="1"></a>Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Set</span><span class="op">(</span><span class="st">"HighScore"</span><span class="op">,</span> <span class="dv">125</span><span class="op">);</span></span>
+<span id="cb25-2"><a aria-label="2"></a></span>
+<span id="cb25-3"><a aria-label="3"></a>Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Set</span><span class="op">(</span><span class="st">"PlayerName"</span><span class="op">,</span> <span class="st">"Alice"</span><span class="op">);</span></span>
+<span id="cb25-4"><a aria-label="4"></a></span>
+<span id="cb25-5"><a aria-label="5"></a>Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Set</span><span class="op">(</span><span class="st">"SoundEnabled"</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The key identifies the value we want to store.</p>
+</section>
+<section id="getting-a-preference" class="slide level2">
+<h2>Getting a Preference</h2>
+<p>When retrieving a preference, we provide a default value.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a aria-label="1"></a><span class="dt">int</span> highScore <span class="op">=</span></span>
+<span id="cb26-2"><a aria-label="2"></a>    Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Get</span><span class="op">(</span><span class="st">"HighScore"</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb26-3"><a aria-label="3"></a></span>
+<span id="cb26-4"><a aria-label="4"></a><span class="dt">string</span> playerName <span class="op">=</span></span>
+<span id="cb26-5"><a aria-label="5"></a>    Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Get</span><span class="op">(</span><span class="st">"PlayerName"</span><span class="op">,</span> <span class="st">""</span><span class="op">);</span></span>
+<span id="cb26-6"><a aria-label="6"></a></span>
+<span id="cb26-7"><a aria-label="7"></a><span class="dt">bool</span> soundEnabled <span class="op">=</span></span>
+<span id="cb26-8"><a aria-label="8"></a>    Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Get</span><span class="op">(</span><span class="st">"SoundEnabled"</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the preference has not previously been stored, the default value is returned.</p>
+</section>
+<section id="a-practical-example" class="slide level2">
+<h2>A Practical Example</h2>
+<p>Suppose our game keeps a high score.</p>
+<p>When the game finishes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a><span class="kw">if</span> <span class="op">(</span>score <span class="op">&gt;</span> highScore<span class="op">)</span></span>
+<span id="cb27-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb27-3"><a aria-label="3"></a>    highScore <span class="op">=</span> score<span class="op">;</span></span>
+<span id="cb27-4"><a aria-label="4"></a></span>
+<span id="cb27-5"><a aria-label="5"></a>    Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Set</span><span class="op">(</span></span>
+<span id="cb27-6"><a aria-label="6"></a>        <span class="st">"HighScore"</span><span class="op">,</span></span>
+<span id="cb27-7"><a aria-label="7"></a>        highScore<span class="op">);</span></span>
+<span id="cb27-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When the page starts, we can retrieve it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a aria-label="1"></a>highScore <span class="op">=</span></span>
+<span id="cb28-2"><a aria-label="2"></a>    Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Get</span><span class="op">(</span><span class="st">"HighScore"</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is a good use of Preferences.</p>
+</section>
+<section id="preferences-the-important-idea" class="slide level2">
+<h2>Preferences: The Important Idea</h2>
+<p>Think of Preferences as a small collection of:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb29-1"><a aria-label="1"></a>key → value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb30-1"><a aria-label="1"></a>"HighScore"    → 125</span>
+<span id="cb30-2"><a aria-label="2"></a>"PlayerName"   → "Alice"</span>
+<span id="cb30-3"><a aria-label="3"></a>"SoundEnabled" → true</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It is simple and convenient.</p>
+<p>But what if the information we want to save becomes more complicated?</p>
+</section></section>
+<section>
+<section id="files" class="title-slide slide level1 center">
+<h1>Files</h1>
+
+</section>
+<section id="why-use-files" class="slide level2">
+<h2>Why Use Files?</h2>
+<p>A file allows an application to store data beyond the lifetime of the application.</p>
+<p>Files can contain:</p>
+<ul>
+<li>Text</li>
+<li>Configuration data</li>
+<li>JSON</li>
+<li>CSV</li>
+<li>XML</li>
+<li>Other application data</li>
+</ul>
+<p>The important difference is that a file can contain much more structured information than a few simple Preferences.</p>
+</section>
+<section id="a-simple-text-file" class="slide level2">
+<h2>A Simple Text File</h2>
+<p>Suppose we want to save three names:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb31-1"><a aria-label="1"></a>Chris</span>
+<span id="cb31-2"><a aria-label="2"></a>Kathryn</span>
+<span id="cb31-3"><a aria-label="3"></a>Jean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We could write these to a text file.</p>
+<p>In C#, one way of doing this is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a aria-label="1"></a><span class="kw">using</span> StreamWriter writer <span class="op">=</span></span>
+<span id="cb32-2"><a aria-label="2"></a>    <span class="kw">new</span> <span class="fu">StreamWriter</span><span class="op">(</span><span class="st">"Names.txt"</span><span class="op">);</span></span>
+<span id="cb32-3"><a aria-label="3"></a></span>
+<span id="cb32-4"><a aria-label="4"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Chris"</span><span class="op">);</span></span>
+<span id="cb32-5"><a aria-label="5"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Kathryn"</span><span class="op">);</span></span>
+<span id="cb32-6"><a aria-label="6"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Jean"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>However, in a MAUI application we also need to think about <strong>where the file is stored</strong>.</p>
+</section>
+<section id="where-should-a-maui-app-store-files" class="slide level2">
+<h2>Where Should a MAUI App Store Files?</h2>
+<p>We should not assume that a filename such as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb33-1"><a aria-label="1"></a>"Names.txt"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>refers to a suitable location on every platform.</p>
+<p>.NET MAUI provides:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a aria-label="1"></a>FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This gives the application a platform-appropriate directory for its own data.</p>
+</section>
+<section id="combining-paths" class="slide level2">
+<h2>Combining Paths</h2>
+<p>We can combine the application data directory with a filename using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a>Path<span class="op">.</span><span class="fu">Combine</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a><span class="dt">string</span> fileName <span class="op">=</span></span>
+<span id="cb36-2"><a aria-label="2"></a>    Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span></span>
+<span id="cb36-3"><a aria-label="3"></a>        FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span><span class="op">,</span></span>
+<span id="cb36-4"><a aria-label="4"></a>        <span class="st">"Names.txt"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This avoids having to worry about whether a platform uses:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a aria-label="1"></a>\</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>or:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb38-1"><a aria-label="1"></a>/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>between directories.</p>
+</section>
+<section id="writing-a-file-in-maui" class="slide level2">
+<h2>Writing a File in MAUI</h2>
+<p>We can now write to our application data directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a aria-label="1"></a><span class="dt">string</span> fileName <span class="op">=</span></span>
+<span id="cb39-2"><a aria-label="2"></a>    Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span></span>
+<span id="cb39-3"><a aria-label="3"></a>        FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span><span class="op">,</span></span>
+<span id="cb39-4"><a aria-label="4"></a>        <span class="st">"Names.txt"</span><span class="op">);</span></span>
+<span id="cb39-5"><a aria-label="5"></a></span>
+<span id="cb39-6"><a aria-label="6"></a><span class="kw">using</span> StreamWriter writer <span class="op">=</span></span>
+<span id="cb39-7"><a aria-label="7"></a>    <span class="kw">new</span> <span class="fu">StreamWriter</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb39-8"><a aria-label="8"></a></span>
+<span id="cb39-9"><a aria-label="9"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Chris"</span><span class="op">);</span></span>
+<span id="cb39-10"><a aria-label="10"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Kathryn"</span><span class="op">);</span></span>
+<span id="cb39-11"><a aria-label="11"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Jean"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The file is created if it does not already exist.</p>
+<p>If it does exist, this form of writing will overwrite its contents.</p>
+</section>
+<section id="using" class="slide level2">
+<h2><code>using</code></h2>
+<p>The <code>using</code> statement is important when working with objects such as <code>StreamWriter</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a aria-label="1"></a><span class="kw">using</span> StreamWriter writer <span class="op">=</span></span>
+<span id="cb40-2"><a aria-label="2"></a>    <span class="kw">new</span> <span class="fu">StreamWriter</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb40-3"><a aria-label="3"></a></span>
+<span id="cb40-4"><a aria-label="4"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Chris"</span><span class="op">);</span></span>
+<span id="cb40-5"><a aria-label="5"></a>writer<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span><span class="st">"Kathryn"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When the <code>using</code> scope ends, the writer is disposed.</p>
+<p>This ensures that the file is properly closed and resources are released.</p>
+</section>
+<section id="reading-a-file" class="slide level2">
+<h2>Reading a File</h2>
+<p>We can read a file using <code>StreamReader</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb41-1"><a aria-label="1"></a><span class="kw">using</span> StreamReader reader <span class="op">=</span></span>
+<span id="cb41-2"><a aria-label="2"></a>    <span class="kw">new</span> <span class="fu">StreamReader</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb41-3"><a aria-label="3"></a></span>
+<span id="cb41-4"><a aria-label="4"></a><span class="dt">string</span> contents <span class="op">=</span></span>
+<span id="cb41-5"><a aria-label="5"></a>    reader<span class="op">.</span><span class="fu">ReadToEnd</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For a file containing:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb42-1"><a aria-label="1"></a>Chris</span>
+<span id="cb42-2"><a aria-label="2"></a>Kathryn</span>
+<span id="cb42-3"><a aria-label="3"></a>Jean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>contents</code> will contain the text from the file.</p>
+</section>
+<section id="reading-line-by-line" class="slide level2">
+<h2>Reading Line by Line</h2>
+<p>We can also read individual lines.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a aria-label="1"></a><span class="kw">using</span> StreamReader reader <span class="op">=</span></span>
+<span id="cb43-2"><a aria-label="2"></a>    <span class="kw">new</span> <span class="fu">StreamReader</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb43-3"><a aria-label="3"></a></span>
+<span id="cb43-4"><a aria-label="4"></a><span class="dt">string</span><span class="op">?</span> line<span class="op">;</span></span>
+<span id="cb43-5"><a aria-label="5"></a></span>
+<span id="cb43-6"><a aria-label="6"></a><span class="kw">while</span> <span class="op">((</span>line <span class="op">=</span> reader<span class="op">.</span><span class="fu">ReadLine</span><span class="op">())</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb43-7"><a aria-label="7"></a><span class="op">{</span></span>
+<span id="cb43-8"><a aria-label="8"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>line<span class="op">);</span></span>
+<span id="cb43-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This can be useful when processing a text file one line at a time.</p>
+<p>For the applications we are building, however, we will often want to read an entire structured file and turn it into an object.</p>
+</section>
+<section id="asynchronous-file-operations" class="slide level2">
+<h2>Asynchronous File Operations</h2>
+<p>File operations can take time.</p>
+<p>As we saw when discussing <code>async</code> and <code>await</code>, we do not want lengthy operations to block the UI thread.</p>
+<p>.NET provides asynchronous versions of many file operations.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a><span class="dt">string</span> contents <span class="op">=</span></span>
+<span id="cb44-2"><a aria-label="2"></a>    await File<span class="op">.</span><span class="fu">ReadAllTextAsync</span><span class="op">(</span>fileName<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a>await File<span class="op">.</span><span class="fu">WriteAllTextAsync</span><span class="op">(</span></span>
+<span id="cb45-2"><a aria-label="2"></a>    fileName<span class="op">,</span></span>
+<span id="cb45-3"><a aria-label="3"></a>    contents<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This fits naturally with the asynchronous programming we have already covered.</p>
+</section>
+<section id="checking-for-a-file" class="slide level2">
+<h2>Checking for a File</h2>
+<p>When reading a file, we need to consider whether it exists.</p>
+<p>We can check using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb46-1"><a aria-label="1"></a><span class="kw">if</span> <span class="op">(</span>File<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>fileName<span class="op">))</span></span>
+<span id="cb46-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb46-3"><a aria-label="3"></a>    <span class="co">// Read the file</span></span>
+<span id="cb46-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a><span class="kw">if</span> <span class="op">(</span>File<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>fileName<span class="op">))</span></span>
+<span id="cb47-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb47-3"><a aria-label="3"></a>    <span class="dt">string</span> contents <span class="op">=</span></span>
+<span id="cb47-4"><a aria-label="4"></a>        await File<span class="op">.</span><span class="fu">ReadAllTextAsync</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb47-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the file does not exist, we can decide what the application should do instead.</p>
+</section>
+<section id="handling-file-errors" class="slide level2">
+<h2>Handling File Errors</h2>
+<p>File operations can fail.</p>
+<p>For example:</p>
+<ul>
+<li>The file may not exist.</li>
+<li>The directory may not be accessible.</li>
+<li>The file may be in use.</li>
+<li>There may be a permissions problem.</li>
+</ul>
+<p>When appropriate, file operations should therefore be protected with exception handling.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a><span class="kw">try</span></span>
+<span id="cb48-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb48-3"><a aria-label="3"></a>    <span class="dt">string</span> contents <span class="op">=</span></span>
+<span id="cb48-4"><a aria-label="4"></a>        await File<span class="op">.</span><span class="fu">ReadAllTextAsync</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb48-5"><a aria-label="5"></a><span class="op">}</span></span>
+<span id="cb48-6"><a aria-label="6"></a><span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
+<span id="cb48-7"><a aria-label="7"></a><span class="op">{</span></span>
+<span id="cb48-8"><a aria-label="8"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>ex<span class="op">.</span><span class="fu">Message</span><span class="op">);</span></span>
+<span id="cb48-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We do not need to handle every possible exception individually at this stage.</p>
+</section></section>
+<section>
+<section id="data-formats" class="title-slide slide level1 center">
+<h1>Data Formats</h1>
+
+</section>
+<section id="why-have-data-formats" class="slide level2">
+<h2>Why Have Data Formats?</h2>
+<p>There are many ways to represent data in a file.</p>
+<p>A useful data format should ideally be:</p>
+<ul>
+<li>Easy for programs to read</li>
+<li>Easy for people to understand</li>
+<li>Widely supported</li>
+<li>Suitable for the type of data being stored</li>
+</ul>
+<p>Some formats we will encounter include:</p>
+<ul>
+<li>CSV</li>
+<li>XML</li>
+<li>JSON</li>
+</ul>
+<p>Databases are another important way of storing structured data, although a database is more than simply a file format.</p>
+</section>
+<section id="csv" class="slide level2">
+<h2>CSV</h2>
+<p>CSV stands for <strong>Comma-Separated Values</strong>.</p>
+<p>A CSV file represents data as rows and columns.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb49-1"><a aria-label="1"></a>Name,Age,Occupation</span>
+<span id="cb49-2"><a aria-label="2"></a>John Doe,30,Engineer</span>
+<span id="cb49-3"><a aria-label="3"></a>Jane Smith,25,Analyst</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>CSV is particularly common when exchanging tabular data with applications such as spreadsheets.</p>
+<p>There are complications, however, when values themselves contain commas or other special characters.</p>
+<p>For this module, we will not need to implement a complete CSV reader or writer.</p>
+</section>
+<section id="json" class="slide level2">
+<h2>JSON</h2>
+<p>JSON stands for <strong>JavaScript Object Notation</strong>.</p>
+<p>Despite the name, JSON is not limited to JavaScript.</p>
+<p>It is a widely used format for representing structured data and is particularly common when applications communicate with APIs.</p>
+<p>A simple JSON object might look like:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb50-1"><a aria-label="1"></a><span class="fu">{</span></span>
+<span id="cb50-2"><a aria-label="2"></a>    <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span></span>
+<span id="cb50-3"><a aria-label="3"></a>    <span class="dt">"Age"</span><span class="fu">:</span> <span class="dv">25</span></span>
+<span id="cb50-4"><a aria-label="4"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It is text, but it has a structure that maps naturally to objects and collections.</p>
+</section>
+<section id="json-values" class="slide level2">
+<h2>JSON Values</h2>
+<p>JSON can represent values such as:</p>
+<ul>
+<li>Strings</li>
+<li>Numbers</li>
+<li>Booleans</li>
+<li>Objects</li>
+<li>Arrays</li>
+<li><code>null</code></li>
+</ul>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb51-1"><a aria-label="1"></a><span class="fu">{</span></span>
+<span id="cb51-2"><a aria-label="2"></a>    <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"John"</span><span class="fu">,</span></span>
+<span id="cb51-3"><a aria-label="3"></a>    <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">,</span></span>
+<span id="cb51-4"><a aria-label="4"></a>    <span class="dt">"cities"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb51-5"><a aria-label="5"></a>        <span class="st">"New York"</span><span class="ot">,</span></span>
+<span id="cb51-6"><a aria-label="6"></a>        <span class="st">"London"</span><span class="ot">,</span></span>
+<span id="cb51-7"><a aria-label="7"></a>        <span class="st">"Paris"</span></span>
+<span id="cb51-8"><a aria-label="8"></a>    <span class="ot">]</span></span>
+<span id="cb51-9"><a aria-label="9"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The square brackets represent an array of values.</p>
+<p>The curly brackets represent an object.</p>
+</section>
+<section id="json-and-c" class="slide level2">
+<h2>JSON and C</h2>
+<p>C# provides support for working with JSON.</p>
+<p>We will use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb52-1"><a aria-label="1"></a>System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Json</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is part of modern .NET, so we do not need to install a third-party JSON package.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb53-1"><a aria-label="1"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Json</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can then convert between C# objects and JSON.</p>
+</section>
+<section id="serialisation" class="slide level2">
+<h2>Serialisation</h2>
+<p><strong>Serialisation</strong> is the process of converting an object into a representation that can be stored or transmitted.</p>
+<p>For JSON:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb54-1"><a aria-label="1"></a>C# object</span>
+<span id="cb54-2"><a aria-label="2"></a>     ↓</span>
+<span id="cb54-3"><a aria-label="3"></a>Serialize</span>
+<span id="cb54-4"><a aria-label="4"></a>     ↓</span>
+<span id="cb54-5"><a aria-label="5"></a>JSON text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb55-1"><a aria-label="1"></a>Person person <span class="op">=</span> <span class="kw">new</span> Person</span>
+<span id="cb55-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb55-3"><a aria-label="3"></a>    Name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">,</span></span>
+<span id="cb55-4"><a aria-label="4"></a>    Age <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb55-5"><a aria-label="5"></a><span class="op">};</span></span>
+<span id="cb55-6"><a aria-label="6"></a></span>
+<span id="cb55-7"><a aria-label="7"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb55-8"><a aria-label="8"></a>    JsonSerializer<span class="op">.</span><span class="fu">Serialize</span><span class="op">(</span>person<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>json</code> now contains the JSON representation of the object.</p>
+</section>
+<section id="what-does-the-json-look-like" class="slide level2">
+<h2>What Does the JSON Look Like?</h2>
+<p>For example, the object:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb56-1"><a aria-label="1"></a>Person person <span class="op">=</span> <span class="kw">new</span> Person</span>
+<span id="cb56-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb56-3"><a aria-label="3"></a>    Name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">,</span></span>
+<span id="cb56-4"><a aria-label="4"></a>    Age <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb56-5"><a aria-label="5"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>could be represented as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb57-1"><a aria-label="1"></a><span class="fu">{</span></span>
+<span id="cb57-2"><a aria-label="2"></a>    <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span></span>
+<span id="cb57-3"><a aria-label="3"></a>    <span class="dt">"Age"</span><span class="fu">:</span> <span class="dv">25</span></span>
+<span id="cb57-4"><a aria-label="4"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The JSON is just text.</p>
+<p>That text can then be:</p>
+<ul>
+<li>Written to a file</li>
+<li>Sent over a network</li>
+<li>Stored somewhere else</li>
+<li>Read by another application</li>
+</ul>
+</section>
+<section id="deserialisation" class="slide level2">
+<h2>Deserialisation</h2>
+<p><strong>Deserialisation</strong> is the reverse process.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb58-1"><a aria-label="1"></a>JSON text</span>
+<span id="cb58-2"><a aria-label="2"></a>     ↓</span>
+<span id="cb58-3"><a aria-label="3"></a>Deserialize</span>
+<span id="cb58-4"><a aria-label="4"></a>     ↓</span>
+<span id="cb58-5"><a aria-label="5"></a>C# object</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb59-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb59-2"><a aria-label="2"></a>    <span class="st">"{</span><span class="sc">\"</span><span class="st">Name</span><span class="sc">\"</span><span class="st">:</span><span class="sc">\"</span><span class="st">Bob</span><span class="sc">\"</span><span class="st">,</span><span class="sc">\"</span><span class="st">Age</span><span class="sc">\"</span><span class="st">:30}"</span><span class="op">;</span></span>
+<span id="cb59-3"><a aria-label="3"></a></span>
+<span id="cb59-4"><a aria-label="4"></a>Person<span class="op">?</span> person <span class="op">=</span></span>
+<span id="cb59-5"><a aria-label="5"></a>    JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>Person<span class="op">&gt;(</span>json<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We now have a <code>Person</code> object again.</p>
+</section>
+<section id="an-object-we-can-save" class="slide level2">
+<h2>An Object We Can Save</h2>
+<p>Let’s create a simple class representing saved game data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb60-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> GameData</span>
+<span id="cb60-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb60-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">string</span> PlayerName <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb60-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">int</span> HighScore <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb60-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="dt">int</span> GamesPlayed <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb60-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can create an object:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb61-1"><a aria-label="1"></a>GameData data <span class="op">=</span> <span class="kw">new</span> GameData</span>
+<span id="cb61-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb61-3"><a aria-label="3"></a>    PlayerName <span class="op">=</span> <span class="st">"Alice"</span><span class="op">,</span></span>
+<span id="cb61-4"><a aria-label="4"></a>    HighScore <span class="op">=</span> <span class="dv">125</span><span class="op">,</span></span>
+<span id="cb61-5"><a aria-label="5"></a>    GamesPlayed <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb61-6"><a aria-label="6"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we want to save it.</p>
+</section>
+<section id="serialising-gamedata" class="slide level2">
+<h2>Serialising <code>GameData</code></h2>
+<p>We can convert the object to JSON:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb62-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb62-2"><a aria-label="2"></a>    JsonSerializer<span class="op">.</span><span class="fu">Serialize</span><span class="op">(</span>data<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The result will be similar to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb63-1"><a aria-label="1"></a><span class="fu">{</span></span>
+<span id="cb63-2"><a aria-label="2"></a>    <span class="dt">"PlayerName"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span></span>
+<span id="cb63-3"><a aria-label="3"></a>    <span class="dt">"HighScore"</span><span class="fu">:</span> <span class="dv">125</span><span class="fu">,</span></span>
+<span id="cb63-4"><a aria-label="4"></a>    <span class="dt">"GamesPlayed"</span><span class="fu">:</span> <span class="dv">7</span></span>
+<span id="cb63-5"><a aria-label="5"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We have converted our C# object into text.</p>
+</section>
+<section id="writing-json-to-a-file" class="slide level2">
+<h2>Writing JSON to a File</h2>
+<p>Now combine what we have already learned.</p>
+<p>First, create the filename:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb64-1"><a aria-label="1"></a><span class="dt">string</span> fileName <span class="op">=</span></span>
+<span id="cb64-2"><a aria-label="2"></a>    Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span></span>
+<span id="cb64-3"><a aria-label="3"></a>        FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span><span class="op">,</span></span>
+<span id="cb64-4"><a aria-label="4"></a>        <span class="st">"game.json"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then serialise the object:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb65-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb65-2"><a aria-label="2"></a>    JsonSerializer<span class="op">.</span><span class="fu">Serialize</span><span class="op">(</span>data<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Finally, write it to the file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb66-1"><a aria-label="1"></a>await File<span class="op">.</span><span class="fu">WriteAllTextAsync</span><span class="op">(</span></span>
+<span id="cb66-2"><a aria-label="2"></a>    fileName<span class="op">,</span></span>
+<span id="cb66-3"><a aria-label="3"></a>    json<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We have now saved an object to a file.</p>
+</section>
+<section id="the-complete-save-operation" class="slide level2">
+<h2>The Complete Save Operation</h2>
+<p>Putting it together:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb67-1"><a aria-label="1"></a>GameData data <span class="op">=</span> <span class="kw">new</span> GameData</span>
+<span id="cb67-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb67-3"><a aria-label="3"></a>    PlayerName <span class="op">=</span> <span class="st">"Alice"</span><span class="op">,</span></span>
+<span id="cb67-4"><a aria-label="4"></a>    HighScore <span class="op">=</span> <span class="dv">125</span><span class="op">,</span></span>
+<span id="cb67-5"><a aria-label="5"></a>    GamesPlayed <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb67-6"><a aria-label="6"></a><span class="op">};</span></span>
+<span id="cb67-7"><a aria-label="7"></a></span>
+<span id="cb67-8"><a aria-label="8"></a><span class="dt">string</span> fileName <span class="op">=</span></span>
+<span id="cb67-9"><a aria-label="9"></a>    Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span></span>
+<span id="cb67-10"><a aria-label="10"></a>        FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span><span class="op">,</span></span>
+<span id="cb67-11"><a aria-label="11"></a>        <span class="st">"game.json"</span><span class="op">);</span></span>
+<span id="cb67-12"><a aria-label="12"></a></span>
+<span id="cb67-13"><a aria-label="13"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb67-14"><a aria-label="14"></a>    JsonSerializer<span class="op">.</span><span class="fu">Serialize</span><span class="op">(</span>data<span class="op">);</span></span>
+<span id="cb67-15"><a aria-label="15"></a></span>
+<span id="cb67-16"><a aria-label="16"></a>await File<span class="op">.</span><span class="fu">WriteAllTextAsync</span><span class="op">(</span></span>
+<span id="cb67-17"><a aria-label="17"></a>    fileName<span class="op">,</span></span>
+<span id="cb67-18"><a aria-label="18"></a>    json<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The important sequence is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb68-1"><a aria-label="1"></a>C# object</span>
+<span id="cb68-2"><a aria-label="2"></a>    ↓</span>
+<span id="cb68-3"><a aria-label="3"></a>Serialize</span>
+<span id="cb68-4"><a aria-label="4"></a>    ↓</span>
+<span id="cb68-5"><a aria-label="5"></a>JSON string</span>
+<span id="cb68-6"><a aria-label="6"></a>    ↓</span>
+<span id="cb68-7"><a aria-label="7"></a>WriteAllTextAsync</span>
+<span id="cb68-8"><a aria-label="8"></a>    ↓</span>
+<span id="cb68-9"><a aria-label="9"></a>File</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="reading-the-json-file" class="slide level2">
+<h2>Reading the JSON File</h2>
+<p>Now suppose the application starts again.</p>
+<p>We can read the file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb69-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb69-2"><a aria-label="2"></a>    await File<span class="op">.</span><span class="fu">ReadAllTextAsync</span><span class="op">(</span>fileName<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We have the JSON text again.</p>
+<p>But we want a <code>GameData</code> object.</p>
+<p>So we deserialize it.</p>
+</section>
+<section id="deserialising-gamedata" class="slide level2">
+<h2>Deserialising <code>GameData</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb70-1"><a aria-label="1"></a>GameData<span class="op">?</span> data <span class="op">=</span></span>
+<span id="cb70-2"><a aria-label="2"></a>    JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>GameData<span class="op">&gt;(</span>json<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We now have the object back.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb71-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>data<span class="op">?.</span><span class="fu">PlayerName</span><span class="op">);</span></span>
+<span id="cb71-2"><a aria-label="2"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>data<span class="op">?.</span><span class="fu">HighScore</span><span class="op">);</span></span>
+<span id="cb71-3"><a aria-label="3"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>data<span class="op">?.</span><span class="fu">GamesPlayed</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The values that were saved can be used again.</p>
+</section>
+<section id="the-complete-load-operation" class="slide level2">
+<h2>The Complete Load Operation</h2>
+<p>Putting it together:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb72-1"><a aria-label="1"></a><span class="dt">string</span> fileName <span class="op">=</span></span>
+<span id="cb72-2"><a aria-label="2"></a>    Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span></span>
+<span id="cb72-3"><a aria-label="3"></a>        FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span><span class="op">,</span></span>
+<span id="cb72-4"><a aria-label="4"></a>        <span class="st">"game.json"</span><span class="op">);</span></span>
+<span id="cb72-5"><a aria-label="5"></a></span>
+<span id="cb72-6"><a aria-label="6"></a><span class="kw">if</span> <span class="op">(</span>File<span class="op">.</span><span class="fu">Exists</span><span class="op">(</span>fileName<span class="op">))</span></span>
+<span id="cb72-7"><a aria-label="7"></a><span class="op">{</span></span>
+<span id="cb72-8"><a aria-label="8"></a>    <span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb72-9"><a aria-label="9"></a>        await File<span class="op">.</span><span class="fu">ReadAllTextAsync</span><span class="op">(</span>fileName<span class="op">);</span></span>
+<span id="cb72-10"><a aria-label="10"></a></span>
+<span id="cb72-11"><a aria-label="11"></a>    GameData<span class="op">?</span> data <span class="op">=</span></span>
+<span id="cb72-12"><a aria-label="12"></a>        JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>GameData<span class="op">&gt;(</span>json<span class="op">);</span></span>
+<span id="cb72-13"><a aria-label="13"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The important sequence is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb73-1"><a aria-label="1"></a>File</span>
+<span id="cb73-2"><a aria-label="2"></a>    ↓</span>
+<span id="cb73-3"><a aria-label="3"></a>ReadAllTextAsync</span>
+<span id="cb73-4"><a aria-label="4"></a>    ↓</span>
+<span id="cb73-5"><a aria-label="5"></a>JSON string</span>
+<span id="cb73-6"><a aria-label="6"></a>    ↓</span>
+<span id="cb73-7"><a aria-label="7"></a>Deserialize</span>
+<span id="cb73-8"><a aria-label="8"></a>    ↓</span>
+<span id="cb73-9"><a aria-label="9"></a>C# object</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="preferences-or-json" class="slide level2">
+<h2>Preferences or JSON?</h2>
+<p>We now have two different ways to save data.</p>
+<h3 id="preferences-1">Preferences</h3>
+<p>Good for small, simple values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a>Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Set</span><span class="op">(</span></span>
+<span id="cb74-2"><a aria-label="2"></a>    <span class="st">"HighScore"</span><span class="op">,</span></span>
+<span id="cb74-3"><a aria-label="3"></a>    <span class="dv">125</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 id="json-file">JSON file</h3>
+<p>Good for structured data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb75-1"><a aria-label="1"></a>GameData data <span class="op">=</span> <span class="kw">new</span> GameData</span>
+<span id="cb75-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb75-3"><a aria-label="3"></a>    PlayerName <span class="op">=</span> <span class="st">"Alice"</span><span class="op">,</span></span>
+<span id="cb75-4"><a aria-label="4"></a>    HighScore <span class="op">=</span> <span class="dv">125</span><span class="op">,</span></span>
+<span id="cb75-5"><a aria-label="5"></a>    GamesPlayed <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb75-6"><a aria-label="6"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The important question is:</p>
+<blockquote>
+<p>What sort of data are we trying to store?</p>
+</blockquote>
+</section>
+<section id="a-useful-comparison" class="slide level2">
+<h2>A Useful Comparison</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Requirement</th>
+<th>Suitable approach</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One integer</td>
+<td>Preferences</td>
+</tr>
+<tr class="even">
+<td>One Boolean setting</td>
+<td>Preferences</td>
+</tr>
+<tr class="odd">
+<td>A username</td>
+<td>Preferences</td>
+</tr>
+<tr class="even">
+<td>Several related values</td>
+<td>JSON file</td>
+</tr>
+<tr class="odd">
+<td>A C# object</td>
+<td>JSON file</td>
+</tr>
+<tr class="even">
+<td>More complex structured data</td>
+<td>JSON file</td>
+</tr>
+</tbody>
+</table>
+<p>We are not choosing between two competing technologies.</p>
+<p>They solve slightly different problems.</p>
+</section>
+<section id="what-about-a-list" class="slide level2">
+<h2>What About a List?</h2>
+<p>Later we will learn about:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb76-1"><a aria-label="1"></a>List<span class="op">&lt;</span>T<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Suppose we have:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a>List<span class="op">&lt;</span>GameData<span class="op">&gt;</span> games <span class="op">=</span></span>
+<span id="cb77-2"><a aria-label="2"></a>    <span class="kw">new</span> List<span class="op">&lt;</span>GameData<span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We could serialise the entire list in exactly the same way:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb78-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span></span>
+<span id="cb78-2"><a aria-label="2"></a>    JsonSerializer<span class="op">.</span><span class="fu">Serialize</span><span class="op">(</span>games<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And deserialize it using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb79-1"><a aria-label="1"></a>List<span class="op">&lt;</span>GameData<span class="op">&gt;?</span> games <span class="op">=</span></span>
+<span id="cb79-2"><a aria-label="2"></a>    JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>List<span class="op">&lt;</span>GameData<span class="op">&gt;&gt;(</span>json<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We do not need to concentrate on this yet.</p>
+<p>The important idea is that JSON can represent both <strong>objects and collections of objects</strong>.</p>
+</section>
+<section id="why-learn-this-now" class="slide level2">
+<h2>Why Learn This Now?</h2>
+<p>We will use these ideas throughout the module.</p>
+<p>For example, an application might:</p>
+<ol type="1">
+<li>Create an object</li>
+<li>Change its properties</li>
+<li>Save it as JSON</li>
+<li>Close the application</li>
+<li>Open the application again</li>
+<li>Read the JSON file</li>
+<li>Recreate the object</li>
+</ol>
+<p>This gives our applications persistent state.</p>
+</section>
+<section id="resources-vs-application-data" class="slide level2">
+<h2>Resources vs Application Data</h2>
+<p>There is an important distinction between the two types of files we have seen.</p>
+<h3 id="packaged-resources">Packaged resources</h3>
+<p>Files that are included <strong>with the application</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb80-1"><a aria-label="1"></a>Resources/Images/</span>
+<span id="cb80-2"><a aria-label="2"></a>Resources/Raw/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The application can read these files, but they are part of the application package.</p>
+<h3 id="application-data">Application data</h3>
+<p>Files that the application <strong>creates or changes while running</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb81-1"><a aria-label="1"></a>FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb82-1"><a aria-label="1"></a>game.json</span>
+<span id="cb82-2"><a aria-label="2"></a>settings.json</span>
+<span id="cb82-3"><a aria-label="3"></a>saveddata.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These are where we can store information created by the user or application.</p>
+</section>
+<section id="putting-it-all-together" class="slide level2">
+<h2>Putting It All Together</h2>
+<p>We now have a complete path from an object in memory to persistent storage.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb83-1"><a aria-label="1"></a>             Application</span>
+<span id="cb83-2"><a aria-label="2"></a>                  │</span>
+<span id="cb83-3"><a aria-label="3"></a>                  ▼</span>
+<span id="cb83-4"><a aria-label="4"></a>             C# object</span>
+<span id="cb83-5"><a aria-label="5"></a>                  │</span>
+<span id="cb83-6"><a aria-label="6"></a>                  ▼</span>
+<span id="cb83-7"><a aria-label="7"></a>              JSON text</span>
+<span id="cb83-8"><a aria-label="8"></a>                  │</span>
+<span id="cb83-9"><a aria-label="9"></a>                  ▼</span>
+<span id="cb83-10"><a aria-label="10"></a>          Application data</span>
+<span id="cb83-11"><a aria-label="11"></a>             directory</span>
+<span id="cb83-12"><a aria-label="12"></a>                  │</span>
+<span id="cb83-13"><a aria-label="13"></a>                  ▼</span>
+<span id="cb83-14"><a aria-label="14"></a>                File</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When the application starts again, we reverse the process.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb84-1"><a aria-label="1"></a>                File</span>
+<span id="cb84-2"><a aria-label="2"></a>                  │</span>
+<span id="cb84-3"><a aria-label="3"></a>                  ▼</span>
+<span id="cb84-4"><a aria-label="4"></a>             JSON text</span>
+<span id="cb84-5"><a aria-label="5"></a>                  │</span>
+<span id="cb84-6"><a aria-label="6"></a>                  ▼</span>
+<span id="cb84-7"><a aria-label="7"></a>           C# object</span>
+<span id="cb84-8"><a aria-label="8"></a>                  │</span>
+<span id="cb84-9"><a aria-label="9"></a>                  ▼</span>
+<span id="cb84-10"><a aria-label="10"></a>             Application</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="further-reading" class="slide level2">
+<h2>Further Reading</h2>
+<p>.NET MAUI Preferences:</p>
+<p>https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-10.0</p>
+<p>.NET MAUI File System Helpers:</p>
+<p>https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-system-helpers?view=net-maui-10.0</p>
+<p>.NET JSON overview:</p>
+<p>https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview</p>
+<p>JSON:</p>
+<p>https://www.json.org/</p>
+</section></section>
+<section>
 <section id="collections" class="title-slide slide level1 center">
 <h1>Collections</h1>
 
@@ -604,41 +1308,41 @@
 <section id="why-collections" class="slide level2">
 <h2>Why Collections?</h2>
 <p>So far we have seen variables that store individual values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a aria-label="1"></a><span class="dt">int</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span>
-<span id="cb20-2"><a aria-label="2"></a><span class="dt">string</span> name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb85-1"><a aria-label="1"></a><span class="dt">int</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span>
+<span id="cb85-2"><a aria-label="2"></a><span class="dt">string</span> name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But applications often need to store <strong>many values</strong>.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a aria-label="1"></a>Students</span>
-<span id="cb21-2"><a aria-label="2"></a>Products</span>
-<span id="cb21-3"><a aria-label="3"></a>Recipes</span>
-<span id="cb21-4"><a aria-label="4"></a>Animals</span>
-<span id="cb21-5"><a aria-label="5"></a>Messages</span>
-<span id="cb21-6"><a aria-label="6"></a>Buttons</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb86-1"><a aria-label="1"></a>Students</span>
+<span id="cb86-2"><a aria-label="2"></a>Products</span>
+<span id="cb86-3"><a aria-label="3"></a>Recipes</span>
+<span id="cb86-4"><a aria-label="4"></a>Animals</span>
+<span id="cb86-5"><a aria-label="5"></a>Messages</span>
+<span id="cb86-6"><a aria-label="6"></a>Buttons</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>C# provides several ways of storing collections of objects.</p>
 </section>
 <section id="arrays" class="slide level2">
 <h2>Arrays</h2>
 <p>An array is a fixed-size, ordered collection of elements of the same type.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a aria-label="1"></a><span class="dt">int</span><span class="op">[]</span> numbers <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span><span class="dv">5</span><span class="op">];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb87-1"><a aria-label="1"></a><span class="dt">int</span><span class="op">[]</span> numbers <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span><span class="dv">5</span><span class="op">];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The size is fixed when the array is created.</p>
 <p>We can access individual elements using an index:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a aria-label="1"></a>numbers<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb23-2"><a aria-label="2"></a>numbers<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb88-1"><a aria-label="1"></a>numbers<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb88-2"><a aria-label="2"></a>numbers<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Remember that indexing starts at <code>0</code>.</p>
 </section>
 <section id="array-example" class="slide level2">
 <h2>Array Example</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a aria-label="1"></a><span class="dt">int</span><span class="op">[]</span> numbers <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span><span class="dv">5</span><span class="op">]</span></span>
-<span id="cb24-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb24-3"><a aria-label="3"></a>    <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span></span>
-<span id="cb24-4"><a aria-label="4"></a><span class="op">};</span></span>
-<span id="cb24-5"><a aria-label="5"></a></span>
-<span id="cb24-6"><a aria-label="6"></a>numbers<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb24-7"><a aria-label="7"></a></span>
-<span id="cb24-8"><a aria-label="8"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> numbers<span class="op">.</span><span class="fu">Length</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb24-9"><a aria-label="9"></a><span class="op">{</span></span>
-<span id="cb24-10"><a aria-label="10"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>numbers<span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb24-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb89"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb89-1"><a aria-label="1"></a><span class="dt">int</span><span class="op">[]</span> numbers <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">[</span><span class="dv">5</span><span class="op">]</span></span>
+<span id="cb89-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb89-3"><a aria-label="3"></a>    <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span></span>
+<span id="cb89-4"><a aria-label="4"></a><span class="op">};</span></span>
+<span id="cb89-5"><a aria-label="5"></a></span>
+<span id="cb89-6"><a aria-label="6"></a>numbers<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb89-7"><a aria-label="7"></a></span>
+<span id="cb89-8"><a aria-label="8"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> numbers<span class="op">.</span><span class="fu">Length</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb89-9"><a aria-label="9"></a><span class="op">{</span></span>
+<span id="cb89-10"><a aria-label="10"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>numbers<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb89-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Arrays are useful when we know the number of elements we need.</p>
 <p>But what if the number of elements can change?</p>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -661,10 +1365,10 @@
 <p>Suppose we want to store the names of students.</p>
 <p>We don’t necessarily know how many students there will be.</p>
 <p>A <code>List&lt;T&gt;</code> can grow and shrink as required.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb90"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb90-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>T</code> represents the type of object stored in the list.</p>
 <p>Here:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb91-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>means:</p>
 <blockquote>
 <p>A list containing <code>string</code> objects.</p>
@@ -673,71 +1377,71 @@
 <section id="adding-items" class="slide level2">
 <h2>Adding Items</h2>
 <p>We can add items using <code>Add()</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span>
-<span id="cb27-2"><a aria-label="2"></a></span>
-<span id="cb27-3"><a aria-label="3"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">);</span></span>
-<span id="cb27-4"><a aria-label="4"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Bob"</span><span class="op">);</span></span>
-<span id="cb27-5"><a aria-label="5"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Charlie"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb92"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb92-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span>
+<span id="cb92-2"><a aria-label="2"></a></span>
+<span id="cb92-3"><a aria-label="3"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">);</span></span>
+<span id="cb92-4"><a aria-label="4"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Bob"</span><span class="op">);</span></span>
+<span id="cb92-5"><a aria-label="5"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Charlie"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The list now contains three strings.</p>
 <p>We can also initialise a list with values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span>
-<span id="cb28-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb28-3"><a aria-label="3"></a>    <span class="st">"Alice"</span><span class="op">,</span></span>
-<span id="cb28-4"><a aria-label="4"></a>    <span class="st">"Bob"</span><span class="op">,</span></span>
-<span id="cb28-5"><a aria-label="5"></a>    <span class="st">"Charlie"</span></span>
-<span id="cb28-6"><a aria-label="6"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb93-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span></span>
+<span id="cb93-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb93-3"><a aria-label="3"></a>    <span class="st">"Alice"</span><span class="op">,</span></span>
+<span id="cb93-4"><a aria-label="4"></a>    <span class="st">"Bob"</span><span class="op">,</span></span>
+<span id="cb93-5"><a aria-label="5"></a>    <span class="st">"Charlie"</span></span>
+<span id="cb93-6"><a aria-label="6"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="removing-items" class="slide level2">
 <h2>Removing Items</h2>
 <p>Items can be removed using <code>Remove()</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Remove</span><span class="op">(</span><span class="st">"Bob"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb94"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb94-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Remove</span><span class="op">(</span><span class="st">"Bob"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This removes the first matching “Bob”, so only one item will be removed.</p>
 <p>We can also remove an item using its index:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">RemoveAt</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb95"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb95-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">RemoveAt</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Other useful methods include:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Contains</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">);</span></span>
-<span id="cb31-2"><a aria-label="2"></a>names<span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb96"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb96-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Contains</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">);</span></span>
+<span id="cb96-2"><a aria-label="2"></a>names<span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>These methods make lists much more flexible than fixed-size arrays.</p>
 </section>
 <section id="accessing-items" class="slide level2">
 <h2>Accessing Items</h2>
 <p>Lists use indexing in the same way as arrays.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb97"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb97-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can also find out how many items are currently in the list using <code>Count</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">.</span><span class="fu">Count</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb98"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb98-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">.</span><span class="fu">Count</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Compare this with an array:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a aria-label="1"></a>numbers<span class="op">.</span><span class="fu">Length</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb99"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb99-1"><a aria-label="1"></a>numbers<span class="op">.</span><span class="fu">Length</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and a list:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Count</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb100"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb100-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Count</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="looping-through-a-list" class="slide level2">
 <h2>Looping Through a List</h2>
 <p>We can use a normal <code>for</code> loop:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> names<span class="op">.</span><span class="fu">Count</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb36-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb36-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb36-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb101"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb101-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> names<span class="op">.</span><span class="fu">Count</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb101-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb101-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb101-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or a <code>foreach</code> loop:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb37-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">string</span> name <span class="kw">in</span> names<span class="op">)</span></span>
-<span id="cb37-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb37-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>name<span class="op">);</span></span>
-<span id="cb37-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb102"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb102-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">string</span> name <span class="kw">in</span> names<span class="op">)</span></span>
+<span id="cb102-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb102-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>name<span class="op">);</span></span>
+<span id="cb102-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Both are useful.</p>
 <p>The <code>for</code> loop gives us the index; <code>foreach</code> gives us each object directly.</p>
 </section>
 <section id="common-list-errors" class="slide level2">
 <h2>Common List Errors</h2>
 <p><strong>Index out of range</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb38-1"><a aria-label="1"></a><span class="dt">var</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> <span class="op">{</span> <span class="st">"Alice"</span><span class="op">,</span> <span class="st">"Bob"</span> <span class="op">};</span></span>
-<span id="cb38-2"><a aria-label="2"></a></span>
-<span id="cb38-3"><a aria-label="3"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">[</span><span class="dv">2</span><span class="op">]);</span>   <span class="co">// ArgumentOutOfRangeException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb103"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb103-1"><a aria-label="1"></a><span class="dt">var</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> <span class="op">{</span> <span class="st">"Alice"</span><span class="op">,</span> <span class="st">"Bob"</span> <span class="op">};</span></span>
+<span id="cb103-2"><a aria-label="2"></a></span>
+<span id="cb103-3"><a aria-label="3"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>names<span class="op">[</span><span class="dv">2</span><span class="op">]);</span>   <span class="co">// ArgumentOutOfRangeException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The valid indexes are <code>0</code> to <code>Count - 1</code>.</p>
 <p><strong>Changing the list inside a <code>foreach</code></strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> name <span class="kw">in</span> names<span class="op">)</span></span>
-<span id="cb39-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb39-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">"Bob"</span><span class="op">)</span></span>
-<span id="cb39-4"><a aria-label="4"></a>        names<span class="op">.</span><span class="fu">Remove</span><span class="op">(</span>name<span class="op">);</span>    <span class="co">// InvalidOperationException</span></span>
-<span id="cb39-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb104"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb104-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> name <span class="kw">in</span> names<span class="op">)</span></span>
+<span id="cb104-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb104-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">"Bob"</span><span class="op">)</span></span>
+<span id="cb104-4"><a aria-label="4"></a>        names<span class="op">.</span><span class="fu">Remove</span><span class="op">(</span>name<span class="op">);</span>    <span class="co">// InvalidOperationException</span></span>
+<span id="cb104-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can’t add or remove items while <code>foreach</code> is looping over the list.</p>
 <p>If we need to remove items while looping, use a <code>for</code> loop that counts <strong>backwards</strong>, or remove after the loop has finished.</p>
 </section>
@@ -745,141 +1449,141 @@
 <h2>Lists of Objects</h2>
 <p>A list does not have to contain simple types such as <code>int</code> or <code>string</code>.</p>
 <p>It can contain objects.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> Person</span>
-<span id="cb40-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb40-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
-<span id="cb40-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">int</span> Age <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
-<span id="cb40-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb105"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb105-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> Person</span>
+<span id="cb105-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb105-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb105-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">int</span> Age <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb105-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can then create:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb41-1"><a aria-label="1"></a>List<span class="op">&lt;</span>Person<span class="op">&gt;</span> people <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span>Person<span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb106"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb106-1"><a aria-label="1"></a>List<span class="op">&lt;</span>Person<span class="op">&gt;</span> people <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span>Person<span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and add objects:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb42-1"><a aria-label="1"></a>people<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> Person</span>
-<span id="cb42-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb42-3"><a aria-label="3"></a>    Name <span class="op">=</span> <span class="st">"John"</span><span class="op">,</span></span>
-<span id="cb42-4"><a aria-label="4"></a>    Age <span class="op">=</span> <span class="dv">35</span></span>
-<span id="cb42-5"><a aria-label="5"></a><span class="op">});</span></span>
-<span id="cb42-6"><a aria-label="6"></a></span>
-<span id="cb42-7"><a aria-label="7"></a>people<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> Person</span>
-<span id="cb42-8"><a aria-label="8"></a><span class="op">{</span></span>
-<span id="cb42-9"><a aria-label="9"></a>    Name <span class="op">=</span> <span class="st">"Mary"</span><span class="op">,</span></span>
-<span id="cb42-10"><a aria-label="10"></a>    Age <span class="op">=</span> <span class="dv">29</span></span>
-<span id="cb42-11"><a aria-label="11"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb107"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb107-1"><a aria-label="1"></a>people<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> Person</span>
+<span id="cb107-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb107-3"><a aria-label="3"></a>    Name <span class="op">=</span> <span class="st">"John"</span><span class="op">,</span></span>
+<span id="cb107-4"><a aria-label="4"></a>    Age <span class="op">=</span> <span class="dv">35</span></span>
+<span id="cb107-5"><a aria-label="5"></a><span class="op">});</span></span>
+<span id="cb107-6"><a aria-label="6"></a></span>
+<span id="cb107-7"><a aria-label="7"></a>people<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> Person</span>
+<span id="cb107-8"><a aria-label="8"></a><span class="op">{</span></span>
+<span id="cb107-9"><a aria-label="9"></a>    Name <span class="op">=</span> <span class="st">"Mary"</span><span class="op">,</span></span>
+<span id="cb107-10"><a aria-label="10"></a>    Age <span class="op">=</span> <span class="dv">29</span></span>
+<span id="cb107-11"><a aria-label="11"></a><span class="op">});</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The list now contains two <code>Person</code> objects.</p>
 </section>
 <section id="looping-through-objects" class="slide level2">
 <h2>Looping Through Objects</h2>
 <p>We can access the properties of each object.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span>Person person <span class="kw">in</span> people<span class="op">)</span></span>
-<span id="cb43-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb43-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb43-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb108"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb108-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span>Person person <span class="kw">in</span> people<span class="op">)</span></span>
+<span id="cb108-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb108-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb108-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or using an index:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> people<span class="op">.</span><span class="fu">Count</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb44-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb44-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>people<span class="op">[</span>i<span class="op">].</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb44-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb109"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb109-1"><a aria-label="1"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> people<span class="op">.</span><span class="fu">Count</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb109-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb109-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>people<span class="op">[</span>i<span class="op">].</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb109-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is particularly important for applications where we have a collection of domain objects.</p>
 </section>
 <section id="var" class="slide level2">
 <h2><code>var</code></h2>
 <p>You may have seen me use the <code>var</code> keyword.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a><span class="dt">var</span> name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
-<span id="cb45-2"><a aria-label="2"></a><span class="dt">var</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb110"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb110-1"><a aria-label="1"></a><span class="dt">var</span> name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
+<span id="cb110-2"><a aria-label="2"></a><span class="dt">var</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The compiler can infer the type from the expression on the right-hand side, so these are effectively:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb46-1"><a aria-label="1"></a><span class="dt">string</span> name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
-<span id="cb46-2"><a aria-label="2"></a><span class="dt">int</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb111"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb111-1"><a aria-label="1"></a><span class="dt">string</span> name <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
+<span id="cb111-2"><a aria-label="2"></a><span class="dt">int</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It is particularly useful when the type is already obvious from the right-hand side.</p>
 <p>Instead of:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb112"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb112-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>we can write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a><span class="dt">var</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb113"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb113-1"><a aria-label="1"></a><span class="dt">var</span> names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The compiler knows that <code>names</code> is a <code>List&lt;string&gt;</code>. The code is shorter without losing the type information.</p>
 </section>
 <section id="var-does-not-mean-any-type" class="slide level2">
 <h2><code>var</code> Does Not Mean Any Type</h2>
 <p><code>var</code> does <strong>not</strong> mean that the variable can contain any type.</p>
 <p>The compiler still knows the type.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb49-1"><a aria-label="1"></a><span class="dt">var</span> number <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb49-2"><a aria-label="2"></a></span>
-<span id="cb49-3"><a aria-label="3"></a>number <span class="op">=</span> <span class="dv">20</span><span class="op">;</span>       <span class="co">// Fine</span></span>
-<span id="cb49-4"><a aria-label="4"></a></span>
-<span id="cb49-5"><a aria-label="5"></a>number <span class="op">=</span> <span class="st">"hello"</span><span class="op">;</span>  <span class="co">// Error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb114"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb114-1"><a aria-label="1"></a><span class="dt">var</span> number <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb114-2"><a aria-label="2"></a></span>
+<span id="cb114-3"><a aria-label="3"></a>number <span class="op">=</span> <span class="dv">20</span><span class="op">;</span>       <span class="co">// Fine</span></span>
+<span id="cb114-4"><a aria-label="4"></a></span>
+<span id="cb114-5"><a aria-label="5"></a>number <span class="op">=</span> <span class="st">"hello"</span><span class="op">;</span>  <span class="co">// Error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>number</code> is still an <code>int</code>.</p>
 <p><code>var</code> is <strong>type inference</strong>, not dynamic typing.</p>
 <p>It is also handy in a <code>foreach</code> loop:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb50-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> person <span class="kw">in</span> people<span class="op">)</span></span>
-<span id="cb50-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb50-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb50-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb115"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb115-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> person <span class="kw">in</span> people<span class="op">)</span></span>
+<span id="cb115-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb115-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb115-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The compiler knows that <code>person</code> is a <code>Person</code>.</p>
 </section>
 <section id="var-with-maui-collections" class="slide level2">
 <h2><code>var</code> with MAUI Collections</h2>
 <p>When looping through the children of a layout, the exact type isn’t obvious:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb51-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> item <span class="kw">in</span> GridPageContent<span class="op">.</span><span class="fu">Children</span><span class="op">)</span></span>
-<span id="cb51-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb51-3"><a aria-label="3"></a>    <span class="co">// item is an IView, not a Label or a Button</span></span>
-<span id="cb51-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb116"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb116-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> item <span class="kw">in</span> GridPageContent<span class="op">.</span><span class="fu">Children</span><span class="op">)</span></span>
+<span id="cb116-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb116-3"><a aria-label="3"></a>    <span class="co">// item is an IView, not a Label or a Button</span></span>
+<span id="cb116-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>Children</code> holds <code>IView</code> objects, so we can’t just write <code>item.Text</code>.</p>
 <p>To use a property of a specific control, check the type first:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb52-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> item <span class="kw">in</span> GridPageContent<span class="op">.</span><span class="fu">Children</span><span class="op">)</span></span>
-<span id="cb52-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb52-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span>item <span class="kw">is</span> Label label<span class="op">)</span></span>
-<span id="cb52-4"><a aria-label="4"></a>    <span class="op">{</span></span>
-<span id="cb52-5"><a aria-label="5"></a>        label<span class="op">.</span><span class="fu">TextColor</span> <span class="op">=</span> Colors<span class="op">.</span><span class="fu">Red</span><span class="op">;</span></span>
-<span id="cb52-6"><a aria-label="6"></a>    <span class="op">}</span></span>
-<span id="cb52-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb117"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb117-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> item <span class="kw">in</span> GridPageContent<span class="op">.</span><span class="fu">Children</span><span class="op">)</span></span>
+<span id="cb117-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb117-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span>item <span class="kw">is</span> Label label<span class="op">)</span></span>
+<span id="cb117-4"><a aria-label="4"></a>    <span class="op">{</span></span>
+<span id="cb117-5"><a aria-label="5"></a>        label<span class="op">.</span><span class="fu">TextColor</span> <span class="op">=</span> Colors<span class="op">.</span><span class="fu">Red</span><span class="op">;</span></span>
+<span id="cb117-6"><a aria-label="6"></a>    <span class="op">}</span></span>
+<span id="cb117-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="lists-in-.net-maui" class="slide level2">
 <h2>Lists in .NET MAUI</h2>
 <p>A list can be a field in a MAUI page.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb53-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
-<span id="cb53-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb53-3"><a aria-label="3"></a>    List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names<span class="op">;</span></span>
-<span id="cb53-4"><a aria-label="4"></a></span>
-<span id="cb53-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
-<span id="cb53-6"><a aria-label="6"></a>    <span class="op">{</span></span>
-<span id="cb53-7"><a aria-label="7"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
-<span id="cb53-8"><a aria-label="8"></a></span>
-<span id="cb53-9"><a aria-label="9"></a>        names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span>
-<span id="cb53-10"><a aria-label="10"></a>    <span class="op">}</span></span>
-<span id="cb53-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb118"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb118-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
+<span id="cb118-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb118-3"><a aria-label="3"></a>    List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names<span class="op">;</span></span>
+<span id="cb118-4"><a aria-label="4"></a></span>
+<span id="cb118-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb118-6"><a aria-label="6"></a>    <span class="op">{</span></span>
+<span id="cb118-7"><a aria-label="7"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb118-8"><a aria-label="8"></a></span>
+<span id="cb118-9"><a aria-label="9"></a>        names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span>
+<span id="cb118-10"><a aria-label="10"></a>    <span class="op">}</span></span>
+<span id="cb118-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can then add to the list from event handlers or other methods:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb54-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">);</span></span>
-<span id="cb54-2"><a aria-label="2"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Bob"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb119"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb119-1"><a aria-label="1"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">);</span></span>
+<span id="cb119-2"><a aria-label="2"></a>names<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"Bob"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is a simple example of keeping a collection as part of the state of a page.</p>
 </section>
 <section id="showing-a-list-on-the-page" class="slide level2">
 <h2>Showing a List on the Page</h2>
 <p>A list on its own doesn’t appear on screen. To show it, we can create a control for each item.</p>
 <p>In the XAML:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb55-1"><a aria-label="1"></a>&lt;<span class="kw">VerticalStackLayout</span> <span class="ot">x:Name=</span><span class="st">"PeopleLayout"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb120"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb120-1"><a aria-label="1"></a>&lt;<span class="kw">VerticalStackLayout</span> <span class="ot">x:Name=</span><span class="st">"PeopleLayout"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb56-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> person <span class="kw">in</span> people<span class="op">)</span></span>
-<span id="cb56-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb56-3"><a aria-label="3"></a>    <span class="dt">var</span> label <span class="op">=</span> <span class="kw">new</span> Label</span>
-<span id="cb56-4"><a aria-label="4"></a>    <span class="op">{</span></span>
-<span id="cb56-5"><a aria-label="5"></a>        Text <span class="op">=</span> $<span class="st">"{person.Name} ({person.Age})"</span></span>
-<span id="cb56-6"><a aria-label="6"></a>    <span class="op">};</span></span>
-<span id="cb56-7"><a aria-label="7"></a></span>
-<span id="cb56-8"><a aria-label="8"></a>    PeopleLayout<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span>
-<span id="cb56-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb121"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb121-1"><a aria-label="1"></a><span class="kw">foreach</span> <span class="op">(</span><span class="dt">var</span> person <span class="kw">in</span> people<span class="op">)</span></span>
+<span id="cb121-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb121-3"><a aria-label="3"></a>    <span class="dt">var</span> label <span class="op">=</span> <span class="kw">new</span> Label</span>
+<span id="cb121-4"><a aria-label="4"></a>    <span class="op">{</span></span>
+<span id="cb121-5"><a aria-label="5"></a>        Text <span class="op">=</span> $<span class="st">"{person.Name} ({person.Age})"</span></span>
+<span id="cb121-6"><a aria-label="6"></a>    <span class="op">};</span></span>
+<span id="cb121-7"><a aria-label="7"></a></span>
+<span id="cb121-8"><a aria-label="8"></a>    PeopleLayout<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">);</span></span>
+<span id="cb121-9"><a aria-label="9"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This combines a list of objects, creating controls in C#, and <code>var</code>.</p>
 </section>
 <section id="a-note-about-and-new" class="slide level2">
 <h2>A Note About <code>[]</code> and <code>new()</code></h2>
 <p>Modern C# also allows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb57-1"><a aria-label="1"></a>names <span class="op">=</span> <span class="op">[];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb122"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb122-1"><a aria-label="1"></a>names <span class="op">=</span> <span class="op">[];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>to create an empty collection when the target type is already known.</p>
 <p>So this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb58-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="op">[];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb123"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb123-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="op">[];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>works.</p>
 <p>You will also see this, which Visual Studio and Copilot often suggest:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb59-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb124"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb124-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names <span class="op">=</span> <span class="kw">new</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For now I prefer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb60-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names<span class="op">;</span></span>
-<span id="cb60-2"><a aria-label="2"></a></span>
-<span id="cb60-3"><a aria-label="3"></a>names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb125"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb125-1"><a aria-label="1"></a>List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> names<span class="op">;</span></span>
+<span id="cb125-2"><a aria-label="2"></a></span>
+<span id="cb125-3"><a aria-label="3"></a>names <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>because it makes the creation of the <code>List&lt;string&gt;</code> explicit.</p>
 <p>We will encounter the shorter syntax again as we become more comfortable with C#.</p>
 </section>
@@ -900,57 +1604,57 @@
 <h2>Queue</h2>
 <p>A <code>Queue&lt;T&gt;</code> is a <strong>first-in, first-out (FIFO)</strong> collection.</p>
 <p>Think of a queue of people: new items join at the back, and the item at the front leaves first.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb61-1"><a aria-label="1"></a> first out         front              back          new items in</span>
-<span id="cb61-2"><a aria-label="2"></a>     ←        ┌─────┬─────┬─────┐        ←</span>
-<span id="cb61-3"><a aria-label="3"></a>              │  1  │  2  │  3  │</span>
-<span id="cb61-4"><a aria-label="4"></a>              └─────┴─────┴─────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb126"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb126-1"><a aria-label="1"></a> first out         front              back          new items in</span>
+<span id="cb126-2"><a aria-label="2"></a>     ←        ┌─────┬─────┬─────┐        ←</span>
+<span id="cb126-3"><a aria-label="3"></a>              │  1  │  2  │  3  │</span>
+<span id="cb126-4"><a aria-label="4"></a>              └─────┴─────┴─────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We add items using <code>Enqueue()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb62-1"><a aria-label="1"></a>Queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> numbers <span class="op">=</span> <span class="kw">new</span> Queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;();</span></span>
-<span id="cb62-2"><a aria-label="2"></a></span>
-<span id="cb62-3"><a aria-label="3"></a>numbers<span class="op">.</span><span class="fu">Enqueue</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb62-4"><a aria-label="4"></a>numbers<span class="op">.</span><span class="fu">Enqueue</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
-<span id="cb62-5"><a aria-label="5"></a>numbers<span class="op">.</span><span class="fu">Enqueue</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb127"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb127-1"><a aria-label="1"></a>Queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> numbers <span class="op">=</span> <span class="kw">new</span> Queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;();</span></span>
+<span id="cb127-2"><a aria-label="2"></a></span>
+<span id="cb127-3"><a aria-label="3"></a>numbers<span class="op">.</span><span class="fu">Enqueue</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb127-4"><a aria-label="4"></a>numbers<span class="op">.</span><span class="fu">Enqueue</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb127-5"><a aria-label="5"></a>numbers<span class="op">.</span><span class="fu">Enqueue</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We remove the first item using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb63-1"><a aria-label="1"></a><span class="dt">int</span> first <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Dequeue</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb128"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb128-1"><a aria-label="1"></a><span class="dt">int</span> first <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Dequeue</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can look at the next item without removing it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb64-1"><a aria-label="1"></a><span class="dt">int</span> next <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Peek</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb129"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb129-1"><a aria-label="1"></a><span class="dt">int</span> next <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Peek</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="stack" class="slide level2">
 <h2>Stack</h2>
 <p>A <code>Stack&lt;T&gt;</code> is a <strong>last-in, first-out (LIFO)</strong> collection.</p>
 <p>Think of a stack of plates:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb65-1"><a aria-label="1"></a>       ┌───┐</span>
-<span id="cb65-2"><a aria-label="2"></a>       │ 3 │  ← first out</span>
-<span id="cb65-3"><a aria-label="3"></a>       ├───┤</span>
-<span id="cb65-4"><a aria-label="4"></a>       │ 2 │</span>
-<span id="cb65-5"><a aria-label="5"></a>       ├───┤</span>
-<span id="cb65-6"><a aria-label="6"></a>       │ 1 │</span>
-<span id="cb65-7"><a aria-label="7"></a>       └───┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb130"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb130-1"><a aria-label="1"></a>       ┌───┐</span>
+<span id="cb130-2"><a aria-label="2"></a>       │ 3 │  ← first out</span>
+<span id="cb130-3"><a aria-label="3"></a>       ├───┤</span>
+<span id="cb130-4"><a aria-label="4"></a>       │ 2 │</span>
+<span id="cb130-5"><a aria-label="5"></a>       ├───┤</span>
+<span id="cb130-6"><a aria-label="6"></a>       │ 1 │</span>
+<span id="cb130-7"><a aria-label="7"></a>       └───┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We add using <code>Push()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb66-1"><a aria-label="1"></a>Stack<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> numbers <span class="op">=</span> <span class="kw">new</span> Stack<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;();</span></span>
-<span id="cb66-2"><a aria-label="2"></a></span>
-<span id="cb66-3"><a aria-label="3"></a>numbers<span class="op">.</span><span class="fu">Push</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb66-4"><a aria-label="4"></a>numbers<span class="op">.</span><span class="fu">Push</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
-<span id="cb66-5"><a aria-label="5"></a>numbers<span class="op">.</span><span class="fu">Push</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb131"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb131-1"><a aria-label="1"></a>Stack<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> numbers <span class="op">=</span> <span class="kw">new</span> Stack<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;();</span></span>
+<span id="cb131-2"><a aria-label="2"></a></span>
+<span id="cb131-3"><a aria-label="3"></a>numbers<span class="op">.</span><span class="fu">Push</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb131-4"><a aria-label="4"></a>numbers<span class="op">.</span><span class="fu">Push</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb131-5"><a aria-label="5"></a>numbers<span class="op">.</span><span class="fu">Push</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We remove the most recently added item using:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb67-1"><a aria-label="1"></a><span class="dt">int</span> top <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Pop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb132"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb132-1"><a aria-label="1"></a><span class="dt">int</span> top <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Pop</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And we can inspect it without removing it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb68-1"><a aria-label="1"></a><span class="dt">int</span> next <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Peek</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb133"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb133-1"><a aria-label="1"></a><span class="dt">int</span> next <span class="op">=</span> numbers<span class="op">.</span><span class="fu">Peek</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dictionary" class="slide level2">
 <h2>Dictionary</h2>
 <p>A <code>Dictionary&lt;TKey, TValue&gt;</code> stores <strong>key/value pairs</strong>.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb69-1"><a aria-label="1"></a>Dictionary<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;</span> grades <span class="op">=</span> <span class="kw">new</span> Dictionary<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;();</span></span>
-<span id="cb69-2"><a aria-label="2"></a></span>
-<span id="cb69-3"><a aria-label="3"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">"A"</span><span class="op">);</span></span>
-<span id="cb69-4"><a aria-label="4"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">"B"</span><span class="op">);</span></span>
-<span id="cb69-5"><a aria-label="5"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="st">"C"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb134"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb134-1"><a aria-label="1"></a>Dictionary<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;</span> grades <span class="op">=</span> <span class="kw">new</span> Dictionary<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;();</span></span>
+<span id="cb134-2"><a aria-label="2"></a></span>
+<span id="cb134-3"><a aria-label="3"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">"A"</span><span class="op">);</span></span>
+<span id="cb134-4"><a aria-label="4"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">"B"</span><span class="op">);</span></span>
+<span id="cb134-5"><a aria-label="5"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="st">"C"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The key identifies the value.</p>
 <p>We can retrieve a value using its key:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb70-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>grades<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb135"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb135-1"><a aria-label="1"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>grades<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This prints:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb71-1"><a aria-label="1"></a>A</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb136"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb136-1"><a aria-label="1"></a>A</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Useful when we want to look up a value using a key rather than a numerical position.</p>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
@@ -971,13 +1675,13 @@
 <section id="hashset" class="slide level2">
 <h2>HashSet</h2>
 <p>A <code>HashSet&lt;T&gt;</code> stores a collection of <strong>unique</strong> items, with no duplicates.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb72-1"><a aria-label="1"></a>HashSet<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> tags <span class="op">=</span> <span class="kw">new</span> HashSet<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span>
-<span id="cb72-2"><a aria-label="2"></a></span>
-<span id="cb72-3"><a aria-label="3"></a>tags<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"maui"</span><span class="op">);</span></span>
-<span id="cb72-4"><a aria-label="4"></a>tags<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"csharp"</span><span class="op">);</span></span>
-<span id="cb72-5"><a aria-label="5"></a>tags<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"maui"</span><span class="op">);</span>      <span class="co">// ignored, already in the set</span></span>
-<span id="cb72-6"><a aria-label="6"></a></span>
-<span id="cb72-7"><a aria-label="7"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>tags<span class="op">.</span><span class="fu">Count</span><span class="op">);</span>   <span class="co">// 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb137"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb137-1"><a aria-label="1"></a>HashSet<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> tags <span class="op">=</span> <span class="kw">new</span> HashSet<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;();</span></span>
+<span id="cb137-2"><a aria-label="2"></a></span>
+<span id="cb137-3"><a aria-label="3"></a>tags<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"maui"</span><span class="op">);</span></span>
+<span id="cb137-4"><a aria-label="4"></a>tags<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"csharp"</span><span class="op">);</span></span>
+<span id="cb137-5"><a aria-label="5"></a>tags<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="st">"maui"</span><span class="op">);</span>      <span class="co">// ignored, already in the set</span></span>
+<span id="cb137-6"><a aria-label="6"></a></span>
+<span id="cb137-7"><a aria-label="7"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>tags<span class="op">.</span><span class="fu">Count</span><span class="op">);</span>   <span class="co">// 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>Add()</code> returns <code>false</code> if the item was already there.</li>
 <li><code>Contains()</code> is very fast, even for large sets.</li>
@@ -988,19 +1692,19 @@
 <section id="common-errors-with-queue-stack-and-dictionary" class="slide level2">
 <h2>Common Errors with Queue, Stack and Dictionary</h2>
 <p><strong>Removing from an empty <code>Queue</code> or <code>Stack</code></strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb73-1"><a aria-label="1"></a><span class="dt">var</span> queue <span class="op">=</span> <span class="kw">new</span> Queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;();</span></span>
-<span id="cb73-2"><a aria-label="2"></a></span>
-<span id="cb73-3"><a aria-label="3"></a><span class="dt">int</span> x <span class="op">=</span> queue<span class="op">.</span><span class="fu">Dequeue</span><span class="op">();</span>   <span class="co">// InvalidOperationException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb138"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb138-1"><a aria-label="1"></a><span class="dt">var</span> queue <span class="op">=</span> <span class="kw">new</span> Queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;();</span></span>
+<span id="cb138-2"><a aria-label="2"></a></span>
+<span id="cb138-3"><a aria-label="3"></a><span class="dt">int</span> x <span class="op">=</span> queue<span class="op">.</span><span class="fu">Dequeue</span><span class="op">();</span>   <span class="co">// InvalidOperationException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Check <code>queue.Count &gt; 0</code> first. The same applies to <code>Pop()</code> and <code>Peek()</code> on a <code>Stack</code>.</p>
 <p><strong>Dictionary keys</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb74-1"><a aria-label="1"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">"A"</span><span class="op">);</span>         <span class="co">// ArgumentException: key already exists</span></span>
-<span id="cb74-2"><a aria-label="2"></a></span>
-<span id="cb74-3"><a aria-label="3"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>grades<span class="op">[</span><span class="dv">9</span><span class="op">]);</span>  <span class="co">// KeyNotFoundException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb139"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb139-1"><a aria-label="1"></a>grades<span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">"A"</span><span class="op">);</span>         <span class="co">// ArgumentException: key already exists</span></span>
+<span id="cb139-2"><a aria-label="2"></a></span>
+<span id="cb139-3"><a aria-label="3"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>grades<span class="op">[</span><span class="dv">9</span><span class="op">]);</span>  <span class="co">// KeyNotFoundException</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Check first with <code>ContainsKey</code>, or use <code>TryGetValue</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb75-1"><a aria-label="1"></a><span class="kw">if</span> <span class="op">(</span>grades<span class="op">.</span><span class="fu">TryGetValue</span><span class="op">(</span><span class="dv">9</span><span class="op">,</span> <span class="kw">out</span> <span class="dt">string</span><span class="op">?</span> grade<span class="op">))</span></span>
-<span id="cb75-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb75-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>grade<span class="op">);</span></span>
-<span id="cb75-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb140"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb140-1"><a aria-label="1"></a><span class="kw">if</span> <span class="op">(</span>grades<span class="op">.</span><span class="fu">TryGetValue</span><span class="op">(</span><span class="dv">9</span><span class="op">,</span> <span class="kw">out</span> <span class="dt">string</span><span class="op">?</span> grade<span class="op">))</span></span>
+<span id="cb140-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb140-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>grade<span class="op">);</span></span>
+<span id="cb140-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="which-collection" class="slide level2">
 <h2>Which Collection?</h2>
@@ -1044,11 +1748,11 @@
 <section id="looking-ahead" class="slide level2">
 <h2>Looking Ahead</h2>
 <p>Today we have used:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb76-1"><a aria-label="1"></a>List<span class="op">&lt;</span>Person<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb141"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb141-1"><a aria-label="1"></a>List<span class="op">&lt;</span>Person<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>to store a collection of objects.</p>
 <p>Later, when we introduce <strong>data binding</strong>, we will need the interface to be able to react when items are added or removed.</p>
 <p>That is where we will meet:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb77-1"><a aria-label="1"></a>ObservableCollection<span class="op">&lt;</span>Person<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb142"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb142-1"><a aria-label="1"></a>ObservableCollection<span class="op">&lt;</span>Person<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For now, the important thing is to understand <code>List&lt;T&gt;</code> well.</p>
 <p>We will build on this knowledge later rather than introducing everything at once.</p>
 </section>

@@ -1131,7 +1131,7 @@
     "href": "labs/Lab 3 - Conversion App.html#create-a-grid-at-runtime",
     "title": "Lab 3: Events with XAML",
     "section": "12. Create a Grid at Runtime",
-    "text": "12. Create a Grid at Runtime\nSo far, we have created our user interface using XAML.\nHowever, we can also create parts of our user interface using C# at runtime.\nIn this exercise, you will create a Grid containing Borders using C#.\nWe will make the size of the grid configurable, so the same method can create a 3 × 3, 4 × 4 or 5 × 5 grid.\n\n12.1. Add a Button\nFirst, add a Button to your XAML that will allow you to create the grid.\nGive it a Clicked event.\nFor example:\n&lt;Button\n    Text=\"Create Grid\"\n    Clicked=\"CreateGrid_Clicked\" /&gt;\nUse Visual Studio to create the event handler.\nFor now, you can make the event handler call:\nCreateGrid(3);\nWe will write the CreateGrid method next.\n\n\n12.2. Create the Method\nCreate a new method called CreateGrid.\nIt should take an int parameter called size.\nprivate void CreateGrid(int size)\n{\n    \n}\nThe size parameter tells the method how large the grid should be.\nFor example:\nCreateGrid(3);\nshould eventually create a 3 × 3 grid.\nCreateGrid(5);\nshould eventually create a 5 × 5 grid.\n\n\n12.3. Create the Grid\nInside the method, create a new Grid object.\nGrid grid = new Grid();\nAt the moment, this grid has no rows or columns.\nWe need to add them.\n\n\n12.4. Add the Rows\nWe know how many rows we need because the size parameter tells us.\nUse a for loop to add the rows.\nThe following code shows you how to add one row:\ngrid.RowDefinitions.Add(new RowDefinition());\nYour task is to put this inside a loop so that the correct number of rows is created.\nFor example, if size is 3, your loop should add three rows.\nTry this yourself before looking at the next section.\n\n\n12.5. Add the Columns\nNow we need to do the same thing for the columns.\nWe use:\ngrid.ColumnDefinitions.Add(new ColumnDefinition());\nAdd the appropriate for loop to your method.\nThink about it:\n\nHow many columns do you need?\nWhich variable tells you that?\nIs this loop very similar to the one you just wrote for the rows?\n\nYou should now have a Grid with the correct number of rows and columns.\n\n\n12.6. Create a Border\nNow we need something to put inside the grid.\nWe are going to use a Border.\nA Border can have a stroke, a background colour and rounded corners.\nTry creating one with the following properties:\nBorder border = new Border\n{\n    Stroke = Colors.DarkBlue,\n    StrokeThickness = 2,\n    BackgroundColor = Colors.LightBlue,\n    StrokeShape = new RoundRectangle\n    {\n        CornerRadius = 10\n    },\n    Margin = new Thickness(3)\n};\nYou now have a Border object, but it is not yet part of the grid.\n\n\n12.7. Add the Border to the Grid\nWe can add an element to a particular row and column using an overloaded version of Grid.Children.Add().\nFor example:\ngrid.Children.Add(border, 0, 0);\nThe two numbers specify:\n             column\n                ↓\ngrid.Children.Add(border, 0, 0);\n                         ↑\n                        row\nSo:\ngrid.Children.Add(border, 1, 2);\nwould put the Border in row 2, column 1.\nNotice that this is different from adding an element to the grid without specifying its position.\nWe are using the overloaded Add() method to tell the grid where the element belongs.\n\n\n12.8. Try One Border\nBefore creating the whole grid, try adding just one Border.\nAdd it to the first cell:\ngrid.Children.Add(border, 0, 0);\nNow you need to add the Grid itself to your page.\nFind an appropriate layout in your XAML and give it an x:Name.\nFor example:\n&lt;VerticalStackLayout\n    x:Name=\"MainLayout\"&gt;\nYou can then add the grid to it:\nMainLayout.Children.Add(grid);\nRun the application and press your Create Grid button.\nYou should see your Border in the first cell of the grid.\n\n\n12.9. Create All the Borders\nWe don’t want to write this:\ngrid.Children.Add(border, 0, 0);\ngrid.Children.Add(border, 1, 0);\ngrid.Children.Add(border, 2, 0);\nEspecially because we want our method to work with different grid sizes.\nInstead, we can use nested loops.\nYou have already used a loop to create the rows and another loop to create the columns.\nNow we need:\nFor each row\n    For each column\n        Create a Border\n        Add it to that row and column\nStart by writing the two loops yourself.\nYou will need:\nfor (int row = 0; row &lt; size; row++)\n{\n    for (int column = 0; column &lt; size; column++)\n    {\n        // Create a Border\n\n        // Add the Border to the Grid\n    }\n}\nInside the loops, create your Border.\nThen use the overloaded version of Children.Add() to put it in the correct position.\nHint: the variables row and column are exactly the values you need.\n\n\n12.10. Put It All Together\nAt this point, you should have written most of the method yourself.\nYour method needs to do the following, in this order:\n\nCreate a Grid.\nAdd size rows.\nAdd size columns.\nUse nested loops to visit every cell.\nCreate a Border for each cell.\nAdd each Border to the appropriate row and column.\nAdd the completed Grid to your page.\n\nDo not worry if you need to move some of your code around to get this working.\nThe important thing is that you understand what each part is doing.\n\n\n12.11. Try Different Sizes\nOnce your grid is working, change the value passed to CreateGrid().\nTry:\nCreateGrid(3);\nThen try:\nCreateGrid(4);\nand:\nCreateGrid(5);\nYou should not need to change the CreateGrid method itself.\nThe size parameter controls the size of the grid."
+    "text": "12. Create a Grid at Runtime\nSo far, we have created our user interface using XAML.\nHowever, we can also create parts of our user interface using C# at runtime.\nIn this exercise, you will create a Grid containing Borders using C#.\nWe will make the size of the grid configurable, so the same method can create a 3 × 3, 4 × 4 or 5 × 5 grid.\n\n12.1. Add a Button\nFirst, add a Button to your XAML that will allow you to create the grid.\nGive it a Clicked event.\nFor example:\n&lt;Button\n    Text=\"Create Grid\"\n    Clicked=\"CreateGrid_Clicked\" /&gt;\nUse Visual Studio to create the event handler.\nFor now, you can make the event handler call:\nCreateGrid(3);\nWe will write the CreateGrid method next.\n\n\n12.2. Create the Method\nCreate a new method called CreateGrid.\nIt should take an int parameter called size.\nprivate void CreateGrid(int size)\n{\n    \n}\nThe size parameter tells the method how large the grid should be.\nFor example:\nCreateGrid(3);\nshould eventually create a 3 × 3 grid.\nCreateGrid(5);\nshould eventually create a 5 × 5 grid.\n\n\n12.3. Create the Grid\nInside the method, create a new Grid object.\nGrid grid = new Grid();\nAt the moment, this grid has no rows or columns.\nWe need to add them.\n\n\n12.4. Add the Rows\nWe know how many rows we need because the size parameter tells us.\nUse a for loop to add the rows.\nThe following code shows you how to add one row:\ngrid.RowDefinitions.Add(new RowDefinition());\nYour task is to put this inside a loop so that the correct number of rows is created.\nFor example, if size is 3, your loop should add three rows.\nTry this yourself before looking at the next section.\n\n\n12.5. Add the Columns\nNow we need to do the same thing for the columns.\nWe use:\ngrid.ColumnDefinitions.Add(new ColumnDefinition());\nAdd the appropriate for loop to your method.\nThink about it:\n\nHow many columns do you need?\nWhich variable tells you that?\nIs this loop very similar to the one you just wrote for the rows?\n\nYou should now have a Grid with the correct number of rows and columns.\n\n\n12.6. Create a Border\nNow we need something to put inside the grid.\nWe are going to use a Border.\nA Border can have a stroke, a background colour and rounded corners.\nTry creating one with the following properties:\nBorder border = new Border\n{\n    Stroke = Colors.DarkBlue,\n    StrokeThickness = 2,\n    BackgroundColor = Colors.LightBlue,\n    StrokeShape = new RoundRectangle\n    {\n        CornerRadius = 10\n    },\n    Margin = new Thickness(3)\n};\nYou now have a Border object, but it is not yet part of the grid.\n\n\n12.7. Add the Border to the Grid\nWe can add an element to a particular row and column using an overloaded version of Grid.Add().\nFor example:\ngrid.Add(border, 0, 0);\nThe two numbers specify:\n             column\n                ↓\ngrid.Add(border, 0, 0);\n                    ↑\n                    row\nSo:\ngrid.Add(border, 1, 2);\nwould put the Border in row 2, column 1.\nNotice that this is different from adding an element to the grid without specifying its position.\nWe are using the overloaded Add() method to tell the grid where the element belongs.\n\n\n12.8. Try One Border\nBefore creating the whole grid, try adding just one Border.\nAdd it to the first cell:\ngrid.Add(border, 0, 0);\nNow you need to add the Grid itself to your page.\nFind an appropriate layout in your XAML and give it an x:Name.\nFor example:\n&lt;VerticalStackLayout\n    x:Name=\"MainLayout\"&gt;\nYou can then add the grid to it:\nMainLayout.Add(grid);\nRun the application and press your Create Grid button.\nYou should see your Border in the first cell of the grid.\n\n\n12.9. Create All the Borders\nWe don’t want to write this:\ngrid.Add(border, 0, 0);\ngrid.Add(border, 1, 0);\ngrid.Add(border, 2, 0);\nEspecially because we want our method to work with different grid sizes.\nInstead, we can use nested loops.\nYou have already used a loop to create the rows and another loop to create the columns.\nNow we need:\nFor each row\n    For each column\n        Create a Border\n        Add it to that row and column\nStart by writing the two loops yourself.\nYou will need:\nfor (int row = 0; row &lt; size; row++)\n{\n    for (int column = 0; column &lt; size; column++)\n    {\n        // Create a Border\n\n        // Add the Border to the Grid\n    }\n}\nInside the loops, create your Border.\nThen use the overloaded version of Children.Add() to put it in the correct position.\nHint: the variables row and column are exactly the values you need.\n\n\n12.10. Put It All Together\nAt this point, you should have written most of the method yourself.\nYour method needs to do the following, in this order:\n\nCreate a Grid.\nAdd size rows.\nAdd size columns.\nUse nested loops to visit every cell.\nCreate a Border for each cell.\nAdd each Border to the appropriate row and column.\nAdd the completed Grid to your page.\n\nDo not worry if you need to move some of your code around to get this working.\nThe important thing is that you understand what each part is doing.\n\n\n12.11. Try Different Sizes\nOnce your grid is working, change the value passed to CreateGrid().\nTry:\nCreateGrid(3);\nThen try:\nCreateGrid(4);\nand:\nCreateGrid(5);\nYou should not need to change the CreateGrid method itself.\nThe size parameter controls the size of the grid."
   },
   {
     "objectID": "labs/Lab 3 - Conversion App.html#try-it-on-different-platforms",
@@ -2201,8 +2201,8 @@
     "objectID": "lectures/Week5/Week5.html#displaying-an-image-in-c",
     "href": "lectures/Week5/Week5.html#displaying-an-image-in-c",
     "title": "Week 5 Resources, Shapes and Collections",
-    "section": "Displaying an Image in C",
-    "text": "Displaying an Image in C\nThe same control can be created in C#:\nvar image = new Image\n{\n    Source = \"dotnet_bot.png\",\n    HorizontalOptions = LayoutOptions.Center,\n    VerticalOptions = LayoutOptions.Center\n};\nThis is exactly the same idea as creating other MAUI controls programmatically."
+    "section": "Displaying an Image in C#",
+    "text": "Displaying an Image in C#\nThe same control can be created in C#:\nvar image = new Image\n{\n    Source = \"dotnet_bot.png\",\n    HorizontalOptions = LayoutOptions.Center,\n    VerticalOptions = LayoutOptions.Center\n};\nThis is exactly the same idea as creating other MAUI controls programmatically."
   },
   {
     "objectID": "lectures/Week5/Week5.html#image-size-and-aspect",
@@ -2230,7 +2230,7 @@
     "href": "lectures/Week5/Week5.html#reading-a-raw-resource",
     "title": "Week 5 Resources, Shapes and Collections",
     "section": "Reading a Raw Resource",
-    "text": "Reading a Raw Resource\nReading the file is an asynchronous operation, so the method needs to be async:\nprivate async Task LoadData()\n{\n    using var stream =\n        await FileSystem.OpenAppPackageFileAsync(\"mydata.txt\");\n\n    using var reader = new StreamReader(stream);\n\n    string contents = await reader.ReadToEndAsync();\n}\nWe will look at reading and writing files in more detail later."
+    "text": "Reading a Raw Resource\nReading the file is an asynchronous operation, so the method needs to be async:\nprivate async Task LoadData()\n{\n    using var stream =\n        await FileSystem.OpenAppPackageFileAsync(\"mydata.txt\");\n\n    using var reader = new StreamReader(stream);\n\n    string contents = await reader.ReadToEndAsync();\n}\nThis is for files packaged with the application.\nLater we will look at files that our application creates and modifies itself."
   },
   {
     "objectID": "lectures/Week5/Week5.html#drawing-in-.net-maui",
@@ -2441,5 +2441,327 @@
     "title": "Week 5 Resources, Shapes and Collections",
     "section": "Summary",
     "text": "Summary\nToday we looked at:\n\nApplication resources, the Resources folder and build actions\nApp icons and splash screens\nImages and image formats\nFonts and raw resources\nShapes and paths\nArrays\nList&lt;T&gt;, lists of objects and common list errors\nvar and type inference\nShowing a list on a page\nQueue&lt;T&gt;, Stack&lt;T&gt;, Dictionary&lt;TKey,TValue&gt; and HashSet&lt;T&gt;"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#week-5",
+    "href": "lectures/Week5/Week5.html#week-5",
+    "title": "Week 5 Resources, Shapes and Persistence",
+    "section": "Week 5",
+    "text": "Week 5\nToday we will look at:\n\nResources in a .NET MAUI application\nImages and image formats\nDrawing simple shapes\nStoring data using Preferences\nReading and writing files\nJSON and serialisation\n\nThe second half will concentrate on persistent data: allowing our application to remember information after it has been closed."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#images-and-the-midterm",
+    "href": "lectures/Week5/Week5.html#images-and-the-midterm",
+    "title": "Week 5 Resources, Shapes and Persistence",
+    "section": "Images and the Midterm",
+    "text": "Images and the Midterm\nImages are particularly useful for the applications we will build.\nFor example, a game might contain:\nResources/Images/\n├── alien.png\n├── spaceship.png\n└── background.png\nWe can then display these using normal MAUI controls.\nThe image itself is a resource; the Image control is the UI element displaying it."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#simple-shapes",
+    "href": "lectures/Week5/Week5.html#simple-shapes",
+    "title": "Week 5 Resources, Shapes and Persistence",
+    "section": "Simple Shapes",
+    "text": "Simple Shapes\nMAUI provides controls such as:\n\nEllipse\nRectangle\nLine\nPolygon\nPolyline\nPath\n\nFor example:\n&lt;Ellipse Fill=\"DarkBlue\"\n         Stroke=\"Red\"\n         StrokeThickness=\"4\"\n         WidthRequest=\"150\"\n         HeightRequest=\"50\" /&gt;"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#fill-and-stroke",
+    "href": "lectures/Week5/Week5.html#fill-and-stroke",
+    "title": "Week 5 Resources, Shapes and Persistence",
+    "section": "Fill and Stroke",
+    "text": "Fill and Stroke\nShapes can have both a fill and an outline.\n&lt;Ellipse Fill=\"DarkBlue\"\n         Stroke=\"Red\"\n         StrokeThickness=\"4\"\n         WidthRequest=\"150\"\n         HeightRequest=\"50\" /&gt;\n\nFill controls the inside of the shape.\nStroke controls the outline.\nStrokeThickness controls the width of the outline.\n\nThese properties are common to many of the MAUI Shapes controls."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#paths-and-geometry",
+    "href": "lectures/Week5/Week5.html#paths-and-geometry",
+    "title": "Week 5 Resources, Shapes and Persistence",
+    "section": "Paths and Geometry",
+    "text": "Paths and Geometry\nPaths can also be defined using more detailed geometry.\nFor example:\n&lt;Path Stroke=\"Red\"\n      Aspect=\"Uniform\"\n      HorizontalOptions=\"Start\"&gt;\n    &lt;Path.Data&gt;\n        &lt;PathGeometry&gt;\n            &lt;PathGeometry.Figures&gt;\n                &lt;PathFigure IsClosed=\"True\"\n                            StartPoint=\"10,100\"&gt;\n                    &lt;PathFigure.Segments&gt;\n                        &lt;PathSegmentCollection&gt;\n                            &lt;LineSegment Point=\"100,100\" /&gt;\n                            &lt;LineSegment Point=\"100,50\" /&gt;\n                        &lt;/LineSegmentCollection&gt;\n                    &lt;/PathFigure.Segments&gt;\n                &lt;/PathFigure&gt;\n            &lt;/PathGeometry.Figures&gt;\n        &lt;/PathGeometry&gt;\n    &lt;/Path.Data&gt;\n&lt;/Path&gt;\nWe do not need to become experts in path geometry today.\nThe important point is that MAUI provides controls for drawing shapes when a standard control is not enough."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#remembering-information",
+    "href": "lectures/Week5/Week5.html#remembering-information",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Remembering Information",
+    "text": "Remembering Information\nSo far, information in our application has existed only while the application is running.\nFor example:\nint score = 125;\nWhat happens when the application closes?\nThe variable disappears.\nWhat if we want our application to remember something?\nFor example:\n\nA high score\nA username\nA setting\nA player’s progress\nSaved application data\n\nWe need persistent storage."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#two-simple-approaches",
+    "href": "lectures/Week5/Week5.html#two-simple-approaches",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Two Simple Approaches",
+    "text": "Two Simple Approaches\nFor the applications we are building, there are two important approaches:\nPreferences\nGood for small pieces of simple data.\nHighScore → 125\nSoundEnabled → true\nPlayerName → \"Alice\"\nFiles\nGood for larger or more structured data.\nGameData\n├── PlayerName\n├── HighScore\n└── GamesPlayed\nLater we can use JSON to store objects in files."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#what-are-preferences",
+    "href": "lectures/Week5/Week5.html#what-are-preferences",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "What are Preferences?",
+    "text": "What are Preferences?\nPreferences in .NET MAUI provide a simple way to store key-value pairs that persist between application sessions.\nFor example:\n\"HighScore\" → 125\nThe value remains available when the application is closed and opened again.\nPreferences are suitable for small and simple values."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#when-to-use-preferences",
+    "href": "lectures/Week5/Week5.html#when-to-use-preferences",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "When to Use Preferences",
+    "text": "When to Use Preferences\nGood examples include:\n\nA high score\nA username\nA setting\nWhether sound is enabled\nWhether the user has seen a particular screen\n\nFor example:\nHighScore → 125\nSoundEnabled → true\nPlayerName → \"Alice\"\nPreferences are not intended to replace a database or a general-purpose file format."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#setting-a-preference",
+    "href": "lectures/Week5/Week5.html#setting-a-preference",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Setting a Preference",
+    "text": "Setting a Preference\nThe Preferences API is available through Microsoft.Maui.Storage.\nUse Preferences.Default:\nPreferences.Default.Set(\"HighScore\", 125);\n\nPreferences.Default.Set(\"PlayerName\", \"Alice\");\n\nPreferences.Default.Set(\"SoundEnabled\", true);\nThe key identifies the value we want to store."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#getting-a-preference",
+    "href": "lectures/Week5/Week5.html#getting-a-preference",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Getting a Preference",
+    "text": "Getting a Preference\nWhen retrieving a preference, we provide a default value.\nint highScore =\n    Preferences.Default.Get(\"HighScore\", 0);\n\nstring playerName =\n    Preferences.Default.Get(\"PlayerName\", \"\");\n\nbool soundEnabled =\n    Preferences.Default.Get(\"SoundEnabled\", true);\nIf the preference has not previously been stored, the default value is returned."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#a-practical-example",
+    "href": "lectures/Week5/Week5.html#a-practical-example",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "A Practical Example",
+    "text": "A Practical Example\nSuppose our game keeps a high score.\nWhen the game finishes:\nif (score &gt; highScore)\n{\n    highScore = score;\n\n    Preferences.Default.Set(\n        \"HighScore\",\n        highScore);\n}\nWhen the page starts, we can retrieve it:\nhighScore =\n    Preferences.Default.Get(\"HighScore\", 0);\nThis is a good use of Preferences."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#preferences-the-important-idea",
+    "href": "lectures/Week5/Week5.html#preferences-the-important-idea",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Preferences: The Important Idea",
+    "text": "Preferences: The Important Idea\nThink of Preferences as a small collection of:\nkey → value\nFor example:\n\"HighScore\"    → 125\n\"PlayerName\"   → \"Alice\"\n\"SoundEnabled\" → true\nIt is simple and convenient.\nBut what if the information we want to save becomes more complicated?"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#why-use-files",
+    "href": "lectures/Week5/Week5.html#why-use-files",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Why Use Files?",
+    "text": "Why Use Files?\nA file allows an application to store data beyond the lifetime of the application.\nFiles can contain:\n\nText\nConfiguration data\nJSON\nCSV\nXML\nOther application data\n\nThe important difference is that a file can contain much more structured information than a few simple Preferences."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#a-simple-text-file",
+    "href": "lectures/Week5/Week5.html#a-simple-text-file",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "A Simple Text File",
+    "text": "A Simple Text File\nSuppose we want to save three names:\nChris\nKathryn\nJean\nWe could write these to a text file.\nIn C#, one way of doing this is:\nusing StreamWriter writer =\n    new StreamWriter(\"Names.txt\");\n\nwriter.WriteLine(\"Chris\");\nwriter.WriteLine(\"Kathryn\");\nwriter.WriteLine(\"Jean\");\nHowever, in a MAUI application we also need to think about where the file is stored."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#where-should-a-maui-app-store-files",
+    "href": "lectures/Week5/Week5.html#where-should-a-maui-app-store-files",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Where Should a MAUI App Store Files?",
+    "text": "Where Should a MAUI App Store Files?\nWe should not assume that a filename such as:\n\"Names.txt\"\nrefers to a suitable location on every platform.\n.NET MAUI provides:\nFileSystem.Current.AppDataDirectory\nThis gives the application a platform-appropriate directory for its own data."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#combining-paths",
+    "href": "lectures/Week5/Week5.html#combining-paths",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Combining Paths",
+    "text": "Combining Paths\nWe can combine the application data directory with a filename using:\nPath.Combine()\nFor example:\nstring fileName =\n    Path.Combine(\n        FileSystem.Current.AppDataDirectory,\n        \"Names.txt\");\nThis avoids having to worry about whether a platform uses:\n\\\nor:\n/\nbetween directories."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#writing-a-file-in-maui",
+    "href": "lectures/Week5/Week5.html#writing-a-file-in-maui",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Writing a File in MAUI",
+    "text": "Writing a File in MAUI\nWe can now write to our application data directory:\nstring fileName =\n    Path.Combine(\n        FileSystem.Current.AppDataDirectory,\n        \"Names.txt\");\n\nusing StreamWriter writer =\n    new StreamWriter(fileName);\n\nwriter.WriteLine(\"Chris\");\nwriter.WriteLine(\"Kathryn\");\nwriter.WriteLine(\"Jean\");\nThe file is created if it does not already exist.\nIf it does exist, this form of writing will overwrite its contents."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#using",
+    "href": "lectures/Week5/Week5.html#using",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "using",
+    "text": "using\nThe using statement is important when working with objects such as StreamWriter.\nusing StreamWriter writer =\n    new StreamWriter(fileName);\n\nwriter.WriteLine(\"Chris\");\nwriter.WriteLine(\"Kathryn\");\nWhen the using scope ends, the writer is disposed.\nThis ensures that the file is properly closed and resources are released."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#reading-a-file",
+    "href": "lectures/Week5/Week5.html#reading-a-file",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Reading a File",
+    "text": "Reading a File\nWe can read a file using StreamReader.\nusing StreamReader reader =\n    new StreamReader(fileName);\n\nstring contents =\n    reader.ReadToEnd();\nFor a file containing:\nChris\nKathryn\nJean\ncontents will contain the text from the file."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#reading-line-by-line",
+    "href": "lectures/Week5/Week5.html#reading-line-by-line",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Reading Line by Line",
+    "text": "Reading Line by Line\nWe can also read individual lines.\nusing StreamReader reader =\n    new StreamReader(fileName);\n\nstring? line;\n\nwhile ((line = reader.ReadLine()) != null)\n{\n    Console.WriteLine(line);\n}\nThis can be useful when processing a text file one line at a time.\nFor the applications we are building, however, we will often want to read an entire structured file and turn it into an object."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#asynchronous-file-operations",
+    "href": "lectures/Week5/Week5.html#asynchronous-file-operations",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Asynchronous File Operations",
+    "text": "Asynchronous File Operations\nFile operations can take time.\nAs we saw when discussing async and await, we do not want lengthy operations to block the UI thread.\n.NET provides asynchronous versions of many file operations.\nFor example:\nstring contents =\n    await File.ReadAllTextAsync(fileName);\nand:\nawait File.WriteAllTextAsync(\n    fileName,\n    contents);\nThis fits naturally with the asynchronous programming we have already covered."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#checking-for-a-file",
+    "href": "lectures/Week5/Week5.html#checking-for-a-file",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Checking for a File",
+    "text": "Checking for a File\nWhen reading a file, we need to consider whether it exists.\nWe can check using:\nif (File.Exists(fileName))\n{\n    // Read the file\n}\nFor example:\nif (File.Exists(fileName))\n{\n    string contents =\n        await File.ReadAllTextAsync(fileName);\n}\nIf the file does not exist, we can decide what the application should do instead."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#handling-file-errors",
+    "href": "lectures/Week5/Week5.html#handling-file-errors",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Handling File Errors",
+    "text": "Handling File Errors\nFile operations can fail.\nFor example:\n\nThe file may not exist.\nThe directory may not be accessible.\nThe file may be in use.\nThere may be a permissions problem.\n\nWhen appropriate, file operations should therefore be protected with exception handling.\ntry\n{\n    string contents =\n        await File.ReadAllTextAsync(fileName);\n}\ncatch (Exception ex)\n{\n    Console.WriteLine(ex.Message);\n}\nWe do not need to handle every possible exception individually at this stage."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#why-have-data-formats",
+    "href": "lectures/Week5/Week5.html#why-have-data-formats",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Why Have Data Formats?",
+    "text": "Why Have Data Formats?\nThere are many ways to represent data in a file.\nA useful data format should ideally be:\n\nEasy for programs to read\nEasy for people to understand\nWidely supported\nSuitable for the type of data being stored\n\nSome formats we will encounter include:\n\nCSV\nXML\nJSON\n\nDatabases are another important way of storing structured data, although a database is more than simply a file format."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#csv",
+    "href": "lectures/Week5/Week5.html#csv",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "CSV",
+    "text": "CSV\nCSV stands for Comma-Separated Values.\nA CSV file represents data as rows and columns.\nFor example:\nName,Age,Occupation\nJohn Doe,30,Engineer\nJane Smith,25,Analyst\nCSV is particularly common when exchanging tabular data with applications such as spreadsheets.\nThere are complications, however, when values themselves contain commas or other special characters.\nFor this module, we will not need to implement a complete CSV reader or writer."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#json",
+    "href": "lectures/Week5/Week5.html#json",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "JSON",
+    "text": "JSON\nJSON stands for JavaScript Object Notation.\nDespite the name, JSON is not limited to JavaScript.\nIt is a widely used format for representing structured data and is particularly common when applications communicate with APIs.\nA simple JSON object might look like:\n{\n    \"Name\": \"Alice\",\n    \"Age\": 25\n}\nIt is text, but it has a structure that maps naturally to objects and collections."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#json-values",
+    "href": "lectures/Week5/Week5.html#json-values",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "JSON Values",
+    "text": "JSON Values\nJSON can represent values such as:\n\nStrings\nNumbers\nBooleans\nObjects\nArrays\nnull\n\nFor example:\n{\n    \"name\": \"John\",\n    \"age\": 30,\n    \"cities\": [\n        \"New York\",\n        \"London\",\n        \"Paris\"\n    ]\n}\nThe square brackets represent an array of values.\nThe curly brackets represent an object."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#json-and-c",
+    "href": "lectures/Week5/Week5.html#json-and-c",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "JSON and C",
+    "text": "JSON and C\nC# provides support for working with JSON.\nWe will use:\nSystem.Text.Json\nThis is part of modern .NET, so we do not need to install a third-party JSON package.\nFor example:\nusing System.Text.Json;\nWe can then convert between C# objects and JSON."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#serialisation",
+    "href": "lectures/Week5/Week5.html#serialisation",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Serialisation",
+    "text": "Serialisation\nSerialisation is the process of converting an object into a representation that can be stored or transmitted.\nFor JSON:\nC# object\n     ↓\nSerialize\n     ↓\nJSON text\nFor example:\nPerson person = new Person\n{\n    Name = \"Alice\",\n    Age = 25\n};\n\nstring json =\n    JsonSerializer.Serialize(person);\njson now contains the JSON representation of the object."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#what-does-the-json-look-like",
+    "href": "lectures/Week5/Week5.html#what-does-the-json-look-like",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "What Does the JSON Look Like?",
+    "text": "What Does the JSON Look Like?\nFor example, the object:\nPerson person = new Person\n{\n    Name = \"Alice\",\n    Age = 25\n};\ncould be represented as:\n{\n    \"Name\": \"Alice\",\n    \"Age\": 25\n}\nThe JSON is just text.\nThat text can then be:\n\nWritten to a file\nSent over a network\nStored somewhere else\nRead by another application"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#deserialisation",
+    "href": "lectures/Week5/Week5.html#deserialisation",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Deserialisation",
+    "text": "Deserialisation\nDeserialisation is the reverse process.\nJSON text\n     ↓\nDeserialize\n     ↓\nC# object\nFor example:\nstring json =\n    \"{\\\"Name\\\":\\\"Bob\\\",\\\"Age\\\":30}\";\n\nPerson? person =\n    JsonSerializer.Deserialize&lt;Person&gt;(json);\nWe now have a Person object again."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#an-object-we-can-save",
+    "href": "lectures/Week5/Week5.html#an-object-we-can-save",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "An Object We Can Save",
+    "text": "An Object We Can Save\nLet’s create a simple class representing saved game data.\npublic class GameData\n{\n    public string PlayerName { get; set; } = \"\";\n    public int HighScore { get; set; }\n    public int GamesPlayed { get; set; }\n}\nWe can create an object:\nGameData data = new GameData\n{\n    PlayerName = \"Alice\",\n    HighScore = 125,\n    GamesPlayed = 7\n};\nNow we want to save it."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#serialising-gamedata",
+    "href": "lectures/Week5/Week5.html#serialising-gamedata",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Serialising GameData",
+    "text": "Serialising GameData\nWe can convert the object to JSON:\nstring json =\n    JsonSerializer.Serialize(data);\nThe result will be similar to:\n{\n    \"PlayerName\": \"Alice\",\n    \"HighScore\": 125,\n    \"GamesPlayed\": 7\n}\nWe have converted our C# object into text."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#writing-json-to-a-file",
+    "href": "lectures/Week5/Week5.html#writing-json-to-a-file",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Writing JSON to a File",
+    "text": "Writing JSON to a File\nNow combine what we have already learned.\nFirst, create the filename:\nstring fileName =\n    Path.Combine(\n        FileSystem.Current.AppDataDirectory,\n        \"game.json\");\nThen serialise the object:\nstring json =\n    JsonSerializer.Serialize(data);\nFinally, write it to the file:\nawait File.WriteAllTextAsync(\n    fileName,\n    json);\nWe have now saved an object to a file."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#the-complete-save-operation",
+    "href": "lectures/Week5/Week5.html#the-complete-save-operation",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "The Complete Save Operation",
+    "text": "The Complete Save Operation\nPutting it together:\nGameData data = new GameData\n{\n    PlayerName = \"Alice\",\n    HighScore = 125,\n    GamesPlayed = 7\n};\n\nstring fileName =\n    Path.Combine(\n        FileSystem.Current.AppDataDirectory,\n        \"game.json\");\n\nstring json =\n    JsonSerializer.Serialize(data);\n\nawait File.WriteAllTextAsync(\n    fileName,\n    json);\nThe important sequence is:\nC# object\n    ↓\nSerialize\n    ↓\nJSON string\n    ↓\nWriteAllTextAsync\n    ↓\nFile"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#reading-the-json-file",
+    "href": "lectures/Week5/Week5.html#reading-the-json-file",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Reading the JSON File",
+    "text": "Reading the JSON File\nNow suppose the application starts again.\nWe can read the file:\nstring json =\n    await File.ReadAllTextAsync(fileName);\nWe have the JSON text again.\nBut we want a GameData object.\nSo we deserialize it."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#deserialising-gamedata",
+    "href": "lectures/Week5/Week5.html#deserialising-gamedata",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Deserialising GameData",
+    "text": "Deserialising GameData\nGameData? data =\n    JsonSerializer.Deserialize&lt;GameData&gt;(json);\nWe now have the object back.\nFor example:\nConsole.WriteLine(data?.PlayerName);\nConsole.WriteLine(data?.HighScore);\nConsole.WriteLine(data?.GamesPlayed);\nThe values that were saved can be used again."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#the-complete-load-operation",
+    "href": "lectures/Week5/Week5.html#the-complete-load-operation",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "The Complete Load Operation",
+    "text": "The Complete Load Operation\nPutting it together:\nstring fileName =\n    Path.Combine(\n        FileSystem.Current.AppDataDirectory,\n        \"game.json\");\n\nif (File.Exists(fileName))\n{\n    string json =\n        await File.ReadAllTextAsync(fileName);\n\n    GameData? data =\n        JsonSerializer.Deserialize&lt;GameData&gt;(json);\n}\nThe important sequence is:\nFile\n    ↓\nReadAllTextAsync\n    ↓\nJSON string\n    ↓\nDeserialize\n    ↓\nC# object"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#preferences-or-json",
+    "href": "lectures/Week5/Week5.html#preferences-or-json",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Preferences or JSON?",
+    "text": "Preferences or JSON?\nWe now have two different ways to save data.\nPreferences\nGood for small, simple values:\nPreferences.Default.Set(\n    \"HighScore\",\n    125);\nJSON file\nGood for structured data:\nGameData data = new GameData\n{\n    PlayerName = \"Alice\",\n    HighScore = 125,\n    GamesPlayed = 7\n};\nThe important question is:\n\nWhat sort of data are we trying to store?"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#a-useful-comparison",
+    "href": "lectures/Week5/Week5.html#a-useful-comparison",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "A Useful Comparison",
+    "text": "A Useful Comparison\n\n\n\nRequirement\nSuitable approach\n\n\n\n\nOne integer\nPreferences\n\n\nOne Boolean setting\nPreferences\n\n\nA username\nPreferences\n\n\nSeveral related values\nJSON file\n\n\nA C# object\nJSON file\n\n\nMore complex structured data\nJSON file\n\n\n\nWe are not choosing between two competing technologies.\nThey solve slightly different problems."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#what-about-a-list",
+    "href": "lectures/Week5/Week5.html#what-about-a-list",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "What About a List?",
+    "text": "What About a List?\nLater we will learn about:\nList&lt;T&gt;\nSuppose we have:\nList&lt;GameData&gt; games =\n    new List&lt;GameData&gt;();\nWe could serialise the entire list in exactly the same way:\nstring json =\n    JsonSerializer.Serialize(games);\nAnd deserialize it using:\nList&lt;GameData&gt;? games =\n    JsonSerializer.Deserialize&lt;List&lt;GameData&gt;&gt;(json);\nWe do not need to concentrate on this yet.\nThe important idea is that JSON can represent both objects and collections of objects."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#why-learn-this-now",
+    "href": "lectures/Week5/Week5.html#why-learn-this-now",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Why Learn This Now?",
+    "text": "Why Learn This Now?\nWe will use these ideas throughout the module.\nFor example, an application might:\n\nCreate an object\nChange its properties\nSave it as JSON\nClose the application\nOpen the application again\nRead the JSON file\nRecreate the object\n\nThis gives our applications persistent state."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#resources-vs-application-data",
+    "href": "lectures/Week5/Week5.html#resources-vs-application-data",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Resources vs Application Data",
+    "text": "Resources vs Application Data\nThere is an important distinction between the two types of files we have seen.\nPackaged resources\nFiles that are included with the application:\nResources/Images/\nResources/Raw/\nThe application can read these files, but they are part of the application package.\nApplication data\nFiles that the application creates or changes while running:\nFileSystem.Current.AppDataDirectory\nFor example:\ngame.json\nsettings.json\nsaveddata.txt\nThese are where we can store information created by the user or application."
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#putting-it-all-together",
+    "href": "lectures/Week5/Week5.html#putting-it-all-together",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Putting It All Together",
+    "text": "Putting It All Together\nWe now have a complete path from an object in memory to persistent storage.\n             Application\n                  │\n                  ▼\n             C# object\n                  │\n                  ▼\n              JSON text\n                  │\n                  ▼\n          Application data\n             directory\n                  │\n                  ▼\n                File\nWhen the application starts again, we reverse the process.\n                File\n                  │\n                  ▼\n             JSON text\n                  │\n                  ▼\n           C# object\n                  │\n                  ▼\n             Application"
+  },
+  {
+    "objectID": "lectures/Week5/Week5.html#further-reading",
+    "href": "lectures/Week5/Week5.html#further-reading",
+    "title": "Week 5 Resources, Shapes and Collections",
+    "section": "Further Reading",
+    "text": "Further Reading\n.NET MAUI Preferences:\nhttps://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-10.0\n.NET MAUI File System Helpers:\nhttps://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-system-helpers?view=net-maui-10.0\n.NET JSON overview:\nhttps://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview\nJSON:\nhttps://www.json.org/"
   }
 ]
