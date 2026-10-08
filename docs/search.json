@@ -837,7 +837,7 @@
     "href": "labs.html",
     "title": "Labs",
     "section": "",
-    "text": "Lab 1: C# Basics\n\n\n\n\n\n\n\n\n\n\n\n\nLab 2: XAML Layouts\n\n\n\n\n\n\n\n\n\n\n\n\nLab 3: Events with XAML\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Lab 1: C# Basics\n\n\n\n\n\n\n\n\n\n\n\n\nLab 2: XAML Layouts\n\n\n\n\n\n\n\n\n\n\n\n\nLab 3: Events with XAML\n\n\n\n\n\n\n\n\n\n\n\n\nLab 4: Tic Tac Toe\n\n\n\n\n\n\n\n\n\n\n\n\norder: 4\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "labs/Lab 4 - Tic Tac Toe.html",
@@ -1187,7 +1187,7 @@
     "href": "labs/Lab 4 - Whack a Mole.html#starting-xaml",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "2. Starting XAML",
-    "text": "2. Starting XAML\nOpen MainPage.xaml.\nReplace the contents inside your existing page with the following:\n&lt;VerticalStackLayout\n    Padding=\"20\"\n    Spacing=\"10\"&gt;\n\n    &lt;Label\n        Text=\"WHACK-A-MOLE\"\n        FontSize=\"32\"\n        HorizontalOptions=\"Center\" /&gt;\n\n    &lt;HorizontalStackLayout\n        HorizontalOptions=\"Center\"\n        Spacing=\"40\"&gt;\n\n        &lt;Label\n            Text=\"Score: 0\"\n            FontSize=\"20\"\n            x:Name=\"ScoreLabel\" /&gt;\n\n        &lt;Label\n            Text=\"Time: 30\"\n            FontSize=\"20\"\n            x:Name=\"TimeLabel\" /&gt;\n\n    &lt;/HorizontalStackLayout&gt;\n\n    &lt;Grid\n        x:Name=\"GameGrid\"\n        HeightRequest=\"300\"\n        WidthRequest=\"300\"&gt;\n\n        &lt;Border\n            x:Name=\"Mole\"\n            BackgroundColor=\"SaddleBrown\"\n            Stroke=\"Black\"\n            StrokeThickness=\"3\"\n            StrokeShape=\"RoundRectangle 50\"\n            Padding=\"10\"&gt;\n\n            &lt;Label\n                Text=\"🐹\"\n                FontSize=\"40\"\n                HorizontalOptions=\"Center\"\n                VerticalOptions=\"Center\" /&gt;\n\n        &lt;/Border&gt;\n\n    &lt;/Grid&gt;\n\n    &lt;Button\n        x:Name=\"StartButton\"\n        Text=\"Start Game\"\n        Clicked=\"StartGame_Clicked\" /&gt;\n\n&lt;/VerticalStackLayout&gt;\nThe Grid and the Mole already exist.\nWe are not going to create a new Grid or a new mole in C#.\nInstead, we will modify the existing Grid and move the existing mole around it.\nThe ScoreLabel and TimeLabel have already been given names because we will change their text from C#."
+    "text": "2. Starting XAML\nOpen MainPage.xaml.\nReplace the contents inside your existing page with the following: (It is probably easier to copy and paste this from the HTML version of the lab)\n&lt;VerticalStackLayout\n    Padding=\"20\"\n    Spacing=\"10\"&gt;\n\n    &lt;Label\n        Text=\"WHACK-A-MOLE\"\n        FontSize=\"32\"\n        HorizontalOptions=\"Center\" /&gt;\n\n    &lt;HorizontalStackLayout\n        HorizontalOptions=\"Center\"\n        Spacing=\"40\"&gt;\n\n        &lt;Label\n            Text=\"Score: 0\"\n            FontSize=\"20\"\n            x:Name=\"ScoreLabel\" /&gt;\n\n        &lt;Label\n            Text=\"Time: 30\"\n            FontSize=\"20\"\n            x:Name=\"TimeLabel\" /&gt;\n\n    &lt;/HorizontalStackLayout&gt;\n\n    &lt;Grid\n        x:Name=\"GameGrid\"\n        HeightRequest=\"300\"\n        WidthRequest=\"300\"&gt;\n\n        &lt;Border\n            x:Name=\"Mole\"\n            BackgroundColor=\"SaddleBrown\"\n            Stroke=\"Black\"\n            StrokeThickness=\"3\"\n            StrokeShape=\"RoundRectangle 50\"\n            Padding=\"10\"&gt;\n\n            &lt;Label\n                Text=\"🐹\"\n                FontSize=\"40\"\n                HorizontalOptions=\"Center\"\n                VerticalOptions=\"Center\" /&gt;\n\n        &lt;/Border&gt;\n\n    &lt;/Grid&gt;\n\n    &lt;Button\n        x:Name=\"StartButton\"\n        Text=\"Start Game\"\n        Clicked=\"StartGame_Clicked\" /&gt;\n\n&lt;/VerticalStackLayout&gt;\nThe Grid and the Mole already exist.\nWe are not going to create a new Grid or a new mole in C#.\nInstead, we will modify the existing Grid and move the existing mole around it.\nThe ScoreLabel and TimeLabel have already been given names because we will change their text from C#."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#mainpage.xaml.cs",
@@ -1201,35 +1201,35 @@
     "href": "labs/Lab 4 - Whack a Mole.html#game-fields",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "4. Game Fields",
-    "text": "4. Game Fields\nWe need to keep track of three things.\nWe need 3 fields:\n\n_score — int\n_timeRemaining — int\n_gameTimer — IDispatcherTimer\n\nCreate these fields in your class.\nStart the first two at appropriate initial values.\nFor example, the score should start at 0 and the game should last 30 seconds."
+    "text": "4. Game Fields\nWe need to keep track of three things.\nWe need 3 fields:\n\n_score - int\n_timeRemaining -int\n_gameTimer - IDispatcherTimer\n\nCreate these fields in your class.\nStart the first two at appropriate initial values.\nFor example, the score should start at 0 and the game should last 30 seconds."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#create-the-game-grid",
     "href": "labs/Lab 4 - Whack a Mole.html#create-the-game-grid",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "5. Create the Game Grid",
-    "text": "5. Create the Game Grid\nThe Grid already exists in XAML:\nGameGrid\nWe now need to add its rows and columns.\nCreate a method:\nprivate void CreateGameGrid()\n{\n    \n}\nThe game is going to use a 3 × 3 grid.\n\nAdd the rows\nUse a for loop to add three RowDefinitions to GameGrid.\nYou will need:\nGameGrid.RowDefinitions.Add(\n    new RowDefinition());\n\n\nAdd the columns\nNow add another loop to add three ColumnDefinitions.\n\n\nAdd the cells\nUse nested loops to create a Border for every cell.\nUse a Border with a more interesting appearance, for example:\nBorder border = new Border\n{\n    BackgroundColor = Colors.LightGreen,\n    Stroke = Colors.DarkGreen,\n    StrokeThickness = 3,\n    StrokeShape = new RoundRectangle\n    {\n        CornerRadius = 15\n    },\n    Margin = new Thickness(5)\n};\nAdd each Border to the correct position using the overloaded Add() method:\nGameGrid.Children.Add(\n    border,\n    column,\n    row);\nRemember that this is:\ncolumn, row\nDo not use Grid.SetRow() or Grid.SetColumn().\nIf you are really stuck, your lecturer has put a solution to last week’s runtime Grid exercise on GitHub."
+    "text": "5. Create the Game Grid\nThe Grid already exists in XAML:\nGameGrid\nWe now need to add its rows and columns.\nCreate a method:\nprivate void CreateGameGrid()\n{\n    \n}\nThe game is going to use a 3 × 3 grid.\n\nAdd the rows\nUse a for loop to add three RowDefinitions to GameGrid.\nYou will need:\nGameGrid.RowDefinitions.Add(new RowDefinition());\n\n\nAdd the columns\nNow add another loop to add three ColumnDefinitions.\n\n\nAdd the cells\nUse nested loops to create a Border for every cell.\nUse a Border with a more interesting appearance, for example:\nBorder border = new Border\n{\n    BackgroundColor = Colors.LightGreen,\n    Stroke = Colors.DarkGreen,\n    StrokeThickness = 3,\n    StrokeShape = new RoundRectangle\n    {\n        CornerRadius = 15\n    },\n    Margin = new Thickness(5)\n};\nAdd each Border to the correct position using the overloaded Add() method:\nGameGrid.Add(border, column, row);\nRemember that this is:\ncolumn, row\nDo not use Grid.SetRow() or Grid.SetColumn().\nIf you are really stuck, your lecturer has put a solution to last week’s runtime Grid exercise on GitHub."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#put-the-mole-in-a-random-cell",
     "href": "labs/Lab 4 - Whack a Mole.html#put-the-mole-in-a-random-cell",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "6. Put the Mole in a Random Cell",
-    "text": "6. Put the Mole in a Random Cell\nThe mole already exists:\nMole\nWe simply need to move it around the Grid.\nCreate a Random field in your class and initialise it in the constructor.\nYou can then use:\n_random.Next(3)\nto generate a value of 0, 1 or 2.\nCreate a method:\nprivate void MoveMole()\n{\n    \n}\nInside this method:\n\nGenerate a random row.\nGenerate a random column.\nStore these values in _moleRow and _moleColumn.\nAdd the existing Mole to that position in GameGrid.\n\nYou will therefore need fields to remember the mole’s current row and column.\nTry to write this yourself rather than copying a complete method."
+    "text": "6. Put the Mole in a Random Cell\nThe mole already exists:\nMole\nWe simply need to move it around the Grid.\nCreate a Random field in your class and initialise it in the constructor.\nYou can then use:\n_random.Next(3)\nto generate a value of 0, 1 or 2.\nCreate a method:\nprivate void MoveMole()\n{\n    \n}\nInside this method:\n\nGenerate a random row.\nGenerate a random column.\nStore these values in moleRow and moleColumn.\nMove the existing Mole to that position in GameGrid.\n\nYou will therefore need fields to remember the mole’s current row and column.\nTry to write this yourself rather than copying a complete method."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#make-the-mole-tappable",
     "href": "labs/Lab 4 - Whack a Mole.html#make-the-mole-tappable",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "7. Make the Mole Tappable",
-    "text": "7. Make the Mole Tappable\nWe only need the mole to respond to taps.\nWe do not need to add a TapGestureRecognizer to every cell.\nCreate a TapGestureRecognizer for the existing Mole and connect its Tapped event to a method called:\nOnMoleTapped\nAdd the gesture recognizer to the mole.\nYour event handler should have a signature similar to:\nprivate void OnMoleTapped(\n    object? sender,\n    TappedEventArgs e)\n{\n    \n}\nWhen the mole is tapped:\n\nIncrease _score.\nUpdate ScoreLabel.\nMove the mole to a new random position.\n\nThere is no need for a “miss” counter.\nIf the player taps somewhere that does not contain the mole, nothing happens."
+    "text": "7. Make the Mole Tappable\nWe only need the mole to respond to taps.\nCreate a TapGestureRecognizer for the existing Mole and connect its Tapped event to a method called:\nOnMoleTapped\nAdd the gesture recognizer to the mole.\nYour event handler should have a signature similar to:\nprivate void OnMoleTapped(object? sender, TappedEventArgs e)\nWhen the mole is tapped:\n\nIncrease _score.\nUpdate ScoreLabel.\nMove the mole to a new random position.\n\nIf the player taps somewhere that does not contain the mole, nothing happens."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#add-the-game-timer",
     "href": "labs/Lab 4 - Whack a Mole.html#add-the-game-timer",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "8. Add the Game Timer",
-    "text": "8. Add the Game Timer\nNow we want the mole to move automatically.\nCreate the IDispatcherTimer using:\n_gameTimer = Dispatcher.CreateTimer();\nSet an appropriate interval and connect the Tick event.\nThe timer should call MoveMole() each time it ticks.\nStart the timer when the game starts.\nRemember that we already used DispatcherTimer in the previous lab."
+    "text": "8. Add the Game Timer\nWe want the game to only last a certain amount of time\nCreate the IDispatcherTimer using:\n_gameTimer = Dispatcher.CreateTimer();\nSet an appropriate interval and connect the Tick event.\nThe timer should call MoveMole() each time it ticks.\nStart the timer when the game starts."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#countdown",
@@ -1243,14 +1243,14 @@
     "href": "labs/Lab 4 - Whack a Mole.html#start-the-game",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "10. Start the Game",
-    "text": "10. Start the Game\nNow complete StartGame_Clicked.\nWhen the button is pressed:\n\nReset _score.\nReset _timeRemaining to 30.\nUpdate the score and time labels.\nCreate the game grid.\nMove the mole to its first random position.\nStart the timer.\nDisable the Start button.\n\nYou may want to put some of this work into a separate StartGame() method rather than putting everything into the button event."
+    "text": "10. Start the Game\nNow complete StartGame_Clicked.\nWhen the button is pressed:\n\nReset _score.\nReset _timeRemaining to 30.\nUpdate the score and time labels.\nCreate the game grid (if not already created).\nMove the mole to its first random position.\nStart the timer.\nDisable the Start button.\n\nYou may want to put some of this work into a separate StartGame() method rather than putting everything into the button event."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#make-the-mole-disappear",
     "href": "labs/Lab 4 - Whack a Mole.html#make-the-mole-disappear",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "11. Make the Mole Disappear",
-    "text": "11. Make the Mole Disappear\nAt the moment, the mole could stay visible in one cell until the next timer tick.\nInstead, we want the mole to disappear if the player takes too long to hit it.\nWe can use an animation for this.\nFor example:\nawait Mole.FadeToAsync(\n    0,\n    500);\nThis fades the mole to an opacity of 0 over half a second.\nThe useful thing about this is that the animation itself takes time.\nWe can therefore use the fade as the mole’s “time limit”, rather than creating another timer.\nMake the method that controls the mole movement asynchronous.\nFor example:\nprivate async Task ShowMole()\n{\n    \n}\nThe method should:\n\nMove the mole.\nMake sure it is visible.\nWait while it is displayed.\nFade it away.\nMove it to a new position.\nShow it again.\n\nThink about how await allows the UI to remain responsive while the animation is running."
+    "text": "11. Make the Mole Disappear\nAt the moment, the mole could stay visible in one cell until the next timer tick.\nInstead, we want the mole to disappear if the player takes too long to hit it.\nWe can use an animation for this.\nFor example:\nawait Mole.FadeToAsync( 0, 500);\nThis fades the mole to an opacity of 0 over half a second.\nThe useful thing about this is that the animation itself takes time.\nWe can therefore use the fade as the mole’s “time limit”, rather than creating another timer.\nMake the method that controls the mole movement asynchronous.\nFor example:\nprivate async Task ShowMole()\n{\n    \n}\nThe method should:\n\nMove the mole.\nMake sure it is visible.\nWait while it is displayed.\nFade it away.\nMove it to a new position.\nShow it again.\n\nThink about how await allows the UI to remain responsive while the animation is running."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#what-happens-when-the-mole-is-hit",
@@ -1264,7 +1264,7 @@
     "href": "labs/Lab 4 - Whack a Mole.html#animation",
     "title": "Lab 4 — Whack-a-Mole",
     "section": "13. Animation",
-    "text": "13. Animation\nMake the mole appear smoothly.\nFor example, after moving it, start with:\nMole.Opacity = 0;\nand then use:\nawait Mole.FadeToAsync(\n    1,\n    200);\nYou could also experiment with ScaleToAsync().\nFor example:\nawait Mole.ScaleToAsync(\n    1,\n    200);\nTry making the mole start slightly smaller and grow into place.\nRemember that these animation methods are asynchronous, so you will need await."
+    "text": "13. Animation\nMake the mole appear smoothly.\nFor example, after moving it, start with:\nMole.Opacity = 0;\nand then use:\nawait Mole.FadeToAsync(1, 200);\nYou could also experiment with ScaleToAsync().\nFor example:\nawait Mole.ScaleToAsync(1, 200);\nTry making the mole start slightly smaller and grow into place.\nRemember that these animation methods are asynchronous, so you will need await."
   },
   {
     "objectID": "labs/Lab 4 - Whack a Mole.html#finishing-the-game",

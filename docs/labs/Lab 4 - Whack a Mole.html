@@ -197,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="starting-xaml" class="level2">
 <h2 class="anchored" data-anchor-id="starting-xaml">2. Starting XAML</h2>
 <p>Open <code>MainPage.xaml</code>.</p>
-<p>Replace the contents inside your existing page with the following:</p>
+<p>Replace the contents inside your existing page with the following: (It is probably easier to copy and paste this from the HTML version of the lab)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">VerticalStackLayout</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Padding=</span><span class="st">"20"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">Spacing=</span><span class="st">"10"</span>&gt;</span>
@@ -275,9 +275,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We need to keep track of three things.</p>
 <p>We need <strong>3 fields</strong>:</p>
 <ul>
-<li><code>_score</code> — <code>int</code></li>
-<li><code>_timeRemaining</code> — <code>int</code></li>
-<li><code>_gameTimer</code> — <code>IDispatcherTimer</code></li>
+<li><code>_score</code> - <code>int</code></li>
+<li><code>_timeRemaining</code> -<code>int</code></li>
+<li><code>_gameTimer</code> - <code>IDispatcherTimer</code></li>
 </ul>
 <p>Create these fields in your class.</p>
 <p>Start the first two at appropriate initial values.</p>
@@ -299,8 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="add-the-rows">Add the rows</h3>
 <p>Use a <code>for</code> loop to add three <code>RowDefinition</code>s to <code>GameGrid</code>.</p>
 <p>You will need:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">RowDefinitions</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> <span class="fu">RowDefinition</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">RowDefinitions</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> <span class="fu">RowDefinition</span><span class="op">());</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="add-the-columns" class="level3">
 <h3 class="anchored" data-anchor-id="add-the-columns">Add the columns</h3>
@@ -322,10 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    Margin <span class="op">=</span> <span class="kw">new</span> <span class="fu">Thickness</span><span class="op">(</span><span class="dv">5</span><span class="op">)</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Add each Border to the correct position using the overloaded <code>Add()</code> method:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    border<span class="op">,</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    column<span class="op">,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    row<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>GameGrid<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>border<span class="op">,</span> column<span class="op">,</span> row<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Remember that this is:</p>
 <pre class="text"><code>column, row</code></pre>
 <p><strong>Do not use <code>Grid.SetRow()</code> or <code>Grid.SetColumn()</code>.</strong></p>
@@ -351,8 +347,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Generate a random row.</li>
 <li>Generate a random column.</li>
-<li>Store these values in <code>_moleRow</code> and <code>_moleColumn</code>.</li>
-<li>Add the existing <code>Mole</code> to that position in <code>GameGrid</code>.</li>
+<li>Store these values in <code>moleRow</code> and <code>moleColumn</code>.</li>
+<li>Move the existing <code>Mole</code> to that position in <code>GameGrid</code>.</li>
 </ol>
 <p>You will therefore need fields to remember the mole’s current row and column.</p>
 <p>Try to write this yourself rather than copying a complete method.</p>
@@ -361,36 +357,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="make-the-mole-tappable" class="level2">
 <h2 class="anchored" data-anchor-id="make-the-mole-tappable">7. Make the Mole Tappable</h2>
 <p>We only need the <strong>mole</strong> to respond to taps.</p>
-<p>We do not need to add a <code>TapGestureRecognizer</code> to every cell.</p>
 <p>Create a <code>TapGestureRecognizer</code> for the existing <code>Mole</code> and connect its <code>Tapped</code> event to a method called:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>OnMoleTapped</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Add the gesture recognizer to the mole.</p>
 <p>Your event handler should have a signature similar to:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnMoleTapped</span><span class="op">(</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    TappedEventArgs e<span class="op">)</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnMoleTapped</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> TappedEventArgs e<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When the mole is tapped:</p>
 <ol type="1">
 <li>Increase <code>_score</code>.</li>
 <li>Update <code>ScoreLabel</code>.</li>
 <li>Move the mole to a new random position.</li>
 </ol>
-<p>There is no need for a “miss” counter.</p>
 <p>If the player taps somewhere that does not contain the mole, nothing happens.</p>
 <hr>
 </section>
 <section id="add-the-game-timer" class="level2">
 <h2 class="anchored" data-anchor-id="add-the-game-timer">8. Add the Game Timer</h2>
-<p>Now we want the mole to move automatically.</p>
+<p>We want the game to only last a certain amount of time</p>
 <p>Create the <code>IDispatcherTimer</code> using:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>_gameTimer <span class="op">=</span> Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Set an appropriate interval and connect the <code>Tick</code> event.</p>
 <p>The timer should call <code>MoveMole()</code> each time it ticks.</p>
 <p>Start the timer when the game starts.</p>
-<p>Remember that we already used <code>DispatcherTimer</code> in the previous lab.</p>
 <hr>
 </section>
 <section id="countdown" class="level2">
@@ -418,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Reset <code>_score</code>.</li>
 <li>Reset <code>_timeRemaining</code> to 30.</li>
 <li>Update the score and time labels.</li>
-<li>Create the game grid.</li>
+<li>Create the game grid (if not already created).</li>
 <li>Move the mole to its first random position.</li>
 <li>Start the timer.</li>
 <li>Disable the Start button.</li>
@@ -432,9 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Instead, we want the mole to disappear if the player takes too long to hit it.</p>
 <p>We can use an animation for this.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span><span class="op">,</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">500</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">500</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This fades the mole to an opacity of <code>0</code> over half a second.</p>
 <p>The useful thing about this is that the animation itself takes time.</p>
 <p>We can therefore use the fade as the mole’s “time limit”, rather than creating another timer.</p>
@@ -488,14 +474,10 @@ Show mole again</code></pre>
 <p>For example, after moving it, start with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">Opacity</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and then use:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">200</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You could also experiment with <code>ScaleToAsync()</code>.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">200</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Try making the mole start slightly smaller and grow into place.</p>
 <p>Remember that these animation methods are asynchronous, so you will need <code>await</code>.</p>
 <hr>
