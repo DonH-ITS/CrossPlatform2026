@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.MainPage"
+             Title="Conversion App">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="MainLayout" Padding="10,0">
+            <Grid RowDefinitions="*,*" ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+                <Label Text="Enter a Value: " VerticalOptions="Center"/>
+                <Entry Grid.Column="1" x:Name="QuantityEntry" TextChanged="QuantityEntry_TextChanged" HorizontalOptions="Start"/>
+                <!-- Do we still need the button? -->
+                <Button Grid.Row ="1" Grid.ColumnSpan="2" HorizontalOptions="Center" Text="Convert" x:Name="btnCalculate" Clicked="btnCalculate_Clicked"/>
+            </Grid>
+
+            
+            <Label x:Name="lblAnswer" 
+                   Text="Conversion will go here"/>
+
+            <Picker x:Name="ConversionTypePicker"
+                Title="Select Conversion"
+                SelectedIndexChanged="ConversionTypePicker_SelectedIndexChanged"
+                    HorizontalOptions="Start"
+                    >
+
+                <Picker.Items>
+                    <x:String>Kilograms to Pounds</x:String>
+                    <x:String>Pounds to Kilograms</x:String>
+                    <x:String>Kilometres to Miles</x:String>
+                    <x:String>Miles to Kilometres</x:String>
+                    <x:String>Pints (UK/Ireland) to Litres</x:String>
+                    <x:String>Litres to Pints (UK/Ireland)</x:String>
+                </Picker.Items>
+
+            </Picker>
+            
+            <!-- This is not related to the Conversion but I just wanted you to see creating a UI
+                 via C#-->
+
+            <Label HeightRequest="50"/>
+            <Button Text="CreateGrid" Clicked="CreateGridButton_Clicked"/>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
