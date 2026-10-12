@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 4: Whack-a-Mole – Cross Platform Application Development</title>
+<title>lab-4---whack-a-mole – Cross Platform Application Development</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -156,29 +156,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Lab 4: Whack-a-Mole</h1>
-</div>
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta column-page">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="lab-4---whack-a-mole" class="level1">
-<h1>Lab 4 - Whack-a-Mole</h1>
+<hr>
+<p>title: “Lab 4: Whack-a-Mole” order: 4 —</p>
+<section id="lab-4-whack-a-mole" class="level1">
+<h1>Lab 4 — Whack-a-Mole</h1>
 <section id="aim" class="level2">
 <h2 class="anchored" data-anchor-id="aim">Aim</h2>
 <p>In this lab you will build a simple <strong>Whack-a-Mole</strong> game using .NET MAUI.</p>
@@ -277,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>ZIndex="1"</code> draws the mole <strong>on top of</strong> the cells we will add later. Without it, the cells would be added after the mole and would cover it.</li>
 <li><code>Opacity="0"</code> hides the mole until the game starts.</li>
-<li><code>InputTransparent="True"</code> means the mole ignores taps. We will switch this off only while the mole is fully visible.</li>
+<li><code>InputTransparent="True"</code> means the mole ignores taps. We will switch this off while the mole is being shown.</li>
 </ul>
 <p>The <code>ScoreLabel</code> and <code>TimeLabel</code> have already been given names because we will change their text from C#.</p>
 <hr>
@@ -466,7 +452,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Move the mole (<code>MoveMole()</code>).</li>
 <li>Make it fully visible (<code>Opacity = 1</code>) and tappable (<code>InputTransparent = false</code>).</li>
 <li>Fade it away slowly. The fade is how long the player has to hit it.</li>
-<li>Make it untappable again (<code>InputTransparent = true</code>).</li>
 </ol>
 <p>The loop then goes round again, which moves the mole to a new position and shows it again.</p>
 <p>Think about how <code>await</code> allows the UI to remain responsive while the animation is running. Why does the game not freeze while the mole fades?</p>
@@ -481,11 +466,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>.NET MAUI provides:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">CancelAnimations</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This cancels animations currently running on that element.</p>
-<p>When an animation is cancelled, <code>FadeToAsync</code> finishes early and returns <code>false</code> (it returns <code>true</code> if it ran to completion). The <code>await</code> in <code>ShowMole()</code> therefore completes straight away, and the loop carries on to the next iteration, which moves the mole and shows it again.</p>
+<p>When an animation is cancelled, <code>FadeToAsync</code> finishes early and returns <code>true</code> (it returns <code>false</code> if the animation ran all the way to the end). Either way, the <code>await</code> in <code>ShowMole()</code> completes straight away and the loop goes round again, which moves the mole and shows it again.</p>
 <p>So the tap handler only needs to:</p>
 <ol type="1">
 <li>Increase <code>_score</code> and update <code>ScoreLabel</code>.</li>
-<li>Set <code>Mole.InputTransparent = true</code> (so a double tap cannot score twice).</li>
 <li>Call <code>Mole.CancelAnimations()</code>.</li>
 </ol>
 <p>Remove the <code>MoveMole()</code> call you added to the tap handler in Section 7. <code>ShowMole()</code> now does the moving.</p>
@@ -504,28 +488,42 @@ ShowMole() loop continues
       v
 Move mole, show it again</code></pre>
 <p>This means we have <strong>one game timer</strong> (the countdown) and <strong>one loop</strong> (<code>ShowMole</code>), rather than a separate timer for how long the mole stays visible.</p>
+<section id="why-does-my-game-freeze" class="level3">
+<h3 class="anchored" data-anchor-id="why-does-my-game-freeze">Why does my game freeze?</h3>
+<p>Try it now. You will probably find that the first tap freezes the app, stuck in an infinite loop.</p>
+<p>The reason is that when <code>CancelAnimations()</code> is called in the tap handler, the <code>await</code> in <code>ShowMole()</code> can carry on running <strong>immediately</strong>, before the cancellation has finished. The loop then starts a new animation, which is cancelled as well. <code>FadeToAsync</code> therefore returns instantly every time, and the loop spins without ever giving the UI a chance to run.</p>
+<p>The fix is to add this line straight after the fade:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>await Task<span class="op">.</span><span class="fu">Yield</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>Task.Yield()</code> hands control back to the UI thread for a moment, which gives the cancellation time to finish before the loop starts its next animation.</p>
 <hr>
+</section>
 </section>
 <section id="animation" class="level2">
 <h2 class="anchored" data-anchor-id="animation">13. Animation</h2>
 <p>Make the mole appear smoothly.</p>
-<p>In <code>ShowMole()</code>, after moving the mole, start with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">Opacity</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>and then use:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">FadeToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You could also experiment with <code>ScaleToAsync()</code>.</p>
-<p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Try making the mole start slightly smaller (<code>Mole.Scale = 0.5;</code>) and grow into place.</p>
-<p>Remember that these animation methods are asynchronous, so you will need <code>await</code>. To run the fade and the scale at the same time, you can use <code>Task.WhenAll(...)</code>.</p>
-<p>Keep the mole <strong>untappable</strong> (<code>InputTransparent = true</code>) while it is appearing, and only make it tappable once it is fully visible. This avoids the problem of the player tapping the mole in the middle of its appearing animation.</p>
+<p>In <code>ShowMole()</code>, after moving the mole, reset it to its starting state:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">Opacity</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">Scale</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">Rotation</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and then animate it in before the fade-out. Use <code>ScaleToAsync()</code> and <code>RotateToAsync()</code>, for example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>await Mole<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">750</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To run two animations <strong>at the same time</strong>, use <code>Task.WhenAll(...)</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>await Task<span class="op">.</span><span class="fu">WhenAll</span><span class="op">(</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    Mole<span class="op">.</span><span class="fu">ScaleToAsync</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">750</span><span class="op">),</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    Mole<span class="op">.</span><span class="fu">RotateToAsync</span><span class="op">(</span><span class="dv">360</span><span class="op">,</span> <span class="dv">750</span><span class="op">)</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Remember that these animation methods are asynchronous, so you will need <code>await</code>.</p>
+<p>You can also try an easing function as a third parameter, for example <code>Easing.SpringOut</code>. This makes the mole slightly overshoot its final size before settling, so don’t worry if it pops a little bigger than normal for a moment.</p>
+<p>The reset at the start of each loop matters: after the first round the mole is already at scale <code>1</code> and rotation <code>360</code>, so without it there would be nothing left to animate.</p>
+<p>The mole is tappable while it appears, so the appear animation counts towards the player’s time. You may want to shorten the fade-out to compensate.</p>
+<p><code>CancelAnimations()</code> cancels <strong>every</strong> animation running on the mole. If the player taps during the appear animation, both the scale and the rotation are cancelled, the fade-out that follows is cancelled too, and the loop moves the mole to a new position. This is also why <code>await Task.Yield()</code> is needed.</p>
 <hr>
 </section>
 <section id="finishing-the-game" class="level2">
 <h2 class="anchored" data-anchor-id="finishing-the-game">14. Finishing the Game</h2>
 <p>Complete <code>EndGame()</code>. When the countdown reaches zero:</p>
 <ul>
-<li>Set <code>_gameRunning</code> to <code>false</code>.</li>
+<li>Set <code>_gameRunning</code> to <code>false</code>. <strong>Do this before cancelling the animation.</strong></li>
 <li>Stop the game timer.</li>
 <li>Cancel any running animation with <code>Mole.CancelAnimations()</code>.</li>
 <li>Hide the mole and make it ignore taps (<code>Opacity = 0</code>, <code>InputTransparent = true</code>).</li>
@@ -537,9 +535,9 @@ Score: 12</code></pre>
 <p>The mole should no longer respond to taps.</p>
 <p>The timer should stop.</p>
 <p>The Start button should become available again.</p>
-<p>Think about why <code>ShowMole()</code> stops by itself once the animation is cancelled. (Hint: look at the condition on the loop.)</p>
+<p>Think about why <code>ShowMole()</code> stops by itself once the animation is cancelled. (Hint: look at the condition on the loop, and think about why the order of the first and third steps matters.)</p>
 <p>You can use:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">CancelAnimations</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Mole<span class="op">.</span><span class="fu">CancelAnimations</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>to stop an animation that is currently running.</p>
 <hr>
 </section>
