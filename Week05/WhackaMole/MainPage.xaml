@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhackAMole.MainPage">
+
+    <VerticalStackLayout
+    Padding="20"
+    Spacing="10">
+
+        <Label
+        Text="WHACK-A-MOLE"
+        FontSize="32"
+        HorizontalOptions="Center" />
+
+        <HorizontalStackLayout
+        HorizontalOptions="Center"
+        Spacing="40">
+
+            <Label
+            Text="Score: 0"
+            FontSize="20"
+            x:Name="ScoreLabel" />
+
+            <Label
+            Text="Time: 30"
+            FontSize="20"
+            x:Name="TimeLabel" />
+            <Label
+Text="Missed: 0"
+FontSize="20"
+x:Name="MissedLabel" />
+
+        </HorizontalStackLayout>
+
+        <Grid
+        x:Name="GameGrid"
+        HeightRequest="300"
+        WidthRequest="300">
+
+            <Border
+            x:Name="Mole"
+            ZIndex="1"
+            Opacity="0"
+            InputTransparent="True"
+            Margin="5"
+            BackgroundColor="SaddleBrown"
+            Stroke="Black"
+            StrokeThickness="3"
+            StrokeShape="RoundRectangle 50"
+            Padding="10"
+            >
+
+                <Label
+                    x:Name="MoleLabel"
+                Text="🐹"
+                FontSize="40"
+                    HorizontalOptions="Fill"
+       VerticalOptions="Fill"
+       HorizontalTextAlignment="Center"
+       VerticalTextAlignment="Center" >
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Mole_Tapped"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+
+            </Border>
+
+        </Grid>
+        <Grid ColumnDefinitions="Auto,Auto" HorizontalOptions="Start">
+            <Label Text="Grid Size: " VerticalOptions="Center"/>
+            <Entry x:Name="GridSizeEntry" Text="3" HorizontalOptions="Start" Grid.Column="1"
+                   />
+        </Grid>
+        <Button
+        x:Name="StartButton"
+        Text="Start Game"
+        Clicked="StartGame_Clicked" />
+
+    </VerticalStackLayout>
+</ContentPage>
