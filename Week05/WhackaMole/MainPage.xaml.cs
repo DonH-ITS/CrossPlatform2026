@@ -61,32 +61,26 @@ namespace WhackAMole
             if (_gameRunning) {
                 return;
             }
-
-            // Let the gridsize change the first time
-            // This isn't in the lab book description, but I included it here anyway
-            // It only creates the grid once, and then locks the size in place for further games
-            // We could have it change, but that would require things I have not talked about in lectures
+            // I've moved these into separate methods as an eventhandler should be smaller
+            // Resetting game is not really an eventhandler, it is its own thing
             if (!_gridCreated) {
-                int.TryParse(GridSizeEntry.Text, out _gridSize);
-                if (_gridSize < 3)
-                    _gridSize = 3;
-                else if (_gridSize > 7) 
-                    _gridSize = 7;
-                GridSizeEntry.Text = _gridSize.ToString();
-                GridSizeEntry.IsEnabled = false;
-                CreateGrid(_gridSize);
-                _gridCreated = true;
+                CreateGrid();
             }
-            StartButton.IsEnabled = false; 
-            _gameRunning = true; 
+
+            ResetGame();
+            await ShowMole(); 
+        }
+
+        private void ResetGame() {
+            StartButton.IsEnabled = false;
+            _gameRunning = true;
             _timeRemaining = 30;
             _score = 0;
             _missed = 0;
             ScoreLabel.Text = $"Score: {_score}";
             MissedLabel.Text = $"Missed: {_missed}";
-            _gameTimer?.Start();
             TimeLabel.Text = $"Time: {_timeRemaining}";
-            await ShowMole(); 
+            _gameTimer?.Start();
         }
 
         private async Task ShowMole() {
@@ -118,15 +112,31 @@ namespace WhackAMole
 
 
 
-        private void CreateGrid(int size)
+        private void CreateGrid()
         {
-            // This first bit is to make the mole a different size in each grid size
+            // Let the gridsize change the first time
+            // This isn't in the lab book description, but I included it here anyway
+            // It only creates the grid once, and then locks the size in place for further games
+            // We could have it change, but that would require things I have not talked about in lectures
+            int.TryParse(GridSizeEntry.Text, out _gridSize);
+            if (_gridSize < 3)
+                _gridSize = 3;
+            else if (_gridSize > 7)
+                _gridSize = 7;
+            GridSizeEntry.Text = _gridSize.ToString();
+            GridSizeEntry.IsEnabled = false;
+            int size = _gridSize;
+            _gridCreated = true;
+
+            // This bit is to make the mole a different size in each grid size
             // This would be a lot easier if we just used an image to start with
             // It also is not required if you stick with a 3x3 grid
             double cell = GameGrid.WidthRequest / size;
             MoleLabel.FontSize = cell * 0.4;
             Mole.Margin = new Thickness(cell * 0.05);
             Mole.Padding = new Thickness(cell * 0.1);
+
+            // Now the only part that's in the lab book!
             for (int i = 0; i < size; i++)
             {
                 GameGrid.RowDefinitions.Add(new RowDefinition());
