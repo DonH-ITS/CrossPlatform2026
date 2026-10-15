@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Week5Examples.MainPage">
+
+    <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="16">
+
+        <Label Text="Week 5: Persistence and Resources"
+                   FontSize="26"
+                   FontAttributes="Bold" />
+
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+            <Button Grid.Column="0" Text="Preferences" Clicked="OnPrefTabClicked" />
+            <Button Grid.Column="1" Text="Resources" Clicked="OnResTabClicked" />
+            <Button Grid.Column="2" Text="Files" Clicked="OnFileTabClicked" />
+        </Grid>
+
+        <VerticalStackLayout x:Name="PrefSection" Spacing="12">
+
+            <Label Text="Preferences (key → value)" FontSize="20" FontAttributes="Bold" />
+
+            <Label Text="Close the app completely and run it again. The values below should still be here."
+                       FontSize="14" />
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="PlayerName (string)" FontAttributes="Bold" />
+                    <Entry x:Name="NameEntry" Placeholder="Enter a name" />
+                    <Button Text="Save name" Clicked="OnSaveNameClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <HorizontalStackLayout Spacing="12">
+                    <Label Text="SoundEnabled (bool)" FontAttributes="Bold" VerticalOptions="Center" />
+                    <Switch x:Name="SoundSwitch" Toggled="OnSoundToggled" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="HighScore and GamesPlayed (int)" FontAttributes="Bold" />
+                    <Label x:Name="LastScoreLabel" Text="Last score: -" />
+                    <Label x:Name="HighScoreLabel" Text="High score: 0" FontSize="20" />
+                    <Label x:Name="GamesPlayedLabel" Text="Games played: 0" />
+                    <Button Text="Play a round (random score 0-200)" Clicked="OnPlayClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Other Preferences methods" FontAttributes="Bold" />
+                    <Button Text="ContainsKey(&quot;HighScore&quot;)" Clicked="OnContainsKeyClicked" />
+                    <Button Text="Remove(&quot;HighScore&quot;)" Clicked="OnRemoveClicked" />
+                    <Button Text="Clear()  (removes everything)" Clicked="OnClearClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="PrefStatusLabel" FontAttributes="Italic" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout x:Name="ResSection" Spacing="12" IsVisible="False">
+
+            <Label Text="Resources" FontSize="20" FontAttributes="Bold" />
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Image from Resources/Images" FontAttributes="Bold" />
+                    <Label Text="The image is in a 300 x 150 box. Change Aspect to see the difference."
+                               FontSize="14" />
+
+                    <Picker x:Name="AspectPicker"
+                                Title="Aspect"
+                                SelectedIndexChanged="OnAspectChanged" />
+
+                    <Grid BackgroundColor="{AppThemeBinding Light=#EEEEEE, Dark=#333333}"
+                              HeightRequest="150"
+                              WidthRequest="300"
+                              HorizontalOptions="Center">
+                        <Image x:Name="DemoImage"
+                                   Source="mole1.png"
+                                   Aspect="AspectFit" />
+                    </Grid>
+
+                    <Label x:Name="AspectLabel" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Fonts from Resources/Fonts" FontAttributes="Bold" />
+
+                    <Label Text="Default font" FontSize="24" />
+                    <Label Text="OpenSansRegular"
+                               FontFamily="OpenSansRegular"
+                               FontSize="24" />
+
+                    <Label Text="Font Awesome Free (solid) icons are just text:" FontSize="14" />
+                    <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                        <Label Text="&#xf015;" FontFamily="FontAwesomeSolid" FontSize="32" />
+                        <Label Text="&#xf005;" FontFamily="FontAwesomeSolid" FontSize="32" />
+                        <Label Text="&#xf013;" FontFamily="FontAwesomeSolid" FontSize="32" />
+                        <Label Text="&#xf007;" FontFamily="FontAwesomeSolid" FontSize="32" />
+                        <Label Text="&#xf091;" FontFamily="FontAwesomeSolid" FontSize="32" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
+                        <Label x:Name="SoundIcon"
+                                   Text="&#xf028;"
+                                   FontFamily="FontAwesomeSolid"
+                                   FontSize="32"
+                                   VerticalOptions="Center" />
+                        <Button Text="Toggle icon" Clicked="OnToggleIconClicked" />
+                    </HorizontalStackLayout>
+
+                    <Button Text="Play" HorizontalOptions="Center">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="FontAwesomeSolid"
+                                                 Glyph="&#xf04b;"
+                                                 Color="White"
+                                                 Size="18" />
+                        </Button.ImageSource>
+                    </Button>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Raw resource (Resources/Raw/mydata.txt)" FontAttributes="Bold" />
+                    <Button Text="Read mydata.txt" Clicked="OnReadRawClicked" />
+                    <Label x:Name="RawLabel" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Image / icon / splash file names (Android)" FontAttributes="Bold" />
+                    <Label Text="OK:   alien_one.png, my_image.svg" />
+                    <Label Text="Bad:  My Image.png, my-image.png, alien1.png, 1alien.png" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout x:Name="FileSection" Spacing="12" IsVisible="False">
+
+            <Label Text="Files" FontSize="20" FontAttributes="Bold" />
+
+            <Label Text="AppDataDirectory:" FontAttributes="Bold" />
+            <Label x:Name="DirLabel" FontSize="12" />
+
+            <Border Padding="12" StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#CCCCCC, Dark=#555555}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Text file (StreamWriter / StreamReader)" FontAttributes="Bold" />
+                    <Button Text="Write Names.txt" Clicked="OnWriteNamesClicked" />
+                    <Button Text="Read Names.txt (line by line)" Clicked="OnReadNamesClicked" />
+                    <Button Text="Delete Names.txt" Clicked="OnDeleteFileClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Output:" FontAttributes="Bold" />
+            <Label x:Name="FileOutputLabel" />
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
