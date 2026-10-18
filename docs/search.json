@@ -4,7 +4,7 @@
     "href": "lectures.html",
     "title": "Lecture Slides",
     "section": "",
-    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\nNo matching items"
+    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/Week5/Week5.html#resources",
@@ -3505,5 +3505,607 @@
     "title": "Lab 5: Penalties",
     "section": "14. Stretch Goals",
     "text": "14. Stretch Goals\nOnly attempt these after the main game is working.\n\nA. Improve the Shot Animation\nExperiment with the Easing parameter of the animation methods (for example Easing.CubicOut) and with different durations, scales and rotations to make the football look more realistic.\n\n\nB. Improve the Goalkeeper\nChange the goalkeeper’s movement distance or animation duration.\nCan you make the goalkeeper move at different speeds? Can you make the goalkeeper smarter, for example by favouring the direction you have shot most often?\n\n\nC. Add Difficulty\nUse Preferences to save a difficulty setting.\nFor example, a more difficult game might have a faster goalkeeper or a shorter countdown.\nLoad the setting when the application starts.\n\n\nD. Improve the Feedback\nChange the feedback message or appearance for goals and saves. You could also change the colour of the feedback label depending on the outcome."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#raw-resources",
+    "href": "lectures/Week6/Week6.html#raw-resources",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Raw Resources",
+    "text": "Raw Resources\nSometimes we need files that are not images.\nExamples include:\n\nText files\nJSON files\nXML files\nOther data files\n\nThese can be placed in:\nResources/Raw/\nThey can then be accessed at runtime."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#reading-a-raw-resource",
+    "href": "lectures/Week6/Week6.html#reading-a-raw-resource",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Reading a Raw Resource",
+    "text": "Reading a Raw Resource\nReading the file is an asynchronous operation, so the method needs to be async:\nprivate async Task LoadData()\n{\n    using var stream = await FileSystem.OpenAppPackageFileAsync(\"mydata.txt\");\n\n    using var reader = new StreamReader(stream);\n\n    string contents = await reader.ReadToEndAsync();\n}\nThis is for files packaged with the application."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#why-use-files",
+    "href": "lectures/Week6/Week6.html#why-use-files",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Why Use Files?",
+    "text": "Why Use Files?\nA file allows an application to store data beyond the lifetime of the application.\nFiles can contain:\n\nText\nConfiguration data\nJSON\nCSV\nXML\nOther application data\n\nThe important difference is that a file can contain much more structured information than a few simple Preferences."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#java-vs-c",
+    "href": "lectures/Week6/Week6.html#java-vs-c",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Java vs C#",
+    "text": "Java vs C#\nFile Writing\n\n\nPrintWriter outputFile = new PrintWriter(\"Names.txt\");\noutputFile.println(\"Chris\");\noutputFile.println(\"Kathryn\");\noutputFile.println(\"Jean\");\noutputFile.close();\n\nStreamWriter outputFile = new StreamWriter(\"Names.txt\");\noutputFile.WriteLine(\"Chris\");\noutputFile.WriteLine(\"Kathryn\");\noutputFile.WriteLine(\"Jean\");\noutputFile.Close();\n\nMost basic examples for file writing. If the file does not exist, it will be created (Names.txt). If it does exist, it will be overwritten.\nFile Reading\n\n\n // Open the file\nFile myFile = new File(\"Names.txt\");\nScanner inputFile = new Scanner(myFile);\n\nList&lt;String&gt; names = new ArrayList&lt;String&gt;();\n\n// Read a line from the file.\nwhile (inputFile.hasNextLine()) {\n    String str = inputFile.nextLine();\n    names.add(str);\n}\n\n// Close the file.\ninputFile.close();\n\nfor (int i = 0; i &lt; names.size(); ++i)\n    System.out.println(names.get(i));\n\n// Open the file\nStreamReader s = new StreamReader(\"Names.txt\");\n\nList&lt;string&gt; names = new List&lt;string&gt;();\nstring? line;\n\n// Read a line from file.\nwhile ((line = s.ReadLine()) != null) {\n    names.Add(line);\n}\n\n// Close the file\ns.Close();\n\nfor (int i = 0; i &lt; names.Count; ++i)\n    Console.WriteLine(names[i]);"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#a-simple-text-file",
+    "href": "lectures/Week6/Week6.html#a-simple-text-file",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "A Simple Text File",
+    "text": "A Simple Text File\nFrom now on only C# code\nSuppose we want to save three names:\nChris\nKathryn\nJean\nWe could write these to a text file.\nIn C#, one way of doing this is (a little more condensed to previous)\nusing StreamWriter writer = new StreamWriter(\"Names.txt\");\n\nwriter.WriteLine(\"Chris\");\nwriter.WriteLine(\"Kathryn\");\nwriter.WriteLine(\"Jean\");\n\n\n\n\n\n\nNote\n\n\nWhere is the writer.Close()??\nThe using statement is important when working with objects such as StreamWriter.\nWhen the using scope ends, the writer is disposed.\nThis ensures that the file is properly closed and resources are released.\n\n\n\nHowever, in a MAUI application we also need to think about where the file is stored."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#where-should-a-maui-app-store-files",
+    "href": "lectures/Week6/Week6.html#where-should-a-maui-app-store-files",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Where Should a MAUI App Store Files?",
+    "text": "Where Should a MAUI App Store Files?\nWe should not assume that a filename such as:\n\"Names.txt\"\nrefers to a suitable location on every platform.\n.NET MAUI provides:\nFileSystem.Current.AppDataDirectory\nThis gives the application a platform-appropriate directory for its own data.\n\n\n\n\n\n\nNote\n\n\nYou will also see this written as FileSystem.AppDataDirectory in examples online. It gives the same directory."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#combining-paths",
+    "href": "lectures/Week6/Week6.html#combining-paths",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Combining Paths",
+    "text": "Combining Paths\nWe can combine the application data directory with a filename using:\nPath.Combine()\nFor example:\nstring fileName = Path.Combine(FileSystem.Current.AppDataDirectory, \"Names.txt\");\nThis avoids having to worry about whether a platform uses:\n\\\nor:\n/\nbetween directories."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#writing-a-file-in-maui",
+    "href": "lectures/Week6/Week6.html#writing-a-file-in-maui",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Writing a File in MAUI",
+    "text": "Writing a File in MAUI\nWe can now write to our application data directory:\nstring fileName = Path.Combine(FileSystem.Current.AppDataDirectory, \"Names.txt\");\n\nusing StreamWriter writer = new StreamWriter(fileName);\n\nwriter.WriteLine(\"Chris\");\nwriter.WriteLine(\"Kathryn\");\nwriter.WriteLine(\"Jean\");\nThe file is created if it does not already exist.\nIf it does exist, this form of writing will overwrite its contents."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#reading-a-file",
+    "href": "lectures/Week6/Week6.html#reading-a-file",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Reading a File",
+    "text": "Reading a File\nWe can read a file using StreamReader.\nusing StreamReader reader =  new StreamReader(fileName);\n\nstring contents = reader.ReadToEnd();\nFor a file containing:\nChris\nKathryn\nJean\ncontents will contain the text from the file.\nReading Line by Line\nWe can also read individual lines.\nusing StreamReader reader = new StreamReader(fileName);\n\nstring? line;\n\nwhile ((line = reader.ReadLine()) != null)\n{\n    Console.WriteLine(line);\n}\nThis can be useful when processing a text file one line at a time."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#dealing-with-files",
+    "href": "lectures/Week6/Week6.html#dealing-with-files",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Dealing with Files",
+    "text": "Dealing with Files\nWhen dealing with files, we need to be careful about certain things.\n\nDoes the file exist?\nFile.Exists(fileName)\nIf it exists, what do we do?\n\nIf we are writing a file: it will be overwritten. We could append instead if that is what we want (for example File.AppendAllText).\nIf we are reading a file: well, we need it to exist!\n\nDo we have the right file permissions?\n\nCan we read/write the file?\nCan we access the directory (folder) the file is in?\n\nWe should always enclose file reading and writing in try/catch blocks.\n\ntry\n{\n    string contents = await File.ReadAllTextAsync(fileName);\n}\ncatch (Exception ex)\n{\n    System.Diagnostics.Debug.WriteLine(ex.Message);\n}\nWe do not need to handle every possible exception individually at this stage."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#asynchronous-synchronous",
+    "href": "lectures/Week6/Week6.html#asynchronous-synchronous",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Asynchronous / Synchronous",
+    "text": "Asynchronous / Synchronous\nThe methods shown so far are synchronous methods. That means the program will wait until any file reading/writing is done before continuing.\nFile operations can take time.\nIf the file is short, it might be OK, but a large file can take a significant amount of time.\nAs we saw when discussing async and await, we do not want lengthy operations to block the UI thread.\n.NET provides asynchronous versions of many file operations.\nStreamWriter and StreamReader have asynchronous methods too.\nreader.ReadLineAsync()      // Reads one line to a string\nreader.ReadToEndAsync()     // Reads the entire file to a string\n\nwriter.WriteLineAsync(line) // Writes one line\nwriter.WriteAsync(contents) // Writes to the file, no new line character\nWe will have to put await in front of those as usual."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#asynchronous-streams-in-practice",
+    "href": "lectures/Week6/Week6.html#asynchronous-streams-in-practice",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Asynchronous Streams in Practice",
+    "text": "Asynchronous Streams in Practice\nWhen we use the asynchronous writer methods, we should also dispose of the writer asynchronously, using await using:\nawait using StreamWriter writer = new StreamWriter(fileName);\n\nawait writer.WriteLineAsync(\"Chris\");\nawait writer.WriteLineAsync(\"Kathryn\");\nA StreamReader is disposed with a normal using, but the reads are awaited:\nusing StreamReader reader = new StreamReader(fileName);\n\nstring? line;\n\nwhile ((line = await reader.ReadLineAsync()) != null)\n{\n    names.Add(line);\n}"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#shortcuts-for-small-files",
+    "href": "lectures/Week6/Week6.html#shortcuts-for-small-files",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Shortcuts for Small Files",
+    "text": "Shortcuts for Small Files\nStreamWriter and StreamReader are still the right tools for large files, or when we want to process a file one line at a time.\nFor small files, the static File methods are shorter:\nstring fileName = Path.Combine(FileSystem.Current.AppDataDirectory, \"Names.txt\");\n\nList&lt;string&gt; names = new List&lt;string&gt; { \"Chris\", \"Kathryn\", \"Jean\" };\n\n// Write every line (overwrites an existing file)\nawait File.WriteAllLinesAsync(fileName, names);\n\n// Add to the end of the file instead\nawait File.AppendAllTextAsync(fileName, \"Alice\" + Environment.NewLine);\n\n// Read every line back\nstring[] lines = await File.ReadAllLinesAsync(fileName);\nWe will use File.WriteAllTextAsync and File.ReadAllTextAsync in exactly this way when we get to JSON."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#filestream",
+    "href": "lectures/Week6/Week6.html#filestream",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "FileStream",
+    "text": "FileStream\nFileStream provides a stream for reading/writing data. It is lower level than StreamReader/StreamWriter because it works with bytes, but we can pass the FileStream to the StreamReader/StreamWriter object.\nYou will meet streams whenever something else hands you one, for example a file the user has picked. We can wrap any stream in a reader or writer:\nusing FileStream outputStream = File.Create(fileName);\nusing StreamWriter streamWriter = new StreamWriter(outputStream);\n// Use streamWriter as usual\nFor reading:\nusing FileStream inputStream = File.OpenRead(fileName);\nusing StreamReader reader = new StreamReader(inputStream);\n// Use reader as usual\n\n\n\n\n\n\nWarning\n\n\nUse File.Create (not File.OpenWrite) when writing a new version of a file.\nFile.Create empties an existing file first. File.OpenWrite does not: if the new text is shorter than the old text, the left-over end of the old file stays in the file, and a JSON file ends up corrupted."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#why-have-data-formats",
+    "href": "lectures/Week6/Week6.html#why-have-data-formats",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Why Have Data Formats?",
+    "text": "Why Have Data Formats?\nThere are many ways to represent data in a file.\nA useful data format should ideally be:\n\nEasy for programs to read\nEasy for people to understand\nWidely supported\nSuitable for the type of data being stored\n\nSome formats we will encounter include:\n\nCSV\nXML\nJSON\n\nDatabases are another important way of storing structured data, although a database is more than simply a file format."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#csv",
+    "href": "lectures/Week6/Week6.html#csv",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "CSV",
+    "text": "CSV\nCSV stands for Comma-Separated Values.\nA CSV file represents data as rows and columns.\nFor example:\nName,Age,Occupation\nJohn Doe,30,Engineer\nJane Smith,25,Analyst\nCSV is particularly common when exchanging tabular data with applications such as spreadsheets.\nThere are complications, however, when values themselves contain commas or other special characters.\nFor this module, we will not need to implement a complete CSV reader or writer."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#json",
+    "href": "lectures/Week6/Week6.html#json",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "JSON",
+    "text": "JSON\nJSON stands for JavaScript Object Notation.\nDespite the name, JSON is not limited to JavaScript.\nIt is a widely used format for representing structured data and is particularly common when applications communicate with APIs.\nA simple JSON object might look like:\n{\n    \"Name\": \"Alice\",\n    \"Age\": 25\n}\nIt is text, but it has a structure that maps naturally to objects and collections."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#json-values",
+    "href": "lectures/Week6/Week6.html#json-values",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "JSON Values",
+    "text": "JSON Values\nJSON can represent values such as:\n\nStrings\nNumbers\nBooleans\nObjects\nArrays\nnull\n\nFor example:\n{\n    \"name\": \"John\",\n    \"age\": 30,\n    \"cities\": [\n        \"New York\",\n        \"London\",\n        \"Paris\"\n    ]\n}\nThe square brackets represent an array of values.\nThe curly brackets represent an object."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#json-and-c",
+    "href": "lectures/Week6/Week6.html#json-and-c",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "JSON and C",
+    "text": "JSON and C\nC# provides support for working with JSON.\nWe will use:\nSystem.Text.Json\nThis is part of modern .NET, so we do not need to install a third-party JSON package.\nFor example:\nusing System.Text.Json;\nWe can then convert between C# objects and JSON."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#serialisation",
+    "href": "lectures/Week6/Week6.html#serialisation",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Serialisation",
+    "text": "Serialisation\nSerialisation is the process of converting an object into a representation that can be stored or transmitted.\nFor JSON:\nC# object\n     ↓\nSerialize\n     ↓\nJSON text\nFor example:\nPerson person = new Person\n{\n    Name = \"Alice\",\n    Age = 25\n};\n\nstring json =\n    JsonSerializer.Serialize(person);\njson now contains the JSON representation of the object."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#what-does-the-json-look-like",
+    "href": "lectures/Week6/Week6.html#what-does-the-json-look-like",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "What Does the JSON Look Like?",
+    "text": "What Does the JSON Look Like?\nFor example, the object:\nPerson person = new Person\n{\n    Name = \"Alice\",\n    Age = 25\n};\ncould be represented as (shown indented here to make it easier to read):\n{\n    \"Name\": \"Alice\",\n    \"Age\": 25\n}\nThe JSON is just text.\nThat text can then be:\n\nWritten to a file\nSent over a network\nStored somewhere else\nRead by another application"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#deserialisation",
+    "href": "lectures/Week6/Week6.html#deserialisation",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Deserialisation",
+    "text": "Deserialisation\nDeserialisation is the reverse process.\nJSON text\n     ↓\nDeserialize\n     ↓\nC# object\nFor example:\nstring json = \"\"\"{\"Name\":\"Bob\",\"Age\":30}\"\"\";\n\nPerson? person =\n    JsonSerializer.Deserialize&lt;Person&gt;(json);\nWe now have a Person object again.\n\n\n\n\n\n\nNote\n\n\nThe \"\"\" … \"\"\" syntax is a raw string literal. Everything between the triple quotes is taken exactly as written, so we don’t need to escape the double quotes inside the JSON."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#an-object-we-can-save",
+    "href": "lectures/Week6/Week6.html#an-object-we-can-save",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "An Object We Can Save",
+    "text": "An Object We Can Save\nLet’s create a simple class representing saved game data.\npublic class GameData\n{\n    public string PlayerName { get; set; } = \"\";\n    public int HighScore { get; set; }\n    public int GamesPlayed { get; set; }\n}\nWe can create an object:\nGameData data = new GameData\n{\n    PlayerName = \"Alice\",\n    HighScore = 125,\n    GamesPlayed = 7\n};\nNow we want to save it."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#serialising-gamedata",
+    "href": "lectures/Week6/Week6.html#serialising-gamedata",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Serialising GameData",
+    "text": "Serialising GameData\nWe can convert the object to JSON:\nstring json =\n    JsonSerializer.Serialize(data);\nBy default the result is compact, all on one line:\n{\"PlayerName\":\"Alice\",\"HighScore\":125,\"GamesPlayed\":7}\nWe have converted our C# object into text."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#readable-json",
+    "href": "lectures/Week6/Week6.html#readable-json",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Readable JSON",
+    "text": "Readable JSON\nIf we want the JSON to be indented so that people can read it, we pass some options:\nprivate static readonly JsonSerializerOptions jsonOptions =\n    new JsonSerializerOptions { WriteIndented = true };\nstring json =\n    JsonSerializer.Serialize(data, jsonOptions);\nThe result is now laid out over several lines:\n{\n  \"PlayerName\": \"Alice\",\n  \"HighScore\": 125,\n  \"GamesPlayed\": 7\n}\nWe create the options object once, as a field, rather than creating a new one every time we save."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#writing-json-to-a-file",
+    "href": "lectures/Week6/Week6.html#writing-json-to-a-file",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Writing JSON to a File",
+    "text": "Writing JSON to a File\nNow combine what we have already learned.\nFirst, create the filename:\nstring fileName = Path.Combine(FileSystem.Current.AppDataDirectory, \"game.json\");\nThen serialise the object:\nstring json = JsonSerializer.Serialize(data, jsonOptions);\nFinally, write it to the file:\nawait File.WriteAllTextAsync(fileName, json);\nWe have now saved an object to a file."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#the-complete-save-operation",
+    "href": "lectures/Week6/Week6.html#the-complete-save-operation",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "The Complete Save Operation",
+    "text": "The Complete Save Operation\nPutting it together:\nGameData data = new GameData\n{\n    PlayerName = \"Alice\",\n    HighScore = 125,\n    GamesPlayed = 7\n};\n\nstring fileName = Path.Combine(FileSystem.Current.AppDataDirectory, \"game.json\");\n\ntry\n{\n    string json =JsonSerializer.Serialize(data, jsonOptions);\n    await File.WriteAllTextAsync(fileName, json);\n}\ncatch (Exception ex)\n{\n    System.Diagnostics.Debug.WriteLine(ex.Message);\n}\nThe important sequence is:\nC# object\n    ↓\nSerialize\n    ↓\nJSON string\n    ↓\nWriteAllTextAsync\n    ↓\nFile"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#reading-the-json-file",
+    "href": "lectures/Week6/Week6.html#reading-the-json-file",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Reading the JSON File",
+    "text": "Reading the JSON File\nNow suppose the application starts again.\nWe can read the file:\nstring json = await File.ReadAllTextAsync(fileName);\nWe have the JSON text again.\nBut we want a GameData object.\nSo we deserialize it."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#deserialising-gamedata",
+    "href": "lectures/Week6/Week6.html#deserialising-gamedata",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Deserialising GameData",
+    "text": "Deserialising GameData\nGameData? data = JsonSerializer.Deserialize&lt;GameData&gt;(json);\nWe now have the object back.\nFor example:\nConsole.WriteLine(data?.PlayerName);\nConsole.WriteLine(data?.HighScore);\nConsole.WriteLine(data?.GamesPlayed);\nThe values that were saved can be used again."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#the-complete-load-operation",
+    "href": "lectures/Week6/Week6.html#the-complete-load-operation",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "The Complete Load Operation",
+    "text": "The Complete Load Operation\nPutting it together. This version also copes with a missing or damaged file:\nstring fileName = Path.Combine(FileSystem.Current.AppDataDirectory, \"game.json\");\nGameData data = new GameData();\n\nif (File.Exists(fileName))\n{\n    try\n    {\n        string json = await File.ReadAllTextAsync(fileName);\n        GameData loadedData = JsonSerializer.Deserialize&lt;GameData&gt;(json);\n        if (loadedData != null)\n        {\n            data = loadedData;\n        }\n    }\n    catch (Exception ex)\n    {\n        System.Diagnostics.Debug.WriteLine(ex.Message);\n    }\n}\nThe important sequence is:\nFile\n    ↓\nReadAllTextAsync\n    ↓\nJSON string\n    ↓\nDeserialize\n    ↓\nC# object"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#common-json-errors",
+    "href": "lectures/Week6/Week6.html#common-json-errors",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Common JSON Errors",
+    "text": "Common JSON Errors\nFields are not saved\npublic class GameData\n{\n    public int HighScore;            // a field: NOT saved\n    public int GamesPlayed { get; set; }   // a property: saved\n}\nOnly public properties are serialised by default. A class with only fields produces {}, with no error message.\nNames must match exactly\nDeserialising is case-sensitive: \"highscore\" in the file will not fill the HighScore property.\nBad or missing data\n\nNo file: check File.Exists\nDamaged JSON: Deserialize throws a JsonException, so use try/catch\nThe JSON text null: Deserialize returns null\n\n\n\n\n\n\n\nNote\n\n\nYou may see “source generators” and JsonSerializerContext mentioned online for System.Text.Json. They are an optimisation for special cases, and we don’t need them."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#preferences-or-json",
+    "href": "lectures/Week6/Week6.html#preferences-or-json",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Preferences or JSON?",
+    "text": "Preferences or JSON?\nWe now have two different ways to save data.\nPreferences\nGood for small, simple values:\nPreferences.Default.Set(\"HighScore\", 125);\nJSON file\nGood for structured data:\nGameData data = new GameData\n{\n    PlayerName = \"Alice\",\n    HighScore = 125,\n    GamesPlayed = 7\n};\nThe important question is:\n\nWhat sort of data are we trying to store? Also, who the hell is Alice?"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#a-useful-comparison",
+    "href": "lectures/Week6/Week6.html#a-useful-comparison",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "A Useful Comparison",
+    "text": "A Useful Comparison\n\n\n\nRequirement\nSuitable approach\n\n\n\n\nOne integer\nPreferences\n\n\nOne Boolean setting\nPreferences\n\n\nA username\nPreferences\n\n\nSeveral related values\nJSON file\n\n\nA C# object\nJSON file\n\n\nMore complex structured data\nJSON file\n\n\n\nWe are not choosing between two competing technologies.\nThey solve slightly different problems."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#what-about-a-list",
+    "href": "lectures/Week6/Week6.html#what-about-a-list",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "What About a List?",
+    "text": "What About a List?\nLater we will learn about:\nSuppose we have:\nList&lt;GameData&gt; games = new List&lt;GameData&gt;();\nWe could serialise the entire list in exactly the same way:\nstring json = JsonSerializer.Serialize(games);\nAnd deserialize it using:\nList&lt;GameData&gt;? games = JsonSerializer.Deserialize&lt;List&lt;GameData&gt;&gt;(json);\nWe do not need to concentrate on this yet.\nThe important idea is that JSON can represent both objects and collections of objects."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#why-learn-this-now",
+    "href": "lectures/Week6/Week6.html#why-learn-this-now",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Why Learn This Now?",
+    "text": "Why Learn This Now?\nWe will use these ideas throughout the module.\nFor example, an application might:\n\nCreate an object\nChange its properties\nSave it as JSON\nClose the application\nOpen the application again\nRead the JSON file\nRecreate the object\n\nThis gives our applications persistent state."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#resources-vs-application-data",
+    "href": "lectures/Week6/Week6.html#resources-vs-application-data",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Resources vs Application Data",
+    "text": "Resources vs Application Data\nThere is an important distinction between the two types of files we have seen.\nPackaged resources\nFiles that are included with the application:\nResources/Images/\nResources/Raw/\nThe application can read these files, but they are part of the application package.\nApplication data\nFiles that the application creates or changes while running:\nFileSystem.Current.AppDataDirectory\nFor example:\ngame.json\nsettings.json\nsaveddata.txt\nThese are where we can store information created by the user or application."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#putting-it-all-together",
+    "href": "lectures/Week6/Week6.html#putting-it-all-together",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Putting It All Together",
+    "text": "Putting It All Together\nWe now have a complete path from an object in memory to persistent storage.\n             Application\n                  │\n                  ▼\n             C# object\n                  │\n                  ▼\n              JSON text\n                  │\n                  ▼\n          Application data\n             directory\n                  │\n                  ▼\n                File\nWhen the application starts again, we reverse the process.\n                File\n                  │\n                  ▼\n             JSON text\n                  │\n                  ▼\n           C# object\n                  │\n                  ▼\n             Application"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#further-reading",
+    "href": "lectures/Week6/Week6.html#further-reading",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Further Reading",
+    "text": "Further Reading\n.NET MAUI Preferences:\nhttps://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-10.0\n.NET MAUI File System Helpers:\nhttps://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-system-helpers?view=net-maui-10.0"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#why-collections",
+    "href": "lectures/Week6/Week6.html#why-collections",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Why Collections?",
+    "text": "Why Collections?\nSo far we have seen variables that store individual values:\nint age = 25;\nstring name = \"Alice\";\nBut applications often need to store many values.\nFor example:\nStudents\nProducts\nRecipes\nAnimals\nMessages\nButtons\nC# provides several ways of storing collections of objects."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#arrays",
+    "href": "lectures/Week6/Week6.html#arrays",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Arrays",
+    "text": "Arrays\nAn array is a fixed-size, ordered collection of elements of the same type.\nint[] numbers = new int[5];\nThe size is fixed when the array is created.\nWe can access individual elements using an index:\nnumbers[0] = 10;\nnumbers[1] = 20;\nRemember that indexing starts at 0."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#array-example",
+    "href": "lectures/Week6/Week6.html#array-example",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Array Example",
+    "text": "Array Example\nint[] numbers = new int[5]\n{\n    1, 2, 3, 4, 5\n};\n\nnumbers[2] = 10;\n\nfor (int i = 0; i &lt; numbers.Length; i++)\n{\n    Console.WriteLine(numbers[i]);\n}\nArrays are useful when we know the number of elements we need.\nBut what if the number of elements can change?"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#why-use-a-list",
+    "href": "lectures/Week6/Week6.html#why-use-a-list",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Why Use a List?",
+    "text": "Why Use a List?\nSuppose we want to store the names of students.\nWe don’t necessarily know how many students there will be.\nA List&lt;T&gt; can grow and shrink as required.\nList&lt;string&gt; names = new List&lt;string&gt;();\nThe T represents the type of object stored in the list.\nHere:\nList&lt;string&gt;\nmeans:\n\nA list containing string objects."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#adding-items",
+    "href": "lectures/Week6/Week6.html#adding-items",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Adding Items",
+    "text": "Adding Items\nWe can add items using Add().\nList&lt;string&gt; names = new List&lt;string&gt;();\n\nnames.Add(\"Alice\");\nnames.Add(\"Bob\");\nnames.Add(\"Charlie\");\nThe list now contains three strings.\nWe can also initialise a list with values:\nList&lt;string&gt; names = new List&lt;string&gt;\n{\n    \"Alice\",\n    \"Bob\",\n    \"Charlie\"\n};"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#removing-items",
+    "href": "lectures/Week6/Week6.html#removing-items",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Removing Items",
+    "text": "Removing Items\nItems can be removed using Remove().\nnames.Remove(\"Bob\");\nThis removes the first matching “Bob”, so only one item will be removed.\nWe can also remove an item using its index:\nnames.RemoveAt(1);\nOther useful methods include:\nnames.Contains(\"Alice\");\nnames.Clear();\nThese methods make lists much more flexible than fixed-size arrays."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#accessing-items",
+    "href": "lectures/Week6/Week6.html#accessing-items",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Accessing Items",
+    "text": "Accessing Items\nLists use indexing in the same way as arrays.\nConsole.WriteLine(names[0]);\nWe can also find out how many items are currently in the list using Count.\nConsole.WriteLine(names.Count);\nCompare this with an array:\nnumbers.Length\nand a list:\nnames.Count"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#looping-through-a-list",
+    "href": "lectures/Week6/Week6.html#looping-through-a-list",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Looping Through a List",
+    "text": "Looping Through a List\nWe can use a normal for loop:\nfor (int i = 0; i &lt; names.Count; i++)\n{\n    Console.WriteLine(names[i]);\n}\nOr a foreach loop:\nforeach (string name in names)\n{\n    Console.WriteLine(name);\n}\nBoth are useful.\nThe for loop gives us the index; foreach gives us each object directly."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#lists-of-objects",
+    "href": "lectures/Week6/Week6.html#lists-of-objects",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Lists of Objects",
+    "text": "Lists of Objects\nA list does not have to contain simple types such as int or string.\nIt can contain objects.\npublic class Person\n{\n    public string Name { get; set; } = \"\";\n    public int Age { get; set; }\n}\nWe can then create:\nList&lt;Person&gt; people = new List&lt;Person&gt;();\nand add objects:\npeople.Add(new Person\n{\n    Name = \"John\",\n    Age = 35\n});\n\npeople.Add(new Person\n{\n    Name = \"Mary\",\n    Age = 29\n});\nThe list now contains two Person objects."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#looping-through-objects",
+    "href": "lectures/Week6/Week6.html#looping-through-objects",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Looping Through Objects",
+    "text": "Looping Through Objects\nWe can access the properties of each object.\nforeach (Person person in people)\n{\n    Console.WriteLine(person.Name);\n}\nOr using an index:\nfor (int i = 0; i &lt; people.Count; i++)\n{\n    Console.WriteLine(people[i].Name);\n}\nThis is particularly important for applications where we have a collection of domain objects."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#var",
+    "href": "lectures/Week6/Week6.html#var",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "var",
+    "text": "var\nYou may have seen me use the var keyword.\nvar name = \"Alice\";\nvar age = 25;\nThe compiler can infer the type from the expression on the right-hand side, so these are effectively:\nstring name = \"Alice\";\nint age = 25;\nIt is particularly useful when the type is already obvious from the right-hand side.\nInstead of:\nList&lt;string&gt; names = new List&lt;string&gt;();\nwe can write:\nvar names = new List&lt;string&gt;();\nThe compiler knows that names is a List&lt;string&gt;. The code is shorter without losing the type information."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#var-does-not-mean-any-type",
+    "href": "lectures/Week6/Week6.html#var-does-not-mean-any-type",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "var Does Not Mean Any Type",
+    "text": "var Does Not Mean Any Type\nvar does not mean that the variable can contain any type.\nThe compiler still knows the type.\nvar number = 10;\n\nnumber = 20;       // Fine\n\nnumber = \"hello\";  // Error\nnumber is still an int.\nvar is type inference, not dynamic typing.\nIt is also handy in a foreach loop:\nforeach (var person in people)\n{\n    Console.WriteLine(person.Name);\n}\nThe compiler knows that person is a Person."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#what-happens-when-a-page-is-displayed",
+    "href": "lectures/Week6/Week6.html#what-happens-when-a-page-is-displayed",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "What Happens When a Page Is Displayed?",
+    "text": "What Happens When a Page Is Displayed?\nSo far, we have mainly worked with the constructor of a ContentPage.\npublic MainPage()\n{\n    InitializeComponent();\n}\nThe constructor is called when the page object is created. However, creating a page and displaying a page are two different things.\nThe page is created first. Slightly later, it is about to become visible, and at some point it may stop being visible.\nSo far our applications have had a single page, so the distinction may seem unimportant. Once we have applications with several pages, a page can be hidden and shown again, which we will see when we cover navigation.\nEven now, we may want to run code at the moment a page becomes visible, or stop work when it is no longer visible.\nThis is where the page lifecycle becomes useful."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#page-lifecycle-methods",
+    "href": "lectures/Week6/Week6.html#page-lifecycle-methods",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Page Lifecycle Methods",
+    "text": "Page Lifecycle Methods\nA ContentPage provides methods that can be overridden to respond to changes in the page’s state.\n\n\n\n\n\n\n\nMethod\nPurpose\n\n\n\n\nOnAppearing()\nCalled when the page is about to become visible.\n\n\nOnDisappearing()\nCalled when the page is about to stop being visible.\n\n\n\nThese methods are part of the page lifecycle, rather than the lifecycle of the entire application.\nWe can override them in MainPage.xaml.cs, just as we override other methods inherited from a base class."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#onappearing",
+    "href": "lectures/Week6/Week6.html#onappearing",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "OnAppearing()",
+    "text": "OnAppearing()\nOnAppearing() is useful when something needs to happen whenever a page becomes visible.\nFor example:\n\nRefreshing information displayed on the page.\nStarting an animation.\nStarting a timer when a game becomes visible.\nSubscribing to an event while the page is being used.\n\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n\n    System.Diagnostics.Debug.WriteLine(\"Page is appearing\");\n}\nNotice that we call base.OnAppearing().\nThis allows the inherited implementation to run as well.\nIn an application with several pages, the method is called again each time the page becomes visible after being hidden."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#ondisappearing",
+    "href": "lectures/Week6/Week6.html#ondisappearing",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "OnDisappearing()",
+    "text": "OnDisappearing()\nOnDisappearing() provides the corresponding opportunity to stop or clean up work associated with a page.\nFor example:\n\nStopping a game timer.\nPausing an animation.\nUnsubscribing from events.\nStopping work that is no longer needed while the page is hidden.\n\nprotected override void OnDisappearing()\n{\n    base.OnDisappearing();\n\n    System.Diagnostics.Debug.WriteLine(\"Page is disappearing\");\n}\nImportant: OnDisappearing() is not a general application shutdown event.\nIt is associated with the page becoming hidden, for example when navigating to another page. Switching to another application or locking a device does not necessarily cause this method to run."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#demonstration-page-lifecycle",
+    "href": "lectures/Week6/Week6.html#demonstration-page-lifecycle",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Demonstration: Page Lifecycle",
+    "text": "Demonstration: Page Lifecycle\nLet’s demonstrate the lifecycle methods.\nAdd the following to MainPage.xaml.cs.\npublic MainPage()\n{\n    InitializeComponent();\n    System.Diagnostics.Debug.WriteLine(\"Constructor\");\n}\n\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n    System.Diagnostics.Debug.WriteLine(\"OnAppearing\");\n}\n\nprotected override void OnDisappearing()\n{\n    base.OnDisappearing();\n    System.Diagnostics.Debug.WriteLine(\"OnDisappearing\");\n}\nRun the application and observe the output in the Visual Studio Output window.\nThings to investigate:\n\nWhich is called first, the constructor or OnAppearing()?\nWhat happens when you minimise the window or switch to another application?\nIs OnDisappearing() called when you close the application?"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#using-the-lifecycle-in-our-applications",
+    "href": "lectures/Week6/Week6.html#using-the-lifecycle-in-our-applications",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Using the Lifecycle in Our Applications",
+    "text": "Using the Lifecycle in Our Applications\nThink back to the Whack-a-Mole game.\nSuppose the game uses a timer to move the mole and update the remaining time.\nWhat should happen if the game page is no longer displayed? Once we have more than one page, the player could navigate away from the game.\nWe probably do not want the timer to continue running unnoticed.\nThe lifecycle methods provide a natural place to manage this.\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n\n    // Start or resume the game timer.\n}\n\nprotected override void OnDisappearing()\n{\n    base.OnDisappearing();\n\n    // Stop the game timer.\n}\nThe comments represent the game-specific logic we would add.\nWe must also decide whether returning to the page should resume the existing game or start a new one. The lifecycle method does not make that decision for us."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#what-about-the-application-lifecycle",
+    "href": "lectures/Week6/Week6.html#what-about-the-application-lifecycle",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "What About the Application Lifecycle?",
+    "text": "What About the Application Lifecycle?\nA page becoming hidden is different from the entire application moving into the background.\n.NET MAUI also provides lifecycle events associated with the application’s Window: Created, Activated, Deactivated, Stopped, Resumed and Destroying.\nThe exact mapping to native operating-system events differs between Android, iOS, Mac Catalyst and Windows.\nFor our current applications, page lifecycle methods will usually be sufficient, so we will not use these events in this module for now.\nSee the official .NET MAUI application lifecycle documentation if you are curious."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#device-specific-information",
+    "href": "lectures/Week6/Week6.html#device-specific-information",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Device-Specific Information",
+    "text": "Device-Specific Information\n.NET MAUI allows us to access information about the device on which our application is running.\nFor example, we might want to know:\n\nThe current screen orientation.\nThe display’s pixel dimensions.\nThe display density.\nWhether the display has changed.\n\nWe can access this information through DeviceDisplay.\nThe relevant namespace is:\nusing Microsoft.Maui.Devices;\nWe can then access the current display information through:\nDeviceDisplay.Current.MainDisplayInfo\nThis is useful when we need to understand the display, but it does not mean we should manually calculate every control’s position."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#reading-display-information",
+    "href": "lectures/Week6/Week6.html#reading-display-information",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Reading Display Information",
+    "text": "Reading Display Information\nThe MainDisplayInfo property provides several useful values.\nvar display = DeviceDisplay.Current.MainDisplayInfo;\n\ndisplay.Width; // Example of a property\nThe properties tell us different things:\n\nWidth and Height: the display dimensions in physical pixels.\nDensity: the display density used to relate physical pixels to device-independent units.\nOrientation: whether the display is in portrait or landscape orientation, or whether its orientation is unknown.\nRotation: the display rotation value.\nRefreshRate: the display refresh rate.\n\nFor example, the orientation can be checked as follows:\nif (DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Portrait)\n{\n    System.Diagnostics.Debug.WriteLine(\"Portrait\");\n}\nThe DisplayOrientation enumeration also includes Landscape and Unknown."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#physical-pixels-vs-device-independent-units",
+    "href": "lectures/Week6/Week6.html#physical-pixels-vs-device-independent-units",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Physical Pixels vs Device-Independent Units",
+    "text": "Physical Pixels vs Device-Independent Units\nThis distinction is particularly important in .NET MAUI.\nSuppose the display information reports a width of 1080 pixels.\nDoes that mean we should set the width of a Grid to 1080?\nNo.\nMAUI layouts normally use device-independent units rather than physical pixels.\nThe WidthRequest and HeightRequest properties are expressed in these layout units.\nThe display density helps relate the two measurements:\n\\[\n\\text{Layout units} \\approx\n\\frac{\\text{Physical pixels}}{\\text{Density}}\n\\]\nFor example, if the display width is 1080 pixels and its density is 3, the corresponding width is approximately 360 device-independent units.\nThis is an illustration of the relationship, not a recommendation to size every layout using the physical display dimensions.\nThe available application window may be smaller than the entire display."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#display-information-changes",
+    "href": "lectures/Week6/Week6.html#display-information-changes",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Display Information Changes",
+    "text": "Display Information Changes\nThe display information can change while the application is running.\nFor example, a user might rotate an Android device, change the display resolution or scaling, or move the application to a different monitor.\nWe can respond to these changes using the MainDisplayInfoChanged event.\nDeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;\nThe event handler receives a DisplayInfoChangedEventArgs object containing the updated display information.\nprivate void OnMainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)\n{\n    var display = e.DisplayInfo;\n\n    System.Diagnostics.Debug.WriteLine($\"{display.Width} x {display.Height}\");\n\n    System.Diagnostics.Debug.WriteLine(display.Orientation);\n}\nThis handler reads the updated values rather than assuming that the display remains unchanged.\nNote: this event reports changes to the display. Resizing an application window on Windows does not change the display, so we will need a different event for that.\nRemember: if we subscribe to an event, we must consider when and how to unsubscribe."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#managing-event-subscriptions",
+    "href": "lectures/Week6/Week6.html#managing-event-subscriptions",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Managing Event Subscriptions",
+    "text": "Managing Event Subscriptions\nSuppose a page subscribes to MainDisplayInfoChanged every time it appears.\nIf we never unsubscribe, the handler may continue to receive events while the page is hidden. Repeated subscriptions can also cause the handler to run multiple times for a single change.\nOne solution is to subscribe when the page appears and unsubscribe when it disappears.\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n\n    DeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;\n}\n\nprotected override void OnDisappearing()\n{\n    DeviceDisplay.Current.MainDisplayInfoChanged -= OnMainDisplayInfoChanged;\n\n    base.OnDisappearing();\n}\nThis approach is appropriate when the handler is only needed while the page is visible.\nIf the information is needed for the entire application, a different lifetime may be more appropriate."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#page-dimensions",
+    "href": "lectures/Week6/Week6.html#page-dimensions",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Page Dimensions",
+    "text": "Page Dimensions\nThe physical display dimensions are not the same as the dimensions available to our page.\nA Page inherits Width and Height properties.\nthis.Width;\nthis.Height;\nThese values represent the dimensions allocated to the page in device-independent units.\nThey are useful when we want to understand the space available to our layout.\nFor example, a Windows application might run in a maximised window, a small window, or a window occupying half the screen.\nIn each case, the page needs to work with the available space.\nWatch out: Width and Height are -1 until the page has been laid out. In the constructor they are not yet meaningful.\npublic MainPage()\n{\n    InitializeComponent();\n    System.Diagnostics.Debug.WriteLine(Width); // -1\n}"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#responding-to-window-resizing",
+    "href": "lectures/Week6/Week6.html#responding-to-window-resizing",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Responding to Window Resizing",
+    "text": "Responding to Window Resizing\nIn a desktop application, the user can resize the window.\nWe can respond to changes using the SizeChanged event.\nFor example, suppose we have two labels in our XAML:\n&lt;Label x:Name=\"WidthLabel\" /&gt;\n&lt;Label x:Name=\"HeightLabel\" /&gt;\nWe can subscribe to the event in the page constructor.\n    SizeChanged += OnPageSizeChanged;\nThe event handler updates the labels.\nprivate void OnPageSizeChanged(object? sender, EventArgs e)\n{\n    WidthLabel.Text = $\"Width: {Width:F0}\";\n    HeightLabel.Text = $\"Height: {Height:F0}\";\n}\nRun the application on Windows and resize the window.\nObserve how the reported dimensions change.\nThe same event can be useful on other platforms when the page’s allocated size changes.\n(There is also an OnSizeAllocated(width, height) method you can override on a page, but SizeChanged is easier for our purposes.)"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#which-event-do-i-need",
+    "href": "lectures/Week6/Week6.html#which-event-do-i-need",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Which Event Do I Need?",
+    "text": "Which Event Do I Need?\nWe now have two events that sound similar but answer different questions.\n\n\n\n\n\n\n\n\nEvent\nRaised when\nReports\n\n\n\n\nMainDisplayInfoChanged\nThe display changes, e.g. rotation, resolution or scaling\nPhysical pixels, density, orientation\n\n\nSizeChanged\nThe page’s allocated size changes, e.g. the window is resized or the device rotates\nWidth and Height in layout units\n\n\n\nResizing a Windows window changes the space available to our page, but not the display itself.\nChoose the event that matches the question you are asking."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#responsive-design",
+    "href": "lectures/Week6/Week6.html#responsive-design",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Responsive Design",
+    "text": "Responsive Design\nShould we use these techniques to manually reposition every control whenever the user rotates a device or resizes a window?\nUsually, no. I’m showing you what options are out there.\nResponsive design means allowing the interface to adapt to the available space.\nMAUI provides layouts such as:\n\nGrid, VerticalStackLayout, HorizontalStackLayout\n\nThese layouts help us arrange controls according to the space available. As we have currently been doing.\nBut say the Whack-a-Mole lab, I fixed that to 300x300. On Windows it could be much larger, but on Android different sizes.\nSizeChanged events could let us use up more of the screen if desired."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#choosing-an-appropriate-layout",
+    "href": "lectures/Week6/Week6.html#choosing-an-appropriate-layout",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Choosing an Appropriate Layout",
+    "text": "Choosing an Appropriate Layout\nConsider an application that displays a list of items.\nOn a narrow screen, we might want to display one item per row.\nOn a wider screen, we might want to display additional information beside the list.\nThere are several possible approaches:\n\nUse layouts that naturally stretch and adapt.\nUse a ScrollView when content may exceed the available space.\nUse Grid row and column definitions to distribute space.\nUse SizeChanged when a genuine change in behaviour is needed at different sizes.\n\nAvoid hard-coding screen dimensions based on one particular device.\nWe should test our application on different screen sizes and orientations to check that the layout remains usable."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#demonstration-windows-and-android",
+    "href": "lectures/Week6/Week6.html#demonstration-windows-and-android",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Demonstration: Windows and Android",
+    "text": "Demonstration: Windows and Android\nLet’s compare the same application running on Windows and Android.\nDisplay the following information:\n\nThe page’s Width and Height.\nThe display’s pixel width and height.\nThe display density.\nThe current orientation.\n\nUpdate it from both SizeChanged and MainDisplayInfoChanged, and log which event fired."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#summary",
+    "href": "lectures/Week6/Week6.html#summary",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Summary",
+    "text": "Summary\nIn this lecture, we covered three related areas.\nPage lifecycle\n\nOnAppearing() runs when a page is about to become visible.\nOnDisappearing() runs when a page is about to stop being visible.\nThese methods are useful for managing page-specific work.\n\nDevice and window information\n\nDeviceDisplay.Current.MainDisplayInfo provides display information.\nMainDisplayInfoChanged allows us to respond to changes to the display.\nWidth and Height on a page describe its allocated layout size, not the physical display’s pixel dimensions, and are -1 before layout.\nSizeChanged can be used to respond to changes in the page’s size, including window resizing.\n\nResponsive design\n\nUse MAUI layouts to adapt to different amounts of available space.\nTest the application on different devices and window sizes.\nOnly use manual size-dependent behaviour when it is genuinely necessary."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#further-reading-1",
+    "href": "lectures/Week6/Week6.html#further-reading-1",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Further Reading",
+    "text": "Further Reading\n\nPage.OnAppearing()\nPage.OnDisappearing()\nDevice display information\nApplication lifecycle"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#json-links",
+    "href": "lectures/Week6/Week6.html#json-links",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "JSON Links",
+    "text": "JSON Links\n.NET JSON overview:\nhttps://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview\nJSON:\nhttps://www.json.org/"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#common-list-errors",
+    "href": "lectures/Week6/Week6.html#common-list-errors",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Common List Errors",
+    "text": "Common List Errors\nIndex out of range\nvar names = new List&lt;string&gt; { \"Alice\", \"Bob\" };\n\nConsole.WriteLine(names[2]);   // ArgumentOutOfRangeException\nThe valid indexes are 0 to Count - 1.\nChanging the list inside a foreach\nforeach (var name in names)\n{\n    if (name == \"Bob\")\n        names.Remove(name);    // InvalidOperationException\n}\nWe can’t add or remove items while foreach is looping over the list.\nThe simplest fix is to let the list do the work:\nnames.RemoveAll(name =&gt; name == \"Bob\");\nOr use a for loop that counts backwards, or remove after the loop has finished."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#var-with-maui-collections",
+    "href": "lectures/Week6/Week6.html#var-with-maui-collections",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "var with MAUI Collections",
+    "text": "var with MAUI Collections\nWhen looping through the children of a layout, the exact type isn’t obvious:\nforeach (var item in GridPageContent.Children)\n{\n    // item is an IView, not a Label or a Button\n}\nChildren holds IView objects, so we can’t just write item.Text.\nTo use a property of a specific control, check the type first:\nforeach (var item in GridPageContent.Children)\n{\n    if (item is Label label)\n    {\n        label.TextColor = Colors.Red;\n    }\n}"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#lists-in-.net-maui",
+    "href": "lectures/Week6/Week6.html#lists-in-.net-maui",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Lists in .NET MAUI",
+    "text": "Lists in .NET MAUI\nA list can be a field in a MAUI page.\npublic partial class MainPage : ContentPage\n{\n    List&lt;string&gt; names;\n\n    public MainPage()\n    {\n        InitializeComponent();\n\n        names = new List&lt;string&gt;();\n    }\n}\nWe can then add to the list from event handlers or other methods:\nnames.Add(\"Alice\");\nnames.Add(\"Bob\");\nThis is a simple example of keeping a collection as part of the state of a page."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#showing-a-list-on-the-page",
+    "href": "lectures/Week6/Week6.html#showing-a-list-on-the-page",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Showing a List on the Page",
+    "text": "Showing a List on the Page\nA list on its own doesn’t appear on screen. To show it, we can create a control for each item.\nIn the XAML:\n&lt;VerticalStackLayout x:Name=\"PeopleLayout\" /&gt;\nIn the code:\nforeach (var person in people)\n{\n    var label = new Label\n    {\n        Text = $\"{person.Name} ({person.Age})\"\n    };\n\n    PeopleLayout.Add(label);\n}\nThis combines a list of objects, creating controls in C#, and var."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#a-note-about-and-new",
+    "href": "lectures/Week6/Week6.html#a-note-about-and-new",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "A Note About [] and new()",
+    "text": "A Note About [] and new()\nModern C# also allows:\nnames = [];\nto create an empty collection when the target type is already known.\nSo this:\nList&lt;string&gt; names = [];\nworks.\nYou will also see this, which Visual Studio and Copilot often suggest:\nList&lt;string&gt; names = new();\nFor now I prefer:\nList&lt;string&gt; names;\n\nnames = new List&lt;string&gt;();\nbecause it makes the creation of the List&lt;string&gt; explicit.\nWe will encounter the shorter syntax again as we become more comfortable with C#."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#other-collection-types",
+    "href": "lectures/Week6/Week6.html#other-collection-types",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Other Collection Types",
+    "text": "Other Collection Types\nList&lt;T&gt; is not the only collection available.\nDifferent collections are useful for different situations.\nCommon examples include:\n\nQueue&lt;T&gt;\nStack&lt;T&gt;\nDictionary&lt;TKey, TValue&gt;\nHashSet&lt;T&gt;\n\nWe only need a basic understanding of these for now."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#queue",
+    "href": "lectures/Week6/Week6.html#queue",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Queue",
+    "text": "Queue\nA Queue&lt;T&gt; is a first-in, first-out (FIFO) collection.\nThink of a queue of people: new items join at the back, and the item at the front leaves first.\n first out         front              back          new items in\n     ←        ┌─────┬─────┬─────┐        ←\n              │  1  │  2  │  3  │\n              └─────┴─────┴─────┘\nWe add items using Enqueue():\nQueue&lt;int&gt; numbers = new Queue&lt;int&gt;();\n\nnumbers.Enqueue(1);\nnumbers.Enqueue(2);\nnumbers.Enqueue(3);\nWe remove the first item using:\nint first = numbers.Dequeue();\nWe can look at the next item without removing it:\nint next = numbers.Peek();"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#stack",
+    "href": "lectures/Week6/Week6.html#stack",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Stack",
+    "text": "Stack\nA Stack&lt;T&gt; is a last-in, first-out (LIFO) collection.\nThink of a stack of plates:\n       ┌───┐\n       │ 3 │  ← first out\n       ├───┤\n       │ 2 │\n       ├───┤\n       │ 1 │\n       └───┘\nWe add using Push():\nStack&lt;int&gt; numbers = new Stack&lt;int&gt;();\n\nnumbers.Push(1);\nnumbers.Push(2);\nnumbers.Push(3);\nWe remove the most recently added item using:\nint top = numbers.Pop();\nAnd we can inspect it without removing it:\nint next = numbers.Peek();"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#dictionary",
+    "href": "lectures/Week6/Week6.html#dictionary",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Dictionary",
+    "text": "Dictionary\nA Dictionary&lt;TKey, TValue&gt; stores key/value pairs.\nFor example:\nDictionary&lt;int, string&gt; grades = new Dictionary&lt;int, string&gt;();\n\ngrades.Add(1, \"A\");\ngrades.Add(2, \"B\");\ngrades.Add(3, \"C\");\nThe key identifies the value.\nWe can retrieve a value using its key:\nConsole.WriteLine(grades[1]);\nThis prints:\nA\nUseful when we want to look up a value using a key rather than a numerical position.\n\n\n\n\n\n\nWarning\n\n\nThe 1 above is not an array index, it refers to the key\nYou could have Dictionary&lt;char, string&gt; category = new Dictionary&lt;char, string&gt;(); with category.Add('B',\"Between 60 and 70\");\nThen to retrieve the value you do Console.WriteLine(category['B']);"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#hashset",
+    "href": "lectures/Week6/Week6.html#hashset",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "HashSet",
+    "text": "HashSet\nA HashSet&lt;T&gt; stores a collection of unique items, with no duplicates.\nHashSet&lt;string&gt; tags = new HashSet&lt;string&gt;();\n\ntags.Add(\"maui\");\ntags.Add(\"csharp\");\ntags.Add(\"maui\");      // ignored, already in the set\n\nConsole.WriteLine(tags.Count);   // 2\n\nAdd() returns false if the item was already there.\nContains() is very fast, even for large sets.\nThere is no index: tags[0] isn’t allowed, and the order isn’t guaranteed.\n\nUseful when we only care whether something is present, for example the set of tags used, or the ids we have already seen."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#common-errors-with-queue-stack-and-dictionary",
+    "href": "lectures/Week6/Week6.html#common-errors-with-queue-stack-and-dictionary",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Common Errors with Queue, Stack and Dictionary",
+    "text": "Common Errors with Queue, Stack and Dictionary\nRemoving from an empty Queue or Stack\nvar queue = new Queue&lt;int&gt;();\n\nint x = queue.Dequeue();   // InvalidOperationException\nCheck queue.Count &gt; 0 first. The same applies to Pop() and Peek() on a Stack.\nDictionary keys\ngrades.Add(1, \"A\");         // ArgumentException: key already exists\n\nConsole.WriteLine(grades[9]);  // KeyNotFoundException\nCheck first with ContainsKey, or use TryGetValue:\nif (grades.TryGetValue(9, out string? grade))\n{\n    Console.WriteLine(grade);\n}"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#safer-alternatives",
+    "href": "lectures/Week6/Week6.html#safer-alternatives",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Safer Alternatives",
+    "text": "Safer Alternatives\nQueue and Stack have “Try” versions that return false instead of throwing an exception:\nif (queue.TryDequeue(out int next))\n{\n    Console.WriteLine(next);\n}\nTryPop and TryPeek work in the same way.\nFor a Dictionary, setting a value with the indexer adds the key if it is new, or replaces the value if it already exists. It never throws:\ngrades[1] = \"A\";    // adds key 1, or replaces its value"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#which-collection",
+    "href": "lectures/Week6/Week6.html#which-collection",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Which Collection?",
+    "text": "Which Collection?\nThe collection we choose depends on what we need to do.\n\n\n\nCollection\nMain idea\n\n\n\n\nArray\nFixed-size sequence\n\n\nList&lt;T&gt;\nFlexible ordered collection\n\n\nQueue&lt;T&gt;\nFirst in, first out\n\n\nStack&lt;T&gt;\nLast in, first out\n\n\nDictionary&lt;TKey,TValue&gt;\nKey/value lookup\n\n\nHashSet&lt;T&gt;\nUnique items, no duplicates\n\n\n\nFor most of the applications we build in this module, List&lt;T&gt; will be the collection we use most often."
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#make-grid-bigger",
+    "href": "lectures/Week6/Week6.html#make-grid-bigger",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Make Grid Bigger",
+    "text": "Make Grid Bigger\nLet’s say in Whack a Mole when creating the grid we want to use as much space as we can\n\nFind out the height and width of the Page\nFind out how much space the other controls need\nFigure out from there the max the height/width of the grid can be\n\ne.g.\ndouble maxWidth = this.Width - 20;\ndouble maxHeight = this.Height - (TopLabel.Height + ScoreLayout.Height + GridSizeLayout.Height) - 20;\ndouble sizea = Math.Min(maxWidth, maxHeight);\nGameGrid.WidthRequest = sizea;\nGameGrid.HeightRequest = sizea;\nmight do the trick\nIf we want to react afterwards maybe something like\npublic MainPage()\n{\n    InitializeComponent();\n    SizeChanged += OnWindowChange;\n}\nprivate void OnWindowChange(object? sender, EventArgs e) {\n    if (_gridCreated) {\n        double maxWidth = this.Width - 20;\n        double maxHeight = this.Height - (MainLayout.Height - GameGrid.Height) - 20;\n        double size = Math.Min(maxWidth, maxHeight);\n\n        GameGrid.WidthRequest = size;\n        GameGrid.HeightRequest = size;\n    }\n\n} \nthis.Height is the Width of the current Page.\nSince we have some other controls (such as the start button) we need to subtract their heights"
+  },
+  {
+    "objectID": "lectures/Week6/Week6.html#make-grid-biggersmaller",
+    "href": "lectures/Week6/Week6.html#make-grid-biggersmaller",
+    "title": "Week 6 Lists Files Lifecycle JSON",
+    "section": "Make Grid Bigger/Smaller",
+    "text": "Make Grid Bigger/Smaller\nLet’s say in Whack a Mole when creating the grid we want to use as much space as we can\n\nFind out the height and width of the Page\nFind out how much space the other controls need\nFigure out from there the max the height/width of the grid can be\n\ne.g.\ndouble maxWidth = this.Width - 20;\ndouble maxHeight = this.Height - (TopLabel.Height + ScoreLayout.Height + GridSizeLayout.Height) - 20;\ndouble sizea = Math.Min(maxWidth, maxHeight);\nGameGrid.WidthRequest = sizea;\nGameGrid.HeightRequest = sizea;\nmight do the trick\nIf we want to react afterwards maybe something like\n    SizeChanged += OnWindowChange;\nprivate void OnWindowChange(object? sender, EventArgs e) {\n    if (_gridCreated) {\n        double maxWidth = this.Width - 20;\n        double maxHeight = this.Height - (MainLayout.Height - GameGrid.Height) - 20;\n        double size = Math.Min(maxWidth, maxHeight);\n\n        GameGrid.WidthRequest = size;\n        GameGrid.HeightRequest = size;\n    }\n\n} \nthis.Height is the Width of the current Page.\nSince we have some other controls (such as the start button) we need to subtract their heights"
   }
 ]
