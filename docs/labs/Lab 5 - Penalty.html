@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Penalty Kick Challenge – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../labs.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Penalty Kick Challenge</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="html-vs-pdf" class="level1">
+<h1>HTML vs PDF</h1>
+<p><strong>If you are viewing this as a PDF while trying to do the lab, you’re looking at the wrong version and it will be harder to copy and paste. Go back to moodle and click the “They will also appear here: Lab Work.” link</strong></p>
+<p>The required images are on Moodle.</p>
+</section>
+<section id="aim" class="level1">
+<h1>Aim</h1>
+<p>In this lab, you will develop a penalty-kick game using .NET MAUI. This project will give you quite a bit to start with and you will have to modify it</p>
+<p>You will bring together several of the topics covered so far:</p>
+<ul>
+<li>Designing a user interface using XAML and <code>Grid</code>.</li>
+<li>Connecting buttons to event handlers.</li>
+<li>Using fields to maintain the state of an application.</li>
+<li>Updating the interface from C#.</li>
+<li>Using a timer to control a game.</li>
+<li>Using animations to move images around the screen.</li>
+<li>Using <code>async</code> and <code>await</code> so that animations and game loops do not freeze the interface.</li>
+<li>Saving and loading data using <code>Preferences</code>.</li>
+<li>Adding images and an application icon as resources.</li>
+</ul>
+<p>The lab is designed to build on the techniques you used in the Whack-a-Mole lab. You will be given some of the code, but you will need to complete and connect the different parts.</p>
+<p>Work through the lab in order. Get each part working before moving on to the next one.</p>
+<p>This lab is for Windows only. Run it using the <strong>Windows Machine</strong> target. The sizes and distances used in the lab are chosen for a normal Windows window, so you do not need to worry about other screen sizes. (I know this defeats the purpose of Cross-Platform, but that’s not the point of this lab)</p>
+<section id="create-the-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-project">1. Create the Project</h2>
+<p>Create a new .NET MAUI App project called <code>PenaltyKick</code>.</p>
+<p>All of your code for this lab will be in <code>MainPage.xaml</code> and <code>MainPage.xaml.cs</code>. (The only other thing you will change is the application icon, near the end.)</p>
+<p>Make sure the template project begins before doing modifications.</p>
+<p>The starter code I give you, probably does have compiler errors that will need fixing.</p>
+<p><strong>Go through the document, don’t just go looking at the comments that are placed in the code, deal with those TODOs in the order this documents says and you’ll find the project easier.</strong></p>
+<section id="resources" class="level3">
+<h3 class="anchored" data-anchor-id="resources">Resources</h3>
+<p>You will need images for the game. Your lecturer may supply these, or you can use suitable images of your own.</p>
+<p>You will need images representing:</p>
+<ul>
+<li>A football goal or goal area.</li>
+<li>A goalkeeper.</li>
+<li>A football.</li>
+</ul>
+<p>You may also use a background image if you wish.</p>
+<p>Add the images to the <code>Resources/Images</code> folder. Drag and drop onto solution explorer. Use the appropriate file names in the XAML supplied below, or change the <code>Source</code> properties to match your own files. The goalkeeper’s <code>Source</code> is already set to <code>goalie.png</code>, so either name your goalkeeper image <code>goalie.png</code> or change the XAML.</p>
+<p>For example, if you have a file called <code>football.png</code>, you can display it using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Image</span> <span class="ot">Source=</span><span class="st">"football.png"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If an image does not appear, the file name is the first thing to check.</p>
+</section>
+</section>
+<section id="starting-xaml" class="level2">
+<h2 class="anchored" data-anchor-id="starting-xaml">2. Starting XAML</h2>
+<p>Open <code>MainPage.xaml</code>. Delete everything <strong>between</strong> the opening <code>&lt;ContentPage ...&gt;</code> tag and the closing <code>&lt;/ContentPage&gt;</code> tag (do not delete the <code>ContentPage</code> tags themselves), and paste in the following XAML. Add Title=“” to the ContentPage tag to remove the “Home” at the top.</p>
+<p>You do not want a scrollview on this so make sure everything between the ContentPage …&gt; and the closing are removed before copying in. Also, don’t type everything here, copy-paste.</p>
+<p>The layout has three main rows:</p>
+<ul>
+<li>A score display at the top.</li>
+<li>The game area in the middle.</li>
+<li>The start button or shooting buttons at the bottom.</li>
+</ul>
+<p>Some controls already have <code>x:Name</code> attributes. These allow you to access the controls from C#.</p>
+<p>The image sources for the background, goal and football are left empty. You should set these to match the images you have added to your project.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Grid</span> <span class="ot">x:Name=</span><span class="st">"MainGrid"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="ot">RowDefinitions=</span><span class="st">"43,577,Auto"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="ot">BackgroundColor=</span><span class="st">"LightGreen"</span>&gt;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Background for the score bar at the top --&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Image</span> <span class="ot">Source=</span><span class="st">""</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>           <span class="ot">ZIndex=</span><span class="st">"-2"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>           <span class="ot">Aspect=</span><span class="st">"AspectFill"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>           <span class="ot">Grid.Row=</span><span class="st">"0"</span>/&gt;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Score Display Area --&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span> <span class="ot">Grid.Row=</span><span class="st">"0"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>          <span class="ot">ColumnDefinitions=</span><span class="st">"*,*,*"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>          <span class="ot">Margin=</span><span class="st">"0,10"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="ot">Padding=</span><span class="st">"10,0"</span>&gt;</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"BestScoreLbl"</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">"Best: 0"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Grid.Column=</span><span class="st">"0"</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"16"</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Start"</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>               <span class="ot">TextColor=</span><span class="st">"White"</span>/&gt;</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"ScoreLbl"</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">"Score: 0"</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Grid.Column=</span><span class="st">"1"</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"18"</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>               <span class="ot">TextColor=</span><span class="st">"Yellow"</span>/&gt;</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"TimeLbl"</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">"Time: 30"</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Grid.Column=</span><span class="st">"2"</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"16"</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"End"</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>               <span class="ot">TextColor=</span><span class="st">"White"</span>/&gt;</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Goal Background (the background for the rest of the screen) --&gt;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Image</span> <span class="ot">x:Name=</span><span class="st">"GoalsImg"</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>           <span class="ot">Source=</span><span class="st">""</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>           <span class="ot">Aspect=</span><span class="st">"AspectFit"</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>           <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>           <span class="ot">ZIndex=</span><span class="st">"-1"</span>/&gt;</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Game Area --&gt;</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span> <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>          <span class="ot">x:Name=</span><span class="st">"GameArea"</span>&gt;</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Goalkeeper --&gt;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Image</span> <span class="ot">x:Name=</span><span class="st">"GoalKeeper"</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Source=</span><span class="st">"goalie.png"</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>               <span class="ot">WidthRequest=</span><span class="st">"136"</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HeightRequest=</span><span class="st">"204"</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Aspect=</span><span class="st">"Fill"</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>               <span class="ot">VerticalOptions=</span><span class="st">"Start"</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Margin=</span><span class="st">"0,100,0,0"</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>               <span class="ot">ZIndex=</span><span class="st">"1"</span>/&gt;</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Football --&gt;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Image</span> <span class="ot">x:Name=</span><span class="st">"FootballImg"</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Source=</span><span class="st">""</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>               <span class="ot">WidthRequest=</span><span class="st">"55"</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HeightRequest=</span><span class="st">"55"</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Aspect=</span><span class="st">"AspectFit"</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>               <span class="ot">VerticalOptions=</span><span class="st">"End"</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Margin=</span><span class="st">"0,0,0,50"</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>               <span class="ot">ZIndex=</span><span class="st">"2"</span>/&gt;</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Feedback --&gt;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">x:Name=</span><span class="st">"FeedbackLbl"</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">""</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"48"</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>               <span class="ot">TextColor=</span><span class="st">"Yellow"</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>               <span class="ot">VerticalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>               <span class="ot">IsVisible=</span><span class="st">"False"</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>               <span class="ot">ZIndex=</span><span class="st">"3"</span>/&gt;</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Start Button --&gt;</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Button</span> <span class="ot">x:Name=</span><span class="st">"StartBtn"</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>            <span class="ot">Text=</span><span class="st">"Start Game"</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>            <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>            <span class="ot">FontSize=</span><span class="st">"16"</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>            <span class="ot">Padding=</span><span class="st">"20,10"</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>            <span class="ot">BackgroundColor=</span><span class="st">"Green"</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>            <span class="ot">TextColor=</span><span class="st">"White"</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>            <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>            <span class="ot">Clicked=</span><span class="st">"StartBtn_Clicked"</span>/&gt;</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Shooting Buttons --&gt;</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span> <span class="ot">x:Name=</span><span class="st">"ControlGrid"</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>          <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>          <span class="ot">ColumnDefinitions=</span><span class="st">"*,*,*"</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>          <span class="ot">ColumnSpacing=</span><span class="st">"10"</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>          <span class="ot">IsVisible=</span><span class="st">"False"</span>&gt;</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Shoot Left"</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>                <span class="ot">Grid.Column=</span><span class="st">"0"</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>                <span class="ot">FontSize=</span><span class="st">"16"</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>                <span class="ot">BackgroundColor=</span><span class="st">"Red"</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>                <span class="ot">TextColor=</span><span class="st">"White"</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>                <span class="ot">Clicked=</span><span class="st">"ShootButton_Clicked"</span>/&gt;</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Shoot Centre"</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>                <span class="ot">Grid.Column=</span><span class="st">"1"</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>                <span class="ot">FontSize=</span><span class="st">"16"</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>                <span class="ot">BackgroundColor=</span><span class="st">"Red"</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>                <span class="ot">TextColor=</span><span class="st">"White"</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>                <span class="ot">Clicked=</span><span class="st">"ShootButton_Clicked"</span>/&gt;</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Shoot Right"</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>                <span class="ot">Grid.Column=</span><span class="st">"2"</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>                <span class="ot">FontSize=</span><span class="st">"16"</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>                <span class="ot">BackgroundColor=</span><span class="st">"Red"</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>                <span class="ot">TextColor=</span><span class="st">"White"</span></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>                <span class="ot">Clicked=</span><span class="st">"ShootButton_Clicked"</span>/&gt;</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Grid</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="mainpage.xaml.cs" class="level2">
+<h2 class="anchored" data-anchor-id="mainpage.xaml.cs">3. MainPage.xaml.cs</h2>
+<p>Open <code>MainPage.xaml.cs</code>. Keep the <code>namespace PenaltyKick</code> line at the top of the file, delete <strong>everything below it</strong>, and paste in the following starter code.</p>
+<p>This contains the fields and method structure for the game. Some methods are incomplete, and you will fill them in as you work through the lab.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">bool</span> _gamePlaying <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">bool</span> _ballMoving <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> _goals<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> _timeLeft<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> _bestScore<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> IDispatcherTimer _gameTimer <span class="op">=</span> <span class="kw">null</span><span class="op">!;</span>   <span class="co">// created in InitialiseTimer()</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> Random _random <span class="op">=</span> <span class="kw">new</span> <span class="fu">Random</span><span class="op">();</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> _goaliePosition <span class="op">=</span> <span class="st">"centre"</span><span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// How far (in pixels) the goalkeeper and the football move to the left or right.</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">const</span> <span class="dt">int</span> SideOffset <span class="op">=</span> <span class="dv">180</span><span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The three places the goalkeeper can stand, and the three directions you can shoot.</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">readonly</span> <span class="dt">string</span><span class="op">[]</span> _directions <span class="op">=</span> <span class="op">{</span> <span class="st">"left"</span><span class="op">,</span> <span class="st">"centre"</span><span class="op">,</span> <span class="st">"right"</span> <span class="op">};</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InitialiseTimer</span><span class="op">();</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">LoadBestScore</span><span class="op">();</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">InitialiseTimer</span><span class="op">()</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        _gameTimer <span class="op">=</span> Dispatcher<span class="op">.</span><span class="fu">CreateTimer</span><span class="op">();</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        _gameTimer<span class="op">.</span><span class="fu">Interval</span> <span class="op">=</span> TimeSpan<span class="op">.</span><span class="fu">FromSeconds</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        _gameTimer<span class="op">.</span><span class="fu">Tick</span> <span class="op">+=</span> TimerTick<span class="op">;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">TimerTick</span><span class="op">(</span><span class="dt">object</span><span class="op">?</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update the time remaining.</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update the time label.</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: End the game when the time reaches zero.</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async <span class="dt">void</span> <span class="fu">StartBtn_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        await <span class="fu">StartGame</span><span class="op">();</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async Task <span class="fu">StartGame</span><span class="op">()</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Reset the score and time.</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update the labels.</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Put the goalkeeper and the football back where they start</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>        <span class="co">//       (position, scale and rotation) and set _goaliePosition to "centre".</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Show the shooting buttons and hide the start button.</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Set the game state to playing.</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Start the timer.</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>        <span class="co">// --- This part is already written for you (see Section 4) ---</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        await <span class="fu">AnimateGoalKeeper</span><span class="op">();</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        <span class="kw">while</span> <span class="op">(</span>_ballMoving<span class="op">)</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>            await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">50</span><span class="op">);</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        StartBtn<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async <span class="dt">void</span> <span class="fu">ShootButton_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Do nothing if the game is not playing or the ball is already moving.</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Work out which button was clicked.</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Call MoveBall with "left", "centre" or "right".</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async Task <span class="fu">MoveBall</span><span class="op">(</span><span class="dt">string</span> direction<span class="op">)</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>        _ballMoving <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="co">// TEMPORARY </span><span class="al">TEST</span><span class="co"> CODE - you will delete this in Section 8.</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> direction<span class="op">;</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Animate the football towards the selected direction.</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Check the game is still being played when the ball arrives.</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Compare the shot direction with the goalkeeper position.</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Call ScoreGoal() or SaveShot().</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Reset the football after the shot.</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>        _ballMoving <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">double</span> <span class="fu">GetOffsetX</span><span class="op">(</span><span class="dt">string</span> direction<span class="op">)</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Return how far left or right a position is from the centre.</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async Task <span class="fu">AnimateGoalKeeper</span><span class="op">()</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>        <span class="kw">while</span> <span class="op">(</span>_gamePlaying<span class="op">)</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>            <span class="co">// </span><span class="al">TODO</span><span class="co">: Choose a random position: "left", "centre" or "right".</span></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>            <span class="co">// </span><span class="al">TODO</span><span class="co">: Set _goaliePosition to "moving".</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>            <span class="co">// </span><span class="al">TODO</span><span class="co">: Move the goalkeeper to the chosen position.</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>            <span class="co">// </span><span class="al">TODO</span><span class="co">: Set _goaliePosition to the chosen position.</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>            <span class="co">// The goalkeeper stays where it is for a moment.</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (This also stops the loop from spinning too quickly.)</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>            await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">500</span><span class="op">);</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async Task <span class="fu">ScoreGoal</span><span class="op">()</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Increase the score and update the label.</span></span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"GOAL!"</span><span class="op">;</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>        await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">500</span><span class="op">);</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async Task <span class="fu">SaveShot</span><span class="op">()</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"SAVED!"</span><span class="op">;</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>        await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">500</span><span class="op">);</span></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>        FeedbackLbl<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">EndGame</span><span class="op">()</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Stop the game and timer.</span></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Hide the shooting buttons.</span></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update the best score if necessary.</span></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Display the final score.</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">LoadBestScore</span><span class="op">()</span></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Load the saved best score using Preferences.</span></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The code deliberately contains incomplete methods. You should not try to implement everything at once. Follow the sections below and test each feature as you add it.</p>
+<section id="tasks" class="level3">
+<h3 class="anchored" data-anchor-id="tasks">Tasks</h3>
+<ol type="1">
+<li>Set the <code>Source</code> of the background image, goal image and football image.</li>
+<li>Make sure that all image files are in the correct folder.</li>
+<li>Run the application and check that the layout looks reasonable.</li>
+<li>If an image is too large or too small, adjust its size in XAML.</li>
+</ol>
+<p>The shooting buttons should initially be hidden. The start button should be visible.</p>
+<p>Do not worry about the game logic yet.</p>
+</section>
+</section>
+<section id="game-state-and-starting-a-game" class="level2">
+<h2 class="anchored" data-anchor-id="game-state-and-starting-a-game">4. Game State and Starting a Game</h2>
+<p>The game needs to keep track of the current score, remaining time and whether a game is running.</p>
+<p>The fields have already been declared:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">bool</span> _gamePlaying <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">bool</span> _ballMoving <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> _goals<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> _timeLeft<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">int</span> _bestScore<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>_gamePlaying</code> field tells us whether a game is in progress. The <code>_ballMoving</code> field prevents the player from starting another shot while the previous shot is being animated.</p>
+<section id="tasks-1" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-1">Tasks</h3>
+<p>Complete the TODO comments at the top of <code>StartGame()</code>.</p>
+<p>When the player clicks <strong>Start Game</strong>, the method should:</p>
+<ol type="1">
+<li>Set <code>_goals</code> to zero.</li>
+<li>Set <code>_timeLeft</code> to 30.</li>
+<li>Update <code>ScoreLbl</code> and <code>TimeLbl</code> to show the current score and the remaining time.</li>
+<li>Reset the goalkeeper and the football. The goalkeeper will have stopped wherever it was when the last game ended, so it must be put back in the centre. Set <code>_goaliePosition</code> to <code>"centre"</code> as well. (Hint: you can set properties such as <code>TranslationX</code>, <code>TranslationY</code>, <code>Scale</code> and <code>Rotation</code> directly. This changes the image instantly, without an animation.)</li>
+<li>Hide <code>StartBtn</code> and show <code>ControlGrid</code>.</li>
+<li>Set <code>_gamePlaying</code> to <code>true</code>.</li>
+<li>Start the game timer.</li>
+</ol>
+<p>For example, to update the score label:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ScoreLbl<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> $<span class="st">"Score: {_goals}"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-part-that-is-already-written" class="level3">
+<h3 class="anchored" data-anchor-id="the-part-that-is-already-written">The part that is already written</h3>
+<p>Look at the end of <code>StartGame()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>await <span class="fu">AnimateGoalKeeper</span><span class="op">();</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> <span class="op">(</span>_ballMoving<span class="op">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    await Task<span class="op">.</span><span class="fu">Delay</span><span class="op">(</span><span class="dv">50</span><span class="op">);</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>StartBtn<span class="op">.</span><span class="fu">IsVisible</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Read this carefully, because it is a good example of how <code>await</code> works.</p>
+<p><code>AnimateGoalKeeper()</code> is a loop that keeps running for as long as the game is being played. Because <code>StartGame()</code> <strong>awaits</strong> it, the lines after it do not run until the loop has finished, which is when the game is over. This means:</p>
+<ul>
+<li>The goalkeeper animation starts automatically when the game starts.</li>
+<li>When the game ends, the loop finishes, and then the code after the <code>await</code> runs.</li>
+<li>The <code>while</code> loop waits for any shot that is still in progress.</li>
+<li>Only then is the start button shown again. This prevents the player from starting a new game while the old goalkeeper loop is still finishing its last animation.</li>
+</ul>
+<p>You do not need to write any more code to show the start button again.</p>
+<p>You should be able to start the game and see the shooting buttons. The timer and goalkeeper movement will be completed in later sections.</p>
+</section>
+</section>
+<section id="implement-the-countdown-timer" class="level2">
+<h2 class="anchored" data-anchor-id="implement-the-countdown-timer">5. Implement the Countdown Timer</h2>
+<p>The game should last 30 seconds.</p>
+<p>The timer has already been created in <code>InitialiseTimer()</code>. It raises the <code>Tick</code> event once every second, and <code>TimerTick</code> is called each time.</p>
+<section id="tasks-2" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-2">Tasks</h3>
+<ol type="1">
+<li>In <code>TimerTick</code>, decrease <code>_timeLeft</code> by one and update <code>TimeLbl</code>.</li>
+<li>If <code>_timeLeft</code> reaches zero, call <code>EndGame()</code>.</li>
+<li>Start completing <code>EndGame()</code> so that it:
+<ul>
+<li>sets <code>_gamePlaying</code> to <code>false</code>,</li>
+<li>stops the timer (<code>_gameTimer.Stop();</code>),</li>
+<li>hides the shooting buttons.</li>
+</ul></li>
+</ol>
+<p>You will finish the rest of <code>EndGame()</code> in Section 10.</p>
+<p>Remember that the timer must not continue running after the game ends.</p>
+</section>
+<section id="test" class="level3">
+<h3 class="anchored" data-anchor-id="test">Test</h3>
+<p>Run the application and check that:</p>
+<ul>
+<li>The timer starts when you click <strong>Start Game</strong>.</li>
+<li>The displayed time decreases once per second.</li>
+<li>The game ends when the time reaches zero and the shooting buttons disappear.</li>
+<li>A moment later, the start button comes back.</li>
+<li>You can start another game, and the timer starts again from 30.</li>
+</ul>
+<p>Why does the start button come back without you writing any code for it? (Look back at the end of <code>StartGame()</code>.)</p>
+<p>At this stage, you may not have working shots or goalkeeper movement. That is fine.</p>
+</section>
+</section>
+<section id="process-the-shooting-buttons" class="level2">
+<h2 class="anchored" data-anchor-id="process-the-shooting-buttons">6. Process the Shooting Buttons</h2>
+<p>The three shooting buttons are connected to the same event handler, <code>ShootButton_Clicked</code>. The <code>sender</code> parameter identifies the control that raised the event.</p>
+<p>To find out which button was clicked, you can convert <code>sender</code> to a <code>Button</code> and check its <code>Text</code> property:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Button btn <span class="op">=</span> <span class="op">(</span>Button<span class="op">)</span>sender<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="tasks-3" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-3">Tasks</h3>
+<p>Write <code>ShootButton_Clicked</code> yourself, using the TODO comments as a guide.</p>
+<ol type="1">
+<li>Make sure nothing happens if the game is not running, or if a shot is already in progress (<code>_ballMoving</code>).</li>
+<li>Work out which of the three buttons was clicked.</li>
+<li>Call <code>await MoveBall(...)</code> with <code>"left"</code>, <code>"centre"</code> or <code>"right"</code> as appropriate.</li>
+</ol>
+<p>Use exactly these three strings. The rest of the game compares them, so a spelling mistake (for example <code>"center"</code>) will not cause an error. It will just stop the game from working correctly.</p>
+</section>
+<section id="test-1" class="level3">
+<h3 class="anchored" data-anchor-id="test-1">Test</h3>
+<p><code>MoveBall</code> currently contains some temporary test code that displays the chosen direction on the screen for one second.</p>
+<ol type="1">
+<li>Click <strong>Start Game</strong>, then click each of the three shooting buttons. Check that the correct direction is displayed each time.</li>
+<li>Click one of the shooting buttons several times quickly. Only the first click should do anything. Why?</li>
+<li>Wait for the game to end, then check that nothing happens if you click a shooting button (they are hidden, but think about why the checks you wrote would still protect you if they were not).</li>
+</ol>
+<p>Do not remove the checks you wrote in step 1. They will become important when the football animation is added.</p>
+</section>
+</section>
+<section id="animate-the-goalkeeper" class="level2">
+<h2 class="anchored" data-anchor-id="animate-the-goalkeeper">7. Animate the Goalkeeper</h2>
+<p>The goalkeeper should move between three positions during the game: left, centre and right.</p>
+<p>The goalkeeper’s current position is stored in <code>_goaliePosition</code>, which can be <code>"left"</code>, <code>"centre"</code>, <code>"right"</code> or <code>"moving"</code>. The game uses this value later to decide whether a shot is saved.</p>
+<section id="moving-an-image" class="level3">
+<h3 class="anchored" data-anchor-id="moving-an-image">Moving an Image</h3>
+<p>You have already used animations in the Whack-a-Mole lab. For example, an image can be moved horizontally using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>await GoalKeeper<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">180</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">400</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The parameters specify the horizontal translation, vertical translation and duration in milliseconds.</p>
+<p>A negative horizontal translation moves the image to the left, while a positive translation moves it to the right.</p>
+<p>Note that <code>TranslateToAsync</code> moves the image <strong>to</strong> a position, measured from where the image started, not by a distance from where it is now. This means the goalkeeper can move straight from the left to the right without returning to the centre in between. Moving to <code>0</code> is the centre.</p>
+</section>
+<section id="tasks-4" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-4">Tasks</h3>
+<p>First, complete the helper method <code>GetOffsetX</code>. Both the goalkeeper and the football need to turn <code>"left"</code>, <code>"centre"</code> or <code>"right"</code> into a horizontal distance, so it is better to write this once.</p>
+<ol type="1">
+<li><code>GetOffsetX</code> should return <code>-SideOffset</code> for <code>"left"</code>, <code>SideOffset</code> for <code>"right"</code> and <code>0</code> for anything else.</li>
+</ol>
+<p>Then complete <code>AnimateGoalKeeper()</code>. Inside the loop:</p>
+<ol start="2" type="1">
+<li>Choose a random position. <code>_random.Next(3)</code> gives you 0, 1 or 2, which you can use as an index into the <code>_directions</code> array.</li>
+<li>Set <code>_goaliePosition</code> to <code>"moving"</code>.</li>
+<li>Animate the goalkeeper to the chosen position, using <code>GetOffsetX</code>. Try a duration of around 400ms.</li>
+<li>Set <code>_goaliePosition</code> to the chosen position.</li>
+</ol>
+<p>The <code>await Task.Delay(500)</code> at the end of the loop is already there. It keeps the goalkeeper in position for half a second before choosing a new position.</p>
+</section>
+<section id="think-about-the-order" class="level3">
+<h3 class="anchored" data-anchor-id="think-about-the-order">Think about the order</h3>
+<p>Why is <code>_goaliePosition</code> set to <code>"moving"</code> <em>before</em> the animation, and only set to the final position <em>after</em> it?</p>
+<p>The animation takes time. If you set <code>_goaliePosition = "left"</code> before the goalkeeper has moved, then for the next 400ms a shot would be saved by a goalkeeper who is still standing in the middle of the screen. The value of <code>_goaliePosition</code> should always match what the player can actually see. A shot that arrives while the goalkeeper is still moving will not be saved.</p>
+</section>
+<section id="important" class="level3">
+<h3 class="anchored" data-anchor-id="important">Important</h3>
+<p>The goalkeeper should stop moving when the game ends. The loop condition provides this behaviour, but remember that an animation already in progress has to finish before the loop checks the condition again. This is why the start button waits for the goalkeeper loop at the end of <code>StartGame()</code>.</p>
+</section>
+<section id="test-2" class="level3">
+<h3 class="anchored" data-anchor-id="test-2">Test</h3>
+<p>Start a game and watch the goalkeeper. It should move between the three positions, pausing at each, and it should sometimes stay in the centre. Play two games in a row. In the second game, the goalkeeper should start in the centre.</p>
+</section>
+</section>
+<section id="animate-the-football" class="level2">
+<h2 class="anchored" data-anchor-id="animate-the-football">8. Animate the Football</h2>
+<p>Now you will animate the football when the player chooses a direction.</p>
+<p>The <code>MoveBall()</code> method receives a string indicating the selected direction: <code>"left"</code>, <code>"centre"</code> or <code>"right"</code>.</p>
+<p>You can use <code>GetOffsetX</code> to decide how far the football should move horizontally. The football should also move upwards towards the goal.</p>
+<section id="animation-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="animation-parameters">Animation Parameters</h3>
+<p>You can use <code>TranslateToAsync</code> to move the football. For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>await FootballImg<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(-</span><span class="dv">180</span><span class="op">,</span> <span class="op">-</span><span class="dv">350</span><span class="op">,</span> <span class="dv">1000</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This moves the football to the left and upwards over one second.</p>
+<p>A positive horizontal translation moves it right, while a negative vertical translation moves it upwards.</p>
+<p>You can also use <code>ScaleToAsync</code> and <code>RotateToAsync</code> to make the shot more interesting. They work in a similar way, but they take a scale or an angle instead of a position.</p>
+</section>
+<section id="tasks-5" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-5">Tasks</h3>
+<p>Complete <code>MoveBall()</code>. Start by deleting the temporary test code.</p>
+<ol type="1">
+<li>Animate the football so that it moves towards the goal in the chosen direction. As it moves, it should also get smaller (to look as if it is moving away from the player) and spin.</li>
+<li>Check that the game is still being played when the ball arrives (see “Think about this” below). If it is not, the shot does not count.</li>
+<li>Otherwise, compare the shot direction with <code>_goaliePosition</code>.</li>
+<li>If they match, call <code>SaveShot()</code>. If they do not match, call <code>ScoreGoal()</code>.</li>
+<li>Reset the football to its starting position.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> Maybe there’s a way to combine the 3 animations at the same time…..</p>
+<p>Also, is 1000ms too long? Try it yourself.</p>
+</blockquote>
+</section>
+<section id="think-about-this" class="level3">
+<h3 class="anchored" data-anchor-id="think-about-this">Think about this</h3>
+<p>The ball takes time to travel, and the timer keeps ticking while it does. What if the time runs out while the ball is in the air?</p>
+<p>If you do nothing, the game will already be over (the final score has been displayed) when the ball arrives, and the shot would still change the score. The player would see “GOAL!” after the game has finished.</p>
+<p>This is a general lesson about <code>await</code>: <strong>the state of your program can change while you are waiting.</strong> After an <code>await</code>, do not assume that things are still the way they were before it. Here, a shot that lands after the game has ended should not count.</p>
+</section>
+<section id="resetting-the-football" class="level3">
+<h3 class="anchored" data-anchor-id="resetting-the-football">Resetting the Football</h3>
+<p>After each shot, the football must return to its original position and appearance.</p>
+<p>Remember that <code>TranslationX</code> and <code>TranslationY</code> represent the current translation. You can animate the football back to the start using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>await FootballImg<span class="op">.</span><span class="fu">TranslateToAsync</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">300</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The scale and rotation also have to go back to their original values. You can set these directly, which is instant and does not need an animation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>FootballImg<span class="op">.</span><span class="fu">Scale</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>FootballImg<span class="op">.</span><span class="fu">Rotation</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Make sure the football is back to its original state before <code>_ballMoving</code> is set back to <code>false</code>.</p>
+</section>
+<section id="testing" class="level3">
+<h3 class="anchored" data-anchor-id="testing">Testing</h3>
+<p>Try shooting in all three directions.</p>
+<p>Check that:</p>
+<ul>
+<li>The football moves when a button is clicked.</li>
+<li>The football returns to its starting position.</li>
+<li>A goal is awarded when the shot direction differs from the goalkeeper’s position.</li>
+<li>A save is recorded when the directions match.</li>
+<li>Shooting centre over and over does <em>not</em> score every time.</li>
+<li>The player cannot start another shot while the football is moving.</li>
+<li>A shot taken just before the time runs out, which lands after the game has ended, does not change the score.</li>
+</ul>
+</section>
+</section>
+<section id="display-goals-and-saves" class="level2">
+<h2 class="anchored" data-anchor-id="display-goals-and-saves">9. Display Goals and Saves</h2>
+<p>The starter code contains two methods:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> async Task <span class="fu">ScoreGoal</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> async Task <span class="fu">SaveShot</span><span class="op">()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Both methods display <code>FeedbackLbl</code> and hide it after a short delay. <code>SaveShot</code> is already complete. <code>ScoreGoal</code> follows the same pattern, but should also increase the score.</p>
+<section id="tasks-6" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-6">Tasks</h3>
+<p>Complete <code>ScoreGoal()</code>.</p>
+<ol type="1">
+<li>Increase <code>_goals</code> by one.</li>
+<li>Update <code>ScoreLbl</code>.</li>
+</ol>
+<p>The save method should display the save message but should not increase the score.</p>
+<p>Check that <code>MoveBall()</code> uses <code>await</code> when it calls these methods. Otherwise, the football reset would start before the feedback has finished displaying.</p>
+</section>
+</section>
+<section id="end-the-game" class="level2">
+<h2 class="anchored" data-anchor-id="end-the-game">10. End the Game</h2>
+<p>The game ends when the timer reaches zero. You have already started <code>EndGame()</code> in Section 5. Now complete it.</p>
+<p><code>EndGame()</code> should now also:</p>
+<ol type="1">
+<li>Check whether the current score is a new best score (you will save it in Section 11).</li>
+<li>Display the final score.</li>
+</ol>
+<p>You can use <code>DisplayAlertAsync</code> to show the result:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DisplayAlertAsync</span><span class="op">(</span><span class="st">"Game Over"</span><span class="op">,</span> $<span class="st">"Final Score: {_goals}"</span><span class="op">,</span> <span class="st">"OK"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>DisplayAlertAsync</code> returns a <code>Task</code>, but nothing in <code>EndGame()</code> needs to wait for the player to close the alert, so there is no need to <code>await</code> it here. This means <code>EndGame()</code> does not need to be <code>async</code>.</p>
+<p><code>EndGame()</code> no longer needs to show the start button. As you saw in Section 4, that happens at the end of <code>StartGame()</code>.</p>
+<p>The game should not continue accepting shots after the timer reaches zero.</p>
+<section id="test-3" class="level3">
+<h3 class="anchored" data-anchor-id="test-3">Test</h3>
+<p>Play a complete game. Check that the timer ends the game, the final score is displayed, the buttons return to their initial state, and you can start another game.</p>
+</section>
+</section>
+<section id="save-the-best-score-using-preferences" class="level2">
+<h2 class="anchored" data-anchor-id="save-the-best-score-using-preferences">11. Save the Best Score Using Preferences</h2>
+<p>The game should remember the highest score achieved, even after the application is closed.</p>
+<p>.NET MAUI provides <code>Preferences</code> for storing simple values such as integers, strings and Boolean values.</p>
+<section id="loading-the-best-score" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-best-score">Loading the Best Score</h3>
+<p>Complete <code>LoadBestScore()</code> so that it loads the previously saved best score. Use the key <code>"BestScore"</code> and a default value of zero.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>_bestScore <span class="op">=</span> Preferences<span class="op">.</span><span class="fu">Default</span><span class="op">.</span><span class="fu">Get</span><span class="op">(</span><span class="st">"BestScore"</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then update <code>BestScoreLbl</code> to display the value. This method is already called from the constructor.</p>
+</section>
+<section id="saving-a-new-best-score" class="level3">
+<h3 class="anchored" data-anchor-id="saving-a-new-best-score">Saving a New Best Score</h3>
+<p>In <code>EndGame()</code>, compare <code>_goals</code> with <code>_bestScore</code>.</p>
+<p>If the current score is greater than the best score:</p>
+<ol type="1">
+<li>Update <code>_bestScore</code>.</li>
+<li>Save the new value using <code>Preferences</code>. (Look at the <code>Get</code> method above. What would the matching method be called?)</li>
+<li>Update <code>BestScoreLbl</code>.</li>
+</ol>
+<p>Only save the score when a new record has been achieved.</p>
+<p>Do this <em>before</em> you display the final score. Otherwise, a new best score would not be saved if the player closed the application without closing the alert.</p>
+</section>
+<section id="test-4" class="level3">
+<h3 class="anchored" data-anchor-id="test-4">Test</h3>
+<ol type="1">
+<li>Play a game and achieve a score greater than zero.</li>
+<li>End the game.</li>
+<li>Close and restart the application.</li>
+<li>Check that the best score is still displayed.</li>
+</ol>
+<p>The current score should reset when a new game starts, but the best score should persist.</p>
+</section>
+</section>
+<section id="improve-the-resources" class="level2">
+<h2 class="anchored" data-anchor-id="improve-the-resources">12. Improve the Resources</h2>
+<p>Now that the game is working, improve its appearance using the resources covered in the lecture.</p>
+<section id="images" class="level3">
+<h3 class="anchored" data-anchor-id="images">Images</h3>
+<p>Check that the football, goalkeeper and goal images are displayed correctly.</p>
+<p>You can experiment with:</p>
+<ul>
+<li><code>AspectFit</code> and <code>AspectFill</code>.</li>
+<li><code>WidthRequest</code> and <code>HeightRequest</code>.</li>
+<li><code>Margin</code>.</li>
+<li><code>ZIndex</code>.</li>
+</ul>
+<p>Make sure the football appears in front of the background and that the goalkeeper is visible.</p>
+</section>
+<section id="application-icon" class="level3">
+<h3 class="anchored" data-anchor-id="application-icon">Application Icon</h3>
+<p>Change the application icon to something suitable for your game. (Maybe <code>football.svg</code> would work)</p>
+<p>Use the icon resource configuration in the project file and ensure the image is in the appropriate resources folder.</p>
+<p>Build and run the application again to check that the icon change has taken effect. If you do not see the change immediately, check whether the old icon is being cached by the development environment or operating system.</p>
+</section>
+</section>
+<section id="final-testing" class="level2">
+<h2 class="anchored" data-anchor-id="final-testing">13. Final Testing</h2>
+<p>Before finishing, test the whole game rather than just the individual methods.</p>
+<p>Check the following:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">The application builds and runs.</label></li>
+<li><label><input type="checkbox">The images display correctly.</label></li>
+<li><label><input type="checkbox">The start button begins a new game.</label></li>
+<li><label><input type="checkbox">The score resets when a new game starts.</label></li>
+<li><label><input type="checkbox">The countdown starts at 30 seconds.</label></li>
+<li><label><input type="checkbox">The countdown stops when the game ends.</label></li>
+<li><label><input type="checkbox">The goalkeeper moves between left, centre and right.</label></li>
+<li><label><input type="checkbox">The goalkeeper starts in the centre of every new game.</label></li>
+<li><label><input type="checkbox">The football moves when a shot is taken.</label></li>
+<li><label><input type="checkbox">The football returns to its starting position.</label></li>
+<li><label><input type="checkbox">A goal increases the score.</label></li>
+<li><label><input type="checkbox">A save does not increase the score.</label></li>
+<li><label><input type="checkbox">Shooting centre repeatedly does not score every time.</label></li>
+<li><label><input type="checkbox">The player cannot shoot while the football is moving.</label></li>
+<li><label><input type="checkbox">The game ends when the timer reaches zero.</label></li>
+<li><label><input type="checkbox">A shot that lands after the game has ended does not change the score.</label></li>
+<li><label><input type="checkbox">You can play several games in a row without anything strange happening.</label></li>
+<li><label><input type="checkbox">The best score is saved and loaded using <code>Preferences</code>.</label></li>
+<li><label><input type="checkbox">The application icon and images are configured correctly.</label></li>
+</ul>
+</section>
+<section id="stretch-goals" class="level2">
+<h2 class="anchored" data-anchor-id="stretch-goals">14. Stretch Goals</h2>
+<p>Only attempt these after the main game is working.</p>
+<section id="a.-improve-the-shot-animation" class="level3">
+<h3 class="anchored" data-anchor-id="a.-improve-the-shot-animation">A. Improve the Shot Animation</h3>
+<p>Experiment with the <code>Easing</code> parameter of the animation methods (for example <code>Easing.CubicOut</code>) and with different durations, scales and rotations to make the football look more realistic.</p>
+</section>
+<section id="b.-improve-the-goalkeeper" class="level3">
+<h3 class="anchored" data-anchor-id="b.-improve-the-goalkeeper">B. Improve the Goalkeeper</h3>
+<p>Change the goalkeeper’s movement distance or animation duration.</p>
+<p>Can you make the goalkeeper move at different speeds? Can you make the goalkeeper smarter, for example by favouring the direction you have shot most often?</p>
+</section>
+<section id="c.-add-difficulty" class="level3">
+<h3 class="anchored" data-anchor-id="c.-add-difficulty">C. Add Difficulty</h3>
+<p>Use <code>Preferences</code> to save a difficulty setting.</p>
+<p>For example, a more difficult game might have a faster goalkeeper or a shorter countdown.</p>
+<p>Load the setting when the application starts.</p>
+</section>
+<section id="d.-improve-the-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="d.-improve-the-feedback">D. Improve the Feedback</h3>
+<p>Change the feedback message or appearance for goals and saves. You could also change the colour of the feedback label depending on the outcome.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
