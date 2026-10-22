@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PenaltyKick.MainPage"
+             Title="">
+
+    <Grid x:Name="MainGrid"
+          RowDefinitions="43,577,Auto"
+          BackgroundColor="LightGreen">
+
+        <!-- Background for the score bar at the top -->
+        <Image Source="topstad.png"
+               ZIndex="-2"
+               Aspect="AspectFill"
+               Grid.Row="0"/>
+
+        <!-- Score Display Area -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,*,*"
+              Margin="0,10"
+              Padding="10,0">
+
+            <Label x:Name="BestScoreLbl"
+                   Text="Best: 0"
+                   Grid.Column="0"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Start"
+                   TextColor="White"/>
+
+            <Label x:Name="ScoreLbl"
+                   Text="Score: 0"
+                   Grid.Column="1"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="Yellow"/>
+
+            <Label x:Name="TimeLbl"
+                   Text="Time: 30"
+                   Grid.Column="2"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="End"
+                   TextColor="White"/>
+        </Grid>
+
+        <!-- Goal Background (the background for the rest of the screen) -->
+        <Image x:Name="GoalsImg"
+               Source="goals.jpg"
+               Aspect="AspectFit"
+               Grid.Row="1"
+               ZIndex="-1"/>
+
+        <!-- Game Area -->
+        <Grid Grid.Row="1"
+              x:Name="GameArea">
+
+            <!-- Goalkeeper -->
+            <Image x:Name="GoalKeeper"
+                   Source="goalie.png"
+                   WidthRequest="136"
+                   HeightRequest="204"
+                   Aspect="Fill"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center"
+                   Margin="0,100,0,0"
+                   ZIndex="1"/>
+
+            <!-- Football -->
+            <Image x:Name="FootballImg"
+                   Source="football.png"
+                   WidthRequest="55"
+                   HeightRequest="55"
+                   Aspect="AspectFit"
+                   VerticalOptions="End"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,50"
+                   ZIndex="2"/>
+
+            <!-- Feedback -->
+            <Label x:Name="FeedbackLbl"
+                   Text=""
+                   FontSize="48"
+                   FontAttributes="Bold"
+                   TextColor="Yellow"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   IsVisible="False"
+                   ZIndex="3"/>
+        </Grid>
+
+        <!-- Start Button -->
+        <Button x:Name="StartBtn"
+                Text="Start Game"
+                Grid.Row="2"
+                FontSize="16"
+                Padding="20,10"
+                BackgroundColor="Green"
+                TextColor="White"
+                HorizontalOptions="Center"
+                Clicked="StartBtn_Clicked"/>
+
+        <!-- Shooting Buttons -->
+        <Grid x:Name="ControlGrid"
+              Grid.Row="2"
+              ColumnDefinitions="*,*,*"
+              ColumnSpacing="10"
+              IsVisible="False">
+
+            <Button Text="Shoot Left"
+                    Grid.Column="0"
+                    FontSize="16"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    Clicked="ShootButton_Clicked"/>
+
+            <Button Text="Shoot Centre"
+                    Grid.Column="1"
+                    FontSize="16"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    Clicked="ShootButton_Clicked"/>
+
+            <Button Text="Shoot Right"
+                    Grid.Column="2"
+                    FontSize="16"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    Clicked="ShootButton_Clicked"/>
+        </Grid>
+    </Grid>
+
+</ContentPage>
