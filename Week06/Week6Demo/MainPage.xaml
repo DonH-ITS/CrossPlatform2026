@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Week6Demo.MainPage"
+             Title="Week 6 Demo">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <!-- ===== Lists ===== -->
+            <Label Text="1. Lists of objects" FontSize="20" FontAttributes="Bold" />
+
+            <Grid ColumnDefinitions="*,100" ColumnSpacing="10">
+                <Entry x:Name="NameEntry" Placeholder="Name" Grid.Column="0" />
+                <Entry x:Name="AgeEntry" Placeholder="Age" Keyboard="Numeric" Grid.Column="1" />
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Button Text="Add" Clicked="OnAddClicked" Grid.Column="0" />
+                <Button Text="Remove name" Clicked="OnRemoveClicked" Grid.Column="1" />
+                <Button Text="Highlight" Clicked="OnHighlightClicked" Grid.Column="2" />
+            </Grid>
+
+            <Label x:Name="CountLabel" Text="Count: 0" />
+
+            <!-- Controls are created in C# for each Person and added here -->
+            <VerticalStackLayout x:Name="PeopleLayout" Spacing="2" />
+
+            <!-- ===== Files and JSON ===== -->
+            <Label Text="2. Saving and loading (JSON)" FontSize="20" FontAttributes="Bold" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Text="Save" Clicked="OnSaveClicked" Grid.Column="0" />
+                <Button Text="Load" Clicked="OnLoadClicked" Grid.Column="1" />
+            </Grid>
+
+            <Label x:Name="StatusLabel" Text="Status: ready" />
+
+            <Label Text="Contents of people.json:" />
+            <Label x:Name="JsonLabel" Text="(nothing saved or loaded yet)" FontFamily="Consolas" />
+
+            <!-- ===== Page lifecycle ===== -->
+            <Label Text="3. Page lifecycle" FontSize="20" FontAttributes="Bold" />
+
+            <Label x:Name="ConstructorLabel" Text="Constructor: " />
+            <Label x:Name="AppearingLabel" Text="OnAppearing: not called yet" />
+            <Label x:Name="DisappearingLabel" Text="OnDisappearing: not called yet" />
+            <Label x:Name="SubscribedLabel" Text="Subscribed to MainDisplayInfoChanged: false" />
+
+            <!-- ===== Page and display information ===== -->
+            <Label Text="4. Page size and display information" FontSize="20" FontAttributes="Bold" />
+
+            <Label x:Name="PageSizeLabel" Text="Page: " />
+            <Label x:Name="DisplayPixelsLabel" Text="Display pixels: " />
+            <Label x:Name="DensityLabel" Text="Density: " />
+            <Label x:Name="UnitsLabel" Text="Display in layout units: " />
+            <Label x:Name="OrientationLabel" Text="Orientation: " />
+            <Label x:Name="LastEventLabel" Text="Last event: none yet" FontAttributes="Bold" />
+            <Label x:Name="SizeChangedCountLabel" Text="SizeChanged raised: 0 times" />
+            <Label x:Name="DisplayChangedCountLabel" Text="MainDisplayInfoChanged raised: 0 times" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
