@@ -4,7 +4,7 @@
     "href": "lectures.html",
     "title": "Lecture Slides",
     "section": "",
-    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\nNo matching items"
+    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\n\n\n\n\nWeek 7 GitHub Resources and Data Binding\n\n\nGitHub with Visual Studio, shared resources and styles in .NET MAUI, and introductory data binding\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/Week5/Week5.html#resources",
@@ -4107,5 +4107,411 @@
     "title": "Week 6 Lists Files Lifecycle JSON",
     "section": "Make Grid Bigger/Smaller",
     "text": "Make Grid Bigger/Smaller\nLet’s say in Whack a Mole when creating the grid we want to use as much space as we can\n\nFind out the height and width of the Page\nFind out how much space the other controls need\nFigure out from there the max the height/width of the grid can be\n\ne.g.\ndouble maxWidth = this.Width - 20;\ndouble maxHeight = this.Height - (TopLabel.Height + ScoreLayout.Height + GridSizeLayout.Height) - 20;\ndouble sizea = Math.Min(maxWidth, maxHeight);\nGameGrid.WidthRequest = sizea;\nGameGrid.HeightRequest = sizea;\nmight do the trick\nIf we want to react afterwards maybe something like\n    SizeChanged += OnWindowChange;\nprivate void OnWindowChange(object? sender, EventArgs e) {\n    if (_gridCreated) {\n        double maxWidth = this.Width - 20;\n        double maxHeight = this.Height - (MainLayout.Height - GameGrid.Height) - 20;\n        double size = Math.Min(maxWidth, maxHeight);\n\n        GameGrid.WidthRequest = size;\n        GameGrid.HeightRequest = size;\n    }\n\n} \nthis.Height is the Width of the current Page.\nSince we have some other controls (such as the start button) we need to subtract their heights"
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#github-and-visual-studio",
+    "href": "lectures/Week7/Week7.html#github-and-visual-studio",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "GitHub and Visual Studio",
+    "text": "GitHub and Visual Studio\nGitHub is a platform for version control and collaboration. It hosts Git repositories so that developers can store, track and share their code.\nVisual Studio includes Git functionality, allowing us to work with repositories without leaving the IDE.\nWe can use it to:\n\nCreate or clone repositories.\nReview changes to our code.\nCommit changes to the local repository.\nPush commits to GitHub.\nPull changes made elsewhere.\n\nFor this module, you will use GitHub to maintain your semester project throughout its development."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#local-repository-and-remote-repository",
+    "href": "lectures/Week7/Week7.html#local-repository-and-remote-repository",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Local repository and remote repository",
+    "text": "Local repository and remote repository\nThere are two copies of the repository to think about:\n\nThe local repository is on your computer. Visual Studio works with this copy.\nThe remote repository is hosted on GitHub.\n\nA commit records a set of changes in the local repository. It does not automatically send those changes to GitHub.\n\nCommit: record changes in your local repository.\nPush: send local commits to the remote repository.\nPull: retrieve and integrate commits from the remote repository.\n\nA useful habit is to commit regularly and push your work to GitHub."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#publishing-a-project-to-github",
+    "href": "lectures/Week7/Week7.html#publishing-a-project-to-github",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Publishing a project to GitHub",
+    "text": "Publishing a project to GitHub\nOne way to start is to create an empty repository on GitHub and then publish an existing project from Visual Studio.\n\nSign in to GitHub.\nCreate a new repository and give it a suitable name.\nIn Visual Studio, open the project or solution.\nOpen the Git menu or the Git Changes window.\nUse the option to create or publish a Git repository.\nChoose GitHub as the hosting service and complete the publishing process.\n\nThe exact wording and location of these options can vary slightly between Visual Studio versions.\nYou can also clone an existing repository using File → Clone Repository."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#the-git-changes-window",
+    "href": "lectures/Week7/Week7.html#the-git-changes-window",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "The Git Changes window",
+    "text": "The Git Changes window\nThe Git Changes window shows the changes made to files in your working copy.\nBefore committing, review the changes:\n\nWhich files have changed?\nAre the changes ones you intended to make?\nHave any temporary or unnecessary files been included?\nDoes the application still build and run?\n\nA commit should represent a small, understandable step in the development of your application."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#a-sensible-workflow",
+    "href": "lectures/Week7/Week7.html#a-sensible-workflow",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "A sensible workflow",
+    "text": "A sensible workflow\nFor example, suppose you have just added a settings page to your application.\n\nMake the changes in Visual Studio.\nBuild and run the application.\nTest the new functionality.\nOpen Git Changes and review the modified files.\nEnter a meaningful commit message.\nCommit the changes.\nPush the commit to GitHub.\n\nYou do not need to push after every small edit, but you should push regularly so that your remote repository stays up to date."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#writing-useful-commit-messages",
+    "href": "lectures/Week7/Week7.html#writing-useful-commit-messages",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Writing useful commit messages",
+    "text": "Writing useful commit messages\nA commit message should give a brief indication of what changed.\n\n\n\nLess useful\nMore useful\n\n\n\n\nUpdate\nAdd settings page\n\n\nChanges\nSave user preferences\n\n\nFix\nCorrect score calculation\n\n\nStuff\nLoad saved game data\n\n\n\nA sequence of meaningful commits helps show how your application developed.\nIt also makes it easier to find when a particular feature or change was introduced."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-should-go-into-the-repository",
+    "href": "lectures/Week7/Week7.html#what-should-go-into-the-repository",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What should go into the repository?",
+    "text": "What should go into the repository?\nYour repository should contain the source code and other files needed to develop the application.\nVisual Studio’s .NET project templates normally provide a .gitignore file that excludes generated files such as:\n\nbin and obj directories.\nBuild output and temporary files.\nIDE-specific temporary files.\n\nDo not commit:\n\nPasswords, API keys or other secrets.\nGenerated build output.\nLarge temporary files that are not part of the project.\n\nCheck the files shown in Git Changes rather than assuming that every file should be committed."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#github-and-your-semester-project",
+    "href": "lectures/Week7/Week7.html#github-and-your-semester-project",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "GitHub and your semester project",
+    "text": "GitHub and your semester project\nYou are expected to use GitHub throughout the development of your project.\n\nCreate a repository for your project.\nCommit your work as you develop it.\nUse meaningful commit messages.\nPush your work regularly.\nMake sure the repository contains the final version of your project.\n\nA repository containing one large commit at the end gives very little evidence of how the application was developed."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#why-use-shared-resources",
+    "href": "lectures/Week7/Week7.html#why-use-shared-resources",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Why use shared resources?",
+    "text": "Why use shared resources?\nWhen writing XAML, we often repeat values such as colours, font sizes and spacing.\nFor example, several Labels might use the same text colour and font size.\nIf we decide to change that colour or size, we would have to find and edit every occurrence.\n.NET MAUI provides resources so that we can define a value once and refer to it wherever it is needed.\nThis makes the XAML easier to maintain and helps keep the appearance of an application consistent."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-is-a-resource",
+    "href": "lectures/Week7/Week7.html#what-is-a-resource",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What is a resource?",
+    "text": "What is a resource?\nA resource is a value stored in a resource dictionary and identified by a key.\nYou can think of it as a named value, similar to a symbolic constant in a programming language.\nFor example, instead of repeatedly writing:\n&lt;Label Text=\"Bill\" TextColor=\"Blue\" FontSize=\"22\" /&gt;\n&lt;Button Text=\"Calculate\" TextColor=\"Blue\" FontSize=\"22\" /&gt;\nwe can define a colour resource:\n&lt;Color x:Key=\"PageTextColor\"&gt;Blue&lt;/Color&gt;\nWe can then refer to that resource by its key.\nThe key is a string, and the value can be an object such as a Color, a number, a Style or another supported object."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#resourcedictionary",
+    "href": "lectures/Week7/Week7.html#resourcedictionary",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "ResourceDictionary",
+    "text": "ResourceDictionary\nA ResourceDictionary stores resources as key/value pairs.\nA page can define resources in its Resources property:\n&lt;ContentPage.Resources&gt;\n    &lt;ResourceDictionary&gt;\n        &lt;Color x:Key=\"PageTextColor\"&gt;Blue&lt;/Color&gt;\n        &lt;x:Double x:Key=\"PageFontSize\"&gt;22&lt;/x:Double&gt;\n    &lt;/ResourceDictionary&gt;\n&lt;/ContentPage.Resources&gt;\nIn current .NET MAUI XAML, the ResourceDictionary element can often be omitted when defining resources directly inside the property element:\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"PageTextColor\"&gt;Blue&lt;/Color&gt;\n    &lt;x:Double x:Key=\"PageFontSize\"&gt;22&lt;/x:Double&gt;\n&lt;/ContentPage.Resources&gt;\nBoth forms define resources for the page."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#using-staticresource",
+    "href": "lectures/Week7/Week7.html#using-staticresource",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Using StaticResource",
+    "text": "Using StaticResource\nTo use a resource in XAML, we can use the StaticResource markup extension.\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"PageTextColor\"&gt;Blue&lt;/Color&gt;\n&lt;/ContentPage.Resources&gt;\n\n&lt;Label Text=\"Hello, World!\"\n       TextColor=\"{StaticResource PageTextColor}\" /&gt;\nThe key identifies the resource to look up.\nStaticResource looks up the resource when the target object is created. The value is then assigned to the target property.\nIf the resource is not found, the lookup fails and a runtime exception is raised."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-can-be-stored-as-a-resource",
+    "href": "lectures/Week7/Week7.html#what-can-be-stored-as-a-resource",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What can be stored as a resource?",
+    "text": "What can be stored as a resource?\nResources are not limited to colours.\nThey can be values of many types, including:\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"PageTextColor\"&gt;Blue&lt;/Color&gt;\n    &lt;x:String x:Key=\"WelcomeMessage\"&gt;Hello&lt;/x:String&gt;\n    &lt;x:Double x:Key=\"HeadingSize\"&gt;28&lt;/x:Double&gt;\n    &lt;x:Int32 x:Key=\"MaximumAttempts\"&gt;3&lt;/x:Int32&gt;\n    &lt;x:Boolean x:Key=\"ShowHints\"&gt;True&lt;/x:Boolean&gt;\n&lt;/ContentPage.Resources&gt;\nThey can also be more complex objects, such as Style objects.\nFor now, the most useful resources are likely to be colours, sizes and styles."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#worked-example-repeated-values",
+    "href": "lectures/Week7/Week7.html#worked-example-repeated-values",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Worked example: repeated values",
+    "text": "Worked example: repeated values\nSuppose we have three Labels:\n&lt;Label Text=\"Bill\"\n       TextColor=\"Navy\"\n       FontSize=\"22\" /&gt;\n\n&lt;Label Text=\"Tip\"\n       TextColor=\"Navy\"\n       FontSize=\"22\" /&gt;\n\n&lt;Label Text=\"Total\"\n       TextColor=\"Navy\"\n       FontSize=\"22\" /&gt;\nThere is nothing wrong with this XAML, but the same values are repeated.\nIf we want to change the text colour or font size, we must make the change in three places.\nWe can define the values once as resources."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#worked-example-using-resources",
+    "href": "lectures/Week7/Week7.html#worked-example-using-resources",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Worked example: using resources",
+    "text": "Worked example: using resources\nDefine the resources in the page:\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"LabelTextColor\"&gt;Navy&lt;/Color&gt;\n    &lt;x:Double x:Key=\"LabelFontSize\"&gt;22&lt;/x:Double&gt;\n&lt;/ContentPage.Resources&gt;\nNow use them in each Label:\n&lt;Label Text=\"Bill\"\n       TextColor=\"{StaticResource LabelTextColor}\"\n       FontSize=\"{StaticResource LabelFontSize}\" /&gt;\n\n&lt;Label Text=\"Tip\"\n       TextColor=\"{StaticResource LabelTextColor}\"\n       FontSize=\"{StaticResource LabelFontSize}\" /&gt;\n\n&lt;Label Text=\"Total\"\n       TextColor=\"{StaticResource LabelTextColor}\"\n       FontSize=\"{StaticResource LabelFontSize}\" /&gt;\nIf we want to change the colour or font size, we only need to change the resource definition."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#where-can-resources-be-defined",
+    "href": "lectures/Week7/Week7.html#where-can-resources-be-defined",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Where can resources be defined?",
+    "text": "Where can resources be defined?\nResources can be defined at different levels of the visual tree.\nFor example:\n\nA control can have its own resources.\nA layout can have resources shared by its children.\nA ContentPage can have resources shared by the controls on that page.\nThe Application can have resources shared throughout the application.\n\nA resource defined at a lower level is generally more specific to that part of the UI.\nFor example, a resource defined on a page is available to controls on that page, but not automatically to another page."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#application-level-resources",
+    "href": "lectures/Week7/Week7.html#application-level-resources",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Application-level resources",
+    "text": "Application-level resources\nResources that should be available throughout the application can be defined in App.xaml.\nFor example:\n&lt;Application.Resources&gt;\n    &lt;ResourceDictionary&gt;\n        &lt;Color x:Key=\"PrimaryColor\"&gt;#3498DB&lt;/Color&gt;\n        &lt;Color x:Key=\"TextColor\"&gt;#202020&lt;/Color&gt;\n        &lt;x:Double x:Key=\"HeadingSize\"&gt;24&lt;/x:Double&gt;\n    &lt;/ResourceDictionary&gt;\n&lt;/Application.Resources&gt;\nThese resources can be used by pages throughout the application:\n&lt;Label Text=\"Welcome\"\n       TextColor=\"{StaticResource TextColor}\"\n       FontSize=\"{StaticResource HeadingSize}\" /&gt;\nThis is a good place for colours and styles that should be consistent across the whole application."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#how-are-resources-found",
+    "href": "lectures/Week7/Week7.html#how-are-resources-found",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "How are resources found?",
+    "text": "How are resources found?\nWhen a control requests a resource, .NET MAUI searches the resource dictionaries along the visual tree.\nThe search starts with the control itself and then moves up through its parents.\nFor example, a Label might be inside a Grid, which is inside a ContentPage.\nThe search then continues to the application-level resources.\nThe first matching key found is used.\nThis means that a page can define a resource with the same key as an application-level resource. The page-level resource takes precedence for controls on that page."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#staticresource-or-dynamicresource",
+    "href": "lectures/Week7/Week7.html#staticresource-or-dynamicresource",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "StaticResource or DynamicResource?",
+    "text": "StaticResource or DynamicResource?\nSo far, we have used StaticResource.\nWhat happens if we change the value in the resource dictionary while the application is running?\nFor example, suppose we have this resource:\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"PanelBackgroundColor\"&gt;Blue&lt;/Color&gt;\n&lt;/ContentPage.Resources&gt;\nAnd then change it in C#:\nResources[\"PanelBackgroundColor\"] = Colors.Green;\nA control using StaticResource will not automatically update to use the new value.\nThe original lookup has already taken place."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#dynamicresource",
+    "href": "lectures/Week7/Week7.html#dynamicresource",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "DynamicResource",
+    "text": "DynamicResource\nDynamicResource also looks up a resource by key, but it keeps track of changes to that resource.\nIf the value associated with the key changes, the target property is updated.\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"PanelBackgroundColor\"&gt;Blue&lt;/Color&gt;\n&lt;/ContentPage.Resources&gt;\n\n&lt;Grid BackgroundColor=\"{DynamicResource PanelBackgroundColor}\"&gt;\n    &lt;!-- Page content --&gt;\n&lt;/Grid&gt;\nWe can then change the resource in C#:\nResources[\"PanelBackgroundColor\"] = Colors.Green;\nThe Grid’s background colour will update automatically."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#staticresource-versus-dynamicresource",
+    "href": "lectures/Week7/Week7.html#staticresource-versus-dynamicresource",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "StaticResource versus DynamicResource",
+    "text": "StaticResource versus DynamicResource\n\n\n\n\n\n\n\nStaticResource\nDynamicResource\n\n\n\n\nLooks up the resource when the target is created\nAlso observes changes to the resource\n\n\nDoes not update when the dictionary value changes\nUpdates the target when the resource changes\n\n\nSuitable for values that do not change\nUseful for values that may change at runtime\n\n\n\nDynamicResource has a small additional runtime cost.\nUse StaticResource for values that are not expected to change. Use DynamicResource when you need the UI to respond to changes in a resource."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#example-changing-a-theme",
+    "href": "lectures/Week7/Week7.html#example-changing-a-theme",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Example: changing a theme",
+    "text": "Example: changing a theme\nImagine an application with a light and a dark appearance.\nWe could define two resources:\n&lt;ContentPage.Resources&gt;\n    &lt;Color x:Key=\"BackgroundColor\"&gt;White&lt;/Color&gt;\n    &lt;Color x:Key=\"TextColor\"&gt;Black&lt;/Color&gt;\n&lt;/ContentPage.Resources&gt;\nControls use DynamicResource for the values that may change:\n&lt;Grid BackgroundColor=\"{DynamicResource BackgroundColor}\"&gt;\n    &lt;Label Text=\"Welcome\"\n           TextColor=\"{DynamicResource TextColor}\" /&gt;\n&lt;/Grid&gt;\nA button could change both resources:\nprivate void DarkMode_Clicked(object sender, EventArgs e)\n{\n    Resources[\"BackgroundColor\"] = Colors.Black;\n    Resources[\"TextColor\"] = Colors.White;\n}\nAll controls using those dynamic resources can update without us having to find and change each control individually."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#why-not-change-every-control-in-c",
+    "href": "lectures/Week7/Week7.html#why-not-change-every-control-in-c",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Why not change every control in C#?",
+    "text": "Why not change every control in C#?\nWithout resources, we might write code like this:\nprivate void DarkMode_Clicked(object sender, EventArgs e)\n{\n    LayoutRoot.BackgroundColor = Colors.Black;\n\n    titleLabel.TextColor = Colors.White;\n    billLabel.TextColor = Colors.White;\n    tipLabel.TextColor = Colors.White;\n    totalLabel.TextColor = Colors.White;\n    outputLabel.TextColor = Colors.White;\n}\nThis becomes increasingly difficult to maintain as the number of controls grows.\nWith DynamicResource, we change the resource values instead:\nprivate void DarkMode_Clicked(object sender, EventArgs e)\n{\n    Resources[\"BackgroundColor\"] = Colors.Black;\n    Resources[\"TextColor\"] = Colors.White;\n}\nThe XAML describes which controls use the resources, and the code changes the values."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#styles",
+    "href": "lectures/Week7/Week7.html#styles",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Styles",
+    "text": "Styles\nResources can store more than individual values.\nA Style groups together property settings for a particular type of control.\nThis is similar to using a CSS class in HTML.\nFor example, consider two Buttons:\n&lt;Button Text=\"OK\"\n        BackgroundColor=\"#2A84D3\"\n        BorderColor=\"#1C5F9B\"\n        BorderWidth=\"3\"\n        TextColor=\"White\" /&gt;\n\n&lt;Button Text=\"Cancel\"\n        BackgroundColor=\"#2A84D3\"\n        BorderColor=\"#1C5F9B\"\n        BorderWidth=\"3\"\n        TextColor=\"White\" /&gt;\nThe appearance settings are repeated. We can group them into a Style instead."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#setters",
+    "href": "lectures/Week7/Week7.html#setters",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Setters",
+    "text": "Setters\nA Setter specifies a property and the value that should be assigned to it.\nFor example:\n&lt;Setter Property=\"TextColor\" Value=\"White\" /&gt;\nWe can also use a resource as the value:\n&lt;Setter Property=\"TextColor\"\n        Value=\"{StaticResource TextColor}\" /&gt;\nA Style is a collection of Setters for a particular control type."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#defining-and-using-a-style",
+    "href": "lectures/Week7/Week7.html#defining-and-using-a-style",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Defining and using a Style",
+    "text": "Defining and using a Style\nA Style is normally stored in a resource dictionary.\n&lt;ContentPage.Resources&gt;\n    &lt;Style x:Key=\"MyButtonStyle\"\n           TargetType=\"Button\"&gt;\n        &lt;Setter Property=\"BackgroundColor\"\n                Value=\"#2A84D3\" /&gt;\n        &lt;Setter Property=\"BorderColor\"\n                Value=\"#1C5F9B\" /&gt;\n        &lt;Setter Property=\"BorderWidth\"\n                Value=\"3\" /&gt;\n        &lt;Setter Property=\"TextColor\"\n                Value=\"White\" /&gt;\n    &lt;/Style&gt;\n&lt;/ContentPage.Resources&gt;\nWe can then apply the Style to Buttons:\n&lt;Button Text=\"OK\"\n        Style=\"{StaticResource MyButtonStyle}\" /&gt;\n\n&lt;Button Text=\"Cancel\"\n        Style=\"{StaticResource MyButtonStyle}\" /&gt;\nThe two Buttons now share the same appearance settings."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#explicit-and-implicit-styles",
+    "href": "lectures/Week7/Week7.html#explicit-and-implicit-styles",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Explicit and implicit Styles",
+    "text": "Explicit and implicit Styles\nThe previous example uses an explicit Style.\nIt has an x:Key, so we must refer to it when applying the Style:\n&lt;Button Text=\"OK\"\n        Style=\"{StaticResource MyButtonStyle}\" /&gt;\nAn implicit Style does not have an x:Key.\nInstead, it is automatically applied to controls matching its TargetType.\n&lt;ContentPage.Resources&gt;\n    &lt;Style TargetType=\"Button\"&gt;\n        &lt;Setter Property=\"BackgroundColor\"\n                Value=\"Blue\" /&gt;\n        &lt;Setter Property=\"TextColor\"\n                Value=\"White\" /&gt;\n        &lt;Setter Property=\"CornerRadius\"\n                Value=\"8\" /&gt;\n    &lt;/Style&gt;\n&lt;/ContentPage.Resources&gt;\nAll Buttons within the scope of this resource dictionary receive this Style automatically."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#when-should-we-use-each-type",
+    "href": "lectures/Week7/Week7.html#when-should-we-use-each-type",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "When should we use each type?",
+    "text": "When should we use each type?\nUse an explicit Style when you want to apply a particular appearance to selected controls.\n&lt;Button Text=\"Delete\"\n        Style=\"{StaticResource MyButtonStyle}\" /&gt;\nUse an implicit Style when you want all controls of a particular type within the resource scope to share an appearance.\n&lt;Style TargetType=\"Button\"&gt;\n    &lt;Setter Property=\"TextColor\" Value=\"White\" /&gt;\n&lt;/Style&gt;\nYou can still set individual properties on a control when you need an exception to the shared Style."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#basedon-building-on-another-style",
+    "href": "lectures/Week7/Week7.html#basedon-building-on-another-style",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "BasedOn: building on another Style",
+    "text": "BasedOn: building on another Style\nStyles can be based on other Styles.\nThis is useful when several control types share some settings.\nFor example, define a base Style:\n&lt;Style x:Key=\"BaseControlStyle\"\n       TargetType=\"VisualElement\"&gt;\n    &lt;Setter Property=\"BackgroundColor\"\n            Value=\"Blue\" /&gt;\n&lt;/Style&gt;\nThen create a Button Style based on it:\n&lt;Style x:Key=\"MyButtonStyle\"\n       TargetType=\"Button\"\n       BasedOn=\"{StaticResource BaseControlStyle}\"&gt;\n    &lt;Setter Property=\"BorderWidth\" Value=\"3\" /&gt;\n    &lt;Setter Property=\"TextColor\" Value=\"White\" /&gt;\n&lt;/Style&gt;\nThe Button Style inherits the background colour and adds its own settings.\nThe target types of the base and derived Styles must be compatible.\nThis is a useful feature, but you do not need to use it in every application."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#organising-application-resources",
+    "href": "lectures/Week7/Week7.html#organising-application-resources",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Organising application resources",
+    "text": "Organising application resources\nAs an application grows, putting every resource into App.xaml can make the file difficult to manage.\n.NET MAUI allows resource dictionaries to be placed in separate XAML files and merged into the application resources.\nFor example, we might have:\n\nColors.xaml – colour resources.\nStyles.xaml – control styles.\n\nThese files can then be merged into App.xaml."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#merging-resource-dictionaries",
+    "href": "lectures/Week7/Week7.html#merging-resource-dictionaries",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Merging resource dictionaries",
+    "text": "Merging resource dictionaries\nThe App.xaml file can reference separate resource dictionaries:\n&lt;Application.Resources&gt;\n    &lt;ResourceDictionary&gt;\n        &lt;ResourceDictionary.MergedDictionaries&gt;\n            &lt;ResourceDictionary Source=\"Resources/Colors.xaml\" /&gt;\n            &lt;ResourceDictionary Source=\"Resources/Styles.xaml\" /&gt;\n        &lt;/ResourceDictionary.MergedDictionaries&gt;\n    &lt;/ResourceDictionary&gt;\n&lt;/Application.Resources&gt;\nA separate resource dictionary file has a root ResourceDictionary element:\n&lt;ResourceDictionary\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"&gt;\n\n    &lt;Color x:Key=\"PrimaryColor\"&gt;#3498DB&lt;/Color&gt;\n    &lt;Color x:Key=\"TextColor\"&gt;#202020&lt;/Color&gt;\n\n&lt;/ResourceDictionary&gt;\nThis lets us organise resources without putting everything into one file."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-should-you-use-in-your-projects",
+    "href": "lectures/Week7/Week7.html#what-should-you-use-in-your-projects",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What should you use in your projects?",
+    "text": "What should you use in your projects?\nFor your semester project, consider using application-level resources for values shared throughout the application.\nFor example:\n\nMain colours.\nText colours.\nCommon font sizes.\nButton styles.\nStyles for headings or other frequently used controls.\n\nUse page-level resources when a value is only relevant to one page.\nYou do not need a complicated collection of resource dictionaries. Start with a small number of useful resources and styles."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-is-data-binding",
+    "href": "lectures/Week7/Week7.html#what-is-data-binding",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What is data binding?",
+    "text": "What is data binding?\nSo far, we have often accessed controls directly from C# using their x:Name.\nFor example:\n&lt;Entry x:Name=\"nameEntry\"\n       Placeholder=\"Enter your name\" /&gt;\n\n&lt;Label x:Name=\"nameLabel\" /&gt;\nAnd then in C#:\nprivate void UpdateName_Clicked(object sender, EventArgs e)\n{\n    nameLabel.Text = nameEntry.Text;\n}\nThis works, but we have to write code to transfer the value from one control to another.\nData binding provides another way to connect objects."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#the-basic-idea",
+    "href": "lectures/Week7/Week7.html#the-basic-idea",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "The basic idea",
+    "text": "The basic idea\nData binding connects a property on one object to a property on another object.\nFor example:\n\nA Slider has a Value property.\nA Label has a Rotation property.\nWe can bind the Label’s Rotation to the Slider’s Value.\n\nWhen the Slider’s value changes, the Label’s rotation can update automatically.\nWe do not need to write an event handler to perform that update."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#element-to-element-binding",
+    "href": "lectures/Week7/Week7.html#element-to-element-binding",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Element-to-element binding",
+    "text": "Element-to-element binding\nWe can give a control a name using x:Name.\nWe can then refer to that control using the x:Reference markup extension.\n&lt;Slider x:Name=\"rotationSlider\"\n        Minimum=\"0\"\n        Maximum=\"360\" /&gt;\n\n&lt;Label Text=\"Move the slider\"\n       Rotation=\"{Binding Value,\n                  Source={x:Reference rotationSlider}}\" /&gt;\nThe Label’s Rotation property is bound to the Slider’s Value property.\nAs the Slider moves, the Label rotates."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#understanding-the-binding-expression",
+    "href": "lectures/Week7/Week7.html#understanding-the-binding-expression",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Understanding the binding expression",
+    "text": "Understanding the binding expression\nConsider:\nRotation=\"{Binding Value,\n           Source={x:Reference rotationSlider}}\"\nThere are two important parts:\n\nSource={x:Reference rotationSlider} identifies the object that provides the value.\nValue identifies the property on that object.\n\nThe target property is Rotation, because that is the property on the Label where we placed the binding.\nIn other words:\n\nSource: the Slider.\nSource property: Value.\nTarget: the Label.\nTarget property: Rotation."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#another-example-entry-and-label",
+    "href": "lectures/Week7/Week7.html#another-example-entry-and-label",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Another example: Entry and Label",
+    "text": "Another example: Entry and Label\nWe can bind a Label’s Text property to the Text property of an Entry.\n&lt;Entry x:Name=\"nameEntry\"\n       Placeholder=\"Enter your name\" /&gt;\n\n&lt;Label Text=\"{Binding Text,\n              Source={x:Reference nameEntry},\n              StringFormat='Your name is {0}'}\" /&gt;\nAs the user types into the Entry, the Label updates.\nNotice that we have not written an event handler.\nThe binding system handles the connection between the two controls."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#why-is-this-useful",
+    "href": "lectures/Week7/Week7.html#why-is-this-useful",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Why is this useful?",
+    "text": "Why is this useful?\nWithout binding, we might need an event handler for every value we want to transfer between controls.\nWith binding, the relationship is described in XAML.\nThis can:\n\nReduce code in event handlers.\nMake the relationship between controls clearer.\nKeep the UI updated when the source value changes.\nProvide a consistent way to connect the UI to application data.\n\nSo far, we have bound one UI control to another. We can also bind controls to properties in C#."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#binding-to-a-c-property",
+    "href": "lectures/Week7/Week7.html#binding-to-a-c-property",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Binding to a C# property",
+    "text": "Binding to a C# property\nSuppose we have a property in our MainPage class:\npublic string MyText { get; set; }\nWe would like an Entry to display and update this property.\nWe can write:\n&lt;Entry Text=\"{Binding MyText}\" /&gt;\nBut how does MAUI know where to find MyText?\nWe need to tell the page which object provides the data for its bindings.\nThis is the purpose of the BindingContext property."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#bindingcontext",
+    "href": "lectures/Week7/Week7.html#bindingcontext",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "BindingContext",
+    "text": "BindingContext\nEvery MAUI BindableObject can have a BindingContext.\nThe BindingContext identifies the object that provides the source values for bindings that do not specify another source.\nFor our example, we want the MainPage object itself to provide the values.\nIn the constructor:\npublic MainPage()\n{\n    InitializeComponent();\n\n    BindingContext = this;\n}\nthis refers to the current MainPage object.\nNow a binding such as:\n&lt;Entry Text=\"{Binding MyText}\" /&gt;\nlooks for a property called MyText on the MainPage object."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#putting-it-together",
+    "href": "lectures/Week7/Week7.html#putting-it-together",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Putting it together",
+    "text": "Putting it together\nOur XAML:\n&lt;VerticalStackLayout Padding=\"20\"&gt;\n    &lt;Entry Text=\"{Binding MyText}\"\n           Placeholder=\"Enter some text\" /&gt;\n\n    &lt;Label Text=\"{Binding MyText}\" /&gt;\n&lt;/VerticalStackLayout&gt;\nOur C#:\npublic partial class MainPage : ContentPage\n{\n    public string MyText { get; set; }\n\n    public MainPage()\n    {\n        InitializeComponent();\n        BindingContext = this;\n    }\n}\nThe Entry and Label are both bound to the MyText property.\nHowever, there is something important to understand about how this works."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#binding-modes",
+    "href": "lectures/Week7/Week7.html#binding-modes",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Binding modes",
+    "text": "Binding modes\nA binding has a mode that determines how values move between the source and target.\n\n\n\nMode\nBehaviour\n\n\n\n\nOneWay\nChanges in the source update the target\n\n\nTwoWay\nChanges in either direction update the other\n\n\nOneTime\nThe target receives the source value once\n\n\nOneWayToSource\nChanges in the target update the source\n\n\n\nThe default mode depends on the target property.\nFor example, Entry.Text uses TwoWay binding by default.\nIt is useful to specify the mode explicitly while learning:\n&lt;Entry Text=\"{Binding MyText, Mode=TwoWay}\" /&gt;"
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-happens-when-c-changes-the-property",
+    "href": "lectures/Week7/Week7.html#what-happens-when-c-changes-the-property",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What happens when C# changes the property?",
+    "text": "What happens when C# changes the property?\nSuppose we add a Button:\n&lt;Button Text=\"Change Text\"\n        Clicked=\"ChangeText_Clicked\" /&gt;\nAnd in C#:\nprivate void ChangeText_Clicked(object sender, EventArgs e)\n{\n    MyText = \"Changed in C#\";\n}\nThe value of the property changes.\nBut will the Entry and Label automatically display the new value?\nNot necessarily.\nThe binding system needs to know that the source property has changed.\nChanging a normal C# property does not automatically notify the binding system."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#property-change-notifications",
+    "href": "lectures/Week7/Week7.html#property-change-notifications",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Property change notifications",
+    "text": "Property change notifications\nFor a binding to update when a source property changes, the source object needs to notify the binding system.\n.NET MAUI uses the INotifyPropertyChanged notification mechanism for this.\nThe ContentPage class already provides property change notification through its base classes.\nWe can use its OnPropertyChanged method to notify the binding system when one of our properties changes."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#updating-the-property",
+    "href": "lectures/Week7/Week7.html#updating-the-property",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Updating the property",
+    "text": "Updating the property\nWe need to call OnPropertyChanged whenever the value of the property changes.\nprivate string myText;\n\npublic string MyText\n{\n    get\n    {\n        return myText;\n    }\n    set\n    {\n        myText = value;\n        OnPropertyChanged(nameof(MyText));\n    }\n}\nThe setter now does two things:\n\nStores the new value in the backing field.\nNotifies the binding system that MyText has changed.\n\nThe binding system can then update controls that are bound to this property."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#why-use-nameof",
+    "href": "lectures/Week7/Week7.html#why-use-nameof",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Why use nameof?",
+    "text": "Why use nameof?\nWe could write:\nOnPropertyChanged(\"MyText\");\nBut using nameof is safer:\nOnPropertyChanged(nameof(MyText));\nnameof(MyText) produces the string \"MyText\".\nIf we rename the property in Visual Studio, the compiler can update this reference too.\nIt also helps avoid spelling mistakes in property names."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#a-complete-example",
+    "href": "lectures/Week7/Week7.html#a-complete-example",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "A complete example",
+    "text": "A complete example\nThe XAML:\n&lt;VerticalStackLayout Padding=\"20\"\n                     Spacing=\"15\"&gt;\n\n    &lt;Entry Text=\"{Binding MyText, Mode=TwoWay}\"\n           Placeholder=\"Enter your name\" /&gt;\n\n    &lt;Label Text=\"{Binding MyText}\" /&gt;\n\n    &lt;Button Text=\"Change Text\"\n            Clicked=\"ChangeText_Clicked\" /&gt;\n\n&lt;/VerticalStackLayout&gt;"
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#a-note-about-twoway-binding",
+    "href": "lectures/Week7/Week7.html#a-note-about-twoway-binding",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "A note about TwoWay binding",
+    "text": "A note about TwoWay binding\nIn the previous example, Entry.Text uses TwoWay binding.\nThis means:\n\nWhen the user types, the MyText property is updated.\nWhen the MyText property changes in C#, the Entry is updated.\n\nThe Label is displaying the property, so it only needs to receive changes from the source.\nThis is a typical use of OneWay binding.\nWe do not need to specify Mode=OneWay because it is the default for the Label’s Text property, but we can do so explicitly if it helps make the example clearer."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#binding-to-more-than-one-property",
+    "href": "lectures/Week7/Week7.html#binding-to-more-than-one-property",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Binding to more than one property",
+    "text": "Binding to more than one property\nWe can bind several controls to properties on the same BindingContext.\nFor example, suppose we have:\nprivate int score;\n\npublic int Score\n{\n    get\n    {\n        return score;\n    }\n    set\n    {\n        score = value;\n        OnPropertyChanged();\n    }\n}\nWe can bind a Label to the property:\n&lt;Label Text=\"{Binding Score}\" /&gt;\nAnd update the property in C#:\nprivate void AddPoint_Clicked(object sender, EventArgs e)\n{\n    Score++;\n}\nThe Label updates when the property changes."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#what-have-we-gained",
+    "href": "lectures/Week7/Week7.html#what-have-we-gained",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "What have we gained?",
+    "text": "What have we gained?\nWithout data binding, we might write code that directly accesses controls:\nscore++;\nscoreLabel.Text = $\"Score : {score}\";\nand maybe have to do that in multiple places.\nWith data binding, the XAML describes which property should be displayed:\n&lt;Label Text=\"{Binding Score}\" /&gt;\nThe C# code changes the property, and the property notifies the binding system.\nThis reduces the need for code that manually updates individual controls.\nscore = 0;\nscoreLabel.Text = $\"Score : {score}\";\n...\nscore++;\nscoreLabel.Text = $\"Score : {score}\";\ncan be replaced with\nScore = 0;\n...\nScore++;\nWe have separated having to remember to update the UI in every place, to just allow the data to display as it changes."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#where-does-bindingcontext-come-from",
+    "href": "lectures/Week7/Week7.html#where-does-bindingcontext-come-from",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Where does BindingContext come from?",
+    "text": "Where does BindingContext come from?\nSo far, we have set:\nBindingContext = this;\nThis means that the page itself provides the properties used by its bindings.\nThat is convenient for a small example, but it means the UI and the data properties are still in the same class.\nAs applications become larger, we usually want to separate these responsibilities.\nFor example, we might have:\n\nA Model representing the data.\nA View representing the UI.\nA ViewModel providing the data and operations that the UI binds to.\n\nThis is the basis of the Model-View-ViewModel (MVVM) pattern.\nWe will look at MVVM in a later lecture."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#summary",
+    "href": "lectures/Week7/Week7.html#summary",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Summary",
+    "text": "Summary\nIn this lecture, we have seen how data binding connects properties without requiring us to write code to transfer every value manually.\nThe main ideas are:\n\nA binding connects a source property to a target property.\nx:Reference allows one UI element to bind to another.\nBindingContext identifies the object that provides binding values.\nBinding modes determine the direction in which values are transferred.\nOnPropertyChanged notifies the binding system when a property changes.\n\nFor now, we have kept everything in MainPage.xaml and MainPage.xaml.cs.\nThis gives us the foundations we need before introducing MVVM."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#onpropertychanged",
+    "href": "lectures/Week7/Week7.html#onpropertychanged",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "OnPropertyChanged",
+    "text": "OnPropertyChanged\nOnPropertyChanged is usually in properties, but it does not only work there, you can call it anywhere.\npublic Lives {get; set;}\n\npublic void LoseLife(){\n    --Lives;\n    OnPropertyChanged(nameof(Lives));\n}\nwill work, but this is a bit ridiculous when using properties.\nOnPropertyChanged is inherited from ContentPage so you don’t have to write it."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#onpropertychanged-1",
+    "href": "lectures/Week7/Week7.html#onpropertychanged-1",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "OnPropertyChanged",
+    "text": "OnPropertyChanged\nYou may also see OnPropertyChanged() used without an argument.\nThis is a shorthand provided by BindableObject in .NET MAUI.\nIt uses the caller information to determine which property has changed, so we don’t need to specify the property name ourselves.\nprivate string _name = \"\";\n\npublic string Name\n{\n    get =&gt; _name;\n    set\n    {\n        _name = value;\n        OnPropertyChanged();\n    }\n}\nwill work the same as if you put OnPropertyChanged(nameof(Name));"
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#a-complete-example-1",
+    "href": "lectures/Week7/Week7.html#a-complete-example-1",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "A complete example",
+    "text": "A complete example\nThe C#:\npublic partial class MainPage : ContentPage\n{\n    private string myText = \"\";\n\n    public string MyText\n    {\n        get\n        {\n            return myText;\n        }\n        set\n        {\n            myText = value;\n            OnPropertyChanged();\n        }\n    }\n\n    public MainPage()\n    {\n        InitializeComponent();\n        BindingContext = this;\n    }\n\n    private void ChangeText_Clicked(object sender, EventArgs e)\n    {\n        MyText = \"Changed in C#\";\n    }\n}\nTry typing into the Entry and then pressing the Button.\nThe Entry and Label both reflect the change to the property."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#linked-properties",
+    "href": "lectures/Week7/Week7.html#linked-properties",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Linked Properties",
+    "text": "Linked Properties\nA good example would be two linked Boolean properties, such as IsGameRunning and IsGameStopped. One is always the opposite of the other. Say this xaml\n&lt;ActivityIndicator IsRunning=\"{Binding IsGameRunning}\"\n                   IsVisible=\"{Binding IsGameRunning}\"\n                   Color=\"Green\" /&gt;\n\n&lt;Label Text=\"Game is stopped\"\n       IsVisible=\"{Binding IsGameStopped}\" /&gt;\nSo we need two bools for this, but really we only need one\npublic bool IsGameRunning\n{\n    get =&gt; _isGameRunning;\n    set\n    {\n        _isGameRunning = value;\n        OnPropertyChanged();\n        OnPropertyChanged(nameof(IsGameStopped));\n    }\n}\n\npublic bool IsGameStopped =&gt; !IsGameRunning;\nNotice that one IsGameRunning is changed, we need to also send a OnPropertyChanged for the opposite.\nIsGameStopped is a calculated property. It doesn’t have its own backing field or setter. It gets its value from IsGameRunning."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#something-else-we-could-do",
+    "href": "lectures/Week7/Week7.html#something-else-we-could-do",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "Something else we could do",
+    "text": "Something else we could do\n&lt;VerticalStackLayout&gt;\n    &lt;Label Text=\"Enter a score:\" /&gt;\n    &lt;Entry Text=\"{Binding Score, Mode=TwoWay}\"/&gt;  \n    &lt;Label Text=\"{Binding Score, StringFormat='Current score: {0}'}\" /&gt;\n&lt;/VerticalStackLayout&gt;\nWe know the Entry is going to be a string and we want to use data binding for the score\nprivate int _score;\n\npublic int Score\n{\n    get =&gt; _score;\n    set\n    {\n        if (int.TryParse(value.ToString(), out int result))\n        {\n            if (result &gt;= 0 && result &lt;= 100)\n            {\n                _score = result;\n                OnPropertyChanged();\n            }\n        }\n    }\n}\nSince the bound property is a int but Entry value is always a string we have to do something different."
+  },
+  {
+    "objectID": "lectures/Week7/Week7.html#stringformat",
+    "href": "lectures/Week7/Week7.html#stringformat",
+    "title": "Week 7 GitHub Resources and Data Binding",
+    "section": "StringFormat",
+    "text": "StringFormat\nWe can also include text around a bound value using StringFormat. For example, suppose we want a Label to display the current score:\n&lt;Label Text=\"{Binding Score, StringFormat='Score {0}'}\" /&gt;\nHere, {0} is replaced with the value of the Score property.\nThis is useful when we want to include a bound value within a longer piece of text, rather than displaying the value on its own."
   }
 ]
