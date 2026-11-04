@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GithubDemo.MainPage"
+             Title="Week 7 Demo"
+             BackgroundColor="{DynamicResource PageBackground}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- Colours -->
+            <Color x:Key="PageBackground">#F0F0F0</Color>
+            <Color x:Key="DemoColour">#512BD4</Color>
+            <Color x:Key="HeadingColour">#333333</Color>
+
+            <!-- An explicit Label style -->
+            <Style x:Key="HeadingStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource HeadingColour}" />
+            </Style>
+
+            <!-- An implicit Button style: applies to all Buttons -->
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="15,8" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource DemoColour}" />
+            </Style>
+
+            <!-- An explicit Button style -->
+            <Style x:Key="SpecialButtonStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="Padding" Value="20,10" />
+                <Setter Property="BackgroundColor" Value="DarkOrange" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="12">
+
+            <!-- Resources and styles             -->
+
+
+            <Label Text="Resources and Styles"
+                   Style="{StaticResource HeadingStyle}" />
+
+            <Label Text="This uses StaticResource:"
+                   FontAttributes="Bold" />
+
+            <Label Text="This colour will not change"
+                   TextColor="{StaticResource DemoColour}" />
+
+            <Label Text="This uses DynamicResource:"
+                   FontAttributes="Bold" />
+
+            <Label Text="This colour will change"
+                   TextColor="{DynamicResource DemoColour}" />
+
+            <Button Text="Change Resource Colour"
+                    Clicked="ChangeColour_Clicked" />
+
+            <Label Text="Implicit Button Style"
+                   FontAttributes="Bold" />
+
+            <Button Text="Uses the implicit style" />
+
+            <Label Text="Explicit Button Style"
+                   FontAttributes="Bold" />
+
+            <Button Text="Uses the explicit style"
+                    Style="{StaticResource SpecialButtonStyle}" />
+
+            <BoxView HeightRequest="2" Color="LightGray" />
+
+            <!-- Element-to-element binding       -->
+
+            <Label Text="Element-to-Element Binding"
+                   Style="{StaticResource HeadingStyle}" />
+
+            <Label Text="Move the slider to rotate the text:" />
+
+            <Slider x:Name="RotationSlider"
+                    Minimum="0"
+                    Maximum="360"
+                    Value="0" />
+
+            <Label Text="Rotate me!"
+                   FontSize="24"
+                   HorizontalOptions="Center"
+                   Rotation="{Binding Source={x:Reference RotationSlider},
+                                       Path=Value}" />
+
+            <BoxView HeightRequest="2" Color="LightGray" />
+
+            <!-- Binding to a C# property         -->
+
+            <Label Text="Name Binding"
+                   Style="{StaticResource HeadingStyle}" />
+
+            <Entry Placeholder="Enter your name"
+                   Text="{Binding Name, Mode=TwoWay}" />
+
+            <Label Text="{Binding Name, StringFormat='Hello, {0}!'}"
+                   FontSize="20" />
+
+            <BoxView HeightRequest="2" Color="LightGray" />
+
+            <!-- Boolean properties and binding  -->
+
+            <Label Text="Game Status"
+                   Style="{StaticResource HeadingStyle}" />
+
+            <ActivityIndicator IsRunning="{Binding IsGameRunning}"
+                               IsVisible="{Binding IsGameRunning}"
+                               Color="{DynamicResource DemoColour}" />
+
+            <Label Text="Game is stopped"
+                   IsVisible="{Binding IsGameStopped}" />
+
+            <Button Text="Start / Stop Game"
+                    Clicked="ToggleGame_Clicked" />
+
+            <BoxView HeightRequest="2" Color="LightGray" />
+
+            <!-- Two-way binding and validation   -->
+
+            <Label Text="Score"
+                   Style="{StaticResource HeadingStyle}" />
+
+            <Entry Placeholder="Enter a score (0–100)"
+                   Keyboard="Numeric"
+                   Text="{Binding ScoreInput, Mode=TwoWay}" />
+
+            <Label Text="{Binding Score, StringFormat='Current score: {0}'}" />
+
+            <Label Text="Please enter a valid score between 0 and 100."
+                   TextColor="Red"
+                   IsVisible="{Binding IsScoreInvalid}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
