@@ -83,6 +83,13 @@
             <Label Text="Element-to-Element Binding"
                    Style="{StaticResource HeadingStyle}" />
 
+            <Label Text="Slider and Label with Event Handlers"/>
+            <Slider Minimum="0" Maximum="360" Value="0" ValueChanged="Slider_ValueChanged"/>
+            <Label x:Name="LabelToRotate" Text="Rotate event"
+                    FontSize="24"
+                    HorizontalOptions="Center"
+                    />
+
             <Label Text="Move the slider to rotate the text:" />
 
             <Slider x:Name="RotationSlider"
@@ -95,6 +102,12 @@
                    HorizontalOptions="Center"
                    Rotation="{Binding Source={x:Reference RotationSlider},
                                        Path=Value}" />
+
+
+
+            <Entry Text="{Binding MyText}" />
+
+            <Button Text="Click me" Clicked="Button_Clicked"/>
 
             <BoxView HeightRequest="2" Color="LightGray" />
 

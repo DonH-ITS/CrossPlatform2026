@@ -8,7 +8,6 @@
         private bool _isGameRunning;
         private bool _anotherField;
 
-        private string _name = "";
 
         private int _score;
         private string _scoreInput = "0";
@@ -38,13 +37,35 @@
         // ------------------------------------
         // Name property
         // ------------------------------------
-
+        private string _name="";
         public string Name
         {
             get => _name;
             set
             {
                 _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsGameNotRunning
+        {
+            get
+            {
+                return !_isGameRunning;
+            }
+        }
+
+        private string _myText = "Hello, World!";
+        public string MyText
+        {
+            get
+            {
+                return _myText;
+            }
+            set
+            {
+                _myText = value;
                 OnPropertyChanged();
             }
         }
@@ -107,6 +128,15 @@
                 _isScoreInvalid = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e) {
+            LabelToRotate.Rotation = e.NewValue;
+        }
+
+        private void Button_Clicked(object sender, EventArgs e) {
+            MyText = "change it";
+            DisplayAlertAsync("MyText", MyText, "OK");
         }
     }
 }
