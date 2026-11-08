@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 6: Disciplinary Committee – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../labs.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 6: Disciplinary Committee</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="aim" class="level1">
+<h1>Aim</h1>
+<p>The Premier League has asked you to join its newly formed Disciplinary Committee. Your job is to review the league table and issue points deductions or awards to clubs when you feel they deserve them.</p>
+<p>You will build a small .NET MAUI application that:</p>
+<ul>
+<li>Loads the original Premier League table from a JSON file in <code>Resources/Raw</code>.</li>
+<li>Displays the league table.</li>
+<li>Allows you to enter disciplinary decisions for clubs.</li>
+<li>Recalculates and displays the table after decisions are applied.</li>
+<li>Saves and loads your disciplinary decisions as JSON.</li>
+<li>Uses XAML resources (<code>StaticResource</code> and <code>DynamicResource</code>) to style the application.</li>
+<li>Includes a small example of data binding on <code>MainPage</code>.</li>
+</ul>
+<p>You will bring together several of the topics covered so far:</p>
+<ul>
+<li>Serialising and deserialising objects using JSON.</li>
+<li>Reading a file that is packaged with the application.</li>
+<li>Reading and writing a file in the application’s data folder.</li>
+<li>Using XAML resources.</li>
+<li>A first look at data binding.</li>
+</ul>
+<p>You will be given a lot of the code, but you will need to complete and connect the different parts.</p>
+<p>Work through the lab in order. Get each part working before moving on to the next one.</p>
+<p>This lab is designed to be finished in a single session of about two hours. Anything marked <strong>Optional</strong> (and the stretch goals at the end) can be skipped if you are short of time.</p>
+<p>The supplied league table is a fixed snapshot of the 2026/27 Premier League table as of <strong>8 November 2026</strong>. It is not intended to update automatically.</p>
+<section id="create-the-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-project">1. Create the Project</h2>
+<p>Create a new .NET MAUI App project called <code>PremierLeagueCommittee</code>.</p>
+<p>Most of your code for this lab will be in <code>MainPage.xaml</code> and <code>MainPage.xaml.cs</code>. You will also add three small class files in Section 3.</p>
+<p>Make sure the template project runs before doing any modifications.</p>
+<section id="add-the-league-data" class="level3">
+<h3 class="anchored" data-anchor-id="add-the-league-data">Add the league data</h3>
+<p>The league table is supplied as a file called <code>premierleague.json</code> (it’s on Moodle). Add it to the <code>Resources/Raw</code> folder of your project. Drag and drop it onto the folder in Solution Explorer. Do <strong>not</strong> put it in the root of the project, or the application won’t be able to find it.</p>
+<p>The file is a JSON array containing one object for each club. It looks like this (these are example values, not real ones):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"Example Town"</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Played"</span><span class="fu">:</span> <span class="dv">11</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Won"</span><span class="fu">:</span> <span class="dv">6</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Drawn"</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Lost"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"GoalDifference"</span><span class="fu">:</span> <span class="dv">8</span><span class="fu">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Points"</span><span class="fu">:</span> <span class="dv">21</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The property names in the file are exactly the same as the property names of the <code>Team</code> class that is supplied later in this lab. This matters, because <code>System.Text.Json</code> is case-sensitive by default. If your table later loads with blank club names and zeros everywhere, and you get no error message, a mismatch between the JSON names and the C# property names is the first thing to check.</p>
+<p>The file contains the original league table. It is supplied as part of the application and should not be changed by your application.</p>
+<p>Files in <code>Resources/Raw</code> are packaged inside the application. You can read them, but they are not ordinary files that you can edit in place. Think about this: if the application cannot write to <code>Resources/Raw</code>, where will it save the committee’s decisions? You will find out in Section 9.</p>
+</section>
+</section>
+<section id="starting-xaml" class="level2">
+<h2 class="anchored" data-anchor-id="starting-xaml">2. Starting XAML</h2>
+<p>Open <code>MainPage.xaml</code>. There are two changes to make.</p>
+<p><strong>First</strong>, edit the opening <code>&lt;ContentPage ...&gt;</code> tag. Leave the existing lines (including <code>x:Class</code>) exactly as they are, and add these two attributes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Title="Disciplinary Committee"</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>BackgroundColor="{DynamicResource PageBackground}"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So the tag will look something like this (yours may have a few extra lines, leave them alone):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="ot">x:Class=</span><span class="st">"PremierLeagueCommittee.MainPage"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="ot">Title=</span><span class="st">"Disciplinary Committee"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>             <span class="ot">BackgroundColor=</span><span class="st">"{DynamicResource PageBackground}"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Second</strong>, delete everything <strong>between</strong> the opening <code>&lt;ContentPage ...&gt;</code> tag and the closing <code>&lt;/ContentPage&gt;</code> tag (do not delete the <code>ContentPage</code> tags themselves), and paste in the following XAML. Don’t type it, copy-paste.</p>
+<p>The page contains:</p>
+<ul>
+<li>A heading.</li>
+<li>Two buttons: <strong>Load Original Table</strong> and <strong>Change Theme</strong>.</li>
+<li>A <code>Grid</code> named <code>LeagueTable</code> with eight columns for position, club, played, won, drawn, lost, goal difference and points. You will create the rows in C#.</li>
+<li>Three <code>Entry</code> controls for entering a disciplinary decision, and the <strong>Add Decision</strong> and <strong>Clear Decisions</strong> buttons.</li>
+<li>Three <code>Label</code> controls whose text is data bound. You will meet these in Section 6.</li>
+<li>The <strong>Save Decisions</strong> and <strong>Load Decisions</strong> buttons.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage.Resources</span>&gt;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">ResourceDictionary</span>&gt;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Color</span> <span class="ot">x:Key=</span><span class="st">"PageBackground"</span>&gt;#F4F4F4&lt;/<span class="kw">Color</span>&gt;</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Style</span> <span class="ot">x:Key=</span><span class="st">"CommitteeButtonStyle"</span> <span class="ot">TargetType=</span><span class="st">"Button"</span>&gt;</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"BackgroundColor"</span> <span class="ot">Value=</span><span class="st">"#263B5A"</span> /&gt;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"TextColor"</span> <span class="ot">Value=</span><span class="st">"White"</span> /&gt;</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"CornerRadius"</span> <span class="ot">Value=</span><span class="st">"6"</span> /&gt;</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"Padding"</span> <span class="ot">Value=</span><span class="st">"12,8"</span> /&gt;</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"FontSize"</span> <span class="ot">Value=</span><span class="st">"14"</span> /&gt;</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">Style</span>&gt;</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Not used until the experiment at the end of Section 10 --&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Style</span> <span class="ot">x:Key=</span><span class="st">"AlternateButtonStyle"</span> <span class="ot">TargetType=</span><span class="st">"Button"</span>&gt;</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"BackgroundColor"</span> <span class="ot">Value=</span><span class="st">"#8B1E2D"</span> /&gt;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"TextColor"</span> <span class="ot">Value=</span><span class="st">"#FFD966"</span> /&gt;</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"CornerRadius"</span> <span class="ot">Value=</span><span class="st">"20"</span> /&gt;</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"Padding"</span> <span class="ot">Value=</span><span class="st">"12,8"</span> /&gt;</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Setter</span> <span class="ot">Property=</span><span class="st">"FontSize"</span> <span class="ot">Value=</span><span class="st">"14"</span> /&gt;</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">Style</span>&gt;</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">ResourceDictionary</span>&gt;</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ContentPage.Resources</span>&gt;</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ScrollView</span>&gt;</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Padding=</span><span class="st">"15"</span> <span class="ot">Spacing=</span><span class="st">"12"</span>&gt;</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"THE PREMIER LEAGUE"</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"22"</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span> /&gt;</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"Disciplinary Committee"</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"18"</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span> /&gt;</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"League table: 8 November 2026"</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"12"</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>               <span class="ot">TextColor=</span><span class="st">"Gray"</span> /&gt;</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"*,*"</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>              <span class="ot">ColumnSpacing=</span><span class="st">"8"</span>&gt;</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Load Original Table"</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Grid.Column=</span><span class="st">"0"</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Style=</span><span class="st">"{StaticResource CommitteeButtonStyle}"</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Clicked=</span><span class="st">"LoadOriginalTable_Clicked"</span> /&gt;</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Change Theme"</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Grid.Column=</span><span class="st">"1"</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Style=</span><span class="st">"{StaticResource CommitteeButtonStyle}"</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Clicked=</span><span class="st">"ChangeTheme_Clicked"</span> /&gt;</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"LEAGUE TABLE"</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ScrollView</span> <span class="ot">Orientation=</span><span class="st">"Horizontal"</span>&gt;</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Grid</span> <span class="ot">x:Name=</span><span class="st">"LeagueTable"</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>                  <span class="ot">ColumnDefinitions=</span><span class="st">"35,175,35,35,35,35,45,45"</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>                  <span class="ot">RowDefinitions=</span><span class="st">"Auto"</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>                  <span class="ot">ColumnSpacing=</span><span class="st">"3"</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>                  <span class="ot">RowSpacing=</span><span class="st">"5"</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>                  <span class="ot">Padding=</span><span class="st">"3"</span> /&gt;</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">ScrollView</span>&gt;</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">BoxView</span> <span class="ot">HeightRequest=</span><span class="st">"1"</span> <span class="ot">Color=</span><span class="st">"Gray"</span> /&gt;</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"ENTER A DISCIPLINARY DECISION"</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Entry</span> <span class="ot">x:Name=</span><span class="st">"TeamNameEntry"</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Placeholder=</span><span class="st">"Club name (e.g. Arsenal)"</span> /&gt;</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Entry</span> <span class="ot">x:Name=</span><span class="st">"PointsAdjustmentEntry"</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Placeholder=</span><span class="st">"Points adjustment (e.g. -10 or 5)"</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Keyboard=</span><span class="st">"Numeric"</span> /&gt;</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Entry</span> <span class="ot">x:Name=</span><span class="st">"ReasonEntry"</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Placeholder=</span><span class="st">"Reason for the decision"</span> /&gt;</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"*,*"</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>              <span class="ot">ColumnSpacing=</span><span class="st">"8"</span>&gt;</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Add Decision"</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Grid.Column=</span><span class="st">"0"</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Style=</span><span class="st">"{StaticResource CommitteeButtonStyle}"</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Clicked=</span><span class="st">"AddDecision_Clicked"</span> /&gt;</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Clear Decisions"</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Grid.Column=</span><span class="st">"1"</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Style=</span><span class="st">"{StaticResource CommitteeButtonStyle}"</span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Clicked=</span><span class="st">"ClearDecisions_Clicked"</span> /&gt;</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding CommitteeStatus}"</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span> /&gt;</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding TotalAdjustment, StringFormat='Total points adjustment: {0}'}"</span> /&gt;</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"DECISIONS MADE"</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding DecisionLog}"</span> /&gt;</span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Grid</span> <span class="ot">ColumnDefinitions=</span><span class="st">"*,*"</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>              <span class="ot">ColumnSpacing=</span><span class="st">"8"</span>&gt;</span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Save Decisions"</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Grid.Column=</span><span class="st">"0"</span></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Style=</span><span class="st">"{StaticResource CommitteeButtonStyle}"</span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Clicked=</span><span class="st">"SaveDecisions_Clicked"</span> /&gt;</span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Load Decisions"</span></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Grid.Column=</span><span class="st">"1"</span></span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Style=</span><span class="st">"{StaticResource CommitteeButtonStyle}"</span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>                    <span class="ot">Clicked=</span><span class="st">"LoadDecisions_Clicked"</span> /&gt;</span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ScrollView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-data-classes-and-mainpage.xaml.cs" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-classes-and-mainpage.xaml.cs">3. The Data Classes and MainPage.xaml.cs</h2>
+<section id="the-data-classes" class="level3">
+<h3 class="anchored" data-anchor-id="the-data-classes">The data classes</h3>
+<p>In C#, each class normally lives in its own file. The application uses three simple classes to hold its data. Create each one in its own file:</p>
+<ol type="1">
+<li>Right-click the project in Solution Explorer and choose <strong>Add &gt; Class…</strong></li>
+<li>Give the file the name shown below (<code>Team.cs</code>, <code>DisciplinaryRecord.cs</code> and <code>CommitteeData.cs</code>).</li>
+<li>Delete <strong>everything</strong> in the new file and paste in the code shown.</li>
+</ol>
+<p>The <code>namespace</code> line in each file must match your project’s namespace. If you did not call your project <code>PremierLeagueCommittee</code>, change it.</p>
+<p><code>Team</code> holds one row of the league table. <code>AdjustedPoints</code> is calculated by the application and is not stored in <code>premierleague.json</code>, so it is marked with <code>[JsonIgnore]</code>.</p>
+<p><code>Team.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Json</span><span class="op">.</span><span class="fu">Serialization</span><span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> PremierLeagueCommittee<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Team</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> Played <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> Won <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> Drawn <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> Lost <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> GoalDifference <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> Points <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">// This value is calculated and is not stored in premierleague.json.</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span>JsonIgnore<span class="op">]</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> AdjustedPoints <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>DisciplinaryRecord</code> holds one decision made by the committee.</p>
+<p><code>DisciplinaryRecord.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> PremierLeagueCommittee<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DisciplinaryRecord</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> TeamName <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> PointsAdjustment <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> Reason <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>CommitteeData</code> is the object that you will serialise to <code>decisions.json</code> in Section 9. It contains a collection of <code>DisciplinaryRecord</code> objects.</p>
+<p><code>CommitteeData.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> PremierLeagueCommittee<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> CommitteeData</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> List<span class="op">&lt;</span>DisciplinaryRecord<span class="op">&gt;</span> Decisions <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">new</span> List<span class="op">&lt;</span>DisciplinaryRecord<span class="op">&gt;();</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="mainpage.xaml.cs" class="level3">
+<h3 class="anchored" data-anchor-id="mainpage.xaml.cs">MainPage.xaml.cs</h3>
+<p>Open <code>MainPage.xaml.cs</code>. Keep the <code>namespace PremierLeagueCommittee;</code> line at the top of the file, delete <strong>everything below it</strong>, and paste in the following code.</p>
+<p>The code starts with a <code>using</code> line. It is fine for it to appear underneath the <code>namespace</code> line.</p>
+<p>This contains the fields, the bound properties and the method structure for the application. The table display, calculation and sorting methods, <code>FindTeam()</code> and <code>ClearDecisions_Clicked()</code> are already written for you. You must complete the methods marked <code>TODO</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Json</span><span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> List<span class="op">&lt;</span>Team<span class="op">&gt;</span> _teams <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span>Team<span class="op">&gt;();</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> List<span class="op">&lt;</span>DisciplinaryRecord<span class="op">&gt;</span> _decisions <span class="op">=</span> <span class="kw">new</span> List<span class="op">&lt;</span>DisciplinaryRecord<span class="op">&gt;();</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">bool</span> _alternateTheme <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// These three properties are used by the data binding in Section 6.</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> _committeeStatus <span class="op">=</span> <span class="st">"Load the original league table to begin."</span><span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> CommitteeStatus</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">get</span> <span class="op">{</span> <span class="kw">return</span> _committeeStatus<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        set</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            _committeeStatus <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">OnPropertyChanged</span><span class="op">();</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> _totalAdjustment <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> TotalAdjustment</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">get</span> <span class="op">{</span> <span class="kw">return</span> _totalAdjustment<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        set</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            _totalAdjustment <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">OnPropertyChanged</span><span class="op">();</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> _decisionLog <span class="op">=</span> <span class="st">"No decisions yet."</span><span class="op">;</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">string</span> DecisionLog</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        <span class="kw">get</span> <span class="op">{</span> <span class="kw">return</span> _decisionLog<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        set</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            _decisionLog <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>            <span class="fu">OnPropertyChanged</span><span class="op">();</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        <span class="co">// The colours in this lab assume a light theme. Without this line, a computer</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>        <span class="co">// set to dark mode would show white text on a light background.</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>        Application<span class="op">.</span><span class="fu">Current</span><span class="op">!.</span><span class="fu">UserAppTheme</span> <span class="op">=</span> AppTheme<span class="op">.</span><span class="fu">Light</span><span class="op">;</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        BindingContext <span class="op">=</span> <span class="kw">this</span><span class="op">;</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async <span class="dt">void</span> <span class="fu">LoadOriginalTable_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Open premierleague.json from Resources/Raw.</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Read the JSON text from the file.</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Deserialise the JSON into a List&lt;Team&gt; and store it in _teams.</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>        <span class="fu">CalculateTable</span><span class="op">();</span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>        <span class="fu">DisplayTable</span><span class="op">();</span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>        CommitteeStatus <span class="op">=</span> <span class="st">"Original league table loaded."</span><span class="op">;</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">AddDecision_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Read the three Entry controls.</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Check that a club name has been entered.</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Check that the points adjustment is a valid integer.</span></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Check that a reason has been entered.</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Check that the club exists in the league table (use FindTeam).</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Create a DisciplinaryRecord and add it to _decisions.</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Recalculate and redisplay the table, and call UpdateDecisionSummary().</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update CommitteeStatus and clear the three Entry controls.</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async <span class="dt">void</span> <span class="fu">SaveDecisions_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Create a CommitteeData object containing _decisions.</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Serialise it to JSON.</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Write the JSON to decisions.json (use GetDecisionsPath()).</span></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update CommitteeStatus.</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> async <span class="dt">void</span> <span class="fu">LoadDecisions_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Check whether decisions.json exists. If it doesn't, say so in</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>        <span class="co">//       CommitteeStatus and stop.</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Read the JSON text from the file.</span></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Deserialise it into a CommitteeData object.</span></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Replace _decisions with the loaded decisions.</span></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Recalculate and redisplay the table, and call UpdateDecisionSummary().</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>        <span class="co">// </span><span class="al">TODO</span><span class="co">: Update CommitteeStatus.</span></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">ChangeTheme_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>        _alternateTheme <span class="op">=</span> <span class="op">!</span>_alternateTheme<span class="op">;</span></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>_alternateTheme<span class="op">)</span></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>            Resources<span class="op">[</span><span class="st">"PageBackground"</span><span class="op">]</span> <span class="op">=</span> Color<span class="op">.</span><span class="fu">FromArgb</span><span class="op">(</span><span class="st">"#FFF0E0"</span><span class="op">);</span></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>            Resources<span class="op">[</span><span class="st">"PageBackground"</span><span class="op">]</span> <span class="op">=</span> Color<span class="op">.</span><span class="fu">FromArgb</span><span class="op">(</span><span class="st">"#F4F4F4"</span><span class="op">);</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ------------------------------------------------------------</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The methods below are supplied. You do not need to change them.</span></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ------------------------------------------------------------</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Returns the team with the given name (ignoring upper and lower case),</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>    <span class="co">// or null if there is no such team.</span></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> Team<span class="op">?</span> <span class="fu">FindTeam</span><span class="op">(</span><span class="dt">string</span> name<span class="op">)</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>        <span class="kw">foreach</span> <span class="op">(</span>Team team <span class="kw">in</span> _teams<span class="op">)</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> <span class="op">(</span><span class="dt">string</span><span class="op">.</span><span class="fu">Equals</span><span class="op">(</span>team<span class="op">.</span><span class="fu">Name</span><span class="op">,</span> name<span class="op">,</span> StringComparison<span class="op">.</span><span class="fu">OrdinalIgnoreCase</span><span class="op">))</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>                <span class="kw">return</span> team<span class="op">;</span></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">ClearDecisions_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>        _decisions<span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>        <span class="fu">CalculateTable</span><span class="op">();</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>        <span class="fu">DisplayTable</span><span class="op">();</span></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>        <span class="fu">UpdateDecisionSummary</span><span class="op">();</span></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>        CommitteeStatus <span class="op">=</span> <span class="st">"All decisions cleared."</span><span class="op">;</span></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">CalculateTable</span><span class="op">()</span></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Reset adjusted points to the original points.</span></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a>        <span class="kw">foreach</span> <span class="op">(</span>Team team <span class="kw">in</span> _teams<span class="op">)</span></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>            team<span class="op">.</span><span class="fu">AdjustedPoints</span> <span class="op">=</span> team<span class="op">.</span><span class="fu">Points</span><span class="op">;</span></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Apply every disciplinary decision.</span></span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>        <span class="kw">foreach</span> <span class="op">(</span>DisciplinaryRecord decision <span class="kw">in</span> _decisions<span class="op">)</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>            <span class="kw">foreach</span> <span class="op">(</span>Team team <span class="kw">in</span> _teams<span class="op">)</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span> <span class="op">(</span>team<span class="op">.</span><span class="fu">Name</span> <span class="op">==</span> decision<span class="op">.</span><span class="fu">TeamName</span><span class="op">)</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>                <span class="op">{</span></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>                    team<span class="op">.</span><span class="fu">AdjustedPoints</span> <span class="op">+=</span> decision<span class="op">.</span><span class="fu">PointsAdjustment</span><span class="op">;</span></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Reorder the table.</span></span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>        _teams<span class="op">.</span><span class="fu">Sort</span><span class="op">(</span>CompareTeams<span class="op">);</span></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Comparison helper used by List.Sort().</span></span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Sort by adjusted points, then goal difference.</span></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> <span class="fu">CompareTeams</span><span class="op">(</span>Team first<span class="op">,</span> Team second<span class="op">)</span></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> result <span class="op">=</span> second<span class="op">.</span><span class="fu">AdjustedPoints</span><span class="op">.</span><span class="fu">CompareTo</span><span class="op">(</span>first<span class="op">.</span><span class="fu">AdjustedPoints</span><span class="op">);</span></span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>result <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> second<span class="op">.</span><span class="fu">GoalDifference</span><span class="op">.</span><span class="fu">CompareTo</span><span class="op">(</span>first<span class="op">.</span><span class="fu">GoalDifference</span><span class="op">);</span></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result<span class="op">;</span></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">DisplayTable</span><span class="op">()</span></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>        LeagueTable<span class="op">.</span><span class="fu">Children</span><span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a>        LeagueTable<span class="op">.</span><span class="fu">RowDefinitions</span><span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Header row.</span></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>        LeagueTable<span class="op">.</span><span class="fu">RowDefinitions</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> <span class="fu">RowDefinition</span><span class="op">(</span>GridLength<span class="op">.</span><span class="fu">Auto</span><span class="op">));</span></span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"Pos"</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"Club"</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"P"</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"W"</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"D"</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"L"</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"GD"</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AddCell</span><span class="op">(</span><span class="st">"Pts"</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> position <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>        <span class="kw">foreach</span> <span class="op">(</span>Team team <span class="kw">in</span> _teams<span class="op">)</span></span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> row <span class="op">=</span> position<span class="op">;</span></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a>            LeagueTable<span class="op">.</span><span class="fu">RowDefinitions</span><span class="op">.</span><span class="fu">Add</span><span class="op">(</span><span class="kw">new</span> <span class="fu">RowDefinition</span><span class="op">(</span>GridLength<span class="op">.</span><span class="fu">Auto</span><span class="op">));</span></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>position<span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">0</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">Name</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">Played</span><span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">2</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">Won</span><span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">3</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">Drawn</span><span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">4</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">Lost</span><span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">5</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">GoalDifference</span><span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">6</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>            <span class="fu">AddCell</span><span class="op">(</span>team<span class="op">.</span><span class="fu">AdjustedPoints</span><span class="op">.</span><span class="fu">ToString</span><span class="op">(),</span> <span class="dv">7</span><span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a>            position<span class="op">++;</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">AddCell</span><span class="op">(</span><span class="dt">string</span> text<span class="op">,</span> <span class="dt">int</span> column<span class="op">,</span> <span class="dt">int</span> row<span class="op">,</span> <span class="dt">bool</span> isHeader <span class="op">=</span> <span class="kw">false</span><span class="op">)</span></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a>        Label label <span class="op">=</span> <span class="kw">new</span> Label</span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>            Text <span class="op">=</span> text<span class="op">,</span></span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a>            FontSize <span class="op">=</span> <span class="dv">12</span><span class="op">,</span></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>            FontAttributes <span class="op">=</span> isHeader <span class="op">?</span> FontAttributes<span class="op">.</span><span class="fu">Bold</span> <span class="op">:</span> FontAttributes<span class="op">.</span><span class="fu">None</span><span class="op">,</span></span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>            VerticalTextAlignment <span class="op">=</span> TextAlignment<span class="op">.</span><span class="fu">Center</span><span class="op">,</span></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>            HorizontalTextAlignment <span class="op">=</span> column <span class="op">==</span> <span class="dv">1</span> <span class="op">?</span> TextAlignment<span class="op">.</span><span class="fu">Start</span> <span class="op">:</span> TextAlignment<span class="op">.</span><span class="fu">Center</span></span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a>        <span class="op">};</span></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>        LeagueTable<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>label<span class="op">,</span> column<span class="op">,</span> row<span class="op">);</span></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Works out the total adjustment and the list of decisions, and puts them</span></span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>    <span class="co">// into the two bound properties. Call this whenever _decisions changes.</span></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">UpdateDecisionSummary</span><span class="op">()</span></span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>        <span class="dt">string</span> log <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>        <span class="kw">foreach</span> <span class="op">(</span>DisciplinaryRecord decision <span class="kw">in</span> _decisions<span class="op">)</span></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>            total <span class="op">+=</span> decision<span class="op">.</span><span class="fu">PointsAdjustment</span><span class="op">;</span></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>            log <span class="op">+=</span> decision<span class="op">.</span><span class="fu">TeamName</span> <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span> decision<span class="op">.</span><span class="fu">PointsAdjustment</span> <span class="op">+</span> <span class="st">"): "</span> <span class="op">+</span> decision<span class="op">.</span><span class="fu">Reason</span> <span class="op">+</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>log <span class="op">==</span> <span class="st">""</span><span class="op">)</span></span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>            log <span class="op">=</span> <span class="st">"No decisions yet."</span><span class="op">;</span></span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>        TotalAdjustment <span class="op">=</span> total<span class="op">;</span></span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>        DecisionLog <span class="op">=</span> log<span class="op">.</span><span class="fu">TrimEnd</span><span class="op">();</span></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The full path of decisions.json in the application's data folder.</span></span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> <span class="fu">GetDecisionsPath</span><span class="op">()</span></span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> Path<span class="op">.</span><span class="fu">Combine</span><span class="op">(</span>FileSystem<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">AppDataDirectory</span><span class="op">,</span> <span class="st">"decisions.json"</span><span class="op">);</span></span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The code deliberately contains incomplete methods. You should not try to implement everything at once. Follow the sections below and test each feature as you add it.</p>
+</section>
+<section id="tasks" class="level3">
+<h3 class="anchored" data-anchor-id="tasks">Tasks</h3>
+<ol type="1">
+<li>Build and run the application and check that the layout looks reasonable.</li>
+<li>Click <strong>Load Original Table</strong>. Only the header row of the table appears (there are no teams yet), but the status message under the entry boxes changes. Section 6 explains why.</li>
+<li>Click <strong>Change Theme</strong> a couple of times and watch the page background.</li>
+</ol>
+</section>
+</section>
+<section id="load-the-original-table" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-original-table">4. Load the Original Table</h2>
+<p>Complete the TODO comments in <code>LoadOriginalTable_Clicked()</code>.</p>
+<section id="tasks-1" class="level3">
+<h3 class="anchored" data-anchor-id="tasks-1">Tasks</h3>
+<ol type="1">
+<li>Open <code>premierleague.json</code> using <code>FileSystem.OpenAppPackageFileAsync()</code>.</li>
+<li>Read the contents of the file into a <code>string</code>.</li>
+<li>Use <code>JsonSerializer.Deserialize</code> to convert the JSON into a <code>List&lt;Team&gt;</code>.</li>
+<li>Store the result in <code>_teams</code>.</li>
+</ol>
+<p>The method is already <code>async</code>, so remember to <code>await</code> the asynchronous calls.</p>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> Opening and reading the file looks like this:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> Stream stream <span class="op">=</span> await FileSystem<span class="op">.</span><span class="fu">OpenAppPackageFileAsync</span><span class="op">(</span><span class="st">"premierleague.json"</span><span class="op">);</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> StreamReader reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">StreamReader</span><span class="op">(</span>stream<span class="op">);</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">string</span> json <span class="op">=</span> await reader<span class="op">.</span><span class="fu">ReadToEndAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> You need to tell <code>Deserialize</code> what type to create, by putting it in angle brackets: <code>JsonSerializer.Deserialize&lt;List&lt;Team&gt;&gt;(json)</code>. This can (in theory) return <code>null</code>. If it does, use a new empty list instead.</p>
+</blockquote>
+<p>The supplied code already calls <code>CalculateTable()</code> and <code>DisplayTable()</code> after your code has run.</p>
+</section>
+<section id="test" class="level3">
+<h3 class="anchored" data-anchor-id="test">Test</h3>
+<p>Click <strong>Load Original Table</strong>. You should see the 20 clubs displayed in order, with their played, won, drawn, lost, goal difference and points. Check a few rows against the real table.</p>
+<p>If the club names are blank and the numbers are all zero, the JSON names don’t match the property names of <code>Team</code> (see Section 1).</p>
+</section>
+</section>
+<section id="how-the-table-is-calculated-and-displayed" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-table-is-calculated-and-displayed">5. How the Table is Calculated and Displayed</h2>
+<p>The following three methods are already written. Read through them and make sure you understand them.</p>
+<ul>
+<li><code>CalculateTable()</code> works out each team’s <code>AdjustedPoints</code> and sorts the list.</li>
+<li><code>CompareTeams()</code> is the comparison used by the built-in <code>List&lt;T&gt;.Sort()</code> method. It orders the teams by adjusted points, then by goal difference. You do not need to understand the sorting in detail, and there is no need to write your own sorting algorithm.</li>
+<li><code>DisplayTable()</code> clears the <code>LeagueTable</code> grid, adds a header row, then loops through the teams and adds a <code>Label</code> to the appropriate cell of the grid for each value.</li>
+</ul>
+<p>The table displays the <strong>adjusted points</strong>, not the original points.</p>
+<section id="think-about-this" class="level3">
+<h3 class="anchored" data-anchor-id="think-about-this">Think about this</h3>
+<p><code>CalculateTable()</code> begins by setting every team’s <code>AdjustedPoints</code> back to its original <code>Points</code>, and only then applies the decisions. Why? What would happen if it didn’t?</p>
+<p>The original <code>Points</code> property of each <code>Team</code> is never changed. The decisions are applied to a separate value each time the table is calculated.</p>
+<p>Once you have finished Section 7, come back and try it. Comment out the first <code>foreach</code> loop in <code>CalculateTable()</code>, add a decision, and watch what happens to the points. Then put the loop back.</p>
+</section>
+</section>
+<section id="a-small-example-of-data-binding" class="level2">
+<h2 class="anchored" data-anchor-id="a-small-example-of-data-binding">6. A Small Example of Data Binding</h2>
+<p>The page sets its own <code>BindingContext</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>BindingContext <span class="op">=</span> <span class="kw">this</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means that the bindings in the XAML look for their properties in <code>MainPage</code> itself. Three <code>Label</code> controls are bound to properties of the page:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding CommitteeStatus}"</span> /&gt;</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding TotalAdjustment, StringFormat='Total points adjustment: {0}'}"</span> /&gt;</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding DecisionLog}"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The setter of each property calls <code>OnPropertyChanged()</code>. This tells the data binding system that the value has changed, so the <code>Label</code> updates itself. You do not need to write any code to find the <code>Label</code> and change its <code>Text</code>.</p>
+<p>Compare this with the league table. The table is created in C#, and the table is not data bound, so we have to call <code>DisplayTable()</code> ourselves every time something changes.</p>
+<p>The supplied <code>UpdateDecisionSummary()</code> method works out the total adjustment and the list of decisions from <code>_decisions</code> and sets <code>TotalAdjustment</code> and <code>DecisionLog</code>. You must call it whenever <code>_decisions</code> changes (when you add, clear or load decisions).</p>
+<section id="check-it" class="level3">
+<h3 class="anchored" data-anchor-id="check-it">Check it</h3>
+<p>Click <strong>Load Original Table</strong> and watch the status label change. That is data binding at work: the code only sets <code>CommitteeStatus</code>.</p>
+</section>
+<section id="optional-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="optional-experiment">Optional experiment</h3>
+<p>If you have time, comment out the <code>OnPropertyChanged();</code> line in the <code>CommitteeStatus</code> setter and run the application again. What happens when you click the button? Put the line back when you have finished.</p>
+</section>
+</section>
+<section id="enter-disciplinary-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="enter-disciplinary-decisions">7. Enter Disciplinary Decisions</h2>
+<p>You will enter a decision using the three <code>Entry</code> controls:</p>
+<ul>
+<li>Club name.</li>
+<li>Points adjustment.</li>
+<li>Reason.</li>
+</ul>
+<p>A points adjustment can be negative or positive. For example, <code>-10</code> deducts ten points, while <code>5</code> awards five points.</p>
+<p>A disciplinary record contains:</p>
+<ul>
+<li><code>TeamName</code></li>
+<li><code>PointsAdjustment</code></li>
+<li><code>Reason</code></li>
+</ul>
+<p>A club can have more than one disciplinary record. Do not change the original <code>Points</code> property of a <code>Team</code>.</p>
+<section id="finding-a-team" class="level3">
+<h3 class="anchored" data-anchor-id="finding-a-team">Finding a team</h3>
+<p>The supplied <code>FindTeam()</code> method looks through <code>_teams</code> and returns the team whose <code>Name</code> matches the name given, or <code>null</code> if there isn’t one. The comparison ignores upper and lower case (<code>StringComparison.OrdinalIgnoreCase</code>), so <code>arsenal</code> finds <code>Arsenal</code>. Use it when you check that the club exists.</p>
+</section>
+<section id="adding-a-decision" class="level3">
+<h3 class="anchored" data-anchor-id="adding-a-decision">Adding a decision</h3>
+<p>Complete <code>AddDecision_Clicked()</code>. You should check that:</p>
+<ul>
+<li>A club name has been entered.</li>
+<li>The points adjustment is a valid integer.</li>
+<li>A reason has been entered.</li>
+<li>The club exists in the league table.</li>
+</ul>
+<p>If a check fails, put a helpful message in <code>CommitteeStatus</code> and <code>return</code> without adding anything. All messages for the user in this lab, including errors, go in <code>CommitteeStatus</code>. You do not need to use <code>DisplayAlertAsync</code>.</p>
+<p>If the club isn’t found, remember that it might be because the original table hasn’t been loaded yet. Your message could mention that.</p>
+<p>When all the checks pass:</p>
+<ol type="1">
+<li>Create a <code>DisciplinaryRecord</code> and add it to <code>_decisions</code>.</li>
+<li>Call <code>CalculateTable()</code> and <code>DisplayTable()</code>.</li>
+<li>Call <code>UpdateDecisionSummary()</code>.</li>
+<li>Update <code>CommitteeStatus</code>.</li>
+<li>Clear the three <code>Entry</code> controls ready for the next decision.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> An <code>Entry</code>’s <code>Text</code> can be <code>null</code>, and users add spaces by accident. This reads the text safely and removes the spaces from both ends:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">string</span> clubName <span class="op">=</span> <span class="op">(</span>TeamNameEntry<span class="op">.</span><span class="fu">Text</span> <span class="op">??</span> <span class="st">""</span><span class="op">).</span><span class="fu">Trim</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> To check that some text is a valid integer, use <code>int.TryParse</code>. It returns <code>true</code> or <code>false</code>, and gives you the number through the <code>out</code> parameter:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="op">(!</span><span class="dt">int</span><span class="op">.</span><span class="fu">TryParse</span><span class="op">(</span>PointsAdjustmentEntry<span class="op">.</span><span class="fu">Text</span><span class="op">,</span> <span class="kw">out</span> <span class="dt">int</span> adjustment<span class="op">))</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// not a valid integer</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="think-about-this-1" class="level3">
+<h3 class="anchored" data-anchor-id="think-about-this-1">Think about this</h3>
+<p>When you create the <code>DisciplinaryRecord</code>, which name should you put in <code>TeamName</code>: the text the user typed, or the <code>Name</code> of the team that <code>FindTeam()</code> returned?</p>
+<p>Look at how <code>CalculateTable()</code> matches a decision to a team. It uses <code>==</code>, which cares about upper and lower case. If the user typed <code>arsenal</code> and you stored that, <code>FindTeam()</code> would accept it but <code>CalculateTable()</code> would never find a match, and nothing would change.</p>
+<p>Store the <code>Name</code> of the team that was found.</p>
+</section>
+<section id="suggested-disciplinary-cases" class="level3">
+<h3 class="anchored" data-anchor-id="suggested-disciplinary-cases">Suggested disciplinary cases</h3>
+<p>You may use these suggestions, or invent your own. The deductions are fictional suggestions for this exercise, not actual Premier League sanctions.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Club</th>
+<th style="text-align: right;">Suggested deduction</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Manchester City</td>
+<td style="text-align: right;">-50</td>
+<td>For 114 reasons</td>
+</tr>
+<tr class="even">
+<td>Chelsea</td>
+<td style="text-align: right;">-10</td>
+<td>Financial reporting irregularities and undisclosed payments</td>
+</tr>
+<tr class="odd">
+<td>Everton</td>
+<td style="text-align: right;">-10</td>
+<td>Yet another breach of Profitability and Sustainability Rules</td>
+</tr>
+<tr class="even">
+<td>Nottingham Forest</td>
+<td style="text-align: right;">-4</td>
+<td>Breaching PSR rules following excessive financial losses</td>
+</tr>
+<tr class="odd">
+<td>Manchester United</td>
+<td style="text-align: right;">-20</td>
+<td>For keeping Michael Carrick in charge</td>
+</tr>
+<tr class="even">
+<td>Arsenal</td>
+<td style="text-align: right;">-5</td>
+<td>Excessive time-wasting and diving</td>
+</tr>
+<tr class="odd">
+<td>Tottenham Hotspur</td>
+<td style="text-align: right;">-8</td>
+<td>Being Spursy</td>
+</tr>
+</tbody>
+</table>
+<p>You can issue a deduction or award to any club, not just those listed above.</p>
+</section>
+<section id="test-1" class="level3">
+<h3 class="anchored" data-anchor-id="test-1">Test</h3>
+<p>Check that:</p>
+<ul>
+<li>A valid decision changes the table, the total adjustment and the list of decisions (including the reason).</li>
+<li><code>arsenal</code> and <code>ARSENAL</code> both work for Arsenal.</li>
+<li>You can add two decisions for the same club, and both are applied.</li>
+<li>A positive adjustment moves a club up the table.</li>
+<li>A missing club name, an adjustment such as <code>abc</code> or <code>2.5</code>, a missing reason and a club that doesn’t exist each give a sensible message and change nothing.</li>
+<li>The entry boxes are cleared after a successful decision.</li>
+</ul>
+</section>
+</section>
+<section id="clear-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="clear-decisions">8. Clear Decisions</h2>
+<p>At the moment there would be no way to undo a decision, so <code>ClearDecisions_Clicked()</code> is already written for you. Read it. It follows the same pattern that <code>AddDecision_Clicked()</code> does: change <code>_decisions</code>, then recalculate the table, redisplay it and update the summary.</p>
+<section id="test-2" class="level3">
+<h3 class="anchored" data-anchor-id="test-2">Test</h3>
+<p>Add a few decisions, then click <strong>Clear Decisions</strong>. The table should return to the original order and points, the total should return to zero and the list of decisions should be empty.</p>
+</section>
+</section>
+<section id="save-and-load-the-committees-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="save-and-load-the-committees-decisions">9. Save and Load the Committee’s Decisions</h2>
+<p>The original league table is supplied by the application. The decisions are created by the user. We only need to save the decisions.</p>
+<p>You will save them to a file named <code>decisions.json</code> in the application’s data folder, <code>FileSystem.Current.AppDataDirectory</code>. This is a different location from <code>Resources/Raw</code>. The application can read and write files in its data folder.</p>
+<p>The supplied <code>GetDecisionsPath()</code> method gives you the full path of the file.</p>
+<p>The supplied <code>CommitteeData</code> class is the object that you will serialise. It contains a collection of <code>DisciplinaryRecord</code> objects.</p>
+<section id="save-decisions" class="level3">
+<h3 class="anchored" data-anchor-id="save-decisions">Save Decisions</h3>
+<p>Complete <code>SaveDecisions_Clicked()</code>:</p>
+<ol type="1">
+<li>Create a <code>CommitteeData</code> object containing the current decisions.</li>
+<li>Serialise it using <code>JsonSerializer.Serialize</code>.</li>
+<li>Write the JSON string to <code>decisions.json</code>.</li>
+<li>Show a message in <code>CommitteeStatus</code> that includes the path of the file.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> By default the JSON is produced all on one line. You can ask for something easier to read:</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>JsonSerializerOptions options <span class="op">=</span> <span class="kw">new</span> JsonSerializerOptions <span class="op">{</span> WriteIndented <span class="op">=</span> <span class="kw">true</span> <span class="op">};</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="dt">string</span> json <span class="op">=</span> JsonSerializer<span class="op">.</span><span class="fu">Serialize</span><span class="op">(</span>data<span class="op">,</span> options<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> To write a string to a file you can use <code>File.WriteAllText(path, json)</code> or <code>await File.WriteAllTextAsync(path, json)</code>.</p>
+</blockquote>
+</section>
+<section id="load-decisions" class="level3">
+<h3 class="anchored" data-anchor-id="load-decisions">Load Decisions</h3>
+<p>Complete <code>LoadDecisions_Clicked()</code>:</p>
+<ol type="1">
+<li>Check whether <code>decisions.json</code> exists using <code>File.Exists</code>.</li>
+<li>If it doesn’t exist, show a suitable message in <code>CommitteeStatus</code> and stop.</li>
+<li>Read the contents of the file.</li>
+<li>Deserialise the JSON into a <code>CommitteeData</code> object.</li>
+<li>Replace the current decisions with the loaded decisions.</li>
+<li>Recalculate and redisplay the table, and call <code>UpdateDecisionSummary()</code>.</li>
+<li>Update <code>CommitteeStatus</code>.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> <code>File.ReadAllText(path)</code> and <code>await File.ReadAllTextAsync(path)</code> read the contents of a text file. As in Section 4, <code>Deserialize</code> can return <code>null</code>, so decide what to do if it does.</p>
+</blockquote>
+<p><strong>Important:</strong> Save the disciplinary decisions, not a modified copy of the league table. When decisions are loaded, they are applied to the original points again.</p>
+</section>
+<section id="test-3" class="level3">
+<h3 class="anchored" data-anchor-id="test-3">Test</h3>
+<ol type="1">
+<li>Load the original table and add two or three decisions.</li>
+<li>Click <strong>Save Decisions</strong>. The status message should show where the file was saved.</li>
+<li>Click <strong>Clear Decisions</strong>.</li>
+<li>Click <strong>Load Decisions</strong>. The decisions, the total and the table should all return.</li>
+<li>If you are running on Windows, find <code>decisions.json</code> using the path from the status message and open it in a text editor. It should contain your decisions and nothing else. It does not contain the league table.</li>
+<li>Close the application and run it again. Click <strong>Load Original Table</strong> and then <strong>Load Decisions</strong>.</li>
+<li>Delete <code>decisions.json</code> and click <strong>Load Decisions</strong>. You should get a message rather than a crash.</li>
+</ol>
+</section>
+</section>
+<section id="xaml-resources" class="level2">
+<h2 class="anchored" data-anchor-id="xaml-resources">10. XAML Resources</h2>
+<p>The XAML you pasted in contains two examples of resources.</p>
+<section id="staticresource" class="level3">
+<h3 class="anchored" data-anchor-id="staticresource">StaticResource</h3>
+<p>The buttons use a style called <code>CommitteeButtonStyle</code>.</p>
+<p>The style is defined once in the page’s resources and applied to the buttons using <code>StaticResource</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Style="{StaticResource CommitteeButtonStyle}"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Try changing the style’s background colour, text colour or corner radius. All of the buttons change, because they all use the same style.</p>
+</section>
+<section id="dynamicresource" class="level3">
+<h3 class="anchored" data-anchor-id="dynamicresource">DynamicResource</h3>
+<p>The page background uses a resource called <code>PageBackground</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>BackgroundColor="{DynamicResource PageBackground}"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <strong>Change Theme</strong> button changes the value of this resource in C#. Because the page background uses <code>DynamicResource</code>, it updates when the resource value changes.</p>
+<p>Try changing the two colours used by the theme button.</p>
+</section>
+<section id="the-light-theme" class="level3">
+<h3 class="anchored" data-anchor-id="the-light-theme">The light theme</h3>
+<p>Look at the constructor in <code>MainPage.xaml.cs</code>. It forces the application into the light theme. The default text colour of a <code>Label</code> or <code>Entry</code> comes from the operating system’s theme, so on a computer that is set to dark mode the text would be white. White text on the light background of this page would be unreadable.</p>
+<p>If you want to see this, comment out that line and switch your computer to dark mode. Colours that depend on each other, such as text and background, need to be changed together. Stretch goal A asks you to deal with this properly.</p>
+</section>
+<section id="optional-experiment-staticresource-or-dynamicresource" class="level3">
+<h3 class="anchored" data-anchor-id="optional-experiment-staticresource-or-dynamicresource">Optional experiment: StaticResource or DynamicResource?</h3>
+<p>This one is only if you have time. So what is the difference? A <code>StaticResource</code> is looked up once, when the page is loaded. A <code>DynamicResource</code> is looked up again every time the resource changes.</p>
+<p>Try this:</p>
+<ol type="1">
+<li>Add this line to <code>ChangeTheme_Clicked()</code>. It replaces the button style with the other style that was supplied in the XAML:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Resources<span class="op">[</span><span class="st">"CommitteeButtonStyle"</span><span class="op">]</span> <span class="op">=</span> Resources<span class="op">[</span><span class="st">"AlternateButtonStyle"</span><span class="op">];</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Run the application and click <strong>Change Theme</strong>. The background changes, but the buttons don’t. Why not?</li>
+<li>Stop the application. In the XAML, change <strong>one</strong> of the buttons so that it uses <code>{DynamicResource CommitteeButtonStyle}</code> instead of <code>{StaticResource CommitteeButtonStyle}</code>.</li>
+<li>Run it again and click <strong>Change Theme</strong>. What happens to that button?</li>
+</ol>
+<p>(The change only goes one way, so restart the application to reset it.) Remove the line from <code>ChangeTheme_Clicked()</code> when you have finished.</p>
+</section>
+</section>
+<section id="final-testing" class="level2">
+<h2 class="anchored" data-anchor-id="final-testing">11. Final Testing</h2>
+<p>Before finishing, test the whole application rather than just the individual methods.</p>
+<p>Check the following:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">The application builds and runs.</label></li>
+<li><label><input type="checkbox"><strong>Load Original Table</strong> displays all 20 clubs with the correct values.</label></li>
+<li><label><input type="checkbox">The status message changes when you load the table (data binding).</label></li>
+<li><label><input type="checkbox">A valid decision changes the table, the total adjustment and the list of decisions.</label></li>
+<li><label><input type="checkbox">The club name is not case-sensitive.</label></li>
+<li><label><input type="checkbox">Invalid input gives a message and does not change anything.</label></li>
+<li><label><input type="checkbox">A club can have more than one decision.</label></li>
+<li><label><input type="checkbox">The original <code>Points</code> of a team never change.</label></li>
+<li><label><input type="checkbox"><strong>Clear Decisions</strong> returns the table to its original state.</label></li>
+<li><label><input type="checkbox"><strong>Save Decisions</strong> creates <code>decisions.json</code> in the application’s data folder.</label></li>
+<li><label><input type="checkbox">The saved file contains the decisions only, not the league table.</label></li>
+<li><label><input type="checkbox"><strong>Load Decisions</strong> restores the decisions and the table.</label></li>
+<li><label><input type="checkbox"><strong>Load Decisions</strong> gives a message if there is no file.</label></li>
+<li><label><input type="checkbox">The application can be closed and restarted, and the saved decisions can still be loaded.</label></li>
+<li><label><input type="checkbox">The buttons all share one style defined once as a <code>StaticResource</code>.</label></li>
+<li><label><input type="checkbox"><strong>Change Theme</strong> changes the page background using a <code>DynamicResource</code>.</label></li>
+</ul>
+</section>
+<section id="stretch-goals" class="level2">
+<h2 class="anchored" data-anchor-id="stretch-goals">12. Stretch Goals</h2>
+<p>Only attempt these after the main application is working.</p>
+<section id="a.-a-proper-dark-theme" class="level3">
+<h3 class="anchored" data-anchor-id="a.-a-proper-dark-theme">A. A Proper Dark Theme</h3>
+<p>Remove the line that forces the light theme. Add a second resource called <code>PageText</code> and make <strong>Change Theme</strong> switch between a light page with dark text and a dark page with light text. The text colour of the <code>Label</code> controls and the <code>Entry</code> controls must use <code>DynamicResource</code>.</p>
+<p>(The <code>Label</code> controls in the table are created in C#. Look up <code>SetDynamicResource</code>.)</p>
+</section>
+<section id="b.-remove-one-decision" class="level3">
+<h3 class="anchored" data-anchor-id="b.-remove-one-decision">B. Remove One Decision</h3>
+<p>Add an <strong>Undo Last Decision</strong> button that removes only the most recent decision.</p>
+</section>
+<section id="c.-handle-errors" class="level3">
+<h3 class="anchored" data-anchor-id="c.-handle-errors">C. Handle Errors</h3>
+<p>What happens if <code>decisions.json</code> contains JSON that isn’t valid? Open the file in a text editor, damage it and click <strong>Load Decisions</strong>. Use <code>try</code> and <code>catch</code> to handle the problem and show a message instead of crashing. Do the same for the other file operations.</p>
+</section>
+<section id="d.-highlight-the-table" class="level3">
+<h3 class="anchored" data-anchor-id="d.-highlight-the-table">D. Highlight the Table</h3>
+<p>Change <code>AddCell()</code> so that you can give a cell a colour. Colour the points red for clubs that have lost points through decisions and green for clubs that have gained points. Then try colouring the top four and the bottom three positions.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
