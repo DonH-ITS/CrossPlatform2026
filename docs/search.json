@@ -3460,49 +3460,49 @@
   {
     "objectID": "lectures/Week8/Week8.html#last-week",
     "href": "lectures/Week8/Week8.html#last-week",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Last week",
     "text": "Last week\nLast week we set BindingContext = this, so the page provided the data for its own bindings.\nThat works, but the UI and the data live in the same class.\nToday we separate them. This is the MVVM pattern.\nFirst, we need one idea from C# that you will study properly in your Java module: the interface."
   },
   {
     "objectID": "lectures/Week8/Week8.html#what-is-an-interface",
     "href": "lectures/Week8/Week8.html#what-is-an-interface",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "What is an interface?",
     "text": "What is an interface?\nAn interface is a contract. It lists members that a class promises to provide, but contains no implementation.\npublic interface IVehicle\n{\n    void StartEngine();\n    void StopEngine();\n}\nA class that implements the interface must provide every member:\npublic class Car : IVehicle\n{\n    public void StartEngine()\n    {\n        Console.WriteLine(\"Car engine started.\");\n    }\n\n    public void StopEngine()\n    {\n        Console.WriteLine(\"Car engine stopped.\");\n    }\n}\n\nBy convention, interface names start with I.\nA class can inherit from only one class, but can implement many interfaces.\nCode that needs an IVehicle does not need to know which class it actually receives."
   },
   {
     "objectID": "lectures/Week8/Week8.html#an-interface-you-will-use-today",
     "href": "lectures/Week8/Week8.html#an-interface-you-will-use-today",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "An interface you will use today",
     "text": "An interface you will use today\nINotifyPropertyChanged is an interface. This is the important part:\npublic interface INotifyPropertyChanged\n{\n    event PropertyChangedEventHandler? PropertyChanged;\n}\nIt promises one member: an event called PropertyChanged.\nThe binding system can subscribe to this event. When the event is raised, the binding system knows that a property has changed and can update the UI.\nContentPage already implements this interface (through BindableObject), which is why OnPropertyChanged worked last week.\nA class we write ourselves does not implement it automatically, so we must do that ourselves."
   },
   {
     "objectID": "lectures/Week8/Week8.html#mvvm-three-parts",
     "href": "lectures/Week8/Week8.html#mvvm-three-parts",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "MVVM: three parts",
     "text": "MVVM: three parts\nMVVM (Model-View-ViewModel) splits an application into three parts.\n\n\n\n\n\n\n\nPart\nResponsibility\n\n\n\n\nModel\nThe data and the rules about it. Plain classes.\n\n\nView\nWhat the user sees: the XAML, plus very little code-behind.\n\n\nViewModel\nThe data and actions the View binds to. Sits between the View and the Model.\n\n\n\nThe View binds to the ViewModel. The ViewModel never refers to the View."
   },
   {
     "objectID": "lectures/Week8/Week8.html#why-bother",
     "href": "lectures/Week8/Week8.html#why-bother",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Why bother?",
     "text": "Why bother?\n\nSeparation of concerns: data, presentation and logic are in different places.\nTestability: a ViewModel can be tested without any UI (you will see testing in another module).\nReusability: the same ViewModel can be used with a different View.\n\nFor a very small app this can look like extra work. The benefit becomes clearer as an application grows."
   },
   {
     "objectID": "lectures/Week8/Week8.html#what-goes-where",
     "href": "lectures/Week8/Week8.html#what-goes-where",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "What goes where?",
     "text": "What goes where?\n\nView: XAML, and code-behind that creates the ViewModel and sets BindingContext.\nViewModel: properties, commands, and the logic that responds to the user.\nModel: classes such as Book or Question that hold data.\n\nA useful rule: the ViewModel never mentions a control. No x:Name controls, no nameLabel.Text = ....\nIf the ViewModel needs to tell the user something, it sets a property such as StatusMessage and the View binds to it.\nWe will use Models and ViewModels folders to keep the classes organised."
   },
   {
     "objectID": "lectures/Week8/Week8.html#creating-a-viewmodel",
     "href": "lectures/Week8/Week8.html#creating-a-viewmodel",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Creating a ViewModel",
     "text": "Creating a ViewModel\nA ViewModel is an ordinary C# class. To work with property binding, it needs to:\n\nImplement INotifyPropertyChanged.\nProvide the PropertyChanged event.\nRaise the event whenever a property changes.\n\nFor example, here is a property that stores some text:\nprivate string _myText = \"\";\n\npublic string MyText\n{\n    get\n    {\n        return _myText;\n    }\n    set\n    {\n        if (_myText == value)\n            return;\n\n        _myText = value;\n        OnPropertyChanged();\n    }\n}\nThe if stops us notifying the UI when nothing has really changed."
   },
@@ -3523,147 +3523,147 @@
   {
     "objectID": "lectures/Week8/Week8.html#the-view",
     "href": "lectures/Week8/Week8.html#the-view",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The View",
     "text": "The View\nThe XAML is the same as last week. Only the source of the data has moved.\n&lt;VerticalStackLayout Padding=\"20\" Spacing=\"10\"&gt;\n    &lt;Entry Text=\"{Binding MyText}\" /&gt;\n    &lt;Label Text=\"{Binding MyText}\" /&gt;\n    &lt;Button Text=\"Change Text\" Clicked=\"ChangeText_Clicked\" /&gt;\n&lt;/VerticalStackLayout&gt;\nThe code-behind creates the ViewModel and sets the BindingContext:\npublic partial class MainPage : ContentPage\n{\n    private MyViewModel _viewModel;\n\n    public MainPage()\n    {\n        InitializeComponent();\n\n        _viewModel = new MyViewModel();\n        BindingContext = _viewModel;\n    }\n\n    private void ChangeText_Clicked(object sender, EventArgs e)\n    {\n        _viewModel.MyText = \"New Text\";\n    }\n}"
   },
   {
     "objectID": "lectures/Week8/Week8.html#example-myviewmodel",
     "href": "lectures/Week8/Week8.html#example-myviewmodel",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Example: MyViewModel",
     "text": "Example: MyViewModel\nDemo:\n\nType in the Entry. The Label updates.\nPress the button. Both update.\nRemove OnPropertyChanged() from the setter and press the button again. What happens now?\n\nCompare with last week: MyText has moved out of MainPage into MyViewModel. The bindings in the XAML did not change."
   },
   {
     "objectID": "lectures/Week8/Week8.html#the-event-handler-problem",
     "href": "lectures/Week8/Week8.html#the-event-handler-problem",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The event handler problem",
     "text": "The event handler problem\nLook at the handler again:\nprivate void ChangeText_Clicked(object sender, EventArgs e)\n{\n    _viewModel.MyText = \"New Text\";\n}\nThe View contains logic about what the button does.\nWe want that logic in the ViewModel, but the ViewModel cannot refer to the View, so it cannot subscribe to the button’s Clicked event.\nWe need something the Button can bind to."
   },
   {
     "objectID": "lectures/Week8/Week8.html#commands-1",
     "href": "lectures/Week8/Week8.html#commands-1",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Commands",
     "text": "Commands\nA Command is an object that represents an action. It lives in the ViewModel, and a control binds to it.\n&lt;Button Text=\"Change Text\" Command=\"{Binding ChangeTextCommand}\" /&gt;\nButton.Command is of type ICommand, another interface. MAUI’s Command class implements it.\nWhen the button is pressed, it runs the command. The code-behind does not need to be involved."
   },
   {
     "objectID": "lectures/Week8/Week8.html#defining-a-command",
     "href": "lectures/Week8/Week8.html#defining-a-command",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Defining a command",
     "text": "Defining a command\nIn the ViewModel:\npublic Command ChangeTextCommand { get; }\n\npublic MyViewModel()\n{\n    ChangeTextCommand = new Command(ChangeText);\n}\n\nprivate void ChangeText()\n{\n    MyText = \"Changed in the ViewModel\";\n}\nThe command property never changes after the constructor, so { get; } is enough. It does not need OnPropertyChanged.\nThe ChangeText_Clicked handler can now be deleted from the code-behind."
   },
   {
     "objectID": "lectures/Week8/Week8.html#event-handler-or-command",
     "href": "lectures/Week8/Week8.html#event-handler-or-command",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Event handler or Command?",
     "text": "Event handler or Command?\n\n\n\n\n\n\n\nEvent handler\nCommand\n\n\n\n\nCode is in the View\nCode is in the ViewModel\n\n\nNeeds code-behind to respond to the event\nBound in XAML, no event handler needed\n\n\nTied to the UI event\nCan be tested without the UI\n\n\n\nCommands can also say when they are allowed to run (CanExecute). We will not use that yet.\nFor this module either approach is acceptable, but when you use a ViewModel, prefer a Command."
   },
   {
     "objectID": "lectures/Week8/Week8.html#commandparameter",
     "href": "lectures/Week8/Week8.html#commandparameter",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "CommandParameter",
     "text": "CommandParameter\nCommandParameter lets the View pass a value to the command. One command can then serve several buttons.\n&lt;Button Text=\"+1\" Command=\"{Binding ChangeScoreCommand}\" CommandParameter=\"1\" /&gt;\n&lt;Button Text=\"-1\" Command=\"{Binding ChangeScoreCommand}\" CommandParameter=\"-1\" /&gt;\nXAML supplies the parameter as a string, so use Command&lt;string&gt; and convert it:\nChangeScoreCommand = new Command&lt;string&gt;(ChangeScore);\n\nprivate void ChangeScore(string amount)\n{\n    if (int.TryParse(amount, out int value))\n    {\n        Score += value;\n    }\n}\nScore is a property that calls OnPropertyChanged(), like MyText."
   },
   {
     "objectID": "lectures/Week8/Week8.html#a-model",
     "href": "lectures/Week8/Week8.html#a-model",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "A Model",
     "text": "A Model\nThe Model holds the data. It is a plain class that knows nothing about the View.\npublic class Book\n{\n    public int Id { get; set; }\n    public string Title { get; set; } = \"\";\n    public string Author { get; set; } = \"\";\n    public int PublishedYear { get; set; }\n}\nWe do not need INotifyPropertyChanged here because we never change a Book after creating it.\n(If we edited a book’s title in place and wanted the UI to update, Book would need notifications as well.)"
   },
   {
     "objectID": "lectures/Week8/Week8.html#why-not-a-list",
     "href": "lectures/Week8/Week8.html#why-not-a-list",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Why not a List?",
     "text": "Why not a List?\nWe want the ViewModel to keep a collection of books.\nA List&lt;Book&gt; displays correctly when the page first loads. But:\n\nAdd and Remove on a List tell nobody.\nCalling OnPropertyChanged(nameof(Books)) does not help either. It is still the same list object, so the binding does not know that its contents have changed."
   },
   {
     "objectID": "lectures/Week8/Week8.html#observablecollection",
     "href": "lectures/Week8/Week8.html#observablecollection",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "ObservableCollection",
     "text": "ObservableCollection\nObservableCollection&lt;T&gt; is a collection that notifies the UI when items are added or removed.\n\nIt implements INotifyCollectionChanged, so a bound CollectionView updates automatically.\nYou need using System.Collections.ObjectModel;.\n\npublic ObservableCollection&lt;string&gt; Items { get; } = new();\nThe property itself never changes (we only add to and remove from the collection), so the property needs no OnPropertyChanged."
   },
   {
     "objectID": "lectures/Week8/Week8.html#booksviewmodel",
     "href": "lectures/Week8/Week8.html#booksviewmodel",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "BooksViewModel",
     "text": "BooksViewModel\nThe ViewModel implements INotifyPropertyChanged directly, just as MyViewModel did.\npublic class BooksViewModel : INotifyPropertyChanged\n{\n    public event PropertyChangedEventHandler? PropertyChanged;\n\n    protected void OnPropertyChanged(\n        [CallerMemberName] string? propertyName = null)\n    {\n        PropertyChanged?.Invoke(\n            this, new PropertyChangedEventArgs(propertyName));\n    }\n\n    private int _nextId = 4;\n\n    public ObservableCollection&lt;Book&gt; Books { get; } = new();\n\n    public BooksViewModel()\n    {\n        Books.Add(new Book { Id = 1, Title = \"The Great Gatsby\", Author = \"F. Scott Fitzgerald\", PublishedYear = 1925 });\n        Books.Add(new Book { Id = 2, Title = \"1984\", Author = \"George Orwell\", PublishedYear = 1949 });\n        Books.Add(new Book { Id = 3, Title = \"To Kill a Mockingbird\", Author = \"Harper Lee\", PublishedYear = 1960 });\n    }\n}\nWe have repeated the notification event and method. That is deliberate for this example: we are concentrating on what a ViewModel needs to do, rather than introducing inheritance as another concept."
   },
   {
     "objectID": "lectures/Week8/Week8.html#displaying-the-collection",
     "href": "lectures/Week8/Week8.html#displaying-the-collection",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Displaying the collection",
     "text": "Displaying the collection\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             xmlns:models=\"clr-namespace:BookApp.Models\"\n             xmlns:viewmodels=\"clr-namespace:BookApp.ViewModels\"\n             x:Class=\"BookApp.MainPage\"\n             x:DataType=\"viewmodels:BooksViewModel\"&gt;\n\n    &lt;CollectionView ItemsSource=\"{Binding Books}\"&gt;\n        &lt;CollectionView.ItemTemplate&gt;\n            &lt;DataTemplate x:DataType=\"models:Book\"&gt;\n                &lt;VerticalStackLayout Padding=\"10\"&gt;\n                    &lt;Label Text=\"{Binding Title}\" FontSize=\"Medium\" FontAttributes=\"Bold\" /&gt;\n                    &lt;Label Text=\"{Binding Author}\" FontSize=\"Small\" /&gt;\n                    &lt;Label Text=\"{Binding PublishedYear}\" FontSize=\"Small\" /&gt;\n                &lt;/VerticalStackLayout&gt;\n            &lt;/DataTemplate&gt;\n        &lt;/CollectionView.ItemTemplate&gt;\n    &lt;/CollectionView&gt;\n&lt;/ContentPage&gt;\n\nItemsSource is bound to Books in the ViewModel.\nAt the page level, x:DataType tells XAML that the page bindings are against BooksViewModel.\nInside the DataTemplate, the BindingContext is one Book, so the Labels bind to properties of Book. The template therefore has its own x:DataType.\n\nx:DataType tells the XAML compiler what type to expect for the binding source. It enables compile-time checking and better IntelliSense. It does not set the BindingContext for us; we still need to create the ViewModel and assign it.\nThe code-behind creates the ViewModel in the constructor, as before:\npublic partial class MainPage : ContentPage\n{\n    private BooksViewModel _viewModel;\n\n    public MainPage()\n    {\n        InitializeComponent();\n        _viewModel = new BooksViewModel();\n        BindingContext = _viewModel;\n    }\n}"
   },
   {
     "objectID": "lectures/Week8/Week8.html#adding-a-book",
     "href": "lectures/Week8/Week8.html#adding-a-book",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Adding a book",
     "text": "Adding a book\nThe user types into Entries. The Entries bind to properties on the ViewModel, and a Command does the work.\n&lt;Entry Text=\"{Binding Title}\" Placeholder=\"Title\" /&gt;\n&lt;Entry Text=\"{Binding Author}\" Placeholder=\"Author\" /&gt;\n&lt;Entry Text=\"{Binding PublishedYear}\" Placeholder=\"Published year\" Keyboard=\"Numeric\" /&gt;\n&lt;Button Text=\"Add Book\" Command=\"{Binding AddBookCommand}\" /&gt;\nIn BooksViewModel:\npublic string Title { get; set; } = \"\";\npublic string Author { get; set; } = \"\";\npublic string PublishedYear { get; set; } = \"\";\n\npublic Command AddBookCommand { get; }\nIn the constructor:\nAddBookCommand = new Command(AddBook);\nAnd the method:\nprivate void AddBook()\n{\n    if (string.IsNullOrWhiteSpace(Title))\n        return;\n\n    if (!int.TryParse(PublishedYear, out int year))\n        return;\n\n    Books.Add(new Book\n    {\n        Id = _nextId++,\n        Title = Title,\n        Author = Author,\n        PublishedYear = year\n    });\n}\nEntry.Text is TwoWay by default, so typing updates these properties. We do not need OnPropertyChanged because the ViewModel is not pushing new values back into these Entries in this example."
   },
   {
     "objectID": "lectures/Week8/Week8.html#example-booksviewmodel",
     "href": "lectures/Week8/Week8.html#example-booksviewmodel",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Example: BooksViewModel",
     "text": "Example: BooksViewModel\nDemo:\n\nRun the app. The three books appear.\nAdd a book. It appears in the list immediately.\nChange Books to a List&lt;Book&gt; and try again. The new item does not appear automatically.\n\nQuestion: how would we clear the three Entries after adding a book? What would need to change?"
   },
   {
     "objectID": "lectures/Week8/Week8.html#summary-mvvm",
     "href": "lectures/Week8/Week8.html#summary-mvvm",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Summary: MVVM",
     "text": "Summary: MVVM\n\nAn interface is a contract. INotifyPropertyChanged lets the binding system know when a property changes.\nMVVM splits an app into Model (data), View (XAML) and ViewModel (what the View binds to).\nA ViewModel implements INotifyPropertyChanged and raises PropertyChanged when a property changes.\nCommands let a Button run ViewModel code without an event handler. CommandParameter passes a value.\nUse ObservableCollection&lt;T&gt; for collections that change.\nBindingContext identifies the object used at runtime; x:DataType tells the compiler the expected type."
   },
   {
     "objectID": "lectures/Week8/Week8.html#what-is-an-api",
     "href": "lectures/Week8/Week8.html#what-is-an-api",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "What is an API?",
     "text": "What is an API?\n\nAPI = Application Programming Interface.\nA web API exposes data and functionality over HTTP.\nCommon HTTP verbs include GET, POST, PUT and DELETE.\nJSON is a common format for data returned by web APIs.\n\nWe will only use GET to retrieve information.\nOur example is the Open Trivia Database: https://opentdb.com/"
   },
   {
     "objectID": "lectures/Week8/Week8.html#endpoints",
     "href": "lectures/Week8/Week8.html#endpoints",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Endpoints",
     "text": "Endpoints\nAn endpoint is a specific URL where a web API can be accessed.\nhttps://opentdb.com/api.php?amount=5&type=multiple\nThis endpoint returns five multiple-choice trivia questions as JSON.\nPaste it into a browser to see the response.\nOne of the most important things about any API is RTFM. The documentation is the only way to know exactly how it works. APIs can also change."
   },
   {
     "objectID": "lectures/Week8/Week8.html#the-json-response",
     "href": "lectures/Week8/Week8.html#the-json-response",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The JSON response",
     "text": "The JSON response\n{\n  \"response_code\": 0,\n  \"results\": [\n    {\n      \"type\": \"multiple\",\n      \"difficulty\": \"easy\",\n      \"category\": \"Science\",\n      \"question\": \"What is the chemical symbol for Gold?\",\n      \"correct_answer\": \"Au\",\n      \"incorrect_answers\": [\"Ag\", \"Gd\", \"Ga\"]\n    }\n  ]\n}\nresponse_code is part of this API’s own design: 0 means success; other numbers indicate a problem."
   },
   {
     "objectID": "lectures/Week8/Week8.html#two-things-the-documentation-tells-us",
     "href": "lectures/Week8/Week8.html#two-things-the-documentation-tells-us",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Two things the documentation tells us",
     "text": "Two things the documentation tells us\nRate limit: each IP address may make one request every five seconds. Too many requests gives response_code 5.\n\nEveryone in this room shares one IP address.\nYou may see this error. That is normal. Wait a few seconds and try again.\n\nHTML encoding: the text can contain HTML codes such as &quot; and &#039;.\n\nWhat is the &quot;Big Apple&quot;? should display as What is the \"Big Apple\"?\nWe need to decode the text before displaying it.\n\nReal APIs have quirks like these. Read the documentation before you write code."
   },
   {
     "objectID": "lectures/Week8/Week8.html#httpclient",
     "href": "lectures/Week8/Week8.html#httpclient",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "HttpClient",
     "text": "HttpClient\nHttpClient is the C# class that makes web requests.\nprivate readonly HttpClient _httpClient = new();\nKeep and reuse this object when making requests. We do not need to create a new HttpClient for every button press.\nA request is asynchronous:\nstring url = \"https://opentdb.com/api.php?amount=5&type=multiple\";\n\nusing var response = await _httpClient.GetAsync(url);\nThe app keeps running while we wait for the network, so we use await.\nCheck the response before using its content:\nif (response.IsSuccessStatusCode)\n{\n    string text = await response.Content.ReadAsStringAsync();\n}\nIsSuccessStatusCode is true for HTTP status codes from 200 to 299. (404 means the resource was not found.)"
   },
   {
     "objectID": "lectures/Week8/Week8.html#classes-from-json",
     "href": "lectures/Week8/Week8.html#classes-from-json",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Classes from JSON",
     "text": "Classes from JSON\nWe need classes that match the JSON, so that we can turn the text into objects.\nCopy a sample response into https://json2csharp.com/ and it will generate the classes.\npublic class TriviaResponse\n{\n    public int response_code { get; set; }\n    public List&lt;Question&gt; results { get; set; } = new();\n}\n\npublic class Question\n{\n    public string type { get; set; } = \"\";\n    public string difficulty { get; set; } = \"\";\n    public string category { get; set; } = \"\";\n    public string question { get; set; } = \"\";\n    public string correct_answer { get; set; } = \"\";\n    public List&lt;string&gt; incorrect_answers { get; set; } = new();\n}\nThe tool calls the outer class Root. Give it a better name, such as TriviaResponse.\nThe property names must match the JSON names. ([JsonPropertyName(\"correct_answer\")] lets you use a different C# property name if you prefer.)"
   },
@@ -3677,14 +3677,14 @@
   {
     "objectID": "lectures/Week8/Week8.html#example-retrieving-from-the-api",
     "href": "lectures/Week8/Week8.html#example-retrieving-from-the-api",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Example: retrieving from the API",
     "text": "Example: retrieving from the API\nDemo (initially in a button handler):\n\nClick a button and call GetAsync.\nCheck IsSuccessStatusCode.\nRead the response content into a string with ReadAsStringAsync.\nDeserialise the string into a TriviaResponse object.\nShow the first question.\nShow the HTML codes appearing in the text.\nPress the button twice quickly and show response_code 5.\n\nThis first version is just to see the steps. We will move the work into the ViewModel next."
   },
   {
     "objectID": "lectures/Week8/Week8.html#changing-the-request",
     "href": "lectures/Week8/Week8.html#changing-the-request",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Changing the request",
     "text": "Changing the request\nThe URL again:\nhttps://opentdb.com/api.php?amount=5&type=multiple\n\n? starts the query.\nAfter it come the parameters, written name=value.\n& separates parameters.\n\nThe documentation lists other parameters, such as category and difficulty.\nIf a value comes from the user and might contain spaces or symbols, escape it before putting it in a URL:\nstring safe = Uri.EscapeDataString(userText);\n(HtmlEncode and HtmlDecode are for HTML text, not for URLs.)"
   },
@@ -3733,7 +3733,7 @@
   {
     "objectID": "lectures/Week8/Week8.html#the-view-1",
     "href": "lectures/Week8/Week8.html#the-view-1",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The View",
     "text": "The View\nThe View binds to the command, the busy state, the status message and the collection.\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             xmlns:models=\"clr-namespace:TriviaApp.Models\"\n             xmlns:viewmodels=\"clr-namespace:TriviaApp.ViewModels\"\n             x:Class=\"TriviaApp.MainPage\"\n             x:DataType=\"viewmodels:TriviaViewModel\"&gt;\n\n    &lt;Grid RowDefinitions=\"Auto,Auto,Auto,*\" Padding=\"20\" RowSpacing=\"10\"&gt;\n        &lt;Button Text=\"Load Questions\"\n                Command=\"{Binding LoadQuestionsCommand}\" /&gt;\n\n        &lt;ActivityIndicator Grid.Row=\"1\"\n                           IsRunning=\"{Binding IsBusy}\"\n                           IsVisible=\"{Binding IsBusy}\" /&gt;\n\n        &lt;Label Grid.Row=\"2\"\n               Text=\"{Binding StatusMessage}\"\n               TextColor=\"Red\" /&gt;\n\n        &lt;CollectionView Grid.Row=\"3\" ItemsSource=\"{Binding Questions}\"&gt;\n            &lt;CollectionView.ItemTemplate&gt;\n                &lt;DataTemplate x:DataType=\"models:Question\"&gt;\n                    &lt;VerticalStackLayout Padding=\"10\" Spacing=\"5\"&gt;\n                        &lt;Label Text=\"{Binding question}\" FontAttributes=\"Bold\" /&gt;\n                        &lt;Label Text=\"{Binding category}\" FontSize=\"Small\" /&gt;\n                        &lt;Label Text=\"{Binding correct_answer}\" /&gt;\n                    &lt;/VerticalStackLayout&gt;\n                &lt;/DataTemplate&gt;\n            &lt;/CollectionView.ItemTemplate&gt;\n        &lt;/CollectionView&gt;\n    &lt;/Grid&gt;\n&lt;/ContentPage&gt;\nThe page-level x:DataType describes the ViewModel. Inside the DataTemplate, the binding source changes to one Question, so the template has its own x:DataType.\nSet the page’s BindingContext to a TriviaViewModel in the code-behind, using the same constructor pattern as the earlier examples."
   },
@@ -3761,105 +3761,105 @@
   {
     "objectID": "lectures/Week8/Week8.html#implementing-the-interface-in-visual-studio",
     "href": "lectures/Week8/Week8.html#implementing-the-interface-in-visual-studio",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Implementing the interface in Visual Studio",
     "text": "Implementing the interface in Visual Studio\nStart by declaring that the class implements INotifyPropertyChanged:\npublic class MyViewModel : INotifyPropertyChanged\n{\n}\nINotifyPropertyChanged will be underlined because the class has not provided the required event yet.\nIn Visual Studio:\n\nPut the cursor on INotifyPropertyChanged.\nOpen the lightbulb / Quick Actions menu (or right-click).\nChoose Implement interface.\n\nVisual Studio generates the required event. It may also add the using System.ComponentModel; directive.\nAn interface is a contract: Visual Studio can help generate the members that satisfy that contract, but we still need to write the behaviour that raises the event."
   },
   {
     "objectID": "lectures/Week8/Week8.html#the-notification-method",
     "href": "lectures/Week8/Week8.html#the-notification-method",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The notification method",
     "text": "The notification method\nAdd this method to MyViewModel:\nprotected void OnPropertyChanged([CallerMemberName] string? propertyName = null)\n{\n    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n}\nYou need:\nusing System.ComponentModel;\nusing System.Runtime.CompilerServices;\n\n[CallerMemberName] fills in the name of the property that called OnPropertyChanged().\nPropertyChanged?.Invoke(...) raises the event, but only if something is listening.\nContentPage did this for us. Our own class must do it itself."
   },
   {
     "objectID": "lectures/Week8/Week8.html#deserialising",
     "href": "lectures/Week8/Week8.html#deserialising",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Deserialising",
     "text": "Deserialising\nYou saw JSON last time. Turning text into objects is the same here:\nvar data = JsonSerializer.Deserialize&lt;TriviaResponse&gt;(text);\nYou need using System.Text.Json;.\ndata can be null, and deserialisation can throw an exception if the text is not valid JSON or cannot be converted to the expected type."
   },
   {
     "objectID": "lectures/Week8/Week8.html#putting-the-api-code-in-the-viewmodel",
     "href": "lectures/Week8/Week8.html#putting-the-api-code-in-the-viewmodel",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Putting the API code in the ViewModel",
     "text": "Putting the API code in the ViewModel\nFor this example, the ViewModel will make the request and process the response.\nView  →  ViewModel  →  web API\n\nThe View binds to the ViewModel.\nThe ViewModel makes the request, checks the response and prepares the data for the View.\nThe Model represents the data returned by the API.\n\nIn a larger application, we would normally move the HTTP and API work into a separate service. We are leaving that extra class out for now so that we can concentrate on MVVM and the steps involved in retrieving data."
   },
   {
     "objectID": "lectures/Week8/Week8.html#the-viewmodel-properties",
     "href": "lectures/Week8/Week8.html#the-viewmodel-properties",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The ViewModel properties",
     "text": "The ViewModel properties\nThe ViewModel needs an HttpClient to make requests, along with properties that the View can bind to.\nprivate readonly HttpClient _httpClient = new();\n\nprivate bool _isBusy;\nprivate string _statusMessage = \"\";\n\npublic bool IsBusy\n{\n    get\n    {\n        return _isBusy;\n    }\n    set\n    {\n        if (_isBusy == value)\n            return;\n\n        _isBusy = value;\n        OnPropertyChanged();\n    }\n}\n\npublic string StatusMessage\n{\n    get\n    {\n        return _statusMessage;\n    }\n    set\n    {\n        if (_statusMessage == value)\n            return;\n\n        _statusMessage = value;\n        OnPropertyChanged();\n    }\n}\nIsBusy lets the View show an ActivityIndicator while the request is running. StatusMessage gives the user feedback if something goes wrong."
   },
   {
     "objectID": "lectures/Week8/Week8.html#loading-questions",
     "href": "lectures/Week8/Week8.html#loading-questions",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Loading questions",
     "text": "Loading questions\nThe ViewModel can hold the questions in an ObservableCollection&lt;Question&gt;:\npublic ObservableCollection&lt;Question&gt; Questions { get; } = new();\nThe command calls an asynchronous method:\npublic Command LoadQuestionsCommand { get; }\n\npublic TriviaViewModel()\n{\n    LoadQuestionsCommand = new Command(async () =&gt; await LoadQuestions());\n}\nThe LoadQuestions method makes the request, checks the response and deserialises the JSON. It also updates the properties that the View is displaying.\nprivate async Task LoadQuestions()\n{\n    if (IsBusy)\n        return;\n\n    try\n    {\n        IsBusy = true;\n        StatusMessage = \"\";\n        Questions.Clear();\n\n        string url = \"https://opentdb.com/api.php?amount=5&type=multiple\";\n\n        using var response = await _httpClient.GetAsync(url);\n\n        if (!response.IsSuccessStatusCode)\n        {\n            StatusMessage = \"Could not retrieve the questions.\";\n            return;\n        }\n\n        string json = await response.Content.ReadAsStringAsync();\n        TriviaResponse? data = JsonSerializer.Deserialize&lt;TriviaResponse&gt;(json);\n\n        if (data == null || data.response_code != 0)\n        {\n            StatusMessage = \"The API did not return any questions.\";\n            return;\n        }\n\n        foreach (Question question in data.results)\n        {\n            question.question = WebUtility.HtmlDecode(question.question);\n            question.correct_answer = WebUtility.HtmlDecode(question.correct_answer);\n\n            for (int i = 0; i &lt; question.incorrect_answers.Count; i++)\n            {\n                question.incorrect_answers[i] =\n                    WebUtility.HtmlDecode(question.incorrect_answers[i]);\n            }\n\n            Questions.Add(question);\n        }\n    }\n    catch (Exception)\n    {\n        StatusMessage = \"There was a problem retrieving the questions.\";\n    }\n    finally\n    {\n        IsBusy = false;\n    }\n}\nYou will need the relevant using directives, including:\nusing System.Collections.ObjectModel;\nusing System.ComponentModel;\nusing System.Net;\nusing System.Net.Http;\nusing System.Runtime.CompilerServices;\nusing System.Text.Json;\nThe ViewModel also needs the PropertyChanged event and OnPropertyChanged method we wrote earlier."
   },
   {
     "objectID": "lectures/Week8/Week8.html#things-that-can-go-wrong",
     "href": "lectures/Week8/Week8.html#things-that-can-go-wrong",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Things that can go wrong",
     "text": "Things that can go wrong\n\nThe device may have no network connection.\nThe server may return an unsuccessful HTTP status code.\nThe response may not contain the data we expected.\nThe API may reject a request because of its rate limit.\n\nThe try, catch and finally blocks let us handle these situations without leaving the UI stuck in its busy state."
   },
   {
     "objectID": "lectures/Week8/Week8.html#summary-web-apis",
     "href": "lectures/Week8/Week8.html#summary-web-apis",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Summary: Web APIs",
     "text": "Summary: Web APIs\n\nA web API exposes data over HTTP. We used GET to retrieve data.\nHttpClient makes the request; await lets the app wait without blocking the UI thread.\nCheck the HTTP response before reading its content.\nJsonSerializer.Deserialize&lt;T&gt;() turns JSON text into C# objects.\nAPI responses can have their own error codes and quirks, such as rate limits and HTML encoding.\nIn this example, the ViewModel makes the request and exposes the results to the View."
   },
   {
     "objectID": "lectures/Week8/Week8.html#event-handlers",
     "href": "lectures/Week8/Week8.html#event-handlers",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Event Handlers",
     "text": "Event Handlers\nWe have already used many event handlers:\n\nClicking a button\nTapping a control\nA timer tick expiring\n\nBut what if we want to create and raise our own events?\nBefore looking at that, let’s revisit something we have already used in MVVM."
   },
   {
     "objectID": "lectures/Week8/Week8.html#events-and-invoke",
     "href": "lectures/Week8/Week8.html#events-and-invoke",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Events and Invoke()",
     "text": "Events and Invoke()\nWhen using INotifyPropertyChanged, we raise an event whenever a property changes:\npublic event PropertyChangedEventHandler? PropertyChanged;\n\nprivate void OnPropertyChanged(string propertyName)\n{\n    PropertyChanged?.Invoke(this,\n        new PropertyChangedEventArgs(propertyName));\n}\nBut what is Invoke() doing here?\n\nIt calls all methods that have subscribed to the event.\nIn this case, the UI is listening for property changes.\nThe UI can then update the relevant controls.\n\nWe’ve been using events without necessarily looking at how they work!"
   },
   {
     "objectID": "lectures/Week8/Week8.html#the-eventhandler-delegate",
     "href": "lectures/Week8/Week8.html#the-eventhandler-delegate",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "The EventHandler Delegate",
     "text": "The EventHandler Delegate\nEvents in C# are built on delegates.\nEventHandler is a predefined delegate for handling events.\nIts signature is:\nvoid Handler(object sender, EventArgs e)\n\nsender identifies the object raising the event.\ne contains additional event information.\n\nIf we want to pass additional data, we can use the generic version:\nEventHandler&lt;TEventArgs&gt;\nFor example:\npublic event EventHandler&lt;string&gt; DataAvailable;\nHere, the event passes a string to its subscribers."
   },
   {
     "objectID": "lectures/Week8/Week8.html#raising-an-event",
     "href": "lectures/Week8/Week8.html#raising-an-event",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Raising an Event",
     "text": "Raising an Event\nWe raise an event using Invoke():\npublic event EventHandler&lt;string&gt; DataAvailable;\n\nprivate void NotifySubscribers()\n{\n    string message = \"Processing complete!\";\n\n    DataAvailable?.Invoke(this, message);\n}\n\n?.Invoke() calls the event only if there are subscribers.\nthis identifies the object raising the event.\nThe second argument contains the data being passed.\n\nEvery registered subscriber will receive the event."
   },
   {
     "objectID": "lectures/Week8/Week8.html#subscribing-to-an-event",
     "href": "lectures/Week8/Week8.html#subscribing-to-an-event",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Subscribing to an Event",
     "text": "Subscribing to an Event\nWe subscribe using +=, just as we have done with other events:\nobjectName.DataAvailable += (sender, message) =&gt;\n{\n    Console.WriteLine($\"Received: {message}\");\n};\nWe can unsubscribe using -=.\nThe publisher doesn’t need to know who is listening. It simply raises the event, and all subscribers are notified."
   },
   {
     "objectID": "lectures/Week8/Week8.html#using-action-for-events",
     "href": "lectures/Week8/Week8.html#using-action-for-events",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Using Action for Events",
     "text": "Using Action for Events\nWe don’t always need to use EventHandler when defining an event.\nC# also provides the Action delegate, which allows us to specify our own parameters.\nFor example:\npublic event Action&lt;string, string, string&gt;? ShowAlert;\nWe can raise the event in exactly the same way:\nShowAlert?.Invoke(\"Warning\", \"Are you sure?\", \"Cancel\");\nAnd subscribe using +=:\nShowAlert += (title, message, cancel) =&gt;\n{\n    // Display an alert\n};\nWhat’s the difference?\n\nEventHandler follows the standard .NET event pattern and includes the sender.\nAction allows us to specify whatever parameters we need.\nUse Action when we don’t need the sender or a custom EventArgs class.\n\nBoth support multiple subscribers and can be unsubscribed using -=."
   },
   {
     "objectID": "lectures/Week8/Week8.html#key-points-about-events",
     "href": "lectures/Week8/Week8.html#key-points-about-events",
-    "title": "Week 8 MVVM and Web APIs",
+    "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Key Points About Events",
     "text": "Key Points About Events\n\nEvents follow the publisher–subscriber model.\nThe publisher raises an event using Invoke().\nSubscribers register using += and respond when triggered.\nThe publisher:\n\nDoes not need to know who the subscribers are.\nSimply signals that something has happened.\n\nThe subscriber:\n\nDecides how to respond.\nCan detach at any time using -=."
   }
