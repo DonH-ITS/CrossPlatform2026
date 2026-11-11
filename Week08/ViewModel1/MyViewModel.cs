@@ -72,12 +72,17 @@ namespace Week8Demo
             {
                 Interval = 1000
             };
-
+            
             // Hook up the EventHandler for it
             timer.Elapsed += OnTimerElapsed;
 
             // Start the timer
             timer?.Start();
+
+            // This will work for a DispatcherTimer in a ViewModel
+            // The Application.Current is what I was forgetting in the lecture
+            //_timer = Application.Current.Dispatcher.CreateTimer();
+
             ChangeTextCommand = new Command(MakeaChange);
             ChangeScoreCommand = new Command<string>(ChangeScore);
         }
