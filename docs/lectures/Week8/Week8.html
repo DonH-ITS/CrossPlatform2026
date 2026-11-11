@@ -620,7 +620,11 @@
 <li>At the page level, <code>x:DataType</code> tells XAML that the page bindings are against <code>BooksViewModel</code>.</li>
 <li>Inside the <code>DataTemplate</code>, the <code>BindingContext</code> is <strong>one <code>Book</code></strong>, so the Labels bind to properties of <code>Book</code>. The template therefore has its own <code>x:DataType</code>.</li>
 </ul>
-<p><code>x:DataType</code> tells the XAML compiler what type to expect for the binding source. It enables compile-time checking and better IntelliSense. It does <strong>not</strong> set the <code>BindingContext</code> for us; we still need to create the ViewModel and assign it.</p>
+<p><code>x:DataType</code> tells the XAML compiler what type to expect for the binding source. It enables compile-time checking and better IntelliSense.</p>
+</section>
+<section id="displaying-the-collection-1" class="slide level2">
+<h2>Displaying the collection</h2>
+<p>It does <strong>not</strong> set the <code>BindingContext</code> for us; we still need to create the ViewModel and assign it.</p>
 <p>The code-behind creates the ViewModel in the constructor, as before:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> MainPage <span class="op">:</span> ContentPage</span>
 <span id="cb20-2"><a aria-label="2"></a><span class="op">{</span></span>
@@ -649,10 +653,13 @@
 <span id="cb22-5"><a aria-label="5"></a><span class="kw">public</span> Command AddBookCommand <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the constructor:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a aria-label="1"></a>AddBookCommand <span class="op">=</span> <span class="kw">new</span> <span class="fu">Command</span><span class="op">(</span>AddBook<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="adding-a-book-1" class="slide level2">
+<h2>Adding a book</h2>
 <p>And the method:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">AddBook</span><span class="op">()</span></span>
 <span id="cb24-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb24-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span><span class="dt">string</span><span class="op">.</span><span class="fu">IsNullOrWhiteSpace</span><span class="op">(</span>Title<span class="op">))</span></span>
+<span id="cb24-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span><span class="dt">string</span><span class="op">.</span><span class="fu">IsNullOrWhiteSpace</span><span class="op">(</span>Title<span class="op">)</span> <span class="op">||</span> <span class="dt">string</span><span class="op">.</span><span class="fu">IsNullOrWhiteSpace</span><span class="op">(</span>Author<span class="op">))</span></span>
 <span id="cb24-4"><a aria-label="4"></a>        <span class="kw">return</span><span class="op">;</span></span>
 <span id="cb24-5"><a aria-label="5"></a></span>
 <span id="cb24-6"><a aria-label="6"></a>    <span class="kw">if</span> <span class="op">(!</span><span class="dt">int</span><span class="op">.</span><span class="fu">TryParse</span><span class="op">(</span>PublishedYear<span class="op">,</span> <span class="kw">out</span> <span class="dt">int</span> year<span class="op">))</span></span>
