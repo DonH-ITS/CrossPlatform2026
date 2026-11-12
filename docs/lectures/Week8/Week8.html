@@ -893,114 +893,107 @@
 <span id="cb38-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>LoadQuestions</code> method makes the request, checks the response and deserialises the JSON. It also updates the properties that the View is displaying.</p>
 <p>This is using an anonymous method we could also do</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">TriviaViewModel</span><span class="op">()</span></span>
-<span id="cb39-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb39-3"><a aria-label="3"></a>    LoadQuestionsCommand <span class="op">=</span> <span class="kw">new</span> <span class="fu">Command</span><span class="op">(</span>LoadQuest<span class="op">);</span></span>
-<span id="cb39-4"><a aria-label="4"></a><span class="op">}</span></span>
-<span id="cb39-5"><a aria-label="5"></a></span>
-<span id="cb39-6"><a aria-label="6"></a><span class="kw">public</span> async <span class="dt">void</span> <span class="fu">LoadQuest</span><span class="op">(){</span></span>
-<span id="cb39-7"><a aria-label="7"></a>    await <span class="fu">LoadQuestions</span><span class="op">();</span></span>
-<span id="cb39-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Command wants a method that returns nothing, so we wrap our async method in a small lambda.</p>
 </section>
 <section id="loading-questions-1" class="slide level2">
 <h2>Loading questions</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a aria-label="1"></a><span class="kw">private</span> async Task <span class="fu">LoadQuestions</span><span class="op">()</span></span>
-<span id="cb40-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb40-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span>IsBusy<span class="op">)</span></span>
-<span id="cb40-4"><a aria-label="4"></a>        <span class="kw">return</span><span class="op">;</span></span>
-<span id="cb40-5"><a aria-label="5"></a></span>
-<span id="cb40-6"><a aria-label="6"></a>    <span class="kw">try</span></span>
-<span id="cb40-7"><a aria-label="7"></a>    <span class="op">{</span></span>
-<span id="cb40-8"><a aria-label="8"></a>        IsBusy <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb40-9"><a aria-label="9"></a>        StatusMessage <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
-<span id="cb40-10"><a aria-label="10"></a>        Questions<span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span>
-<span id="cb40-11"><a aria-label="11"></a></span>
-<span id="cb40-12"><a aria-label="12"></a>        <span class="dt">string</span> url <span class="op">=</span> <span class="st">"https://opentdb.com/api.php?amount=5&amp;type=multiple"</span><span class="op">;</span></span>
-<span id="cb40-13"><a aria-label="13"></a></span>
-<span id="cb40-14"><a aria-label="14"></a>        <span class="kw">using</span> <span class="dt">var</span> response <span class="op">=</span> await _httpClient<span class="op">.</span><span class="fu">GetAsync</span><span class="op">(</span>url<span class="op">);</span></span>
-<span id="cb40-15"><a aria-label="15"></a></span>
-<span id="cb40-16"><a aria-label="16"></a>        <span class="kw">if</span> <span class="op">(!</span>response<span class="op">.</span><span class="fu">IsSuccessStatusCode</span><span class="op">)</span></span>
-<span id="cb40-17"><a aria-label="17"></a>        <span class="op">{</span></span>
-<span id="cb40-18"><a aria-label="18"></a>            StatusMessage <span class="op">=</span> <span class="st">"Could not retrieve the questions."</span><span class="op">;</span></span>
-<span id="cb40-19"><a aria-label="19"></a>            <span class="kw">return</span><span class="op">;</span></span>
-<span id="cb40-20"><a aria-label="20"></a>        <span class="op">}</span></span>
-<span id="cb40-21"><a aria-label="21"></a></span>
-<span id="cb40-22"><a aria-label="22"></a>        <span class="dt">string</span> json <span class="op">=</span> await response<span class="op">.</span><span class="fu">Content</span><span class="op">.</span><span class="fu">ReadAsStringAsync</span><span class="op">();</span></span>
-<span id="cb40-23"><a aria-label="23"></a>        TriviaResponse<span class="op">?</span> data <span class="op">=</span> JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>TriviaResponse<span class="op">&gt;(</span>json<span class="op">);</span></span>
-<span id="cb40-24"><a aria-label="24"></a></span>
-<span id="cb40-25"><a aria-label="25"></a>        <span class="kw">if</span> <span class="op">(</span>data <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> data<span class="op">.</span><span class="fu">response_code</span> <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb40-26"><a aria-label="26"></a>        <span class="op">{</span></span>
-<span id="cb40-27"><a aria-label="27"></a>            StatusMessage <span class="op">=</span> <span class="st">"The API did not return any questions."</span><span class="op">;</span></span>
-<span id="cb40-28"><a aria-label="28"></a>            <span class="kw">return</span><span class="op">;</span></span>
-<span id="cb40-29"><a aria-label="29"></a>        <span class="op">}</span></span>
-<span id="cb40-30"><a aria-label="30"></a></span>
-<span id="cb40-31"><a aria-label="31"></a>        <span class="kw">foreach</span> <span class="op">(</span>Question question <span class="kw">in</span> data<span class="op">.</span><span class="fu">results</span><span class="op">)</span></span>
-<span id="cb40-32"><a aria-label="32"></a>        <span class="op">{</span></span>
-<span id="cb40-33"><a aria-label="33"></a>            question<span class="op">.</span><span class="fu">question</span> <span class="op">=</span> WebUtility<span class="op">.</span><span class="fu">HtmlDecode</span><span class="op">(</span>question<span class="op">.</span><span class="fu">question</span><span class="op">);</span></span>
-<span id="cb40-34"><a aria-label="34"></a>            question<span class="op">.</span><span class="fu">correct_answer</span> <span class="op">=</span> WebUtility<span class="op">.</span><span class="fu">HtmlDecode</span><span class="op">(</span>question<span class="op">.</span><span class="fu">correct_answer</span><span class="op">);</span></span>
-<span id="cb40-35"><a aria-label="35"></a></span>
-<span id="cb40-36"><a aria-label="36"></a>            <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> question<span class="op">.</span><span class="fu">incorrect_answers</span><span class="op">.</span><span class="fu">Count</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb40-37"><a aria-label="37"></a>            <span class="op">{</span></span>
-<span id="cb40-38"><a aria-label="38"></a>                question<span class="op">.</span><span class="fu">incorrect_answers</span><span class="op">[</span>i<span class="op">]</span> <span class="op">=</span></span>
-<span id="cb40-39"><a aria-label="39"></a>                    WebUtility<span class="op">.</span><span class="fu">HtmlDecode</span><span class="op">(</span>question<span class="op">.</span><span class="fu">incorrect_answers</span><span class="op">[</span>i<span class="op">]);</span></span>
-<span id="cb40-40"><a aria-label="40"></a>            <span class="op">}</span></span>
-<span id="cb40-41"><a aria-label="41"></a></span>
-<span id="cb40-42"><a aria-label="42"></a>            Questions<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>question<span class="op">);</span></span>
-<span id="cb40-43"><a aria-label="43"></a>        <span class="op">}</span></span>
-<span id="cb40-44"><a aria-label="44"></a>    <span class="op">}</span></span>
-<span id="cb40-45"><a aria-label="45"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception<span class="op">)</span></span>
-<span id="cb40-46"><a aria-label="46"></a>    <span class="op">{</span></span>
-<span id="cb40-47"><a aria-label="47"></a>        StatusMessage <span class="op">=</span> <span class="st">"There was a problem retrieving the questions."</span><span class="op">;</span></span>
-<span id="cb40-48"><a aria-label="48"></a>    <span class="op">}</span></span>
-<span id="cb40-49"><a aria-label="49"></a>    <span class="kw">finally</span></span>
-<span id="cb40-50"><a aria-label="50"></a>    <span class="op">{</span></span>
-<span id="cb40-51"><a aria-label="51"></a>        IsBusy <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb40-52"><a aria-label="52"></a>    <span class="op">}</span></span>
-<span id="cb40-53"><a aria-label="53"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a aria-label="1"></a><span class="kw">private</span> async Task <span class="fu">LoadQuestions</span><span class="op">()</span></span>
+<span id="cb39-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb39-3"><a aria-label="3"></a>    <span class="kw">if</span> <span class="op">(</span>IsBusy<span class="op">)</span></span>
+<span id="cb39-4"><a aria-label="4"></a>        <span class="kw">return</span><span class="op">;</span></span>
+<span id="cb39-5"><a aria-label="5"></a></span>
+<span id="cb39-6"><a aria-label="6"></a>    <span class="kw">try</span></span>
+<span id="cb39-7"><a aria-label="7"></a>    <span class="op">{</span></span>
+<span id="cb39-8"><a aria-label="8"></a>        IsBusy <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb39-9"><a aria-label="9"></a>        StatusMessage <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb39-10"><a aria-label="10"></a>        Questions<span class="op">.</span><span class="fu">Clear</span><span class="op">();</span></span>
+<span id="cb39-11"><a aria-label="11"></a></span>
+<span id="cb39-12"><a aria-label="12"></a>        <span class="dt">string</span> url <span class="op">=</span> <span class="st">"https://opentdb.com/api.php?amount=5&amp;type=multiple"</span><span class="op">;</span></span>
+<span id="cb39-13"><a aria-label="13"></a></span>
+<span id="cb39-14"><a aria-label="14"></a>        <span class="kw">using</span> <span class="dt">var</span> response <span class="op">=</span> await _httpClient<span class="op">.</span><span class="fu">GetAsync</span><span class="op">(</span>url<span class="op">);</span></span>
+<span id="cb39-15"><a aria-label="15"></a></span>
+<span id="cb39-16"><a aria-label="16"></a>        <span class="kw">if</span> <span class="op">(!</span>response<span class="op">.</span><span class="fu">IsSuccessStatusCode</span><span class="op">)</span></span>
+<span id="cb39-17"><a aria-label="17"></a>        <span class="op">{</span></span>
+<span id="cb39-18"><a aria-label="18"></a>            StatusMessage <span class="op">=</span> <span class="st">"Could not retrieve the questions."</span><span class="op">;</span></span>
+<span id="cb39-19"><a aria-label="19"></a>            <span class="kw">return</span><span class="op">;</span></span>
+<span id="cb39-20"><a aria-label="20"></a>        <span class="op">}</span></span>
+<span id="cb39-21"><a aria-label="21"></a></span>
+<span id="cb39-22"><a aria-label="22"></a>        <span class="dt">string</span> json <span class="op">=</span> await response<span class="op">.</span><span class="fu">Content</span><span class="op">.</span><span class="fu">ReadAsStringAsync</span><span class="op">();</span></span>
+<span id="cb39-23"><a aria-label="23"></a>        TriviaResponse<span class="op">?</span> data <span class="op">=</span> JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>TriviaResponse<span class="op">&gt;(</span>json<span class="op">);</span></span>
+<span id="cb39-24"><a aria-label="24"></a></span>
+<span id="cb39-25"><a aria-label="25"></a>        <span class="kw">if</span> <span class="op">(</span>data <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> data<span class="op">.</span><span class="fu">response_code</span> <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb39-26"><a aria-label="26"></a>        <span class="op">{</span></span>
+<span id="cb39-27"><a aria-label="27"></a>            StatusMessage <span class="op">=</span> <span class="st">"The API did not return any questions."</span><span class="op">;</span></span>
+<span id="cb39-28"><a aria-label="28"></a>            <span class="kw">return</span><span class="op">;</span></span>
+<span id="cb39-29"><a aria-label="29"></a>        <span class="op">}</span></span>
+<span id="cb39-30"><a aria-label="30"></a></span>
+<span id="cb39-31"><a aria-label="31"></a>        <span class="kw">foreach</span> <span class="op">(</span>Question question <span class="kw">in</span> data<span class="op">.</span><span class="fu">results</span><span class="op">)</span></span>
+<span id="cb39-32"><a aria-label="32"></a>        <span class="op">{</span></span>
+<span id="cb39-33"><a aria-label="33"></a>            question<span class="op">.</span><span class="fu">question</span> <span class="op">=</span> WebUtility<span class="op">.</span><span class="fu">HtmlDecode</span><span class="op">(</span>question<span class="op">.</span><span class="fu">question</span><span class="op">);</span></span>
+<span id="cb39-34"><a aria-label="34"></a>            question<span class="op">.</span><span class="fu">correct_answer</span> <span class="op">=</span> WebUtility<span class="op">.</span><span class="fu">HtmlDecode</span><span class="op">(</span>question<span class="op">.</span><span class="fu">correct_answer</span><span class="op">);</span></span>
+<span id="cb39-35"><a aria-label="35"></a></span>
+<span id="cb39-36"><a aria-label="36"></a>            <span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> question<span class="op">.</span><span class="fu">incorrect_answers</span><span class="op">.</span><span class="fu">Count</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb39-37"><a aria-label="37"></a>            <span class="op">{</span></span>
+<span id="cb39-38"><a aria-label="38"></a>                question<span class="op">.</span><span class="fu">incorrect_answers</span><span class="op">[</span>i<span class="op">]</span> <span class="op">=</span></span>
+<span id="cb39-39"><a aria-label="39"></a>                    WebUtility<span class="op">.</span><span class="fu">HtmlDecode</span><span class="op">(</span>question<span class="op">.</span><span class="fu">incorrect_answers</span><span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb39-40"><a aria-label="40"></a>            <span class="op">}</span></span>
+<span id="cb39-41"><a aria-label="41"></a></span>
+<span id="cb39-42"><a aria-label="42"></a>            Questions<span class="op">.</span><span class="fu">Add</span><span class="op">(</span>question<span class="op">);</span></span>
+<span id="cb39-43"><a aria-label="43"></a>        <span class="op">}</span></span>
+<span id="cb39-44"><a aria-label="44"></a>    <span class="op">}</span></span>
+<span id="cb39-45"><a aria-label="45"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception<span class="op">)</span></span>
+<span id="cb39-46"><a aria-label="46"></a>    <span class="op">{</span></span>
+<span id="cb39-47"><a aria-label="47"></a>        StatusMessage <span class="op">=</span> <span class="st">"There was a problem retrieving the questions."</span><span class="op">;</span></span>
+<span id="cb39-48"><a aria-label="48"></a>    <span class="op">}</span></span>
+<span id="cb39-49"><a aria-label="49"></a>    <span class="kw">finally</span></span>
+<span id="cb39-50"><a aria-label="50"></a>    <span class="op">{</span></span>
+<span id="cb39-51"><a aria-label="51"></a>        IsBusy <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb39-52"><a aria-label="52"></a>    <span class="op">}</span></span>
+<span id="cb39-53"><a aria-label="53"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You will need the relevant <code>using</code> directives, including:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb41-1"><a aria-label="1"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Collections</span><span class="op">.</span><span class="fu">ObjectModel</span><span class="op">;</span></span>
-<span id="cb41-2"><a aria-label="2"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">ComponentModel</span><span class="op">;</span></span>
-<span id="cb41-3"><a aria-label="3"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Net</span><span class="op">;</span></span>
-<span id="cb41-4"><a aria-label="4"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Net</span><span class="op">.</span><span class="fu">Http</span><span class="op">;</span></span>
-<span id="cb41-5"><a aria-label="5"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Runtime</span><span class="op">.</span><span class="fu">CompilerServices</span><span class="op">;</span></span>
-<span id="cb41-6"><a aria-label="6"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Json</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb40-1"><a aria-label="1"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Collections</span><span class="op">.</span><span class="fu">ObjectModel</span><span class="op">;</span></span>
+<span id="cb40-2"><a aria-label="2"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">ComponentModel</span><span class="op">;</span></span>
+<span id="cb40-3"><a aria-label="3"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Net</span><span class="op">;</span></span>
+<span id="cb40-4"><a aria-label="4"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Net</span><span class="op">.</span><span class="fu">Http</span><span class="op">;</span></span>
+<span id="cb40-5"><a aria-label="5"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Runtime</span><span class="op">.</span><span class="fu">CompilerServices</span><span class="op">;</span></span>
+<span id="cb40-6"><a aria-label="6"></a><span class="kw">using</span> System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Json</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The ViewModel also needs the <code>PropertyChanged</code> event and <code>OnPropertyChanged</code> method we wrote earlier.</p>
 </section>
 <section id="the-view-1" class="slide level2">
 <h2>The View</h2>
 <p>The View binds to the command, the busy state, the status message and the collection.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb42-1"><a aria-label="1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
-<span id="cb42-2"><a aria-label="2"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
-<span id="cb42-3"><a aria-label="3"></a>             <span class="ot">xmlns:models=</span><span class="st">"clr-namespace:TriviaApp.Models"</span></span>
-<span id="cb42-4"><a aria-label="4"></a>             <span class="ot">xmlns:viewmodels=</span><span class="st">"clr-namespace:TriviaApp.ViewModels"</span></span>
-<span id="cb42-5"><a aria-label="5"></a>             <span class="ot">x:Class=</span><span class="st">"TriviaApp.MainPage"</span></span>
-<span id="cb42-6"><a aria-label="6"></a>             <span class="ot">x:DataType=</span><span class="st">"viewmodels:TriviaViewModel"</span>&gt;</span>
-<span id="cb42-7"><a aria-label="7"></a></span>
-<span id="cb42-8"><a aria-label="8"></a>    &lt;<span class="kw">Grid</span> <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,*"</span> <span class="ot">Padding=</span><span class="st">"20"</span> <span class="ot">RowSpacing=</span><span class="st">"10"</span>&gt;</span>
-<span id="cb42-9"><a aria-label="9"></a>        &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Load Questions"</span></span>
-<span id="cb42-10"><a aria-label="10"></a>                <span class="ot">Command=</span><span class="st">"{Binding LoadQuestionsCommand}"</span> /&gt;</span>
-<span id="cb42-11"><a aria-label="11"></a></span>
-<span id="cb42-12"><a aria-label="12"></a>        &lt;<span class="kw">ActivityIndicator</span> <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
-<span id="cb42-13"><a aria-label="13"></a>                           <span class="ot">IsRunning=</span><span class="st">"{Binding IsBusy}"</span></span>
-<span id="cb42-14"><a aria-label="14"></a>                           <span class="ot">IsVisible=</span><span class="st">"{Binding IsBusy}"</span> /&gt;</span>
-<span id="cb42-15"><a aria-label="15"></a></span>
-<span id="cb42-16"><a aria-label="16"></a>        &lt;<span class="kw">Label</span> <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
-<span id="cb42-17"><a aria-label="17"></a>               <span class="ot">Text=</span><span class="st">"{Binding StatusMessage}"</span></span>
-<span id="cb42-18"><a aria-label="18"></a>               <span class="ot">TextColor=</span><span class="st">"Red"</span> /&gt;</span>
-<span id="cb42-19"><a aria-label="19"></a></span>
-<span id="cb42-20"><a aria-label="20"></a>        &lt;<span class="kw">CollectionView</span> <span class="ot">Grid.Row=</span><span class="st">"3"</span> <span class="ot">ItemsSource=</span><span class="st">"{Binding Questions}"</span>&gt;</span>
-<span id="cb42-21"><a aria-label="21"></a>            &lt;<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
-<span id="cb42-22"><a aria-label="22"></a>                &lt;<span class="kw">DataTemplate</span> <span class="ot">x:DataType=</span><span class="st">"models:Question"</span>&gt;</span>
-<span id="cb42-23"><a aria-label="23"></a>                    &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Padding=</span><span class="st">"10"</span> <span class="ot">Spacing=</span><span class="st">"5"</span>&gt;</span>
-<span id="cb42-24"><a aria-label="24"></a>                        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding question}"</span> <span class="ot">FontAttributes=</span><span class="st">"Bold"</span> /&gt;</span>
-<span id="cb42-25"><a aria-label="25"></a>                        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding category}"</span> <span class="ot">FontSize=</span><span class="st">"Small"</span> /&gt;</span>
-<span id="cb42-26"><a aria-label="26"></a>                        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding correct_answer}"</span> /&gt;</span>
-<span id="cb42-27"><a aria-label="27"></a>                    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
-<span id="cb42-28"><a aria-label="28"></a>                &lt;/<span class="kw">DataTemplate</span>&gt;</span>
-<span id="cb42-29"><a aria-label="29"></a>            &lt;/<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
-<span id="cb42-30"><a aria-label="30"></a>        &lt;/<span class="kw">CollectionView</span>&gt;</span>
-<span id="cb42-31"><a aria-label="31"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
-<span id="cb42-32"><a aria-label="32"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb41-1"><a aria-label="1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb41-2"><a aria-label="2"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
+<span id="cb41-3"><a aria-label="3"></a>             <span class="ot">xmlns:models=</span><span class="st">"clr-namespace:TriviaApp.Models"</span></span>
+<span id="cb41-4"><a aria-label="4"></a>             <span class="ot">xmlns:viewmodels=</span><span class="st">"clr-namespace:TriviaApp.ViewModels"</span></span>
+<span id="cb41-5"><a aria-label="5"></a>             <span class="ot">x:Class=</span><span class="st">"TriviaApp.MainPage"</span></span>
+<span id="cb41-6"><a aria-label="6"></a>             <span class="ot">x:DataType=</span><span class="st">"viewmodels:TriviaViewModel"</span>&gt;</span>
+<span id="cb41-7"><a aria-label="7"></a></span>
+<span id="cb41-8"><a aria-label="8"></a>    &lt;<span class="kw">Grid</span> <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,*"</span> <span class="ot">Padding=</span><span class="st">"20"</span> <span class="ot">RowSpacing=</span><span class="st">"10"</span>&gt;</span>
+<span id="cb41-9"><a aria-label="9"></a>        &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Load Questions"</span></span>
+<span id="cb41-10"><a aria-label="10"></a>                <span class="ot">Command=</span><span class="st">"{Binding LoadQuestionsCommand}"</span> /&gt;</span>
+<span id="cb41-11"><a aria-label="11"></a></span>
+<span id="cb41-12"><a aria-label="12"></a>        &lt;<span class="kw">ActivityIndicator</span> <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
+<span id="cb41-13"><a aria-label="13"></a>                           <span class="ot">IsRunning=</span><span class="st">"{Binding IsBusy}"</span></span>
+<span id="cb41-14"><a aria-label="14"></a>                           <span class="ot">IsVisible=</span><span class="st">"{Binding IsBusy}"</span> /&gt;</span>
+<span id="cb41-15"><a aria-label="15"></a></span>
+<span id="cb41-16"><a aria-label="16"></a>        &lt;<span class="kw">Label</span> <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
+<span id="cb41-17"><a aria-label="17"></a>               <span class="ot">Text=</span><span class="st">"{Binding StatusMessage}"</span></span>
+<span id="cb41-18"><a aria-label="18"></a>               <span class="ot">TextColor=</span><span class="st">"Red"</span> /&gt;</span>
+<span id="cb41-19"><a aria-label="19"></a></span>
+<span id="cb41-20"><a aria-label="20"></a>        &lt;<span class="kw">CollectionView</span> <span class="ot">Grid.Row=</span><span class="st">"3"</span> <span class="ot">ItemsSource=</span><span class="st">"{Binding Questions}"</span>&gt;</span>
+<span id="cb41-21"><a aria-label="21"></a>            &lt;<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb41-22"><a aria-label="22"></a>                &lt;<span class="kw">DataTemplate</span> <span class="ot">x:DataType=</span><span class="st">"models:Question"</span>&gt;</span>
+<span id="cb41-23"><a aria-label="23"></a>                    &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Padding=</span><span class="st">"10"</span> <span class="ot">Spacing=</span><span class="st">"5"</span>&gt;</span>
+<span id="cb41-24"><a aria-label="24"></a>                        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding question}"</span> <span class="ot">FontAttributes=</span><span class="st">"Bold"</span> /&gt;</span>
+<span id="cb41-25"><a aria-label="25"></a>                        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding category}"</span> <span class="ot">FontSize=</span><span class="st">"Small"</span> /&gt;</span>
+<span id="cb41-26"><a aria-label="26"></a>                        &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding correct_answer}"</span> /&gt;</span>
+<span id="cb41-27"><a aria-label="27"></a>                    &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb41-28"><a aria-label="28"></a>                &lt;/<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb41-29"><a aria-label="29"></a>            &lt;/<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb41-30"><a aria-label="30"></a>        &lt;/<span class="kw">CollectionView</span>&gt;</span>
+<span id="cb41-31"><a aria-label="31"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb41-32"><a aria-label="32"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The page-level <code>x:DataType</code> describes the ViewModel. Inside the <code>DataTemplate</code>, the binding source changes to one <code>Question</code>, so the template has its own <code>x:DataType</code>.</p>
 </section>
 <section id="things-that-can-go-wrong" class="slide level2">
@@ -1043,13 +1036,13 @@
 <section id="events-and-invoke" class="slide level2">
 <h2>Events and <code>Invoke()</code></h2>
 <p>When using <code>INotifyPropertyChanged</code>, we raise an event whenever a property changes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> PropertyChangedEventHandler<span class="op">?</span> PropertyChanged<span class="op">;</span></span>
-<span id="cb43-2"><a aria-label="2"></a></span>
-<span id="cb43-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnPropertyChanged</span><span class="op">(</span><span class="dt">string</span> propertyName<span class="op">)</span></span>
-<span id="cb43-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb43-5"><a aria-label="5"></a>    PropertyChanged<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span></span>
-<span id="cb43-6"><a aria-label="6"></a>        <span class="kw">new</span> <span class="fu">PropertyChangedEventArgs</span><span class="op">(</span>propertyName<span class="op">));</span></span>
-<span id="cb43-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb42-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> PropertyChangedEventHandler<span class="op">?</span> PropertyChanged<span class="op">;</span></span>
+<span id="cb42-2"><a aria-label="2"></a></span>
+<span id="cb42-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnPropertyChanged</span><span class="op">(</span><span class="dt">string</span> propertyName<span class="op">)</span></span>
+<span id="cb42-4"><a aria-label="4"></a><span class="op">{</span></span>
+<span id="cb42-5"><a aria-label="5"></a>    PropertyChanged<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span></span>
+<span id="cb42-6"><a aria-label="6"></a>        <span class="kw">new</span> <span class="fu">PropertyChangedEventArgs</span><span class="op">(</span>propertyName<span class="op">));</span></span>
+<span id="cb42-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>But what is <code>Invoke()</code> doing here?</p>
 <ul>
 <li>It calls all methods that have subscribed to the event.</li>
@@ -1063,28 +1056,28 @@
 <p>Events in C# are built on <strong>delegates</strong>.</p>
 <p><code>EventHandler</code> is a predefined delegate for handling events.</p>
 <p>Its signature is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a><span class="dt">void</span> <span class="fu">Handler</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a aria-label="1"></a><span class="dt">void</span> <span class="fu">Handler</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>sender</code> identifies the object raising the event.</li>
 <li><code>e</code> contains additional event information.</li>
 </ul>
 <p>If we want to pass additional data, we can use the generic version:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a>EventHandler<span class="op">&lt;</span>TEventArgs<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a>EventHandler<span class="op">&lt;</span>TEventArgs<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb46-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> EventHandler<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> DataAvailable<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> EventHandler<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> DataAvailable<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here, the event passes a <code>string</code> to its subscribers.</p>
 </section>
 <section id="raising-an-event" class="slide level2">
 <h2>Raising an Event</h2>
 <p>We raise an event using <code>Invoke()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> EventHandler<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> DataAvailable<span class="op">;</span></span>
-<span id="cb47-2"><a aria-label="2"></a></span>
-<span id="cb47-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">NotifySubscribers</span><span class="op">()</span></span>
-<span id="cb47-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb47-5"><a aria-label="5"></a>    <span class="dt">string</span> message <span class="op">=</span> <span class="st">"Processing complete!"</span><span class="op">;</span></span>
-<span id="cb47-6"><a aria-label="6"></a></span>
-<span id="cb47-7"><a aria-label="7"></a>    DataAvailable<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> message<span class="op">);</span></span>
-<span id="cb47-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb46-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> EventHandler<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> DataAvailable<span class="op">;</span></span>
+<span id="cb46-2"><a aria-label="2"></a></span>
+<span id="cb46-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">NotifySubscribers</span><span class="op">()</span></span>
+<span id="cb46-4"><a aria-label="4"></a><span class="op">{</span></span>
+<span id="cb46-5"><a aria-label="5"></a>    <span class="dt">string</span> message <span class="op">=</span> <span class="st">"Processing complete!"</span><span class="op">;</span></span>
+<span id="cb46-6"><a aria-label="6"></a></span>
+<span id="cb46-7"><a aria-label="7"></a>    DataAvailable<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> message<span class="op">);</span></span>
+<span id="cb46-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>?.Invoke()</code> calls the event only if there are subscribers.</li>
 <li><code>this</code> identifies the object raising the event.</li>
@@ -1095,10 +1088,10 @@
 <section id="subscribing-to-an-event" class="slide level2">
 <h2>Subscribing to an Event</h2>
 <p>We subscribe using <code>+=</code>, just as we have done with other events:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a>objectName<span class="op">.</span><span class="fu">DataAvailable</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> message<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb48-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb48-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>$<span class="st">"Received: {message}"</span><span class="op">);</span></span>
-<span id="cb48-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a>objectName<span class="op">.</span><span class="fu">DataAvailable</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> message<span class="op">)</span> <span class="op">=&gt;</span></span>
+<span id="cb47-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb47-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>$<span class="st">"Received: {message}"</span><span class="op">);</span></span>
+<span id="cb47-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can unsubscribe using <code>-=</code>.</p>
 <p>The publisher doesn’t need to know who is listening. It simply raises the event, and all subscribers are notified.</p>
 </section>
@@ -1107,14 +1100,14 @@
 <p>We don’t always need to use <code>EventHandler</code> when defining an event.</p>
 <p>C# also provides the <code>Action</code> delegate, which allows us to specify our own parameters.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb49-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> Action<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;?</span> ShowAlert<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> Action<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;?</span> ShowAlert<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We can raise the event in exactly the same way:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb50-1"><a aria-label="1"></a>ShowAlert<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="st">"Warning"</span><span class="op">,</span> <span class="st">"Are you sure?"</span><span class="op">,</span> <span class="st">"Cancel"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb49-1"><a aria-label="1"></a>ShowAlert<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="st">"Warning"</span><span class="op">,</span> <span class="st">"Are you sure?"</span><span class="op">,</span> <span class="st">"Cancel"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And subscribe using <code>+=</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb51-1"><a aria-label="1"></a>ShowAlert <span class="op">+=</span> <span class="op">(</span>title<span class="op">,</span> message<span class="op">,</span> cancel<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb51-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb51-3"><a aria-label="3"></a>    <span class="co">// Display an alert</span></span>
-<span id="cb51-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb50-1"><a aria-label="1"></a>ShowAlert <span class="op">+=</span> <span class="op">(</span>title<span class="op">,</span> message<span class="op">,</span> cancel<span class="op">)</span> <span class="op">=&gt;</span></span>
+<span id="cb50-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb50-3"><a aria-label="3"></a>    <span class="co">// Display an alert</span></span>
+<span id="cb50-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>What’s the difference?</strong></p>
 <ul>
 <li><code>EventHandler</code> follows the standard .NET event pattern and includes the sender.</li>
