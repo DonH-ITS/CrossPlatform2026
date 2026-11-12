@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.MainPage"
+             Title="Disciplinary Committee"
+BackgroundColor="{DynamicResource PageBackground}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PageBackground">#F4F4F4</Color>
+
+            <Style x:Key="CommitteeButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#263B5A" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="Padding" Value="12,8" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <!-- Not used until the experiment at the end of Section 10 -->
+            <Style x:Key="AlternateButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#8B1E2D" />
+                <Setter Property="TextColor" Value="#FFD966" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="Padding" Value="12,8" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="12">
+
+            <Label Text="THE PREMIER LEAGUE"
+               FontSize="22"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+            <Label Text="Disciplinary Committee"
+               FontSize="18"
+               HorizontalOptions="Center" />
+
+            <Label Text="League table: 8 November 2026"
+               FontSize="12"
+               HorizontalOptions="Center"
+               TextColor="Gray" />
+
+            <Grid ColumnDefinitions="*,*"
+              ColumnSpacing="8">
+
+                <Button Text="Load Original Table"
+                    Grid.Column="0"
+                    Style="{StaticResource CommitteeButtonStyle}"
+                    Clicked="LoadOriginalTable_Clicked" />
+
+                <Button Text="Change Theme"
+                    Grid.Column="1"
+                    Style="{StaticResource CommitteeButtonStyle}"
+                    Clicked="ChangeTheme_Clicked" />
+            </Grid>
+
+            <Label Text="LEAGUE TABLE"
+               FontAttributes="Bold"
+               FontSize="16" />
+
+            <ScrollView Orientation="Horizontal">
+                <Grid x:Name="LeagueTable"
+                  ColumnDefinitions="35,175,35,35,35,35,45,45"
+                  RowDefinitions="Auto"
+                  ColumnSpacing="3"
+                  RowSpacing="5"
+                  Padding="3" />
+            </ScrollView>
+
+            <BoxView HeightRequest="1" Color="Gray" />
+
+            <Label Text="ENTER A DISCIPLINARY DECISION"
+               FontAttributes="Bold"
+               FontSize="16" />
+
+            <Entry x:Name="TeamNameEntry"
+               Placeholder="Club name (e.g. Arsenal)" />
+
+            <Entry x:Name="PointsAdjustmentEntry"
+               Placeholder="Points adjustment (e.g. -10 or 5)"
+               Keyboard="Numeric" />
+
+            <Entry x:Name="ReasonEntry"
+               Placeholder="Reason for the decision" />
+
+            <Grid ColumnDefinitions="*,*"
+              ColumnSpacing="8">
+
+                <Button Text="Add Decision"
+                    Grid.Column="0"
+                    Style="{StaticResource CommitteeButtonStyle}"
+                    Clicked="AddDecision_Clicked" />
+
+                <Button Text="Clear Decisions"
+                    Grid.Column="1"
+                    Style="{StaticResource CommitteeButtonStyle}"
+                    Clicked="ClearDecisions_Clicked" />
+            </Grid>
+
+            <Label Text="{Binding CommitteeStatus}"
+               FontAttributes="Bold" />
+
+            <Label Text="{Binding TotalAdjustment, StringFormat='Total points adjustment: {0}'}" />
+
+            <Label Text="DECISIONS MADE"
+               FontAttributes="Bold"
+               FontSize="16" />
+
+            <Label Text="{Binding DecisionLog}" />
+
+            <Grid ColumnDefinitions="*,*"
+              ColumnSpacing="8">
+
+                <Button Text="Save Decisions"
+                    Grid.Column="0"
+                    Style="{StaticResource CommitteeButtonStyle}"
+                    Clicked="SaveDecisions_Clicked" />
+
+                <Button Text="Load Decisions"
+                    Grid.Column="1"
+                    Style="{StaticResource CommitteeButtonStyle}"
+                    Clicked="LoadDecisions_Clicked" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
