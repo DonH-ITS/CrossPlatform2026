@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 7: Album List 1 - Downloading via API and ObservableCollections – Cross Platform Application Development</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-92404dd89b1444827012a9e3a58cda88.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../labs.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Cross Platform Application Development</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 7: Album List 1 - Downloading via API and ObservableCollections</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-7---album-library-downloading-data-from-an-api" class="level1">
+<h1>Lab 7 - Album Library: Downloading Data from an API</h1>
+<p>In this lab, we will build an application that downloads album information from an online API and displays it in a collection.</p>
+<p>We will build the application in stages:</p>
+<ol type="1">
+<li>Generate a C# class to represent an album using example JSON data.</li>
+<li>Create a ViewModel to manage the album data.</li>
+<li>Build the initial page layout, including a temporary area to display the downloaded JSON.</li>
+<li>Connect the ViewModel to the page.</li>
+<li>Download JSON data from an API and display it.</li>
+<li>Create commands to load two different libraries and test the download.</li>
+<li>Deserialise the JSON into an <code>ObservableCollection&lt;Album&gt;</code>.</li>
+<li>Display the albums using a <code>CollectionView</code>.</li>
+<li>Add sorting.</li>
+</ol>
+<section id="generate-the-album-class" class="level2">
+<h2 class="anchored" data-anchor-id="generate-the-album-class">2. Generate the Album Class</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>Album.cs</code></p>
+</div>
+</div>
+</div>
+<p>Rather than writing the C# class ourselves, we are going to generate it from an example of the JSON data.</p>
+<p>Open the following website:</p>
+<p><a href="https://json2csharp.com/" class="uri">https://json2csharp.com/</a></p>
+<p>We will use the first library as our example:</p>
+<p><a href="https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json" class="uri">https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json</a></p>
+<ol type="1">
+<li>Open the JSON URL in your browser.</li>
+<li>Copy the JSON contents.</li>
+<li>Paste the contents into the JSON input on the conversion website.</li>
+<li>Set the class name to <code>Album</code>.</li>
+<li>Generate the C# classes.</li>
+</ol>
+<p>You should end up with a class representing an album.</p>
+<p>The JSON contains the following properties:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Data type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Title</td>
+<td>string</td>
+</tr>
+<tr class="even">
+<td>Artist</td>
+<td>string</td>
+</tr>
+<tr class="odd">
+<td>Year</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>Genre</td>
+<td>string</td>
+</tr>
+<tr class="odd">
+<td>CoverUrl</td>
+<td>string</td>
+</tr>
+<tr class="even">
+<td>Tracks</td>
+<td>List of strings</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that <code>Tracks</code> is an array of strings in the JSON. The generated C# class should represent this as a collection of strings.</p>
+<p>Copy the generated class into a new file called <code>Album.cs</code>. Don’t forget to leave your namespace alone.</p>
+<p><strong>Important:</strong> Both JSON libraries use the same structure, so we only need one <code>Album</code> class.</p>
+</section>
+<section id="create-the-viewmodel" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-viewmodel">3. Create the ViewModel</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>AlbumViewModel.cs</code></p>
+</div>
+</div>
+</div>
+<p>Create a new class called <code>AlbumViewModel</code>.</p>
+<p>This class will manage the album data and the operations required by the application.</p>
+<p>The ViewModel will need the following properties:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Albums</td>
+<td><code>ObservableCollection&lt;Album&gt;</code></td>
+<td>Holds the albums displayed by the application</td>
+</tr>
+<tr class="even">
+<td>LibraryName</td>
+<td><code>string</code></td>
+<td>The name of the currently loaded library</td>
+</tr>
+<tr class="odd">
+<td>IsLoading</td>
+<td><code>bool</code></td>
+<td>Indicates whether data is currently being downloaded</td>
+</tr>
+<tr class="even">
+<td>ErrorMessage</td>
+<td><code>string</code></td>
+<td>Holds any error message</td>
+</tr>
+<tr class="odd">
+<td>ApiText</td>
+<td><code>string</code></td>
+<td>Temporarily holds the downloaded JSON text</td>
+</tr>
+</tbody>
+</table>
+<p>Each property should have a private backing field and a setter that calls <code>OnPropertyChanged()</code> when its value changes.</p>
+<p>This is important because we will be replacing the entire <code>Albums</code> collection when loading and sorting the data, rather than simply modifying its contents.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t forget to make a constructor, empty for now</p>
+</div>
+</div>
+<section id="implement-inotifypropertychanged" class="level3">
+<h3 class="anchored" data-anchor-id="implement-inotifypropertychanged">Implement INotifyPropertyChanged</h3>
+<p>The ViewModel needs to implement <code>INotifyPropertyChanged</code> so that the user interface is updated when its properties change.</p>
+<p>Add the interface to your class:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> AlbumViewModel <span class="op">:</span> INotifyPropertyChanged</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">event</span> PropertyChangedEventHandler PropertyChanged<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Properties and other code will go here.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add the following method inside the class:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnPropertyChanged</span><span class="op">(</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span>System<span class="op">.</span><span class="fu">Runtime</span><span class="op">.</span><span class="fu">CompilerServices</span><span class="op">.</span><span class="fu">CallerMemberName</span><span class="op">]</span> <span class="dt">string</span> propertyName <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    PropertyChanged<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">,</span> <span class="kw">new</span> <span class="fu">PropertyChangedEventArgs</span><span class="op">(</span>propertyName<span class="op">));</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can now create the properties listed above.</p>
+<p>Remember that each property needs a backing field and should call <code>OnPropertyChanged()</code> in its setter.</p>
+<p>For example, your <code>Albums</code> property will look something like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> ObservableCollection<span class="op">&lt;</span>Album<span class="op">&gt;</span> _albums <span class="op">=</span> <span class="kw">new</span><span class="op">();</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> ObservableCollection<span class="op">&lt;</span>Album<span class="op">&gt;</span> Albums</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    get <span class="op">=&gt;</span> _albums<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    set</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        _albums <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">OnPropertyChanged</span><span class="op">();</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create the remaining properties in a similar way.</p>
+</section>
+</section>
+<section id="build-the-initial-page-layout" class="level2">
+<h2 class="anchored" data-anchor-id="build-the-initial-page-layout">4. Build the Initial Page Layout</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>MainPage.xaml</code></p>
+</div>
+</div>
+</div>
+<p>Before we start downloading data, we will create the basic layout of the application.</p>
+<p>The layout will contain:</p>
+<ul>
+<li>A label displaying the current library name.</li>
+<li>Two buttons for loading the two libraries.</li>
+<li>Three buttons for sorting the albums.</li>
+<li>An ActivityIndicator to show when data is being downloaded.</li>
+<li>A label for displaying error messages.</li>
+<li>A temporary area for displaying the downloaded JSON.</li>
+</ul>
+<p>For now, the buttons will not do anything. We will connect them to the ViewModel later.</p>
+<p>Replace the contents of <code>MainPage.xaml</code> with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"utf-8"</span> <span class="fu">?&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="ot">x:Class=</span><span class="st">"AlbumList.MainPage"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>             <span class="ot">Title=</span><span class="st">"Album Library"</span>&gt;</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span> <span class="ot">Padding=</span><span class="st">"20"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>          <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,Auto,*"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>          <span class="ot">RowSpacing=</span><span class="st">"10"</span>&gt;</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Grid.Row=</span><span class="st">"0"</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">"{Binding LibraryName}"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"Large"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">HorizontalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">Spacing=</span><span class="st">"10"</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>&gt;</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 1"</span>/&gt;</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 2"</span>/&gt;</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">HorizontalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">Spacing=</span><span class="st">"10"</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>&gt;</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Title"</span>/&gt;</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Artist"</span>/&gt;</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Year"</span>/&gt;</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"3"</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                             <span class="ot">Spacing=</span><span class="st">"4"</span>&gt;</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">ActivityIndicator</span> <span class="ot">IsVisible=</span><span class="st">"False"</span>/&gt;</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">""</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">TextColor=</span><span class="st">"Red"</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Temporary display of the downloaded JSON --&gt;</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ScrollView</span> <span class="ot">Grid.Row=</span><span class="st">"4"</span>&gt;</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding ApiText}"</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">FontSize=</span><span class="st">"Small"</span>/&gt;</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">ScrollView</span>&gt;</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The bottom part of the page currently contains a <code>ScrollView</code> and a <code>Label</code>. We will use these to display the raw JSON returned by the API.</p>
+<p>This is temporary. Later, we will replace this with a <code>CollectionView</code> to display the individual albums.</p>
+</section>
+<section id="connect-the-viewmodel-to-the-page" class="level2">
+<h2 class="anchored" data-anchor-id="connect-the-viewmodel-to-the-page">5. Connect the ViewModel to the Page</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>MainPage.xaml.cs</code></p>
+</div>
+</div>
+</div>
+<p>We now need to connect the ViewModel to the page.</p>
+<p>Open <code>MainPage.xaml.cs</code>.</p>
+<p>Add a field to hold an instance of the ViewModel:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> AlbumViewModel _viewModel<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the constructor, create the ViewModel and assign it to the page’s <code>BindingContext</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    _viewModel <span class="op">=</span> <span class="kw">new</span> <span class="fu">AlbumViewModel</span><span class="op">();</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    BindingContext <span class="op">=</span> _viewModel<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>BindingContext</code> connects the XAML page to the ViewModel.</p>
+<p>For example, the label we created earlier has:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Text="{Binding LibraryName}"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This means that its Text property is connected to the <code>LibraryName</code> property in the ViewModel.</p>
+<p>When <code>LibraryName</code> changes and <code>PropertyChanged</code> is raised, the label will update automatically.</p>
+</section>
+<section id="download-the-json-data" class="level2">
+<h2 class="anchored" data-anchor-id="download-the-json-data">6. Download the JSON Data</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>AlbumViewModel.cs</code></p>
+</div>
+</div>
+</div>
+<p>We will use <code>HttpClient</code> to download the JSON data from the online libraries.</p>
+<p>First, add an <code>HttpClient</code> field to the ViewModel:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">static</span> <span class="kw">readonly</span> HttpClient _httpClient <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpClient</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For this lab, a single static <code>HttpClient</code> instance in the ViewModel is sufficient. In a larger application, the HTTP client would normally be shared more widely.</p>
+<p>Now create an asynchronous method called <code>LoadLibraryAsync</code>.</p>
+<p>It should accept two parameters:</p>
+<ul>
+<li><code>url</code>: the address of the JSON file.</li>
+<li><code>libraryName</code>: the name of the library being loaded.</li>
+</ul>
+<p>Start with the following structure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> async Task <span class="fu">LoadLibraryAsync</span><span class="op">(</span><span class="dt">string</span> url<span class="op">,</span> <span class="dt">string</span> libraryName<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    IsLoading <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    ErrorMessage <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ApiText <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">try</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Send an HTTP GET request using _httpClient.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Check that the response was successful.</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Read the response content as a string.</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Assign the downloaded JSON to ApiText.</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">catch</span> <span class="op">(</span>Exception ex<span class="op">)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        ErrorMessage <span class="op">=</span> ex<span class="op">.</span><span class="fu">Message</span><span class="op">;</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">finally</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        IsLoading <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Complete the four steps inside the <code>try</code> block. The following hints should help.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>What you need to do</th>
+<th>Method or variable to use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Send a request to the URL and store the response.</td>
+<td><code>HttpResponseMessage</code> and <code>_httpClient.GetAsync(url)</code></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Check that the HTTP request was successful.</td>
+<td><code>EnsureSuccessStatusCode()</code></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Read the response body and store it as a string called <code>json</code>.</td>
+<td><code>ReadAsStringAsync()</code></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Assign the downloaded JSON to the <code>ApiText</code> property.</td>
+<td><code>ApiText = json</code></td>
+</tr>
+</tbody>
+</table>
+<p>A few things to remember:</p>
+<ul>
+<li>Both <code>GetAsync()</code> and <code>ReadAsStringAsync()</code> are asynchronous methods, so you will need to use <code>await</code>.</li>
+<li>The response from <code>GetAsync()</code> should be stored in a variable so that you can use it in the following steps.</li>
+<li>The JSON itself should be stored in a <code>string</code> variable called <code>json</code>.</li>
+<li><code>EnsureSuccessStatusCode()</code> checks the response and throws an exception if the request was unsuccessful. Our <code>catch</code> block will handle this.</li>
+</ul>
+<section id="why-are-we-using-async-and-await" class="level3">
+<h3 class="anchored" data-anchor-id="why-are-we-using-async-and-await">Why are we using async and await?</h3>
+<p>Downloading data involves communicating with another computer over the internet. This can take some time.</p>
+<p>Using <code>async</code> and <code>await</code> allows the application to wait for the download without freezing the user interface.</p>
+<p>When the JSON has been downloaded, assign it to <code>ApiText</code>.</p>
+<p>Because <code>ApiText</code> raises <code>PropertyChanged</code>, the label on the page should update automatically.</p>
+</section>
+</section>
+<section id="create-the-library-commands-and-test-the-download" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-library-commands-and-test-the-download">7. Create the Library Commands and Test the Download</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Files to edit, in order:</strong></p>
+<ol type="1">
+<li><code>AlbumViewModel.cs</code></li>
+<li><code>MainPage.xaml</code></li>
+</ol>
+</div>
+</div>
+</div>
+<p>We now need a way for the user to select which library to download.</p>
+<section id="create-the-commands" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-commands">7.1 Create the commands</h3>
+<p>7.1 Create the commands</p>
+<p>In AlbumViewModel.cs, create two commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> Command LoadLibrary1Command <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> Command LoadLibrary2Command <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A command runs a method with no parameters, but LoadLibraryAsync needs a URL and a library name. We solve this with a lambda (anonymous method). The lambda is a small unnamed method that calls LoadLibraryAsync with the details we want.</p>
+<p>In the ViewModel constructor, initialise the first command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>LoadLibrary1Command <span class="op">=</span> <span class="kw">new</span> <span class="fu">Command</span><span class="op">(</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">async</span> <span class="op">()</span> <span class="op">=&gt;</span> await <span class="fu">LoadLibraryAsync</span><span class="op">(</span>Library1Url<span class="op">,</span> <span class="st">"Library 1"</span><span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Because LoadLibraryAsync is asynchronous, the lambda is marked async and uses await.</p>
+<p>Initialise LoadLibrary2Command yourself in the same way, using Library2Url and the name “Library 2”.</p>
+<p>Here are constants for the two URLs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">const</span> <span class="dt">string</span> Library1Url <span class="op">=</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json"</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">const</span> <span class="dt">string</span> Library2Url <span class="op">=</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library2.json"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="connect-the-buttons" class="level3">
+<h3 class="anchored" data-anchor-id="connect-the-buttons">7.2 Connect the buttons</h3>
+<p>Open <code>MainPage.xaml</code>.</p>
+<p>Update the two library buttons so that they use the commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 1"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Command=</span><span class="st">"{Binding LoadLibrary1Command}"</span>/&gt;</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 2"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Command=</span><span class="st">"{Binding LoadLibrary2Command}"</span>/&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="connect-the-loading-indicator-and-error-message" class="level3">
+<h3 class="anchored" data-anchor-id="connect-the-loading-indicator-and-error-message">7.3 Connect the loading indicator and error message</h3>
+<p>The ActivityIndicator should run while <code>IsLoading</code> is true.</p>
+<p>Update it to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ActivityIndicator</span> <span class="ot">IsRunning=</span><span class="st">"{Binding IsLoading}"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">IsVisible=</span><span class="st">"{Binding IsLoading}"</span>/&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Update the error label:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding ErrorMessage}"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="ot">TextColor=</span><span class="st">"Red"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>       <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="test-the-download" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-download">7.4 Test the download</h3>
+<p>Run the application.</p>
+<p>Press the <strong>Library 1</strong> button. You should see the JSON contents displayed in the temporary area at the bottom of the page.</p>
+<p>Try pressing the <strong>Library 2</strong> button.</p>
+<p>Check that:</p>
+<ul>
+<li>The JSON contents change.</li>
+<li>The library name is displayed.</li>
+<li>The ActivityIndicator appears while downloading.</li>
+<li>An error message is displayed if the download fails.</li>
+</ul>
+<p>At this stage, we have successfully downloaded the JSON data, but we are still displaying it as plain text.</p>
+<p>Next, we will convert it into C# objects.</p>
+</section>
+</section>
+<section id="deserialise-the-json-into-albums" class="level2">
+<h2 class="anchored" data-anchor-id="deserialise-the-json-into-albums">8. Deserialise the JSON into Albums</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>AlbumViewModel.cs</code></p>
+</div>
+</div>
+</div>
+<p>We now have the JSON data stored in <code>ApiText</code>.</p>
+<p>Instead of displaying the JSON as text, we want to convert it into a collection of <code>Album</code> objects.</p>
+<p>This process is called <em>deserialisation</em>.</p>
+<p>We will use <code>System.Text.Json</code> to do this.</p>
+<p>Inside <code>LoadLibraryAsync()</code>, immediately after:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ApiText <span class="op">=</span> json<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>add:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Albums <span class="op">=</span> JsonSerializer<span class="op">.</span><span class="fu">Deserialize</span><span class="op">&lt;</span>ObservableCollection<span class="op">&lt;</span>Album<span class="op">&gt;&gt;(</span>json<span class="op">);</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>LibraryName <span class="op">=</span> libraryName<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You may need to add the <code>System.Text.Json</code> namespace. If Visual Studio identifies an unknown type, use its Quick Actions to add the required namespace.</p>
+<p>The <code>Deserialize</code> method converts the JSON text into an <code>ObservableCollection&lt;Album&gt;</code>.</p>
+<p>We can now access individual albums through the <code>Albums</code> property.</p>
+<p><strong>Why use ObservableCollection?</strong></p>
+<p>An <code>ObservableCollection</code> notifies the user interface when items are added or removed. This is useful when displaying collections of data in controls such as a <code>CollectionView</code>.</p>
+<p>Our <code>Albums</code> property already has a setter that raises <code>PropertyChanged</code>. This is also important here because we are replacing the collection with a newly deserialised collection.</p>
+<p>For now, the raw JSON will still be displayed on the page. We will replace that temporary display in the next section.</p>
+</section>
+<section id="display-albums-using-a-collectionview" class="level2">
+<h2 class="anchored" data-anchor-id="display-albums-using-a-collectionview">9. Display Albums Using a CollectionView</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>MainPage.xaml</code></p>
+</div>
+</div>
+</div>
+<p>We now have a collection of <code>Album</code> objects. We want to display these in a <code>CollectionView</code>.</p>
+<p>Open <code>MainPage.xaml</code>.</p>
+<section id="add-the-collectionview" class="level3">
+<h3 class="anchored" data-anchor-id="add-the-collectionview">9.1 Add the CollectionView</h3>
+<p>Find the temporary <code>ScrollView</code> and <code>Label</code> that display the JSON.</p>
+<p>Remove them and replace them with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">CollectionView</span> <span class="ot">Grid.Row=</span><span class="st">"4"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                <span class="ot">ItemsSource=</span><span class="st">"{Binding Albums}"</span>&gt;</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">CollectionView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>ItemsSource</code> property connects the CollectionView to the <code>Albums</code> collection in the ViewModel.</p>
+</section>
+<section id="add-an-itemtemplate" class="level3">
+<h3 class="anchored" data-anchor-id="add-an-itemtemplate">9.2 Add an ItemTemplate</h3>
+<p>A CollectionView needs to know how each item should be displayed.</p>
+<p>Add an <code>ItemTemplate</code> inside the CollectionView:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">CollectionView.ItemTemplate</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>DataTemplate</code> describes how to display one item in the collection.</p>
+<p>The CollectionView will repeat this template for every album.</p>
+</section>
+<section id="display-the-album-information" class="level3">
+<h3 class="anchored" data-anchor-id="display-the-album-information">9.3 Display the album information</h3>
+<p>Inside the <code>DataTemplate</code>, add a <code>VerticalStackLayout</code> containing labels for the album properties.</p>
+<p>Your completed CollectionView should look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">CollectionView</span> <span class="ot">Grid.Row=</span><span class="st">"4"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                <span class="ot">ItemsSource=</span><span class="st">"{Binding Albums}"</span>&gt;</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Padding=</span><span class="st">"10"</span>&gt;</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding Title}"</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                       <span class="ot">FontSize=</span><span class="st">"Medium"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                       <span class="ot">FontAttributes=</span><span class="st">"Bold"</span>/&gt;</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>                &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding Artist}"</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                       <span class="ot">FontSize=</span><span class="st">"Small"</span>/&gt;</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding Year}"</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                       <span class="ot">FontSize=</span><span class="st">"Small"</span>/&gt;</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding Genre}"</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>                       <span class="ot">FontSize=</span><span class="st">"Small"</span>/&gt;</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>            &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">DataTemplate</span>&gt;</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">CollectionView.ItemTemplate</span>&gt;</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">CollectionView</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notice that the bindings inside the <code>DataTemplate</code> refer directly to <code>Title</code>, <code>Artist</code>, <code>Year</code> and <code>Genre</code>.</p>
+<p>This is because the binding context inside the template is an individual <code>Album</code> object, rather than the ViewModel.</p>
+</section>
+<section id="test-the-collectionview" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-collectionview">9.4 Test the CollectionView</h3>
+<p>Run the application again.</p>
+<p>You should now see the albums displayed as individual items in the CollectionView.</p>
+<p>The CollectionView handles its own scrolling, so we do not need to place it inside a ScrollView.</p>
+<p>The <code>*</code> in the Grid row definition allows the CollectionView to occupy the remaining available space.</p>
+</section>
+</section>
+<section id="add-sorting" class="level2">
+<h2 class="anchored" data-anchor-id="add-sorting">10. Add Sorting</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Files to edit, in order:</strong></p>
+<ol type="1">
+<li><code>AlbumViewModel.cs</code></li>
+<li><code>MainPage.xaml</code></li>
+</ol>
+</div>
+</div>
+</div>
+<p>We will now add the ability to sort the albums by title, artist or year.</p>
+<section id="create-the-sorting-method" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-sorting-method">10.1 Create the sorting method</h3>
+<p>In <code>AlbumViewModel.cs</code>, add the following method:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">SortAlbums</span><span class="op">(</span><span class="dt">string</span> sortBy<span class="op">)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">switch</span> <span class="op">(</span>sortBy<span class="op">)</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Title"</span><span class="op">:</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            Albums <span class="op">=</span> <span class="kw">new</span> ObservableCollection<span class="op">&lt;</span>Album<span class="op">&gt;(</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                Albums<span class="op">.</span><span class="fu">OrderBy</span><span class="op">(</span>a <span class="op">=&gt;</span> a<span class="op">.</span><span class="fu">Title</span><span class="op">));</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Artist"</span><span class="op">:</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>            Albums <span class="op">=</span> <span class="kw">new</span> ObservableCollection<span class="op">&lt;</span>Album<span class="op">&gt;(</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                Albums<span class="op">.</span><span class="fu">OrderBy</span><span class="op">(</span>a <span class="op">=&gt;</span> a<span class="op">.</span><span class="fu">Artist</span><span class="op">));</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> <span class="st">"Year"</span><span class="op">:</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            Albums <span class="op">=</span> <span class="kw">new</span> ObservableCollection<span class="op">&lt;</span>Album<span class="op">&gt;(</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>                Albums<span class="op">.</span><span class="fu">OrderBy</span><span class="op">(</span>a <span class="op">=&gt;</span> a<span class="op">.</span><span class="fu">Year</span><span class="op">));</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This method creates a new collection containing the albums in the requested order.</p>
+<p>We are using <code>OrderBy()</code> to perform the sorting. You do not need to understand the details of this method for this lab.</p>
+</section>
+<section id="create-the-sorting-command" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-sorting-command">10.2 Create the sorting command</h3>
+<p>Add a command property to the ViewModel:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> Command<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> SortCommand <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the constructor, initialise it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>SortCommand <span class="op">=</span> <span class="kw">new</span> Command<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;(</span>SortAlbums<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This command accepts a string parameter and passes it to the <code>SortAlbums</code> method.</p>
+</section>
+<section id="connect-the-sorting-buttons" class="level3">
+<h3 class="anchored" data-anchor-id="connect-the-sorting-buttons">10.3 Connect the sorting buttons</h3>
+<p>Open <code>MainPage.xaml</code>.</p>
+<p>Update the three sorting buttons:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Title"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Command=</span><span class="st">"{Binding SortCommand}"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="ot">CommandParameter=</span><span class="st">"Title"</span>/&gt;</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Artist"</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Command=</span><span class="st">"{Binding SortCommand}"</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="ot">CommandParameter=</span><span class="st">"Artist"</span>/&gt;</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Year"</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="ot">Command=</span><span class="st">"{Binding SortCommand}"</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        <span class="ot">CommandParameter=</span><span class="st">"Year"</span>/&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>All three buttons use the same command.</p>
+<p>The <code>CommandParameter</code> tells the method which property to sort by.</p>
+<p>Run the application and test all three sorting options.</p>
+</section>
+</section>
+<section id="optional-compiled-bindings" class="level2">
+<h2 class="anchored" data-anchor-id="optional-compiled-bindings">11. Optional: Compiled Bindings</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>File to edit:</strong> <code>MainPage.xaml</code></p>
+</div>
+</div>
+</div>
+<p>MAUI supports compiled bindings, which allow binding expressions to be checked at compile time.</p>
+<p>To use compiled bindings, we need to tell MAUI what type of object the page and its templates are working with.</p>
+<p>First, add a namespace declaration to the opening <code>ContentPage</code> element:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>xmlns:local="clr-namespace:AlbumList"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then add:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x:DataType="local:AlbumViewModel"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The opening element should now look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>             <span class="ot">xmlns:local=</span><span class="st">"clr-namespace:AlbumList"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>             <span class="ot">x:Class=</span><span class="st">"AlbumList.MainPage"</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>             <span class="ot">x:DataType=</span><span class="st">"local:AlbumViewModel"</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>             <span class="ot">Title=</span><span class="st">"Album Library"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The page’s binding context is the <code>AlbumViewModel</code>.</p>
+<p>However, inside the CollectionView’s <code>DataTemplate</code>, the binding context is an individual <code>Album</code>.</p>
+<p>Add the following to the DataTemplate:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">DataTemplate</span> <span class="ot">x:DataType=</span><span class="st">"local:Album"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This tells MAUI that the bindings inside the template refer to an <code>Album</code> object.</p>
+</section>
+<section id="final-checks" class="level2">
+<h2 class="anchored" data-anchor-id="final-checks">12. Final Checks</h2>
+<p>Your application should now be able to:</p>
+<ul>
+<li>Download Library 1.</li>
+<li>Download Library 2.</li>
+<li>Display the albums in a CollectionView.</li>
+<li>Sort the albums by title.</li>
+<li>Sort the albums by artist.</li>
+<li>Sort the albums by year.</li>
+<li>Display a loading indicator while downloading.</li>
+<li>Display an error message if something goes wrong.</li>
+</ul>
+<p>You can now remove the temporary <code>ApiText</code> property and the code used to display the raw JSON.</p>
+<section id="extension-cache-the-downloaded-json" class="level3">
+<h3 class="anchored" data-anchor-id="extension-cache-the-downloaded-json">Extension: Cache the Downloaded JSON</h3>
+<p>At the moment, the application downloads the JSON every time a library is selected.</p>
+<p>As an extension, investigate how you could save the downloaded JSON to a local file so that it can be reused later.</p>
+<p>You can use:</p>
+<ul>
+<li><code>FileSystem.Current.AppDataDirectory</code> to obtain the application’s data directory.</li>
+<li><code>File.WriteAllTextAsync()</code> to save the downloaded JSON to a file.</li>
+</ul>
+<p>This would allow the application to retain a local copy of the library rather than needing to download it every time.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
