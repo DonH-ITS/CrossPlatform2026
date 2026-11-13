@@ -1016,123 +1016,156 @@
 <li>API responses can have their own error codes and quirks, such as rate limits and HTML encoding.</li>
 <li>In this example, the ViewModel makes the request and exposes the results to the View.</li>
 </ul>
-</section></section>
-<section>
-<section id="custom-events" class="title-slide slide level1 center">
-<h1>Custom Events</h1>
+<!--
+# Custom Events
 
-</section>
-<section id="event-handlers" class="slide level2">
-<h2>Event Handlers</h2>
-<p>We have already used many event handlers:</p>
-<ul>
-<li>Clicking a button</li>
-<li>Tapping a control</li>
-<li>A timer tick expiring</li>
-</ul>
-<p>But what if we want to create and raise our own events?</p>
-<p>Before looking at that, let’s revisit something we have already used in MVVM.</p>
-</section>
-<section id="events-and-invoke" class="slide level2">
-<h2>Events and <code>Invoke()</code></h2>
-<p>When using <code>INotifyPropertyChanged</code>, we raise an event whenever a property changes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb42-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> PropertyChangedEventHandler<span class="op">?</span> PropertyChanged<span class="op">;</span></span>
-<span id="cb42-2"><a aria-label="2"></a></span>
-<span id="cb42-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnPropertyChanged</span><span class="op">(</span><span class="dt">string</span> propertyName<span class="op">)</span></span>
-<span id="cb42-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb42-5"><a aria-label="5"></a>    PropertyChanged<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span></span>
-<span id="cb42-6"><a aria-label="6"></a>        <span class="kw">new</span> <span class="fu">PropertyChangedEventArgs</span><span class="op">(</span>propertyName<span class="op">));</span></span>
-<span id="cb42-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>But what is <code>Invoke()</code> doing here?</p>
-<ul>
-<li>It calls all methods that have subscribed to the event.</li>
-<li>In this case, the UI is listening for property changes.</li>
-<li>The UI can then update the relevant controls.</li>
-</ul>
-<p>We’ve been using events without necessarily looking at how they work!</p>
-</section>
-<section id="the-eventhandler-delegate" class="slide level2">
-<h2>The <code>EventHandler</code> Delegate</h2>
-<p>Events in C# are built on <strong>delegates</strong>.</p>
-<p><code>EventHandler</code> is a predefined delegate for handling events.</p>
-<p>Its signature is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb43-1"><a aria-label="1"></a><span class="dt">void</span> <span class="fu">Handler</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li><code>sender</code> identifies the object raising the event.</li>
-<li><code>e</code> contains additional event information.</li>
-</ul>
-<p>If we want to pass additional data, we can use the generic version:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a>EventHandler<span class="op">&lt;</span>TEventArgs<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> EventHandler<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> DataAvailable<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Here, the event passes a <code>string</code> to its subscribers.</p>
-</section>
-<section id="raising-an-event" class="slide level2">
-<h2>Raising an Event</h2>
-<p>We raise an event using <code>Invoke()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb46-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> EventHandler<span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;</span> DataAvailable<span class="op">;</span></span>
-<span id="cb46-2"><a aria-label="2"></a></span>
-<span id="cb46-3"><a aria-label="3"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">NotifySubscribers</span><span class="op">()</span></span>
-<span id="cb46-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb46-5"><a aria-label="5"></a>    <span class="dt">string</span> message <span class="op">=</span> <span class="st">"Processing complete!"</span><span class="op">;</span></span>
-<span id="cb46-6"><a aria-label="6"></a></span>
-<span id="cb46-7"><a aria-label="7"></a>    DataAvailable<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> message<span class="op">);</span></span>
-<span id="cb46-8"><a aria-label="8"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li><code>?.Invoke()</code> calls the event only if there are subscribers.</li>
-<li><code>this</code> identifies the object raising the event.</li>
-<li>The second argument contains the data being passed.</li>
-</ul>
-<p>Every registered subscriber will receive the event.</p>
-</section>
-<section id="subscribing-to-an-event" class="slide level2">
-<h2>Subscribing to an Event</h2>
-<p>We subscribe using <code>+=</code>, just as we have done with other events:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb47-1"><a aria-label="1"></a>objectName<span class="op">.</span><span class="fu">DataAvailable</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> message<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb47-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb47-3"><a aria-label="3"></a>    Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>$<span class="st">"Received: {message}"</span><span class="op">);</span></span>
-<span id="cb47-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can unsubscribe using <code>-=</code>.</p>
-<p>The publisher doesn’t need to know who is listening. It simply raises the event, and all subscribers are notified.</p>
-</section>
-<section id="using-action-for-events" class="slide level2">
-<h2>Using <code>Action</code> for Events</h2>
-<p>We don’t always need to use <code>EventHandler</code> when defining an event.</p>
-<p>C# also provides the <code>Action</code> delegate, which allows us to specify our own parameters.</p>
-<p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb48-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">event</span> Action<span class="op">&lt;</span><span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">&gt;?</span> ShowAlert<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We can raise the event in exactly the same way:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb49-1"><a aria-label="1"></a>ShowAlert<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="st">"Warning"</span><span class="op">,</span> <span class="st">"Are you sure?"</span><span class="op">,</span> <span class="st">"Cancel"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>And subscribe using <code>+=</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb50-1"><a aria-label="1"></a>ShowAlert <span class="op">+=</span> <span class="op">(</span>title<span class="op">,</span> message<span class="op">,</span> cancel<span class="op">)</span> <span class="op">=&gt;</span></span>
-<span id="cb50-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb50-3"><a aria-label="3"></a>    <span class="co">// Display an alert</span></span>
-<span id="cb50-4"><a aria-label="4"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>What’s the difference?</strong></p>
-<ul>
-<li><code>EventHandler</code> follows the standard .NET event pattern and includes the sender.</li>
-<li><code>Action</code> allows us to specify whatever parameters we need.</li>
-<li>Use <code>Action</code> when we don’t need the sender or a custom <code>EventArgs</code> class.</li>
-</ul>
-<p>Both support multiple subscribers and can be unsubscribed using <code>-=</code>.</p>
-</section>
-<section id="key-points-about-events" class="slide level2">
-<h2>Key Points About Events</h2>
-<ul>
-<li>Events follow the <strong>publisher–subscriber</strong> model.</li>
-<li>The publisher raises an event using <code>Invoke()</code>.</li>
-<li>Subscribers register using <code>+=</code> and respond when triggered.</li>
-<li>The publisher:
-<ul>
-<li>Does not need to know who the subscribers are.</li>
-<li>Simply signals that something has happened.</li>
-</ul></li>
-<li>The subscriber:
-<ul>
-<li>Decides how to respond.</li>
-<li>Can detach at any time using <code>-=</code>.</li>
-</ul></li>
-</ul>
+## Event Handlers
+
+We have already used many event handlers:
+
+- Clicking a button
+- Tapping a control
+- A timer tick expiring
+
+But what if we want to create and raise our own events?
+
+Before looking at that, let's revisit something we have already used in MVVM.
+
+## Events and `Invoke()`
+
+When using `INotifyPropertyChanged`, we raise an event whenever a property changes:
+
+```csharp
+public event PropertyChangedEventHandler? PropertyChanged;
+
+private void OnPropertyChanged(string propertyName)
+{
+    PropertyChanged?.Invoke(this,
+        new PropertyChangedEventArgs(propertyName));
+}
+```
+
+But what is `Invoke()` doing here?
+
+- It calls all methods that have subscribed to the event.
+- In this case, the UI is listening for property changes.
+- The UI can then update the relevant controls.
+
+We've been using events without necessarily looking at how they work!
+
+## The `EventHandler` Delegate
+
+Events in C# are built on **delegates**.
+
+`EventHandler` is a predefined delegate for handling events.
+
+Its signature is:
+
+```csharp
+void Handler(object sender, EventArgs e)
+```
+
+- `sender` identifies the object raising the event.
+- `e` contains additional event information.
+
+If we want to pass additional data, we can use the generic version:
+
+```csharp
+EventHandler<TEventArgs>
+```
+
+For example:
+
+```csharp
+public event EventHandler<string> DataAvailable;
+```
+
+Here, the event passes a `string` to its subscribers.
+
+## Raising an Event
+
+We raise an event using `Invoke()`:
+
+```csharp
+public event EventHandler<string> DataAvailable;
+
+private void NotifySubscribers()
+{
+    string message = "Processing complete!";
+
+    DataAvailable?.Invoke(this, message);
+}
+```
+
+- `?.Invoke()` calls the event only if there are subscribers.
+- `this` identifies the object raising the event.
+- The second argument contains the data being passed.
+
+Every registered subscriber will receive the event.
+
+## Subscribing to an Event
+
+We subscribe using `+=`, just as we have done with other events:
+
+```csharp
+objectName.DataAvailable += (sender, message) =>
+{
+    Console.WriteLine($"Received: {message}");
+};
+```
+
+We can unsubscribe using `-=`.
+
+The publisher doesn't need to know who is listening. It simply raises the event, and all subscribers are notified.
+
+## Using `Action` for Events
+
+We don't always need to use `EventHandler` when defining an event.
+
+C# also provides the `Action` delegate, which allows us to specify our own parameters.
+
+For example:
+
+```csharp
+public event Action<string, string, string>? ShowAlert;
+```
+
+We can raise the event in exactly the same way:
+
+```csharp
+ShowAlert?.Invoke("Warning", "Are you sure?", "Cancel");
+```
+
+And subscribe using `+=`:
+
+```csharp
+ShowAlert += (title, message, cancel) =>
+{
+    // Display an alert
+};
+```
+
+**What's the difference?**
+
+- `EventHandler` follows the standard .NET event pattern and includes the sender.
+- `Action` allows us to specify whatever parameters we need.
+- Use `Action` when we don't need the sender or a custom `EventArgs` class.
+
+Both support multiple subscribers and can be unsubscribed using `-=`.
+
+## Key Points About Events
+
+- Events follow the **publisher–subscriber** model.
+- The publisher raises an event using `Invoke()`.
+- Subscribers register using `+=` and respond when triggered.
+- The publisher:
+  - Does not need to know who the subscribers are.
+  - Simply signals that something has happened.
+- The subscriber:
+  - Decides how to respond.
+  - Can detach at any time using `-=`.
+
+-->
 
 
 </section></section>
