@@ -6,12 +6,14 @@ namespace Week8Demo
     public class MyViewModel : INotifyPropertyChanged
     {
         private string _myText = "";
-        private int _timeLeft = 0;
+        private int _timeLeft = 30;
         private int _score = 0;
         System.Timers.Timer timer;
+        private bool _isRunning = false;
 
         public Command ChangeTextCommand { get; }
         public Command ChangeScoreCommand { get; }
+        public Command StartTimer { get; }
         public int TimeLeft
         {
             get
@@ -58,6 +60,33 @@ namespace Week8Demo
                 OnPropertyChanged();
             }
         }
+
+        public bool IsRunning
+        {
+            get
+            {
+                return _isRunning;
+            }
+            set
+            {
+                if (_isRunning == value)
+                    return;
+                _isRunning = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(StartStop));
+            }
+        }
+
+        public string StartStop
+        {
+            get
+            {
+                if (IsRunning)
+                    return "Stop Timer";
+
+                return "Start Timer";
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) {
@@ -77,7 +106,7 @@ namespace Week8Demo
             timer.Elapsed += OnTimerElapsed;
 
             // Start the timer
-            timer?.Start();
+            //timer?.Start();
 
             // This will work for a DispatcherTimer in a ViewModel
             // The Application.Current is what I was forgetting in the lecture
@@ -85,6 +114,7 @@ namespace Week8Demo
 
             ChangeTextCommand = new Command(MakeaChange);
             ChangeScoreCommand = new Command<string>(ChangeScore);
+            StartTimer = new Command(StartStopTimer);
         }
 
         public void OnTimerElapsed(object sender, EventArgs e) {
@@ -104,6 +134,17 @@ namespace Week8Demo
             // Better to do this
             if(int.TryParse(score, out int result)) {
                 Score += result;
+            }
+        }
+
+        public void StartStopTimer() {
+            if (!IsRunning) {
+                timer?.Start();
+                IsRunning = true;
+            }
+            else {
+                timer?.Stop();
+                IsRunning = false;
             }
         }
     }

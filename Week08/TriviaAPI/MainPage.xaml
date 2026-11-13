@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="APIExample.MainPage"
+             xmlns:local="clr-namespace:APIExample"
+             x:DataType="local:TriviaModel"
+             Title="Trivia App Demo">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="20" RowSpacing="10">
+        <Button Text="Load Questions"
+                Command="{Binding LoadQuestionsCommand}" />
+
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
+
+        <Label Grid.Row="2"
+               Text="{Binding StatusMessage}"
+               TextColor="Red" />
+
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Questions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:Question">
+                    <VerticalStackLayout Padding="10" Spacing="5">
+                        <Label Text="{Binding question}" FontAttributes="Bold" />
+                        <Label Text="{Binding category}" FontSize="Small" />
+                        <Label Text="{Binding correct_answer}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

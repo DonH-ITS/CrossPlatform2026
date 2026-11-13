@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookDemo.MainPage"
+             Title="Book Demo"
+             xmlns:local="clr-namespace:BookDemo"
+             x:DataType="local:BooksViewModel"
+             >
+
+    <VerticalStackLayout>
+
+
+
+        <CollectionView ItemsSource="{Binding Books}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:Book">
+                    <VerticalStackLayout Padding="10">
+                        <Label Text="{Binding Title}" FontSize="Large" BackgroundColor="Yellow"  FontAttributes="Bold" />
+                        <Label Text="{Binding Author}" FontSize="Small" FontAttributes="Italic"/>
+                        <Label Text="{Binding PublishedYear}" FontSize="Small" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="New List" Command="{Binding ChangeList}"/>
+
+        <Entry Text="{Binding Title}" Placeholder="Title" />
+        <Entry Text="{Binding Author}" Placeholder="Author" />
+        <Entry Text="{Binding PublishedYear}" Placeholder="Published year" Keyboard="Numeric" />
+        <Button Text="Add Book" Command="{Binding AddBookCommand}" />
+    </VerticalStackLayout>
+
+
+</ContentPage>

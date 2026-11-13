@@ -6,28 +6,77 @@
              xmlns:viewmodels="clr-namespace:Week8Demo"
              x:DataType="viewmodels:MyViewModel">
 
-    <VerticalStackLayout Padding="30"
-                         Spacing="20">
-
+    <VerticalStackLayout Padding="25" Spacing="20">
 
         <Label Text="MVVM Example"
-               FontSize="Large"
-               HorizontalOptions="Center" />
+           FontSize="Large"
+           FontAttributes="Bold"
+           HorizontalOptions="Center" />
 
-        <VerticalStackLayout Padding="20" Spacing="10">
-            <Entry Text="{Binding MyText}" />
-            <Label Text="{Binding MyText}" />
-            <Button Text="Change Text" Command="{Binding ChangeTextCommand}" />
+        <!-- Text Binding -->
+        <VerticalStackLayout Spacing="8">
+            <Label Text="Text Binding"
+               FontSize="Medium"
+               FontAttributes="Bold"/>
+
+            <Entry Text="{Binding MyText}"
+               Placeholder="Enter some text"/>
+
+            <Label Text="{Binding MyText}"
+               FontSize="Medium"
+               HorizontalOptions="Center"/>
+
+            <Button Text="Change Text"
+                Command="{Binding ChangeTextCommand}"/>
         </VerticalStackLayout>
-        
-        <Label Text="{Binding TimeLeft}" />
 
-        <Button Text="+1" Command="{Binding ChangeScoreCommand}" CommandParameter="1" />
-        <Button Text="-1" Command="{Binding ChangeScoreCommand}" CommandParameter="-1" />
-        
-        <Label Text="{Binding Score}" />
+        <BoxView HeightRequest="1"
+             Color="LightGray"/>
 
+        <!-- Timer -->
+        <VerticalStackLayout Spacing="8">
+            <Label Text="Timer"
+               FontSize="Medium"
+               FontAttributes="Bold"/>
+
+            <Label Text="{Binding TimeLeft}"
+               FontSize="Large"
+               HorizontalOptions="Center"/>
+
+            <ActivityIndicator IsVisible="{Binding IsRunning}"
+                           IsRunning="{Binding IsRunning}"
+                           HorizontalOptions="Center"/>
+
+            <Button Text="{Binding StartStop}"
+                Command="{Binding StartTimer}"/>
+        </VerticalStackLayout>
+
+        <BoxView HeightRequest="1"
+             Color="LightGray"/>
+
+        <!-- Score -->
+        <VerticalStackLayout Spacing="8">
+            <Label Text="Score"
+               FontSize="Medium"
+               FontAttributes="Bold"/>
+
+            <Label Text="{Binding Score}"
+               FontSize="Large"
+               HorizontalOptions="Center"/>
+
+            <HorizontalStackLayout Spacing="15"
+                               HorizontalOptions="Center">
+                <Button Text="-1"
+                    Command="{Binding ChangeScoreCommand}"
+                    CommandParameter="-1"
+                    WidthRequest="80"/>
+
+                <Button Text="+1"
+                    Command="{Binding ChangeScoreCommand}"
+                    CommandParameter="1"
+                    WidthRequest="80"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
 
     </VerticalStackLayout>
-
 </ContentPage>
