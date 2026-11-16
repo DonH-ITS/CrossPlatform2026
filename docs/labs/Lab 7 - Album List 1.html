@@ -382,54 +382,48 @@ Note
 <li>A temporary area for displaying the downloaded JSON.</li>
 </ul>
 <p>For now, the buttons will not do anything. We will connect them to the ViewModel later.</p>
-<p>Replace the contents of <code>MainPage.xaml</code> with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"utf-8"</span> <span class="fu">?&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">ContentPage</span> <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="ot">x:Class=</span><span class="st">"AlbumList.MainPage"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>             <span class="ot">Title=</span><span class="st">"Album Library"</span>&gt;</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span> <span class="ot">Padding=</span><span class="st">"20"</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>          <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,Auto,*"</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>          <span class="ot">RowSpacing=</span><span class="st">"10"</span>&gt;</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Grid.Row=</span><span class="st">"0"</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">"{Binding LibraryName}"</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"Large"</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">HorizontalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">Spacing=</span><span class="st">"10"</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>&gt;</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 1"</span>/&gt;</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 2"</span>/&gt;</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">HorizontalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">Spacing=</span><span class="st">"10"</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>&gt;</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Title"</span>/&gt;</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Artist"</span>/&gt;</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Year"</span>/&gt;</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"3"</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                             <span class="ot">Spacing=</span><span class="st">"4"</span>&gt;</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">ActivityIndicator</span> <span class="ot">IsVisible=</span><span class="st">"False"</span>/&gt;</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">""</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">TextColor=</span><span class="st">"Red"</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Temporary display of the downloaded JSON --&gt;</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ScrollView</span> <span class="ot">Grid.Row=</span><span class="st">"4"</span>&gt;</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding ApiText}"</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">FontSize=</span><span class="st">"Small"</span>/&gt;</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">ScrollView</span>&gt;</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">ContentPage</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace the contents of <code>MainPage.xaml</code>, remembering to only copy paste the parts you need and be careful of what you overwrite.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">Grid</span> <span class="ot">Padding=</span><span class="st">"20"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          <span class="ot">RowDefinitions=</span><span class="st">"Auto,Auto,Auto,Auto,*"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          <span class="ot">RowSpacing=</span><span class="st">"10"</span>&gt;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">Label</span> <span class="ot">Grid.Row=</span><span class="st">"0"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="ot">Text=</span><span class="st">"{Binding LibraryName}"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontSize=</span><span class="st">"Large"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>               <span class="ot">FontAttributes=</span><span class="st">"Bold"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">HorizontalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"1"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">Spacing=</span><span class="st">"10"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>&gt;</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 1"</span>/&gt;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Library 2"</span>/&gt;</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">HorizontalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"2"</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">Spacing=</span><span class="st">"10"</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                               <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>&gt;</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Title"</span>/&gt;</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Artist"</span>/&gt;</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Year"</span>/&gt;</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">HorizontalStackLayout</span>&gt;</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">VerticalStackLayout</span> <span class="ot">Grid.Row=</span><span class="st">"3"</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                             <span class="ot">Spacing=</span><span class="st">"4"</span>&gt;</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">ActivityIndicator</span> <span class="ot">IsVisible=</span><span class="st">"False"</span>/&gt;</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">""</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">TextColor=</span><span class="st">"Red"</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">HorizontalOptions=</span><span class="st">"Center"</span>/&gt;</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">VerticalStackLayout</span>&gt;</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- Temporary display of the downloaded JSON --&gt;</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">ScrollView</span> <span class="ot">Grid.Row=</span><span class="st">"4"</span>&gt;</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">Label</span> <span class="ot">Text=</span><span class="st">"{Binding ApiText}"</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                   <span class="ot">FontSize=</span><span class="st">"Small"</span>/&gt;</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">ScrollView</span>&gt;</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">Grid</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The bottom part of the page currently contains a <code>ScrollView</code> and a <code>Label</code>. We will use these to display the raw JSON returned by the API.</p>
 <p>This is temporary. Later, we will replace this with a <code>CollectionView</code> to display the individual albums.</p>
 </section>
@@ -450,13 +444,8 @@ Note
 <p>Add a field to hold an instance of the ViewModel:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> AlbumViewModel _viewModel<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In the constructor, create the ViewModel and assign it to the page’s <code>BindingContext</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="fu">MainPage</span><span class="op">()</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    _viewModel <span class="op">=</span> <span class="kw">new</span> <span class="fu">AlbumViewModel</span><span class="op">();</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    BindingContext <span class="op">=</span> _viewModel<span class="op">;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>    _viewModel <span class="op">=</span> <span class="kw">new</span> <span class="fu">AlbumViewModel</span><span class="op">();</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    BindingContext <span class="op">=</span> _viewModel<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>BindingContext</code> connects the XAML page to the ViewModel.</p>
 <p>For example, the label we created earlier has:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Text="{Binding LibraryName}"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
