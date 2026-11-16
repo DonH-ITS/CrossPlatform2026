@@ -337,13 +337,11 @@ Note
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Properties and other code will go here.</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Add the following method inside the class:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">OnPropertyChanged</span><span class="op">(</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">[</span>System<span class="op">.</span><span class="fu">Runtime</span><span class="op">.</span><span class="fu">CompilerServices</span><span class="op">.</span><span class="fu">CallerMemberName</span><span class="op">]</span> <span class="dt">string</span> propertyName <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    PropertyChanged<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">,</span> <span class="kw">new</span> <span class="fu">PropertyChangedEventArgs</span><span class="op">(</span>propertyName<span class="op">));</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add the following method inside the class: (taken directly from the notes)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode csharp code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">protected</span> <span class="dt">void</span> <span class="fu">OnPropertyChanged</span><span class="op">([</span>CallerMemberName<span class="op">]</span> <span class="dt">string</span><span class="op">?</span> propertyName <span class="op">=</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    PropertyChanged<span class="op">?.</span><span class="fu">Invoke</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> <span class="kw">new</span> <span class="fu">PropertyChangedEventArgs</span><span class="op">(</span>propertyName<span class="op">));</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can now create the properties listed above.</p>
 <p>Remember that each property needs a backing field and should call <code>OnPropertyChanged()</code> in its setter.</p>
 <p>For example, your <code>Albums</code> property will look something like this:</p>
@@ -530,13 +528,13 @@ Note
 <tbody>
 <tr class="odd">
 <td>1</td>
-<td>Send a request to the URL and store the response.</td>
+<td>Send a request to the URL and store the response. (<code>using</code>)</td>
 <td><code>HttpResponseMessage</code> and <code>_httpClient.GetAsync(url)</code></td>
 </tr>
 <tr class="even">
 <td>2</td>
 <td>Check that the HTTP request was successful.</td>
-<td><code>EnsureSuccessStatusCode()</code></td>
+<td><code>.IsSuccessStatusCode</code></td>
 </tr>
 <tr class="odd">
 <td>3</td>
@@ -553,7 +551,7 @@ Note
 <p>A few things to remember:</p>
 <ul>
 <li>Both <code>GetAsync()</code> and <code>ReadAsStringAsync()</code> are asynchronous methods, so you will need to use <code>await</code>.</li>
-<li>The response from <code>GetAsync()</code> should be stored in a variable so that you can use it in the following steps.</li>
+<li>The response from <code>GetAsync()</code> should be stored in a variable so that you can use it in the following steps. You should use <code>using</code> to ensure the handles are cleaned up when going out of scope.</li>
 <li>The JSON itself should be stored in a <code>string</code> variable called <code>json</code>.</li>
 <li><code>EnsureSuccessStatusCode()</code> checks the response and throws an exception if the request was unsuccessful. Our <code>catch</code> block will handle this.</li>
 </ul>
