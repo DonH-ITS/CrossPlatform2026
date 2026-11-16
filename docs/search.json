@@ -3882,7 +3882,7 @@
     "href": "labs/Lab 7 - Album List 1.html",
     "title": "Lab 7: Album List 1 - Downloading via API and ObservableCollections",
     "section": "",
-    "text": "In this lab, we will build an application that downloads album information from an online API and displays it in a collection.\nWe will build the application in stages:\n\nGenerate a C# class to represent an album using example JSON data.\nCreate a ViewModel to manage the album data.\nBuild the initial page layout, including a temporary area to display the downloaded JSON.\nConnect the ViewModel to the page.\nDownload JSON data from an API and display it.\nCreate commands to load two different libraries and test the download.\nDeserialise the JSON into an ObservableCollection&lt;Album&gt;.\nDisplay the albums using a CollectionView.\nAdd sorting.\n\n\n\n\n\n\n\n\n\nFile to edit: Album.cs\n\n\n\nRather than writing the C# class ourselves, we are going to generate it from an example of the JSON data.\nOpen the following website:\nhttps://json2csharp.com/\nWe will use the first library as our example:\nhttps://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json\n\nOpen the JSON URL in your browser.\nCopy the JSON contents.\nPaste the contents into the JSON input on the conversion website.\nSet the class name to Album.\nGenerate the C# classes.\n\nYou should end up with a class representing an album.\nThe JSON contains the following properties:\n\n\n\nProperty\nData type\n\n\n\n\nTitle\nstring\n\n\nArtist\nstring\n\n\nYear\nint\n\n\nGenre\nstring\n\n\nCoverUrl\nstring\n\n\nTracks\nList of strings\n\n\n\nNotice that Tracks is an array of strings in the JSON. The generated C# class should represent this as a collection of strings.\nCopy the generated class into a new file called Album.cs. Don’t forget to leave your namespace alone.\nImportant: Both JSON libraries use the same structure, so we only need one Album class.\n\n\n\n\n\n\n\n\n\nFile to edit: AlbumViewModel.cs\n\n\n\nCreate a new class called AlbumViewModel.\nThis class will manage the album data and the operations required by the application.\nThe ViewModel will need the following properties:\n\n\n\n\n\n\n\n\nProperty\nType\nPurpose\n\n\n\n\nAlbums\nObservableCollection&lt;Album&gt;\nHolds the albums displayed by the application\n\n\nLibraryName\nstring\nThe name of the currently loaded library\n\n\nIsLoading\nbool\nIndicates whether data is currently being downloaded\n\n\nErrorMessage\nstring\nHolds any error message\n\n\nApiText\nstring\nTemporarily holds the downloaded JSON text\n\n\n\nEach property should have a private backing field and a setter that calls OnPropertyChanged() when its value changes.\nThis is important because we will be replacing the entire Albums collection when loading and sorting the data, rather than simply modifying its contents.\n\n\n\n\n\n\nNote\n\n\n\nDon’t forget to make a constructor, empty for now\n\n\n\n\nThe ViewModel needs to implement INotifyPropertyChanged so that the user interface is updated when its properties change.\nAdd the interface to your class:\npublic class AlbumViewModel : INotifyPropertyChanged\n{\n    public event PropertyChangedEventHandler PropertyChanged;\n\n    // Properties and other code will go here.\n}\nAdd the following method inside the class:\nprivate void OnPropertyChanged(\n    [System.Runtime.CompilerServices.CallerMemberName] string propertyName = \"\")\n{\n    PropertyChanged?.Invoke(\n        this, new PropertyChangedEventArgs(propertyName));\n}\nYou can now create the properties listed above.\nRemember that each property needs a backing field and should call OnPropertyChanged() in its setter.\nFor example, your Albums property will look something like this:\nprivate ObservableCollection&lt;Album&gt; _albums = new();\n\npublic ObservableCollection&lt;Album&gt; Albums\n{\n    get =&gt; _albums;\n    set\n    {\n        _albums = value;\n        OnPropertyChanged();\n    }\n}\nCreate the remaining properties in a similar way.\n\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml\n\n\n\nBefore we start downloading data, we will create the basic layout of the application.\nThe layout will contain:\n\nA label displaying the current library name.\nTwo buttons for loading the two libraries.\nThree buttons for sorting the albums.\nAn ActivityIndicator to show when data is being downloaded.\nA label for displaying error messages.\nA temporary area for displaying the downloaded JSON.\n\nFor now, the buttons will not do anything. We will connect them to the ViewModel later.\nReplace the contents of MainPage.xaml with:\n&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?&gt;\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             x:Class=\"AlbumList.MainPage\"\n             Title=\"Album Library\"&gt;\n\n    &lt;Grid Padding=\"20\"\n          RowDefinitions=\"Auto,Auto,Auto,Auto,*\"\n          RowSpacing=\"10\"&gt;\n\n        &lt;Label Grid.Row=\"0\"\n               Text=\"{Binding LibraryName}\"\n               FontSize=\"Large\"\n               FontAttributes=\"Bold\"\n               HorizontalOptions=\"Center\"/&gt;\n\n        &lt;HorizontalStackLayout Grid.Row=\"1\"\n                               Spacing=\"10\"\n                               HorizontalOptions=\"Center\"&gt;\n            &lt;Button Text=\"Library 1\"/&gt;\n            &lt;Button Text=\"Library 2\"/&gt;\n        &lt;/HorizontalStackLayout&gt;\n\n        &lt;HorizontalStackLayout Grid.Row=\"2\"\n                               Spacing=\"10\"\n                               HorizontalOptions=\"Center\"&gt;\n            &lt;Button Text=\"Title\"/&gt;\n            &lt;Button Text=\"Artist\"/&gt;\n            &lt;Button Text=\"Year\"/&gt;\n        &lt;/HorizontalStackLayout&gt;\n\n        &lt;VerticalStackLayout Grid.Row=\"3\"\n                             Spacing=\"4\"&gt;\n            &lt;ActivityIndicator IsVisible=\"False\"/&gt;\n            &lt;Label Text=\"\"\n                   TextColor=\"Red\"\n                   HorizontalOptions=\"Center\"/&gt;\n        &lt;/VerticalStackLayout&gt;\n\n        &lt;!-- Temporary display of the downloaded JSON --&gt;\n        &lt;ScrollView Grid.Row=\"4\"&gt;\n            &lt;Label Text=\"{Binding ApiText}\"\n                   FontSize=\"Small\"/&gt;\n        &lt;/ScrollView&gt;\n\n    &lt;/Grid&gt;\n&lt;/ContentPage&gt;\nThe bottom part of the page currently contains a ScrollView and a Label. We will use these to display the raw JSON returned by the API.\nThis is temporary. Later, we will replace this with a CollectionView to display the individual albums.\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml.cs\n\n\n\nWe now need to connect the ViewModel to the page.\nOpen MainPage.xaml.cs.\nAdd a field to hold an instance of the ViewModel:\nprivate AlbumViewModel _viewModel;\nIn the constructor, create the ViewModel and assign it to the page’s BindingContext:\npublic MainPage()\n{\n    InitializeComponent();\n\n    _viewModel = new AlbumViewModel();\n    BindingContext = _viewModel;\n}\nThe BindingContext connects the XAML page to the ViewModel.\nFor example, the label we created earlier has:\nText=\"{Binding LibraryName}\"\nThis means that its Text property is connected to the LibraryName property in the ViewModel.\nWhen LibraryName changes and PropertyChanged is raised, the label will update automatically.\n\n\n\n\n\n\n\n\n\nFile to edit: AlbumViewModel.cs\n\n\n\nWe will use HttpClient to download the JSON data from the online libraries.\nFirst, add an HttpClient field to the ViewModel:\nprivate static readonly HttpClient _httpClient = new HttpClient();\nFor this lab, a single static HttpClient instance in the ViewModel is sufficient. In a larger application, the HTTP client would normally be shared more widely.\nNow create an asynchronous method called LoadLibraryAsync.\nIt should accept two parameters:\n\nurl: the address of the JSON file.\nlibraryName: the name of the library being loaded.\n\nStart with the following structure:\nprivate async Task LoadLibraryAsync(string url, string libraryName)\n{\n    IsLoading = true;\n    ErrorMessage = \"\";\n    ApiText = \"\";\n\n    try\n    {\n        // Send an HTTP GET request using _httpClient.\n\n        // Check that the response was successful.\n\n        // Read the response content as a string.\n\n        // Assign the downloaded JSON to ApiText.\n    }\n    catch (Exception ex)\n    {\n        ErrorMessage = ex.Message;\n    }\n    finally\n    {\n        IsLoading = false;\n    }\n}\nComplete the four steps inside the try block. The following hints should help.\n\n\n\n\n\n\n\n\nStep\nWhat you need to do\nMethod or variable to use\n\n\n\n\n1\nSend a request to the URL and store the response.\nHttpResponseMessage and _httpClient.GetAsync(url)\n\n\n2\nCheck that the HTTP request was successful.\nEnsureSuccessStatusCode()\n\n\n3\nRead the response body and store it as a string called json.\nReadAsStringAsync()\n\n\n4\nAssign the downloaded JSON to the ApiText property.\nApiText = json\n\n\n\nA few things to remember:\n\nBoth GetAsync() and ReadAsStringAsync() are asynchronous methods, so you will need to use await.\nThe response from GetAsync() should be stored in a variable so that you can use it in the following steps.\nThe JSON itself should be stored in a string variable called json.\nEnsureSuccessStatusCode() checks the response and throws an exception if the request was unsuccessful. Our catch block will handle this.\n\n\n\nDownloading data involves communicating with another computer over the internet. This can take some time.\nUsing async and await allows the application to wait for the download without freezing the user interface.\nWhen the JSON has been downloaded, assign it to ApiText.\nBecause ApiText raises PropertyChanged, the label on the page should update automatically.\n\n\n\n\n\n\n\n\n\n\nFiles to edit, in order:\n\nAlbumViewModel.cs\nMainPage.xaml\n\n\n\n\nWe now need a way for the user to select which library to download.\n\n\n7.1 Create the commands\nIn AlbumViewModel.cs, create two commands:\npublic Command LoadLibrary1Command { get; }\npublic Command LoadLibrary2Command { get; }\nA command runs a method with no parameters, but LoadLibraryAsync needs a URL and a library name. We solve this with a lambda (anonymous method). The lambda is a small unnamed method that calls LoadLibraryAsync with the details we want.\nIn the ViewModel constructor, initialise the first command:\nLoadLibrary1Command = new Command(\n    async () =&gt; await LoadLibraryAsync(Library1Url, \"Library 1\"));\nBecause LoadLibraryAsync is asynchronous, the lambda is marked async and uses await.\nInitialise LoadLibrary2Command yourself in the same way, using Library2Url and the name “Library 2”.\nHere are constants for the two URLs:\nprivate const string Library1Url =\n    \"https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json\";\n\nprivate const string Library2Url =\n    \"https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library2.json\";\n\n\n\nOpen MainPage.xaml.\nUpdate the two library buttons so that they use the commands:\n&lt;Button Text=\"Library 1\"\n        Command=\"{Binding LoadLibrary1Command}\"/&gt;\n\n&lt;Button Text=\"Library 2\"\n        Command=\"{Binding LoadLibrary2Command}\"/&gt;\n\n\n\nThe ActivityIndicator should run while IsLoading is true.\nUpdate it to:\n&lt;ActivityIndicator IsRunning=\"{Binding IsLoading}\"\n                   IsVisible=\"{Binding IsLoading}\"/&gt;\nUpdate the error label:\n&lt;Label Text=\"{Binding ErrorMessage}\"\n       TextColor=\"Red\"\n       HorizontalOptions=\"Center\"/&gt;\n\n\n\nRun the application.\nPress the Library 1 button. You should see the JSON contents displayed in the temporary area at the bottom of the page.\nTry pressing the Library 2 button.\nCheck that:\n\nThe JSON contents change.\nThe library name is displayed.\nThe ActivityIndicator appears while downloading.\nAn error message is displayed if the download fails.\n\nAt this stage, we have successfully downloaded the JSON data, but we are still displaying it as plain text.\nNext, we will convert it into C# objects.\n\n\n\n\n\n\n\n\n\n\nFile to edit: AlbumViewModel.cs\n\n\n\nWe now have the JSON data stored in ApiText.\nInstead of displaying the JSON as text, we want to convert it into a collection of Album objects.\nThis process is called deserialisation.\nWe will use System.Text.Json to do this.\nInside LoadLibraryAsync(), immediately after:\nApiText = json;\nadd:\nAlbums = JsonSerializer.Deserialize&lt;ObservableCollection&lt;Album&gt;&gt;(json);\n\nLibraryName = libraryName;\nYou may need to add the System.Text.Json namespace. If Visual Studio identifies an unknown type, use its Quick Actions to add the required namespace.\nThe Deserialize method converts the JSON text into an ObservableCollection&lt;Album&gt;.\nWe can now access individual albums through the Albums property.\nWhy use ObservableCollection?\nAn ObservableCollection notifies the user interface when items are added or removed. This is useful when displaying collections of data in controls such as a CollectionView.\nOur Albums property already has a setter that raises PropertyChanged. This is also important here because we are replacing the collection with a newly deserialised collection.\nFor now, the raw JSON will still be displayed on the page. We will replace that temporary display in the next section.\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml\n\n\n\nWe now have a collection of Album objects. We want to display these in a CollectionView.\nOpen MainPage.xaml.\n\n\nFind the temporary ScrollView and Label that display the JSON.\nRemove them and replace them with:\n&lt;CollectionView Grid.Row=\"4\"\n                ItemsSource=\"{Binding Albums}\"&gt;\n&lt;/CollectionView&gt;\nThe ItemsSource property connects the CollectionView to the Albums collection in the ViewModel.\n\n\n\nA CollectionView needs to know how each item should be displayed.\nAdd an ItemTemplate inside the CollectionView:\n&lt;CollectionView.ItemTemplate&gt;\n    &lt;DataTemplate&gt;\n\n    &lt;/DataTemplate&gt;\n&lt;/CollectionView.ItemTemplate&gt;\nThe DataTemplate describes how to display one item in the collection.\nThe CollectionView will repeat this template for every album.\n\n\n\nInside the DataTemplate, add a VerticalStackLayout containing labels for the album properties.\nYour completed CollectionView should look like this:\n&lt;CollectionView Grid.Row=\"4\"\n                ItemsSource=\"{Binding Albums}\"&gt;\n    &lt;CollectionView.ItemTemplate&gt;\n        &lt;DataTemplate&gt;\n            &lt;VerticalStackLayout Padding=\"10\"&gt;\n                &lt;Label Text=\"{Binding Title}\"\n                       FontSize=\"Medium\"\n                       FontAttributes=\"Bold\"/&gt;\n\n                &lt;Label Text=\"{Binding Artist}\"\n                       FontSize=\"Small\"/&gt;\n\n                &lt;Label Text=\"{Binding Year}\"\n                       FontSize=\"Small\"/&gt;\n\n                &lt;Label Text=\"{Binding Genre}\"\n                       FontSize=\"Small\"/&gt;\n            &lt;/VerticalStackLayout&gt;\n        &lt;/DataTemplate&gt;\n    &lt;/CollectionView.ItemTemplate&gt;\n&lt;/CollectionView&gt;\nNotice that the bindings inside the DataTemplate refer directly to Title, Artist, Year and Genre.\nThis is because the binding context inside the template is an individual Album object, rather than the ViewModel.\n\n\n\nRun the application again.\nYou should now see the albums displayed as individual items in the CollectionView.\nThe CollectionView handles its own scrolling, so we do not need to place it inside a ScrollView.\nThe * in the Grid row definition allows the CollectionView to occupy the remaining available space.\n\n\n\n\n\n\n\n\n\n\nFiles to edit, in order:\n\nAlbumViewModel.cs\nMainPage.xaml\n\n\n\n\nWe will now add the ability to sort the albums by title, artist or year.\n\n\nIn AlbumViewModel.cs, add the following method:\npublic void SortAlbums(string sortBy)\n{\n    switch (sortBy)\n    {\n        case \"Title\":\n            Albums = new ObservableCollection&lt;Album&gt;(\n                Albums.OrderBy(a =&gt; a.Title));\n            break;\n\n        case \"Artist\":\n            Albums = new ObservableCollection&lt;Album&gt;(\n                Albums.OrderBy(a =&gt; a.Artist));\n            break;\n\n        case \"Year\":\n            Albums = new ObservableCollection&lt;Album&gt;(\n                Albums.OrderBy(a =&gt; a.Year));\n            break;\n    }\n}\nThis method creates a new collection containing the albums in the requested order.\nWe are using OrderBy() to perform the sorting. You do not need to understand the details of this method for this lab.\n\n\n\nAdd a command property to the ViewModel:\npublic Command&lt;string&gt; SortCommand { get; }\nIn the constructor, initialise it:\nSortCommand = new Command&lt;string&gt;(SortAlbums);\nThis command accepts a string parameter and passes it to the SortAlbums method.\n\n\n\nOpen MainPage.xaml.\nUpdate the three sorting buttons:\n&lt;Button Text=\"Title\"\n        Command=\"{Binding SortCommand}\"\n        CommandParameter=\"Title\"/&gt;\n\n&lt;Button Text=\"Artist\"\n        Command=\"{Binding SortCommand}\"\n        CommandParameter=\"Artist\"/&gt;\n\n&lt;Button Text=\"Year\"\n        Command=\"{Binding SortCommand}\"\n        CommandParameter=\"Year\"/&gt;\nAll three buttons use the same command.\nThe CommandParameter tells the method which property to sort by.\nRun the application and test all three sorting options.\n\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml\n\n\n\nMAUI supports compiled bindings, which allow binding expressions to be checked at compile time.\nTo use compiled bindings, we need to tell MAUI what type of object the page and its templates are working with.\nFirst, add a namespace declaration to the opening ContentPage element:\nxmlns:local=\"clr-namespace:AlbumList\"\nThen add:\nx:DataType=\"local:AlbumViewModel\"\nThe opening element should now look like this:\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             xmlns:local=\"clr-namespace:AlbumList\"\n             x:Class=\"AlbumList.MainPage\"\n             x:DataType=\"local:AlbumViewModel\"\n             Title=\"Album Library\"&gt;\nThe page’s binding context is the AlbumViewModel.\nHowever, inside the CollectionView’s DataTemplate, the binding context is an individual Album.\nAdd the following to the DataTemplate:\n&lt;DataTemplate x:DataType=\"local:Album\"&gt;\nThis tells MAUI that the bindings inside the template refer to an Album object.\n\n\n\nYour application should now be able to:\n\nDownload Library 1.\nDownload Library 2.\nDisplay the albums in a CollectionView.\nSort the albums by title.\nSort the albums by artist.\nSort the albums by year.\nDisplay a loading indicator while downloading.\nDisplay an error message if something goes wrong.\n\nYou can now remove the temporary ApiText property and the code used to display the raw JSON.\n\n\nAt the moment, the application downloads the JSON every time a library is selected.\nAs an extension, investigate how you could save the downloaded JSON to a local file so that it can be reused later.\nYou can use:\n\nFileSystem.Current.AppDataDirectory to obtain the application’s data directory.\nFile.WriteAllTextAsync() to save the downloaded JSON to a file.\n\nThis would allow the application to retain a local copy of the library rather than needing to download it every time."
+    "text": "In this lab, we will build an application that downloads album information from an online API and displays it in a collection.\nWe will build the application in stages:\n\nGenerate a C# class to represent an album using example JSON data.\nCreate a ViewModel to manage the album data.\nBuild the initial page layout, including a temporary area to display the downloaded JSON.\nConnect the ViewModel to the page.\nDownload JSON data from an API and display it.\nCreate commands to load two different libraries and test the download.\nDeserialise the JSON into an ObservableCollection&lt;Album&gt;.\nDisplay the albums using a CollectionView.\nAdd sorting.\n\n\n\n\n\n\n\n\n\nFile to edit: Album.cs\n\n\n\nRather than writing the C# class ourselves, we are going to generate it from an example of the JSON data.\nOpen the following website:\nhttps://json2csharp.com/\nWe will use the first library as our example:\nhttps://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json\n\nOpen the JSON URL in your browser.\nCopy the JSON contents.\nPaste the contents into the JSON input on the conversion website.\nSet the class name to Album.\nGenerate the C# classes.\n\nYou should end up with a class representing an album.\nThe JSON contains the following properties:\n\n\n\nProperty\nData type\n\n\n\n\nTitle\nstring\n\n\nArtist\nstring\n\n\nYear\nint\n\n\nGenre\nstring\n\n\nCoverUrl\nstring\n\n\nTracks\nList of strings\n\n\n\nNotice that Tracks is an array of strings in the JSON. The generated C# class should represent this as a collection of strings.\nCopy the generated class into a new file called Album.cs. Don’t forget to leave your namespace alone.\nImportant: Both JSON libraries use the same structure, so we only need one Album class.\n\n\n\n\n\n\n\n\n\nFile to edit: AlbumViewModel.cs\n\n\n\nCreate a new class called AlbumViewModel.\nThis class will manage the album data and the operations required by the application.\nThe ViewModel will need the following properties:\n\n\n\n\n\n\n\n\nProperty\nType\nPurpose\n\n\n\n\nAlbums\nObservableCollection&lt;Album&gt;\nHolds the albums displayed by the application\n\n\nLibraryName\nstring\nThe name of the currently loaded library\n\n\nIsLoading\nbool\nIndicates whether data is currently being downloaded\n\n\nErrorMessage\nstring\nHolds any error message\n\n\nApiText\nstring\nTemporarily holds the downloaded JSON text\n\n\n\nEach property should have a private backing field and a setter that calls OnPropertyChanged() when its value changes.\nThis is important because we will be replacing the entire Albums collection when loading and sorting the data, rather than simply modifying its contents.\n\n\n\n\n\n\nNote\n\n\n\nDon’t forget to make a constructor, empty for now\n\n\n\n\nThe ViewModel needs to implement INotifyPropertyChanged so that the user interface is updated when its properties change.\nAdd the interface to your class:\npublic class AlbumViewModel : INotifyPropertyChanged\n{\n    public event PropertyChangedEventHandler PropertyChanged;\n\n    // Properties and other code will go here.\n}\nAdd the following method inside the class: (taken directly from the notes)\nprotected void OnPropertyChanged([CallerMemberName] string? propertyName = null)\n{\n    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n}\nYou can now create the properties listed above.\nRemember that each property needs a backing field and should call OnPropertyChanged() in its setter.\nFor example, your Albums property will look something like this:\nprivate ObservableCollection&lt;Album&gt; _albums = new();\n\npublic ObservableCollection&lt;Album&gt; Albums\n{\n    get =&gt; _albums;\n    set\n    {\n        _albums = value;\n        OnPropertyChanged();\n    }\n}\nCreate the remaining properties in a similar way.\n\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml\n\n\n\nBefore we start downloading data, we will create the basic layout of the application.\nThe layout will contain:\n\nA label displaying the current library name.\nTwo buttons for loading the two libraries.\nThree buttons for sorting the albums.\nAn ActivityIndicator to show when data is being downloaded.\nA label for displaying error messages.\nA temporary area for displaying the downloaded JSON.\n\nFor now, the buttons will not do anything. We will connect them to the ViewModel later.\nReplace the contents of MainPage.xaml with:\n&lt;?xml version=\"1.0\" encoding=\"utf-8\" ?&gt;\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             x:Class=\"AlbumList.MainPage\"\n             Title=\"Album Library\"&gt;\n\n    &lt;Grid Padding=\"20\"\n          RowDefinitions=\"Auto,Auto,Auto,Auto,*\"\n          RowSpacing=\"10\"&gt;\n\n        &lt;Label Grid.Row=\"0\"\n               Text=\"{Binding LibraryName}\"\n               FontSize=\"Large\"\n               FontAttributes=\"Bold\"\n               HorizontalOptions=\"Center\"/&gt;\n\n        &lt;HorizontalStackLayout Grid.Row=\"1\"\n                               Spacing=\"10\"\n                               HorizontalOptions=\"Center\"&gt;\n            &lt;Button Text=\"Library 1\"/&gt;\n            &lt;Button Text=\"Library 2\"/&gt;\n        &lt;/HorizontalStackLayout&gt;\n\n        &lt;HorizontalStackLayout Grid.Row=\"2\"\n                               Spacing=\"10\"\n                               HorizontalOptions=\"Center\"&gt;\n            &lt;Button Text=\"Title\"/&gt;\n            &lt;Button Text=\"Artist\"/&gt;\n            &lt;Button Text=\"Year\"/&gt;\n        &lt;/HorizontalStackLayout&gt;\n\n        &lt;VerticalStackLayout Grid.Row=\"3\"\n                             Spacing=\"4\"&gt;\n            &lt;ActivityIndicator IsVisible=\"False\"/&gt;\n            &lt;Label Text=\"\"\n                   TextColor=\"Red\"\n                   HorizontalOptions=\"Center\"/&gt;\n        &lt;/VerticalStackLayout&gt;\n\n        &lt;!-- Temporary display of the downloaded JSON --&gt;\n        &lt;ScrollView Grid.Row=\"4\"&gt;\n            &lt;Label Text=\"{Binding ApiText}\"\n                   FontSize=\"Small\"/&gt;\n        &lt;/ScrollView&gt;\n\n    &lt;/Grid&gt;\n&lt;/ContentPage&gt;\nThe bottom part of the page currently contains a ScrollView and a Label. We will use these to display the raw JSON returned by the API.\nThis is temporary. Later, we will replace this with a CollectionView to display the individual albums.\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml.cs\n\n\n\nWe now need to connect the ViewModel to the page.\nOpen MainPage.xaml.cs.\nAdd a field to hold an instance of the ViewModel:\nprivate AlbumViewModel _viewModel;\nIn the constructor, create the ViewModel and assign it to the page’s BindingContext:\npublic MainPage()\n{\n    InitializeComponent();\n\n    _viewModel = new AlbumViewModel();\n    BindingContext = _viewModel;\n}\nThe BindingContext connects the XAML page to the ViewModel.\nFor example, the label we created earlier has:\nText=\"{Binding LibraryName}\"\nThis means that its Text property is connected to the LibraryName property in the ViewModel.\nWhen LibraryName changes and PropertyChanged is raised, the label will update automatically.\n\n\n\n\n\n\n\n\n\nFile to edit: AlbumViewModel.cs\n\n\n\nWe will use HttpClient to download the JSON data from the online libraries.\nFirst, add an HttpClient field to the ViewModel:\nprivate static readonly HttpClient _httpClient = new HttpClient();\nFor this lab, a single static HttpClient instance in the ViewModel is sufficient. In a larger application, the HTTP client would normally be shared more widely.\nNow create an asynchronous method called LoadLibraryAsync.\nIt should accept two parameters:\n\nurl: the address of the JSON file.\nlibraryName: the name of the library being loaded.\n\nStart with the following structure:\nprivate async Task LoadLibraryAsync(string url, string libraryName)\n{\n    IsLoading = true;\n    ErrorMessage = \"\";\n    ApiText = \"\";\n\n    try\n    {\n        // Send an HTTP GET request using _httpClient.\n\n        // Check that the response was successful.\n\n        // Read the response content as a string.\n\n        // Assign the downloaded JSON to ApiText.\n    }\n    catch (Exception ex)\n    {\n        ErrorMessage = ex.Message;\n    }\n    finally\n    {\n        IsLoading = false;\n    }\n}\nComplete the four steps inside the try block. The following hints should help.\n\n\n\n\n\n\n\n\nStep\nWhat you need to do\nMethod or variable to use\n\n\n\n\n1\nSend a request to the URL and store the response. (using)\nHttpResponseMessage and _httpClient.GetAsync(url)\n\n\n2\nCheck that the HTTP request was successful.\n.IsSuccessStatusCode\n\n\n3\nRead the response body and store it as a string called json.\nReadAsStringAsync()\n\n\n4\nAssign the downloaded JSON to the ApiText property.\nApiText = json\n\n\n\nA few things to remember:\n\nBoth GetAsync() and ReadAsStringAsync() are asynchronous methods, so you will need to use await.\nThe response from GetAsync() should be stored in a variable so that you can use it in the following steps. You should use using to ensure the handles are cleaned up when going out of scope.\nThe JSON itself should be stored in a string variable called json.\nEnsureSuccessStatusCode() checks the response and throws an exception if the request was unsuccessful. Our catch block will handle this.\n\n\n\nDownloading data involves communicating with another computer over the internet. This can take some time.\nUsing async and await allows the application to wait for the download without freezing the user interface.\nWhen the JSON has been downloaded, assign it to ApiText.\nBecause ApiText raises PropertyChanged, the label on the page should update automatically.\n\n\n\n\n\n\n\n\n\n\nFiles to edit, in order:\n\nAlbumViewModel.cs\nMainPage.xaml\n\n\n\n\nWe now need a way for the user to select which library to download.\n\n\n7.1 Create the commands\nIn AlbumViewModel.cs, create two commands:\npublic Command LoadLibrary1Command { get; }\npublic Command LoadLibrary2Command { get; }\nA command runs a method with no parameters, but LoadLibraryAsync needs a URL and a library name. We solve this with a lambda (anonymous method). The lambda is a small unnamed method that calls LoadLibraryAsync with the details we want.\nIn the ViewModel constructor, initialise the first command:\nLoadLibrary1Command = new Command(\n    async () =&gt; await LoadLibraryAsync(Library1Url, \"Library 1\"));\nBecause LoadLibraryAsync is asynchronous, the lambda is marked async and uses await.\nInitialise LoadLibrary2Command yourself in the same way, using Library2Url and the name “Library 2”.\nHere are constants for the two URLs:\nprivate const string Library1Url =\n    \"https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json\";\n\nprivate const string Library2Url =\n    \"https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library2.json\";\n\n\n\nOpen MainPage.xaml.\nUpdate the two library buttons so that they use the commands:\n&lt;Button Text=\"Library 1\"\n        Command=\"{Binding LoadLibrary1Command}\"/&gt;\n\n&lt;Button Text=\"Library 2\"\n        Command=\"{Binding LoadLibrary2Command}\"/&gt;\n\n\n\nThe ActivityIndicator should run while IsLoading is true.\nUpdate it to:\n&lt;ActivityIndicator IsRunning=\"{Binding IsLoading}\"\n                   IsVisible=\"{Binding IsLoading}\"/&gt;\nUpdate the error label:\n&lt;Label Text=\"{Binding ErrorMessage}\"\n       TextColor=\"Red\"\n       HorizontalOptions=\"Center\"/&gt;\n\n\n\nRun the application.\nPress the Library 1 button. You should see the JSON contents displayed in the temporary area at the bottom of the page.\nTry pressing the Library 2 button.\nCheck that:\n\nThe JSON contents change.\nThe library name is displayed.\nThe ActivityIndicator appears while downloading.\nAn error message is displayed if the download fails.\n\nAt this stage, we have successfully downloaded the JSON data, but we are still displaying it as plain text.\nNext, we will convert it into C# objects.\n\n\n\n\n\n\n\n\n\n\nFile to edit: AlbumViewModel.cs\n\n\n\nWe now have the JSON data stored in ApiText.\nInstead of displaying the JSON as text, we want to convert it into a collection of Album objects.\nThis process is called deserialisation.\nWe will use System.Text.Json to do this.\nInside LoadLibraryAsync(), immediately after:\nApiText = json;\nadd:\nAlbums = JsonSerializer.Deserialize&lt;ObservableCollection&lt;Album&gt;&gt;(json);\n\nLibraryName = libraryName;\nYou may need to add the System.Text.Json namespace. If Visual Studio identifies an unknown type, use its Quick Actions to add the required namespace.\nThe Deserialize method converts the JSON text into an ObservableCollection&lt;Album&gt;.\nWe can now access individual albums through the Albums property.\nWhy use ObservableCollection?\nAn ObservableCollection notifies the user interface when items are added or removed. This is useful when displaying collections of data in controls such as a CollectionView.\nOur Albums property already has a setter that raises PropertyChanged. This is also important here because we are replacing the collection with a newly deserialised collection.\nFor now, the raw JSON will still be displayed on the page. We will replace that temporary display in the next section.\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml\n\n\n\nWe now have a collection of Album objects. We want to display these in a CollectionView.\nOpen MainPage.xaml.\n\n\nFind the temporary ScrollView and Label that display the JSON.\nRemove them and replace them with:\n&lt;CollectionView Grid.Row=\"4\"\n                ItemsSource=\"{Binding Albums}\"&gt;\n&lt;/CollectionView&gt;\nThe ItemsSource property connects the CollectionView to the Albums collection in the ViewModel.\n\n\n\nA CollectionView needs to know how each item should be displayed.\nAdd an ItemTemplate inside the CollectionView:\n&lt;CollectionView.ItemTemplate&gt;\n    &lt;DataTemplate&gt;\n\n    &lt;/DataTemplate&gt;\n&lt;/CollectionView.ItemTemplate&gt;\nThe DataTemplate describes how to display one item in the collection.\nThe CollectionView will repeat this template for every album.\n\n\n\nInside the DataTemplate, add a VerticalStackLayout containing labels for the album properties.\nYour completed CollectionView should look like this:\n&lt;CollectionView Grid.Row=\"4\"\n                ItemsSource=\"{Binding Albums}\"&gt;\n    &lt;CollectionView.ItemTemplate&gt;\n        &lt;DataTemplate&gt;\n            &lt;VerticalStackLayout Padding=\"10\"&gt;\n                &lt;Label Text=\"{Binding Title}\"\n                       FontSize=\"Medium\"\n                       FontAttributes=\"Bold\"/&gt;\n\n                &lt;Label Text=\"{Binding Artist}\"\n                       FontSize=\"Small\"/&gt;\n\n                &lt;Label Text=\"{Binding Year}\"\n                       FontSize=\"Small\"/&gt;\n\n                &lt;Label Text=\"{Binding Genre}\"\n                       FontSize=\"Small\"/&gt;\n            &lt;/VerticalStackLayout&gt;\n        &lt;/DataTemplate&gt;\n    &lt;/CollectionView.ItemTemplate&gt;\n&lt;/CollectionView&gt;\nNotice that the bindings inside the DataTemplate refer directly to Title, Artist, Year and Genre.\nThis is because the binding context inside the template is an individual Album object, rather than the ViewModel.\n\n\n\nRun the application again.\nYou should now see the albums displayed as individual items in the CollectionView.\nThe CollectionView handles its own scrolling, so we do not need to place it inside a ScrollView.\nThe * in the Grid row definition allows the CollectionView to occupy the remaining available space.\n\n\n\n\n\n\n\n\n\n\nFiles to edit, in order:\n\nAlbumViewModel.cs\nMainPage.xaml\n\n\n\n\nWe will now add the ability to sort the albums by title, artist or year.\n\n\nIn AlbumViewModel.cs, add the following method:\npublic void SortAlbums(string sortBy)\n{\n    switch (sortBy)\n    {\n        case \"Title\":\n            Albums = new ObservableCollection&lt;Album&gt;(\n                Albums.OrderBy(a =&gt; a.Title));\n            break;\n\n        case \"Artist\":\n            Albums = new ObservableCollection&lt;Album&gt;(\n                Albums.OrderBy(a =&gt; a.Artist));\n            break;\n\n        case \"Year\":\n            Albums = new ObservableCollection&lt;Album&gt;(\n                Albums.OrderBy(a =&gt; a.Year));\n            break;\n    }\n}\nThis method creates a new collection containing the albums in the requested order.\nWe are using OrderBy() to perform the sorting. You do not need to understand the details of this method for this lab.\n\n\n\nAdd a command property to the ViewModel:\npublic Command&lt;string&gt; SortCommand { get; }\nIn the constructor, initialise it:\nSortCommand = new Command&lt;string&gt;(SortAlbums);\nThis command accepts a string parameter and passes it to the SortAlbums method.\n\n\n\nOpen MainPage.xaml.\nUpdate the three sorting buttons:\n&lt;Button Text=\"Title\"\n        Command=\"{Binding SortCommand}\"\n        CommandParameter=\"Title\"/&gt;\n\n&lt;Button Text=\"Artist\"\n        Command=\"{Binding SortCommand}\"\n        CommandParameter=\"Artist\"/&gt;\n\n&lt;Button Text=\"Year\"\n        Command=\"{Binding SortCommand}\"\n        CommandParameter=\"Year\"/&gt;\nAll three buttons use the same command.\nThe CommandParameter tells the method which property to sort by.\nRun the application and test all three sorting options.\n\n\n\n\n\n\n\n\n\n\nFile to edit: MainPage.xaml\n\n\n\nMAUI supports compiled bindings, which allow binding expressions to be checked at compile time.\nTo use compiled bindings, we need to tell MAUI what type of object the page and its templates are working with.\nFirst, add a namespace declaration to the opening ContentPage element:\nxmlns:local=\"clr-namespace:AlbumList\"\nThen add:\nx:DataType=\"local:AlbumViewModel\"\nThe opening element should now look like this:\n&lt;ContentPage xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             xmlns:local=\"clr-namespace:AlbumList\"\n             x:Class=\"AlbumList.MainPage\"\n             x:DataType=\"local:AlbumViewModel\"\n             Title=\"Album Library\"&gt;\nThe page’s binding context is the AlbumViewModel.\nHowever, inside the CollectionView’s DataTemplate, the binding context is an individual Album.\nAdd the following to the DataTemplate:\n&lt;DataTemplate x:DataType=\"local:Album\"&gt;\nThis tells MAUI that the bindings inside the template refer to an Album object.\n\n\n\nYour application should now be able to:\n\nDownload Library 1.\nDownload Library 2.\nDisplay the albums in a CollectionView.\nSort the albums by title.\nSort the albums by artist.\nSort the albums by year.\nDisplay a loading indicator while downloading.\nDisplay an error message if something goes wrong.\n\nYou can now remove the temporary ApiText property and the code used to display the raw JSON.\n\n\nAt the moment, the application downloads the JSON every time a library is selected.\nAs an extension, investigate how you could save the downloaded JSON to a local file so that it can be reused later.\nYou can use:\n\nFileSystem.Current.AppDataDirectory to obtain the application’s data directory.\nFile.WriteAllTextAsync() to save the downloaded JSON to a file.\n\nThis would allow the application to retain a local copy of the library rather than needing to download it every time."
   },
   {
     "objectID": "labs/Lab 7 - Album List 1.html#introduction",
@@ -3903,7 +3903,7 @@
     "href": "labs/Lab 7 - Album List 1.html#create-the-viewmodel",
     "title": "Lab 7: Album List 1 - Downloading via API and ObservableCollections",
     "section": "",
-    "text": "File to edit: AlbumViewModel.cs\n\n\n\nCreate a new class called AlbumViewModel.\nThis class will manage the album data and the operations required by the application.\nThe ViewModel will need the following properties:\n\n\n\n\n\n\n\n\nProperty\nType\nPurpose\n\n\n\n\nAlbums\nObservableCollection&lt;Album&gt;\nHolds the albums displayed by the application\n\n\nLibraryName\nstring\nThe name of the currently loaded library\n\n\nIsLoading\nbool\nIndicates whether data is currently being downloaded\n\n\nErrorMessage\nstring\nHolds any error message\n\n\nApiText\nstring\nTemporarily holds the downloaded JSON text\n\n\n\nEach property should have a private backing field and a setter that calls OnPropertyChanged() when its value changes.\nThis is important because we will be replacing the entire Albums collection when loading and sorting the data, rather than simply modifying its contents.\n\n\n\n\n\n\nNote\n\n\n\nDon’t forget to make a constructor, empty for now\n\n\n\n\nThe ViewModel needs to implement INotifyPropertyChanged so that the user interface is updated when its properties change.\nAdd the interface to your class:\npublic class AlbumViewModel : INotifyPropertyChanged\n{\n    public event PropertyChangedEventHandler PropertyChanged;\n\n    // Properties and other code will go here.\n}\nAdd the following method inside the class:\nprivate void OnPropertyChanged(\n    [System.Runtime.CompilerServices.CallerMemberName] string propertyName = \"\")\n{\n    PropertyChanged?.Invoke(\n        this, new PropertyChangedEventArgs(propertyName));\n}\nYou can now create the properties listed above.\nRemember that each property needs a backing field and should call OnPropertyChanged() in its setter.\nFor example, your Albums property will look something like this:\nprivate ObservableCollection&lt;Album&gt; _albums = new();\n\npublic ObservableCollection&lt;Album&gt; Albums\n{\n    get =&gt; _albums;\n    set\n    {\n        _albums = value;\n        OnPropertyChanged();\n    }\n}\nCreate the remaining properties in a similar way."
+    "text": "File to edit: AlbumViewModel.cs\n\n\n\nCreate a new class called AlbumViewModel.\nThis class will manage the album data and the operations required by the application.\nThe ViewModel will need the following properties:\n\n\n\n\n\n\n\n\nProperty\nType\nPurpose\n\n\n\n\nAlbums\nObservableCollection&lt;Album&gt;\nHolds the albums displayed by the application\n\n\nLibraryName\nstring\nThe name of the currently loaded library\n\n\nIsLoading\nbool\nIndicates whether data is currently being downloaded\n\n\nErrorMessage\nstring\nHolds any error message\n\n\nApiText\nstring\nTemporarily holds the downloaded JSON text\n\n\n\nEach property should have a private backing field and a setter that calls OnPropertyChanged() when its value changes.\nThis is important because we will be replacing the entire Albums collection when loading and sorting the data, rather than simply modifying its contents.\n\n\n\n\n\n\nNote\n\n\n\nDon’t forget to make a constructor, empty for now\n\n\n\n\nThe ViewModel needs to implement INotifyPropertyChanged so that the user interface is updated when its properties change.\nAdd the interface to your class:\npublic class AlbumViewModel : INotifyPropertyChanged\n{\n    public event PropertyChangedEventHandler PropertyChanged;\n\n    // Properties and other code will go here.\n}\nAdd the following method inside the class: (taken directly from the notes)\nprotected void OnPropertyChanged([CallerMemberName] string? propertyName = null)\n{\n    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n}\nYou can now create the properties listed above.\nRemember that each property needs a backing field and should call OnPropertyChanged() in its setter.\nFor example, your Albums property will look something like this:\nprivate ObservableCollection&lt;Album&gt; _albums = new();\n\npublic ObservableCollection&lt;Album&gt; Albums\n{\n    get =&gt; _albums;\n    set\n    {\n        _albums = value;\n        OnPropertyChanged();\n    }\n}\nCreate the remaining properties in a similar way."
   },
   {
     "objectID": "labs/Lab 7 - Album List 1.html#build-the-initial-page-layout",
@@ -3917,7 +3917,7 @@
     "href": "labs/Lab 7 - Album List 1.html#download-the-json-data",
     "title": "Lab 7: Album List 1 - Downloading via API and ObservableCollections",
     "section": "",
-    "text": "File to edit: AlbumViewModel.cs\n\n\n\nWe will use HttpClient to download the JSON data from the online libraries.\nFirst, add an HttpClient field to the ViewModel:\nprivate static readonly HttpClient _httpClient = new HttpClient();\nFor this lab, a single static HttpClient instance in the ViewModel is sufficient. In a larger application, the HTTP client would normally be shared more widely.\nNow create an asynchronous method called LoadLibraryAsync.\nIt should accept two parameters:\n\nurl: the address of the JSON file.\nlibraryName: the name of the library being loaded.\n\nStart with the following structure:\nprivate async Task LoadLibraryAsync(string url, string libraryName)\n{\n    IsLoading = true;\n    ErrorMessage = \"\";\n    ApiText = \"\";\n\n    try\n    {\n        // Send an HTTP GET request using _httpClient.\n\n        // Check that the response was successful.\n\n        // Read the response content as a string.\n\n        // Assign the downloaded JSON to ApiText.\n    }\n    catch (Exception ex)\n    {\n        ErrorMessage = ex.Message;\n    }\n    finally\n    {\n        IsLoading = false;\n    }\n}\nComplete the four steps inside the try block. The following hints should help.\n\n\n\n\n\n\n\n\nStep\nWhat you need to do\nMethod or variable to use\n\n\n\n\n1\nSend a request to the URL and store the response.\nHttpResponseMessage and _httpClient.GetAsync(url)\n\n\n2\nCheck that the HTTP request was successful.\nEnsureSuccessStatusCode()\n\n\n3\nRead the response body and store it as a string called json.\nReadAsStringAsync()\n\n\n4\nAssign the downloaded JSON to the ApiText property.\nApiText = json\n\n\n\nA few things to remember:\n\nBoth GetAsync() and ReadAsStringAsync() are asynchronous methods, so you will need to use await.\nThe response from GetAsync() should be stored in a variable so that you can use it in the following steps.\nThe JSON itself should be stored in a string variable called json.\nEnsureSuccessStatusCode() checks the response and throws an exception if the request was unsuccessful. Our catch block will handle this.\n\n\n\nDownloading data involves communicating with another computer over the internet. This can take some time.\nUsing async and await allows the application to wait for the download without freezing the user interface.\nWhen the JSON has been downloaded, assign it to ApiText.\nBecause ApiText raises PropertyChanged, the label on the page should update automatically."
+    "text": "File to edit: AlbumViewModel.cs\n\n\n\nWe will use HttpClient to download the JSON data from the online libraries.\nFirst, add an HttpClient field to the ViewModel:\nprivate static readonly HttpClient _httpClient = new HttpClient();\nFor this lab, a single static HttpClient instance in the ViewModel is sufficient. In a larger application, the HTTP client would normally be shared more widely.\nNow create an asynchronous method called LoadLibraryAsync.\nIt should accept two parameters:\n\nurl: the address of the JSON file.\nlibraryName: the name of the library being loaded.\n\nStart with the following structure:\nprivate async Task LoadLibraryAsync(string url, string libraryName)\n{\n    IsLoading = true;\n    ErrorMessage = \"\";\n    ApiText = \"\";\n\n    try\n    {\n        // Send an HTTP GET request using _httpClient.\n\n        // Check that the response was successful.\n\n        // Read the response content as a string.\n\n        // Assign the downloaded JSON to ApiText.\n    }\n    catch (Exception ex)\n    {\n        ErrorMessage = ex.Message;\n    }\n    finally\n    {\n        IsLoading = false;\n    }\n}\nComplete the four steps inside the try block. The following hints should help.\n\n\n\n\n\n\n\n\nStep\nWhat you need to do\nMethod or variable to use\n\n\n\n\n1\nSend a request to the URL and store the response. (using)\nHttpResponseMessage and _httpClient.GetAsync(url)\n\n\n2\nCheck that the HTTP request was successful.\n.IsSuccessStatusCode\n\n\n3\nRead the response body and store it as a string called json.\nReadAsStringAsync()\n\n\n4\nAssign the downloaded JSON to the ApiText property.\nApiText = json\n\n\n\nA few things to remember:\n\nBoth GetAsync() and ReadAsStringAsync() are asynchronous methods, so you will need to use await.\nThe response from GetAsync() should be stored in a variable so that you can use it in the following steps. You should use using to ensure the handles are cleaned up when going out of scope.\nThe JSON itself should be stored in a string variable called json.\nEnsureSuccessStatusCode() checks the response and throws an exception if the request was unsuccessful. Our catch block will handle this.\n\n\n\nDownloading data involves communicating with another computer over the internet. This can take some time.\nUsing async and await allows the application to wait for the download without freezing the user interface.\nWhen the JSON has been downloaded, assign it to ApiText.\nBecause ApiText raises PropertyChanged, the label on the page should update automatically."
   },
   {
     "objectID": "labs/Lab 7 - Album List 1.html#connect-the-viewmodel-to-the-page",
@@ -3995,5 +3995,537 @@
     "title": "Week 8 MVVM, Web APIs and Custom Events",
     "section": "Loading questions",
     "text": "Loading questions\nprivate async Task LoadQuestions()\n{\n    if (IsBusy)\n        return;\n\n    try\n    {\n        IsBusy = true;\n        StatusMessage = \"\";\n        Questions.Clear();\n\n        string url = \"https://opentdb.com/api.php?amount=5&type=multiple\";\n\n        using var response = await _httpClient.GetAsync(url);\n\n        if (!response.IsSuccessStatusCode)\n        {\n            StatusMessage = \"Could not retrieve the questions.\";\n            return;\n        }\n\n        string json = await response.Content.ReadAsStringAsync();\n        TriviaResponse? data = JsonSerializer.Deserialize&lt;TriviaResponse&gt;(json);\n\n        if (data == null || data.response_code != 0)\n        {\n            StatusMessage = \"The API did not return any questions.\";\n            return;\n        }\n\n        foreach (Question question in data.results)\n        {\n            question.question = WebUtility.HtmlDecode(question.question);\n            question.correct_answer = WebUtility.HtmlDecode(question.correct_answer);\n\n            for (int i = 0; i &lt; question.incorrect_answers.Count; i++)\n            {\n                question.incorrect_answers[i] =\n                    WebUtility.HtmlDecode(question.incorrect_answers[i]);\n            }\n\n            Questions.Add(question);\n        }\n    }\n    catch (Exception)\n    {\n        StatusMessage = \"There was a problem retrieving the questions.\";\n    }\n    finally\n    {\n        IsBusy = false;\n    }\n}\nYou will need the relevant using directives, including:\nusing System.Collections.ObjectModel;\nusing System.ComponentModel;\nusing System.Net;\nusing System.Net.Http;\nusing System.Runtime.CompilerServices;\nusing System.Text.Json;\nThe ViewModel also needs the PropertyChanged event and OnPropertyChanged method we wrote earlier."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#why-use-multiple-pages",
+    "href": "lectures/Week9/Week9.html#why-use-multiple-pages",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Why use multiple pages?",
+    "text": "Why use multiple pages?\nAs an application grows, it becomes difficult to put every feature on one screen.\nA typical application might have:\n\nA main page displaying the primary content.\nA details page displaying one selected item.\nA settings page allowing the user to change application behaviour.\n\nEach page has a particular responsibility.\nNavigation determines which page is displayed. Data and shared objects determine what information is available to that page."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#a-simple-application-structure",
+    "href": "lectures/Week9/Week9.html#a-simple-application-structure",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "A simple application structure",
+    "text": "A simple application structure\nConsider an application with three pages:\n\nMainPage – the main screen.\nDetailsPage – displays information about a selected item.\nSettingsPage – allows the user to change application settings.\n\nThe user might:\n\nOpen the application and see MainPage.\nSelect an item and open DetailsPage.\nReturn to MainPage.\nOpen SettingsPage using a toolbar button."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#creating-another-contentpage",
+    "href": "lectures/Week9/Week9.html#creating-another-contentpage",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Creating another ContentPage",
+    "text": "Creating another ContentPage\nA page is a ContentPage, just like the MainPage we have already used.\nIn Visual Studio, add a new .NET MAUI ContentPage (XAML) to the project, for example:\n\nDetailsPage.xaml\nDetailsPage.xaml.cs\n\nThe XAML defines the user interface. The code-behind contains the page’s behaviour.\nAdding a page to the project does not make it reachable. We must decide how the user gets to it."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#navigation-using-a-page-stack",
+    "href": "lectures/Week9/Week9.html#navigation-using-a-page-stack",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Navigation using a page stack",
+    "text": "Navigation using a page stack\nOne straightforward approach is stack-based navigation using NavigationPage.\nA navigation stack behaves like a stack of pages:\n\nThe first page is at the bottom.\nOpening another page places it on top.\nReturning removes the top page and reveals the previous one.\n\nA simplified stack might look like this:\n        DetailsPage   &lt;- current page\n        MainPage\n        NavigationPage\nThis is a useful model for moving from a list to a details page and then returning."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#setting-up-navigationpage",
+    "href": "lectures/Week9/Week9.html#setting-up-navigationpage",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Setting up NavigationPage",
+    "text": "Setting up NavigationPage\nA NavigationPage provides a navigation bar and a navigation stack.\nFor a simple application, the root page can be wrapped in a NavigationPage when the application starts:\nMainPage = new NavigationPage(new MainPage());\nThe application now has a navigation stack, initially containing MainPage.\nA NavigationPage is one navigation approach. It is not the same thing as Shell, and an application would normally choose its main navigation structure rather than wrapping Shell in a NavigationPage."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#pushing-a-page-onto-the-stack",
+    "href": "lectures/Week9/Week9.html#pushing-a-page-onto-the-stack",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Pushing a page onto the stack",
+    "text": "Pushing a page onto the stack\nTo open another page, call PushAsync:\nprivate async void OpenDetails_Clicked(\n    object sender, EventArgs e)\n{\n    await Navigation.PushAsync(new DetailsPage());\n}\nThe new page is pushed onto the navigation stack and becomes the visible page.\nThe navigation bar normally provides a back button automatically."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#returning-to-the-previous-page",
+    "href": "lectures/Week9/Week9.html#returning-to-the-previous-page",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Returning to the previous page",
+    "text": "Returning to the previous page\nTo return, call PopAsync:\nprivate async void Back_Clicked(\n    object sender, EventArgs e)\n{\n    await Navigation.PopAsync();\n}\nThis removes the current page from the stack.\nThe user can also normally use the platform’s back navigation.\nThe important idea is that the application does not need to create another instance of the previous page just to return to it. The previous page is already underneath the current page in the stack."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#when-is-navigationpage-useful",
+    "href": "lectures/Week9/Week9.html#when-is-navigationpage-useful",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "When is NavigationPage useful?",
+    "text": "When is NavigationPage useful?\nStack navigation is a good fit when an application has a relatively simple hierarchy:\n\nMain page\nDetails page\nFurther details page\n\nIt is easy to understand and requires relatively little configuration.\nHowever, many applications also need a way to move between major areas of the application, such as different tabs or a flyout menu.\n.NET MAUI provides Shell for this."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#shell-navigation",
+    "href": "lectures/Week9/Week9.html#shell-navigation",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Shell navigation",
+    "text": "Shell navigation\nShell provides a higher-level structure for an application.\nIt can provide:\n\nA flyout menu.\nA tab bar.\nRoutes for navigating to other pages.\nNavigation stacks within sections of the application.\n\nShell is the default navigation structure in many .NET MAUI project templates.\nIt is not simply a replacement name for NavigationPage: it provides a broader way of organising an application."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#the-shell-visual-hierarchy",
+    "href": "lectures/Week9/Week9.html#the-shell-visual-hierarchy",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "The Shell visual hierarchy",
+    "text": "The Shell visual hierarchy\nThe main elements used to organise a Shell application are:\n\nFlyoutItem – an item in the flyout menu.\nTabBar – a group of tabs.\nTab – an individual tab.\nShellContent – the page displayed by a tab or flyout item.\n\nA simple application can use a tab bar:\n&lt;Shell\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    xmlns:local=\"clr-namespace:MyApp\"&gt;\n\n    &lt;TabBar&gt;\n        &lt;Tab Title=\"Home\"&gt;\n            &lt;ShellContent\n                ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n        &lt;/Tab&gt;\n\n        &lt;Tab Title=\"Favourites\"&gt;\n            &lt;ShellContent\n                ContentTemplate=\"{DataTemplate local:FavouritesPage}\" /&gt;\n        &lt;/Tab&gt;\n    &lt;/TabBar&gt;\n\n&lt;/Shell&gt;\nEach tab provides a separate area of the application."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#tabs",
+    "href": "lectures/Week9/Week9.html#tabs",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Tabs",
+    "text": "Tabs\nWhen users switch regularly between a few major sections, use a TabBar in AppShell.xaml:\n&lt;TabBar&gt;\n    &lt;Tab Title=\"Home\"&gt;\n        &lt;ShellContent ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n    &lt;/Tab&gt;\n    &lt;Tab Title=\"Notes\"&gt;\n        &lt;ShellContent ContentTemplate=\"{DataTemplate local:NotesPage}\" /&gt;\n    &lt;/Tab&gt;\n&lt;/TabBar&gt;\nOn Android the tabs appear at the bottom. On Windows they look more like browser tabs.\nPages with a route, such as details, can still be opened from any tab."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#flyout-menus",
+    "href": "lectures/Week9/Week9.html#flyout-menus",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Flyout menus",
+    "text": "Flyout menus\nA flyout provides a menu for accessing different parts of an application.\nA flyout is useful when there are several major areas, or when a tab bar would become too crowded.\nFor example:\n&lt;FlyoutItem Title=\"Home\"&gt;\n    &lt;ShellContent\n        ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n&lt;/FlyoutItem&gt;\n\n&lt;FlyoutItem Title=\"Favourites\"&gt;\n    &lt;ShellContent\n        ContentTemplate=\"{DataTemplate local:FavouritesPage}\" /&gt;\n&lt;/FlyoutItem&gt;\nThese items appear in the Shell flyout.\nA Shell application can combine a flyout with tabs by placing tabs inside a FlyoutItem."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#tabs-inside-a-flyout-item",
+    "href": "lectures/Week9/Week9.html#tabs-inside-a-flyout-item",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Tabs inside a flyout item",
+    "text": "Tabs inside a flyout item\nA flyout item can contain a tab structure:\n&lt;FlyoutItem Title=\"Library\"&gt;\n    &lt;Tab Title=\"Current\"&gt;\n        &lt;ShellContent\n            ContentTemplate=\"{DataTemplate local:CurrentPage}\" /&gt;\n    &lt;/Tab&gt;\n\n    &lt;Tab Title=\"Archived\"&gt;\n        &lt;ShellContent\n            ContentTemplate=\"{DataTemplate local:ArchivedPage}\" /&gt;\n    &lt;/Tab&gt;\n&lt;/FlyoutItem&gt;\nThe flyout selects the Library section, and the tabs allow the user to switch between Current and Archived.\nA TabBar placed directly under Shell is a different arrangement: it provides tabs without the normal flyout menu."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#routes-and-pages-outside-the-visual-hierarchy",
+    "href": "lectures/Week9/Week9.html#routes-and-pages-outside-the-visual-hierarchy",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Routes and pages outside the visual hierarchy",
+    "text": "Routes and pages outside the visual hierarchy\nNot every page needs to appear as a tab or flyout item.\nA details page, for example, is normally reached after the user selects something on another page.\nShell allows us to register a route for such a page.\nIn AppShell.xaml.cs:\npublic AppShell()\n{\n    InitializeComponent();\n\n    Routing.RegisterRoute(\n        \"details\",\n        typeof(DetailsPage));\n}\nThe route name identifies the destination page."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#navigating-using-a-shell-route",
+    "href": "lectures/Week9/Week9.html#navigating-using-a-shell-route",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Navigating using a Shell route",
+    "text": "Navigating using a Shell route\nOnce a route has been registered, navigate to it using GoToAsync:\nprivate async void OpenDetails_Clicked(\n    object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"details\");\n}\nShell displays the registered page.\nTo return, use the normal back navigation:\nawait Shell.Current.GoToAsync(\"..\");\nShell maintains navigation history for the current section."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#a-settingspage-opened-from-a-toolbar",
+    "href": "lectures/Week9/Week9.html#a-settingspage-opened-from-a-toolbar",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "A SettingsPage opened from a toolbar",
+    "text": "A SettingsPage opened from a toolbar\nA settings page is often not a main section of an application.\nInstead, it can be opened from a settings icon in the toolbar.\nFor example, a ToolbarItem in the main page:\n&lt;ContentPage.ToolbarItems&gt;\n    &lt;ToolbarItem\n        Text=\"Settings\"\n        Clicked=\"Settings_Clicked\" /&gt;\n&lt;/ContentPage.ToolbarItems&gt;\nThe click handler can navigate to the registered SettingsPage:\nprivate async void Settings_Clicked(\n    object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"settings\");\n}\nRegister the route in AppShell.xaml.cs:\nRouting.RegisterRoute(\n    \"settings\",\n    typeof(SettingsPage));\nThe SettingsPage does not have to be a tab or flyout item."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#choosing-a-navigation-approach",
+    "href": "lectures/Week9/Week9.html#choosing-a-navigation-approach",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Choosing a navigation approach",
+    "text": "Choosing a navigation approach\n\n\n\nNeed\nUse\n\n\n\n\nOpen a details or settings page\nA route and GoToAsync\n\n\nSwitch between a few main sections\nTabBar\n\n\nSeveral main areas in a menu\nFlyoutItem\n\n\nReturn to the previous page\nGoToAsync(\"..\")\n\n\n\nMost of your projects need only routes, and perhaps tabs."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#opening-a-page-is-only-part-of-the-problem",
+    "href": "lectures/Week9/Week9.html#opening-a-page-is-only-part-of-the-problem",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Opening a page is only part of the problem",
+    "text": "Opening a page is only part of the problem\nSuppose MainPage shows a list of planets, and the user selects one.\nDetailsPage opens, but it needs to know which planet was selected.\nThere are three situations we will look at:\n\nPassing a simple value when navigating.\nGiving that value to the page’s ViewModel.\nSharing an object that many pages use."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#passing-an-object-through-a-constructor",
+    "href": "lectures/Week9/Week9.html#passing-an-object-through-a-constructor",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Passing an object through a constructor",
+    "text": "Passing an object through a constructor\nWith NavigationPage, we can pass the selected object when creating the destination page.\nFor example:\nprivate async void OpenDetails_Clicked(\n    object sender, EventArgs e)\n{\n    Album selectedAlbum = ...;\n\n    await Navigation.PushAsync(\n        new DetailsPage(selectedAlbum));\n}\nThe destination page accepts the object in its constructor:\npublic partial class DetailsPage : ContentPage\n{\n    private readonly Album _album;\n\n    public DetailsPage(Album album)\n    {\n        InitializeComponent();\n        _album = album;\n    }\n}\nThe DetailsPage now has access to the selected album.\nThis is a direct and simple approach when one page is opening another and knows what information it needs to pass."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#passing-data-using-shell-navigation",
+    "href": "lectures/Week9/Week9.html#passing-data-using-shell-navigation",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Passing data using Shell navigation",
+    "text": "Passing data using Shell navigation\nShell also supports passing information during navigation.\nFor example, we can pass an identifier as part of the route:\nawait Shell.Current.GoToAsync(\n    $\"details?id={selectedId}\");\nThe destination page can receive the query information.\nFor simple values such as an ID, this is a useful approach.\nQuery strings are particularly suitable for values that can be represented as text."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#passing-an-object-using-shell-navigation",
+    "href": "lectures/Week9/Week9.html#passing-an-object-using-shell-navigation",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Passing an object using Shell navigation",
+    "text": "Passing an object using Shell navigation\nShell can also pass an object using a dictionary:\nvar parameters = new Dictionary&lt;string, object&gt;\n{\n    { \"Album\", selectedAlbum }\n};\n\nawait Shell.Current.GoToAsync(\n    \"details\",\n    parameters);\nThe destination page can implement IQueryAttributable:\npublic partial class DetailsPage :\n    ContentPage, IQueryAttributable\n{\n    private Album _album;\n\n    public void ApplyQueryAttributes(\n        IDictionary&lt;string, object&gt; query)\n    {\n        _album = (Album)query[\"Album\"];\n    }\n}\nThis is one way to transfer an object when using Shell navigation.\nFor a small application, students do not need to learn every possible query parameter feature. The important point is that Shell provides ways to pass information as part of navigation."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#which-approach-should-we-use",
+    "href": "lectures/Week9/Week9.html#which-approach-should-we-use",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Which approach should we use?",
+    "text": "Which approach should we use?\nConsider the relationship between the pages.\nConstructor parameter\n\nThe source page creates the destination page.\nThe destination needs information supplied by the source.\nThe relationship is direct.\n\nShell navigation parameter\n\nNavigation is managed by Shell.\nThe destination needs information associated with that navigation.\nIt is useful for passing an ID or selected object.\n\nShared object\n\nSeveral pages need access to the same application data.\nThe object exists independently of one particular navigation.\nPages may need to read or update the same information."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#when-passing-an-object-is-not-enough",
+    "href": "lectures/Week9/Week9.html#when-passing-an-object-is-not-enough",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "When passing an object is not enough",
+    "text": "When passing an object is not enough\nConsider application settings.\nThe application has a SettingsPage where the user can change options such as:\n\nWhether sound is enabled.\nWhether notifications are enabled.\nThe preferred display mode.\n\nOther pages may also need to know these settings.\nWe could pass the settings object from page to page, but that would become awkward as more pages need access to it.\nInstead, the application can hold one shared settings object."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#a-shared-settings-class",
+    "href": "lectures/Week9/Week9.html#a-shared-settings-class",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "A shared settings class",
+    "text": "A shared settings class\npublic class AppSettings\n{\n    public bool SoundEnabled { get; set; } = true;\n    public double FontSize { get; set; } = 16;\n    public Color BackgroundColour { get; set; } = Colors.White;\n}\nThis is an ordinary C# class. It knows nothing about pages or navigation."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#registering-the-shared-object",
+    "href": "lectures/Week9/Week9.html#registering-the-shared-object",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Registering the shared object",
+    "text": "Registering the shared object\nIn MauiProgram.cs, register the class with dependency injection:\nbuilder.Services.AddSingleton&lt;AppSettings&gt;();\nAddSingleton means that the dependency injection container creates one instance and supplies that same instance whenever AppSettings is requested.\nThe application does not create a new settings object for every page.\nThis is an example of a Singleton lifetime."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#constructor-injection",
+    "href": "lectures/Week9/Week9.html#constructor-injection",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Constructor injection",
+    "text": "Constructor injection\nA page or ViewModel can request an AppSettings object through its constructor.\nFor example:\npublic class SettingsViewModel\n{\n    private readonly AppSettings _settings;\n\n    public SettingsViewModel(AppSettings settings)\n    {\n        _settings = settings;\n    }\n}\nThe ViewModel does not create the AppSettings object.\nIt receives the instance supplied by the dependency injection container.\nAnother ViewModel can request AppSettings in exactly the same way.\nBoth receive the same object."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#registering-pages-and-viewmodels",
+    "href": "lectures/Week9/Week9.html#registering-pages-and-viewmodels",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Registering pages and ViewModels",
+    "text": "Registering pages and ViewModels\nWhen using Shell routes with constructor injection, register the relevant page and ViewModel with the dependency injection container.\nFor example, in MauiProgram.cs:\nbuilder.Services.AddSingleton&lt;AppSettings&gt;();\n\nbuilder.Services.AddTransient&lt;SettingsViewModel&gt;();\nbuilder.Services.AddTransient&lt;SettingsPage&gt;();\nThen register the Shell route in AppShell.xaml.cs:\nRouting.RegisterRoute(\n    \"settings\",\n    typeof(SettingsPage));\nThe SettingsPage can receive its ViewModel through its constructor:\npublic SettingsPage(SettingsViewModel viewModel)\n{\n    InitializeComponent();\n    BindingContext = viewModel;\n}\nShell can resolve the registered page and its constructor dependencies."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#singleton-and-transient",
+    "href": "lectures/Week9/Week9.html#singleton-and-transient",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Singleton and Transient",
+    "text": "Singleton and Transient\nDependency injection supports different object lifetimes.\nTwo useful registrations are:\nbuilder.Services.AddSingleton&lt;AppSettings&gt;();\nbuilder.Services.AddTransient&lt;SettingsViewModel&gt;();\nSingleton\n\nOne instance is created by the container.\nThe same instance is supplied whenever the dependency is requested.\nUseful for application-wide data or resources that should be shared.\n\nTransient\n\nA new instance is created whenever the dependency is requested.\nUseful for pages and ViewModels that should have their own state.\n\nThe lifetime should reflect how the object is intended to be used."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#shared-object-does-not-automatically-mean-updated-ui",
+    "href": "lectures/Week9/Week9.html#shared-object-does-not-automatically-mean-updated-ui",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Shared object does not automatically mean updated UI",
+    "text": "Shared object does not automatically mean updated UI\nIf two ViewModels receive the same AppSettings object, they are accessing the same data.\nHowever, changing a property on an ordinary C# object does not automatically tell every bound user interface to refresh.\nFor automatic UI updates, the object must notify the interface when a property changes, typically using INotifyPropertyChanged.\nWe have already used property change notification with MVVM.\nThe important distinction is:\n\nDependency injection provides the shared object.\nProperty change notification tells a bound interface that data has changed.\n\nThese solve two different problems."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#shared-objects-and-application-resources",
+    "href": "lectures/Week9/Week9.html#shared-objects-and-application-resources",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Shared objects and application resources",
+    "text": "Shared objects and application resources\nThe same approach is useful for more than settings.\nAn application may have objects that need to be shared by several pages:\n\nApplication settings.\nA current user or session.\nA collection of data used in several places.\nAn object responsible for communicating with a web API.\n\nThe object should be shared when multiple parts of the application genuinely need access to the same instance.\nIt is not necessary to make every class a Singleton."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#httpclient-as-a-shared-dependency",
+    "href": "lectures/Week9/Week9.html#httpclient-as-a-shared-dependency",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "HttpClient as a shared dependency",
+    "text": "HttpClient as a shared dependency\nHttpClient is another example of an object that should normally be reused.\nIt is used to make HTTP requests, such as retrieving data from a web API or downloading an image.\nRather than creating a new HttpClient every time a request is made, we can register one shared instance with dependency injection.\nIn MauiProgram.cs:\nbuilder.Services.AddSingleton&lt;HttpClient&gt;();\nNow pages and ViewModels can request an HttpClient through their constructors."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#injecting-httpclient-into-a-viewmodel",
+    "href": "lectures/Week9/Week9.html#injecting-httpclient-into-a-viewmodel",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Injecting HttpClient into a ViewModel",
+    "text": "Injecting HttpClient into a ViewModel\nFor example:\npublic class ExampleViewModel\n{\n    private readonly HttpClient _httpClient;\n\n    public ExampleViewModel(HttpClient httpClient)\n    {\n        _httpClient = httpClient;\n    }\n}\nThe ViewModel receives the shared instance.\nIt does not need to know where the client was created or how it was registered.\nIt simply uses the object it was given."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#making-a-request",
+    "href": "lectures/Week9/Week9.html#making-a-request",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Making a request",
+    "text": "Making a request\nThe ViewModel can use the injected client to make an asynchronous request:\nstring json = await _httpClient.GetStringAsync(url);\nOr it can download image data:\nbyte[] imageData =\n    await _httpClient.GetByteArrayAsync(imageUrl);\nThe same client can be used by other ViewModels that need to make HTTP requests.\nThe client is shared; the requests and their results are separate."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#adding-a-user-agent-header",
+    "href": "lectures/Week9/Week9.html#adding-a-user-agent-header",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Adding a User-Agent header",
+    "text": "Adding a User-Agent header\nSome websites require requests to identify the application making them. Add the header to an individual request:\nusing var request = new HttpRequestMessage(HttpMethod.Get, imageUrl);\nrequest.Headers.UserAgent.ParseAdd(\"ExampleMauiApp/1.0\");\nusing HttpResponseMessage response = await App.Http.SendAsync(request);\nresponse.EnsureSuccessStatusCode();\nbyte[] imageData = await response.Content.ReadAsByteArrayAsync();\nUse a meaningful application name and version, and follow the website’s rules."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#displaying-downloaded-image-data",
+    "href": "lectures/Week9/Week9.html#displaying-downloaded-image-data",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Displaying downloaded image data",
+    "text": "Displaying downloaded image data\nOnce the image data has been downloaded, turn it into an ImageSource for an Image control:\nImageSource photo = ImageSource.FromStream(() =&gt; new MemoryStream(imageData));\nThe lambda supplies a new stream each time the image is read.\nThis is why we sometimes download image data ourselves instead of binding a URL directly."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#why-reuse-httpclient",
+    "href": "lectures/Week9/Week9.html#why-reuse-httpclient",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Why reuse HttpClient?",
+    "text": "Why reuse HttpClient?\nCreating a new HttpClient for every request is not recommended. Reusing one:\n\nAvoids repeatedly creating the underlying connection resources.\nAllows connections to be reused.\nGives one place to configure HTTP settings."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#choosing-how-pages-communicate",
+    "href": "lectures/Week9/Week9.html#choosing-how-pages-communicate",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Choosing how pages communicate",
+    "text": "Choosing how pages communicate\nThere are several different problems that can arise in a multi-page application.\n\n\n\n\n\n\n\nRequirement\nPossible approach\n\n\n\n\nOpen a details page\nNavigation\n\n\nPass a selected item to that page\nConstructor or Shell navigation parameter\n\n\nLet several pages access the same settings\nShared object registered as Singleton\n\n\nLet several ViewModels make HTTP requests\nShared HttpClient\n\n\nUpdate a bound interface when data changes\nINotifyPropertyChanged\n\n\n\nThese approaches are related, but they are not interchangeable."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#a-useful-way-to-think-about-it",
+    "href": "lectures/Week9/Week9.html#a-useful-way-to-think-about-it",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "A useful way to think about it",
+    "text": "A useful way to think about it\n\n\n\n\n\n\n\nRequirement\nApproach\n\n\n\n\nOpen another page\nRoute and GoToAsync\n\n\nPass a simple value to that page\nQuery string and [QueryProperty]\n\n\nGive that value to a ViewModel\nPass it on in OnAppearing\n\n\nLet several pages use the same object\nStatic property on App\n\n\nEdit an object and be able to cancel\nEdit a copy, then CopyFrom\n\n\nMake requests from several places\nShared HttpClient\n\n\nShow current data when returning to a page\nOnAppearing\n\n\n\nThese are related, but they are not interchangeable."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#summary",
+    "href": "lectures/Week9/Week9.html#summary",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Summary",
+    "text": "Summary\n\nShell is the navigation structure used by the project template.\nRegister a route for pages outside the main layout, and navigate with GoToAsync.\nGoToAsync(\"..\") returns to the previous page.\nSimple values can be passed in the query and received with [QueryProperty].\nAssigning an object copies the reference. Two variables, one object.\nTo get a separate object, make a real copy.\nA static property on App shares one object, such as settings or HttpClient, across pages.\nEdit a copy of shared settings so that Cancel and the back button do nothing."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#shell",
+    "href": "lectures/Week9/Week9.html#shell",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Shell",
+    "text": "Shell\nA new .NET MAUI project uses Shell for navigation. Look at AppShell.xaml.\n&lt;ShellContent\n    Title=\"Home\"\n    ContentTemplate=\"{DataTemplate local:MainPage}\"\n    Route=\"MainPage\" /&gt;\nThis tells the app to display MainPage. We will use Shell for everything this week.\nOlder tutorials use NavigationPage with PushAsync and PopAsync. That is a different approach and should not be mixed with Shell, so you can ignore it."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#pages-outside-the-shell-layout",
+    "href": "lectures/Week9/Week9.html#pages-outside-the-shell-layout",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Pages outside the Shell layout",
+    "text": "Pages outside the Shell layout\nA details page or settings page is not a main section of the app. The user reaches it from another page.\nGive the page a route. In AppShell.xaml.cs:\npublic AppShell()\n{\n    InitializeComponent();\n    Routing.RegisterRoute(\"details\", typeof(DetailsPage));\n}\nThe route name is simply a string that identifies the destination page."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#navigating-to-a-route",
+    "href": "lectures/Week9/Week9.html#navigating-to-a-route",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Navigating to a route",
+    "text": "Navigating to a route\nUse GoToAsync with the route name:\nprivate async void OpenDetails_Clicked(object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"details\");\n}\nDetailsPage is displayed, and Shell remembers where the user came from."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#going-back",
+    "href": "lectures/Week9/Week9.html#going-back",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Going back",
+    "text": "Going back\nTo return to the previous page:\nprivate async void Back_Clicked(object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"..\");\n}\nThe .. means “go back one page”.\nThe back button in the navigation bar, and the Android back button, do this automatically.\nWe do not create a new MainPage to return to it. It is still there underneath."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#a-settings-page-from-the-toolbar",
+    "href": "lectures/Week9/Week9.html#a-settings-page-from-the-toolbar",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "A settings page from the toolbar",
+    "text": "A settings page from the toolbar\nA settings page is usually opened from an icon in the toolbar, not a tab.\nIn the XAML of MainPage:\n&lt;ContentPage.ToolbarItems&gt;\n    &lt;ToolbarItem Text=\"Settings\" Clicked=\"Settings_Clicked\" /&gt;\n&lt;/ContentPage.ToolbarItems&gt;\nIn the code-behind:\nprivate async void Settings_Clicked(object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"settings\");\n}\nRegister the route in AppShell.xaml.cs:\nRouting.RegisterRoute(\"settings\", typeof(SettingsPage));"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#flyout-menu",
+    "href": "lectures/Week9/Week9.html#flyout-menu",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Flyout menu",
+    "text": "Flyout menu\nA flyout is a menu (the “hamburger” menu) for reaching several areas of the app:\n&lt;FlyoutItem Title=\"Home\"&gt;\n    &lt;ShellContent ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n&lt;/FlyoutItem&gt;\n&lt;FlyoutItem Title=\"Notes\"&gt;\n    &lt;ShellContent ContentTemplate=\"{DataTemplate local:NotesPage}\" /&gt;\n&lt;/FlyoutItem&gt;\nUse a flyout when there are more areas than a tab bar can hold.\nTabs can be placed inside a FlyoutItem to combine them, but not the other way around."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#passing-a-simple-value",
+    "href": "lectures/Week9/Week9.html#passing-a-simple-value",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Passing a simple value",
+    "text": "Passing a simple value\nShell can pass a value as part of the route, just like a web address:\nawait Shell.Current.GoToAsync($\"details?name={planetName}\");\nThe part after the ? is called the query. The key (name) is chosen by us.\nThis suits values that can be written as text, such as a name or an ID.\nIf the text may contain spaces or special characters, escape it:\nawait Shell.Current.GoToAsync($\"details?name={Uri.EscapeDataString(planetName)}\");"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#receiving-the-value",
+    "href": "lectures/Week9/Week9.html#receiving-the-value",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Receiving the value",
+    "text": "Receiving the value\nThe destination page declares a [QueryProperty]:\n[QueryProperty(nameof(PlanetName), \"name\")]\npublic partial class DetailsPage : ContentPage\n{\n    public string PlanetName { get; set; } = \"\";\n\n    public DetailsPage()\n    {\n        InitializeComponent();\n    }\n}\n\nThe first part names the property that receives the value.\nThe second part (\"name\") must match the key used in the route."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#when-is-the-value-available",
+    "href": "lectures/Week9/Week9.html#when-is-the-value-available",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "When is the value available?",
+    "text": "When is the value available?\nThe property is set after the constructor has run, so we cannot use it there.\nIt is set before the page appears, so OnAppearing works:\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n    NameLabel.Text = PlanetName;\n}"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#more-than-one-value",
+    "href": "lectures/Week9/Week9.html#more-than-one-value",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "More than one value",
+    "text": "More than one value\nSeparate the values with &, and add one [QueryProperty] for each:\nawait Shell.Current.GoToAsync($\"details?name={planetName}&moons={moonCount}\");\n[QueryProperty(nameof(PlanetName), \"name\")]\n[QueryProperty(nameof(MoonCount), \"moons\")]\npublic partial class DetailsPage : ContentPage\n{\n    public string PlanetName { get; set; } = \"\";\n    public string MoonCount { get; set; } = \"\";\n}\nQuery values arrive as text. Convert them yourself if you need a number."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#giving-a-page-its-own-setup-value",
+    "href": "lectures/Week9/Week9.html#giving-a-page-its-own-setup-value",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Giving a page its own setup value",
+    "text": "Giving a page its own setup value\nSometimes we want to reuse one page class for several tabs, each set up differently.\nImagine NotesPage used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:\npublic NotesPage(string category)\n{\n    InitializeComponent();\n    CategoryLabel.Text = category;\n}"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#passing-constructor-values-from-xaml",
+    "href": "lectures/Week9/Week9.html#passing-constructor-values-from-xaml",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Passing constructor values from XAML",
+    "text": "Passing constructor values from XAML\nIn AppShell.xaml, x:Arguments supplies the constructor values:\n&lt;TabBar&gt;\n    &lt;ShellContent Title=\"Work\" Route=\"work\"&gt;\n        &lt;local:NotesPage&gt;\n            &lt;x:Arguments&gt;\n                &lt;x:String&gt;Work&lt;/x:String&gt;\n            &lt;/x:Arguments&gt;\n        &lt;/local:NotesPage&gt;\n    &lt;/ShellContent&gt;\n    &lt;ShellContent Title=\"Personal\" Route=\"personal\"&gt;\n        &lt;local:NotesPage&gt;\n            &lt;x:Arguments&gt;\n                &lt;x:String&gt;Personal&lt;/x:String&gt;\n            &lt;/x:Arguments&gt;\n        &lt;/local:NotesPage&gt;\n    &lt;/ShellContent&gt;\n&lt;/TabBar&gt;\n\nThe arguments are matched to the constructor by type and order.\nA mismatch is not a compile error. The app fails when it runs."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#xarguments-rules",
+    "href": "lectures/Week9/Week9.html#xarguments-rules",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "x:Arguments rules",
+    "text": "x:Arguments rules\n\nThe arguments are matched to the constructor by type and order.\nNotesPage(string category) needs exactly one &lt;x:String&gt;.\nA mismatch is not a compile error. The app fails when it runs.\nUse this form instead of ContentTemplate when a page needs constructor values."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#when-passing-a-value-is-not-enough",
+    "href": "lectures/Week9/Week9.html#when-passing-a-value-is-not-enough",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "When passing a value is not enough",
+    "text": "When passing a value is not enough\nConsider application settings. The SettingsPage lets the user change:\n\nWhether sound is enabled.\nThe font size.\nThe background colour.\n\nMainPage and other pages need to use these settings.\nPassing them from page to page would become awkward. Instead, the application can hold one shared settings object."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#making-it-available-everywhere",
+    "href": "lectures/Week9/Week9.html#making-it-available-everywhere",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Making it available everywhere",
+    "text": "Making it available everywhere\nAdd a static property to App.xaml.cs:\npublic partial class App : Application\n{\n    public static AppSettings Settings { get; } = new AppSettings();\n\n    // the rest of App is unchanged\n}\nA static property belongs to the class, not to an object, so there is exactly one.\nAny page can now use App.Settings. The property has no set, so the object itself is never replaced."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#using-it-from-different-pages",
+    "href": "lectures/Week9/Week9.html#using-it-from-different-pages",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Using it from different pages",
+    "text": "Using it from different pages\nSettingsPage changes the value:\nprivate void SoundSwitch_Toggled(object sender, ToggledEventArgs e)\n{\n    App.Settings.SoundEnabled = e.Value;\n}\nMainPage reads it. It uses OnAppearing so the value is checked each time the user returns:\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n    SoundLabel.Text = App.Settings.SoundEnabled ? \"Sound on\" : \"Sound off\";\n}\nBoth pages are using the same object."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#a-shared-object-does-not-update-the-screen",
+    "href": "lectures/Week9/Week9.html#a-shared-object-does-not-update-the-screen",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "A shared object does not update the screen",
+    "text": "A shared object does not update the screen\nBoth pages see the same data, but changing a property on an ordinary object does not refresh a bound screen.\n\nSharing the object makes the data available everywhere.\nProperty change notification (INotifyPropertyChanged) tells a bound interface that data has changed.\n\nThese solve two different problems."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#sharing-httpclient",
+    "href": "lectures/Week9/Week9.html#sharing-httpclient",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Sharing HttpClient",
+    "text": "Sharing HttpClient\nHttpClient makes HTTP requests, such as calling a web API or downloading an image.\nWe should create one and reuse it, so put it on App in the same way:\npublic static HttpClient HttpClient { get; } = new HttpClient();\nUse it from any page:\nstring json = await App.HttpClient.GetStringAsync(url);\nbyte[] data = await App.HttpClient.GetByteArrayAsync(imageUrl);"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#what-should-be-shared",
+    "href": "lectures/Week9/Week9.html#what-should-be-shared",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "What should be shared?",
+    "text": "What should be shared?\nShare things the whole application genuinely needs:\n\nApplication settings.\nThe HttpClient.\nA current user or session.\n\nDo not put everything on App. If only one page uses an object, keep it in that page."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#giving-the-value-to-the-viewmodel",
+    "href": "lectures/Week9/Week9.html#giving-the-value-to-the-viewmodel",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Giving the value to the ViewModel",
+    "text": "Giving the value to the ViewModel\nIf the page uses a ViewModel, OnAppearing is where we pass the value on:\nprivate DetailsViewModel _viewmodel = new();\nprivate bool _loaded;\n\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n    if (_loaded) return;\n    _viewmodel.LoadPlanet(PlanetName);\n    _loaded = true;\n}\nLoadPlanet sets the ViewModel’s bound properties, and the screen updates through data binding as normal.\nOnAppearing runs every time the page appears, including when the user comes back to it from another page. The _loaded flag stops us repeating the work."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#two-names-for-one-object",
+    "href": "lectures/Week9/Week9.html#two-names-for-one-object",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Two names for one object",
+    "text": "Two names for one object\nBefore we share objects between pages, we need to be clear about what happens when we “copy” an object.\npublic class Person\n{\n    public string Name { get; set; }\n    public int Age { get; set; }\n\n    public Person(string name, int age)\n    {\n        Name = name;\n        Age = age;\n    }\n}"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#what-does-this-print",
+    "href": "lectures/Week9/Week9.html#what-does-this-print",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "What does this print?",
+    "text": "What does this print?\nPerson person1 = new Person(\"John\", 34);\nPerson person2 = person1;\n\nConsole.WriteLine(person1.Name);\nConsole.WriteLine(person2.Name);\n\nperson1.Name = \"Mary\";\n\nConsole.WriteLine(person1.Name);\nConsole.WriteLine(person2.Name);\nThink about it before moving on."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#the-answer",
+    "href": "lectures/Week9/Week9.html#the-answer",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "The answer",
+    "text": "The answer\nJohn\nJohn\nMary\nMary\nWe changed person1, but person2 changed too."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#assignment-copies-the-reference-not-the-object",
+    "href": "lectures/Week9/Week9.html#assignment-copies-the-reference-not-the-object",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Assignment copies the reference, not the object",
+    "text": "Assignment copies the reference, not the object\nnew Person(...) creates one object. A variable holds a reference to it.\nperson1 ──┐\n          ├──&gt; Person { Name = \"Mary\", Age = 34 }\nperson2 ──┘\nPerson person2 = person1; makes a second reference to the same object.\nThis is how every class works. Passing an object to a method or a page does the same thing: nothing is copied."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#making-a-real-copy",
+    "href": "lectures/Week9/Week9.html#making-a-real-copy",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Making a real copy",
+    "text": "Making a real copy\nTo get a separate object, create a new one and copy the values across:\nPerson person3 = new Person(person1.Name, person1.Age);\n\nperson1.Name = \"Alice\";\n\nConsole.WriteLine(person1.Name);\nConsole.WriteLine(person3.Name);\nAlice\nMary\nperson3 is a different object, so changing person1 does not affect it.\n(A struct is copied when assigned. A class is not.)"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#why-this-matters-for-pages",
+    "href": "lectures/Week9/Week9.html#why-this-matters-for-pages",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Why this matters for pages",
+    "text": "Why this matters for pages\nWhen several pages use the same object, they are all looking at the same object.\n\nThat is what we want for sharing data.\nIt means a change made on one page is seen everywhere, immediately.\nIf we want to edit something and be able to cancel, we must edit a copy.\n\nWe will use both ideas with application settings."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#using-the-settings-in-mainpage",
+    "href": "lectures/Week9/Week9.html#using-the-settings-in-mainpage",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Using the settings in MainPage",
+    "text": "Using the settings in MainPage\nMainPage applies the settings in OnAppearing:\nprotected override void OnAppearing()\n{\n    base.OnAppearing();\n    BackgroundColor = App.Settings.BackgroundColour;\n    MessageLabel.FontSize = App.Settings.FontSize;\n    SoundLabel.Text = App.Settings.SoundEnabled ? \"Sound on\" : \"Sound off\";\n}\nOnAppearing runs when the page first appears and each time the user returns to it, for example after closing the settings page. So the page always shows the current settings."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#editing-the-settings-directly",
+    "href": "lectures/Week9/Week9.html#editing-the-settings-directly",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Editing the settings directly?",
+    "text": "Editing the settings directly?\nThe simplest SettingsPage would change App.Settings as the user moves each control.\n\nThe changes take effect immediately.\nThe user presses back, but the changes are already made.\nThere is no way to cancel.\n\nWe want the user to choose Save or Cancel.\nSo the SettingsPage will edit a copy, and only copy the values back if the user presses Save."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#copying-a-settings-object",
+    "href": "lectures/Week9/Week9.html#copying-a-settings-object",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Copying a settings object",
+    "text": "Copying a settings object\nAdd two methods to AppSettings:\npublic AppSettings Clone()\n{\n    return new AppSettings\n    {\n        SoundEnabled = SoundEnabled,\n        FontSize = FontSize,\n        BackgroundColour = BackgroundColour\n    };\n}\n\npublic void CopyFrom(AppSettings other)\n{\n    SoundEnabled = other.SoundEnabled;\n    FontSize = other.FontSize;\n    BackgroundColour = other.BackgroundColour;\n}\nClone makes a new object. CopyFrom copies values into an object that already exists."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#the-settingspage-editing-a-copy",
+    "href": "lectures/Week9/Week9.html#the-settingspage-editing-a-copy",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "The SettingsPage: editing a copy",
+    "text": "The SettingsPage: editing a copy\npublic partial class SettingsPage : ContentPage\n{\n    private AppSettings _copy = App.Settings.Clone();\n\n    public SettingsPage()\n    {\n        InitializeComponent();\n        BindingContext = _copy;\n    }\n}\nThe controls are bound to _copy, not to App.Settings:\n&lt;Switch IsToggled=\"{Binding SoundEnabled}\" /&gt;\n&lt;Slider Minimum=\"10\" Maximum=\"40\" Value=\"{Binding FontSize}\" /&gt;\n&lt;Button BackgroundColor=\"White\" Clicked=\"Colour_Clicked\" /&gt;\n&lt;Button BackgroundColor=\"LightYellow\" Clicked=\"Colour_Clicked\" /&gt;\n&lt;Button Text=\"Save\" Clicked=\"Save_Clicked\" /&gt;\n&lt;Button Text=\"Cancel\" Clicked=\"Cancel_Clicked\" /&gt;"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#save-and-cancel",
+    "href": "lectures/Week9/Week9.html#save-and-cancel",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Save and Cancel",
+    "text": "Save and Cancel\nprivate void Colour_Clicked(object sender, EventArgs e)\n{\n    Button button = (Button)sender;\n    _copy.BackgroundColour = button.BackgroundColor ?? Colors.White;\n}\n\nprivate async void Save_Clicked(object sender, EventArgs e)\n{\n    App.Settings.CopyFrom(_copy);\n    await Shell.Current.GoToAsync(\"..\");\n}\n\nprivate async void Cancel_Clicked(object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"..\");\n}\nOnly Save changes App.Settings. We use CopyFrom rather than App.Settings = _copy, because we want everyone to keep using the same settings object."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#what-about-the-back-button",
+    "href": "lectures/Week9/Week9.html#what-about-the-back-button",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "What about the back button?",
+    "text": "What about the back button?\nThe navigation bar arrow, the Android back button and our Cancel button all just leave the page.\nNothing was changed in App.Settings, because we were editing a copy. So going back is cancelling.\nOnly the Save button changes the real settings.\nWe do not need to handle the different ways of going back."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#why-does-mainpage-use-onappearing",
+    "href": "lectures/Week9/Week9.html#why-does-mainpage-use-onappearing",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Why does MainPage use OnAppearing?",
+    "text": "Why does MainPage use OnAppearing?\nMainPage does not know when the settings change. It simply applies the current settings each time it appears.\n\nSharing an object makes the data available everywhere.\nTelling a screen to refresh when data changes is a separate problem.\nHere, OnAppearing solves it. Data binding with INotifyPropertyChanged, as in MVVM, is the other way."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#one-httpclient-many-users",
+    "href": "lectures/Week9/Week9.html#one-httpclient-many-users",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "One HttpClient, many users",
+    "text": "One HttpClient, many users\nHttpClient makes HTTP requests, such as calling a web API or downloading an image.\nLast week, in the trivia MVVM, we made it a static in the TriviaViewModel. This week’s labs do the same in the ViewModel.\nBut what if multiple types of ViewModel need an HttpClient? What if multiple pages need one?\nOur app should only have one HttpClient, so we need a better way of sharing it."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#httpclient-on-app",
+    "href": "lectures/Week9/Week9.html#httpclient-on-app",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "HttpClient on App",
+    "text": "HttpClient on App\nThe same approach we used for the settings. In App.xaml.cs:\npublic static HttpClient Http { get; } = new HttpClient();\nUse it from any page or ViewModel:\nstring json = await App.Http.GetStringAsync(url);\nbyte[] data = await App.Http.GetByteArrayAsync(imageUrl);\nWe call it Http rather than HttpClient, so that it is clear whether we mean the property or the class."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#keeping-app-out-of-the-rest-of-the-class",
+    "href": "lectures/Week9/Week9.html#keeping-app-out-of-the-rest-of-the-class",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Keeping App out of the rest of the class",
+    "text": "Keeping App out of the rest of the class\nWriting App.Settings and App.Http throughout a class gets repetitive. Store them in fields once:\npublic class TriviaViewModel\n{\n    private readonly HttpClient _http = App.Http;\n    private readonly AppSettings _settings = App.Settings;\n\n    // use _http and _settings from here on\n}\nBoth fields refer to the same objects as everywhere else, because assigning an object copies the reference.\nThis is also why Save uses CopyFrom. If the settings object were replaced, a class that had already stored _settings would still hold the old one."
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#setting-up-a-page-differently-in-each-tab",
+    "href": "lectures/Week9/Week9.html#setting-up-a-page-differently-in-each-tab",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Setting up a page differently in each tab",
+    "text": "Setting up a page differently in each tab\nSometimes we want one page class reused for several tabs, each set up differently.\nImagine NotesPage used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:\npublic NotesPage(string category)\n{\n    InitializeComponent();\n    CategoryLabel.Text = category;\n}"
   }
 ]

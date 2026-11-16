@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>Cross Platform Application Development – Week 9 Multi-page Applications and Navigation</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-51289dd89659689ac096039999314983.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Week 9 Multi-page Applications and Navigation</h1>
+  <p class="subtitle">Cross Platform Application Development</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="multiple-page-applications" class="title-slide slide level1 center">
+<h1>Multiple-page applications</h1>
+
+</section>
+<section id="why-use-multiple-pages" class="slide level2">
+<h2>Why use multiple pages?</h2>
+<p>As an application grows, it becomes difficult to put every feature on one screen.</p>
+<p>A typical application might have:</p>
+<ul>
+<li>A main page displaying the primary content.</li>
+<li>A details page displaying one selected item.</li>
+<li>A settings page allowing the user to change application behaviour.</li>
+</ul>
+<p>Each page has a particular responsibility.</p>
+<p>Navigation determines <strong>which page is displayed</strong>. Data and shared objects determine <strong>what information is available to that page</strong>.</p>
+</section>
+<section id="a-simple-application-structure" class="slide level2">
+<h2>A simple application structure</h2>
+<p>Consider an application with three pages:</p>
+<ul>
+<li><code>MainPage</code> – the main screen.</li>
+<li><code>DetailsPage</code> – displays information about a selected item.</li>
+<li><code>SettingsPage</code> – allows the user to change application settings.</li>
+</ul>
+<p>The user might:</p>
+<ol type="1">
+<li>Open the application and see <code>MainPage</code>.</li>
+<li>Select an item and open <code>DetailsPage</code>.</li>
+<li>Return to <code>MainPage</code>.</li>
+<li>Open <code>SettingsPage</code> using a toolbar button.</li>
+</ol>
+</section>
+<section id="creating-another-contentpage" class="slide level2">
+<h2>Creating another ContentPage</h2>
+<p>A page is a <code>ContentPage</code>, just like the <code>MainPage</code> we have already used.</p>
+<p>In Visual Studio, add a new <strong>.NET MAUI ContentPage (XAML)</strong> to the project, for example:</p>
+<ul>
+<li><code>DetailsPage.xaml</code></li>
+<li><code>DetailsPage.xaml.cs</code></li>
+</ul>
+<p>The XAML defines the user interface. The code-behind contains the page’s behaviour.</p>
+<p>Adding a page to the project does not make it reachable. We must decide how the user gets to it.</p>
+</section></section>
+<section>
+<section id="navigation-with-shell" class="title-slide slide level1 center">
+<h1>Navigation with Shell</h1>
+
+</section>
+<section id="shell" class="slide level2">
+<h2>Shell</h2>
+<p>A new .NET MAUI project uses <strong>Shell</strong> for navigation. Look at <code>AppShell.xaml</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a aria-label="1"></a>&lt;<span class="kw">ShellContent</span></span>
+<span id="cb1-2"><a aria-label="2"></a>    <span class="ot">Title=</span><span class="st">"Home"</span></span>
+<span id="cb1-3"><a aria-label="3"></a>    <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:MainPage}"</span></span>
+<span id="cb1-4"><a aria-label="4"></a>    <span class="ot">Route=</span><span class="st">"MainPage"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This tells the app to display <code>MainPage</code>. We will use Shell for everything this week.</p>
+<p>Older tutorials use <code>NavigationPage</code> with <code>PushAsync</code> and <code>PopAsync</code>. That is a different approach and should not be mixed with Shell, so you can ignore it.</p>
+</section>
+<section id="pages-outside-the-shell-layout" class="slide level2">
+<h2>Pages outside the Shell layout</h2>
+<p>A details page or settings page is not a main section of the app. The user reaches it from another page.</p>
+<p>Give the page a <strong>route</strong>. In <code>AppShell.xaml.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb2-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">AppShell</span><span class="op">()</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb2-3"><a aria-label="3"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb2-4"><a aria-label="4"></a>    Routing<span class="op">.</span><span class="fu">RegisterRoute</span><span class="op">(</span><span class="st">"details"</span><span class="op">,</span> <span class="kw">typeof</span><span class="op">(</span>DetailsPage<span class="op">));</span></span>
+<span id="cb2-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The route name is simply a string that identifies the destination page.</p>
+</section>
+<section id="navigating-to-a-route" class="slide level2">
+<h2>Navigating to a route</h2>
+<p>Use <code>GoToAsync</code> with the route name:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb3-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">OpenDetails_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb3-3"><a aria-label="3"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">"details"</span><span class="op">);</span></span>
+<span id="cb3-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>DetailsPage</code> is displayed, and Shell remembers where the user came from.</p>
+</section>
+<section id="going-back" class="slide level2">
+<h2>Going back</h2>
+<p>To return to the previous page:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb4-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Back_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb4-3"><a aria-label="3"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
+<span id="cb4-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>..</code> means “go back one page”.</p>
+<p>The back button in the navigation bar, and the Android back button, do this automatically.</p>
+<p>We do not create a new <code>MainPage</code> to return to it. It is still there underneath.</p>
+</section>
+<section id="a-settings-page-from-the-toolbar" class="slide level2">
+<h2>A settings page from the toolbar</h2>
+<p>A settings page is usually opened from an icon in the toolbar, not a tab.</p>
+<p>In the XAML of <code>MainPage</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb5-1"><a aria-label="1"></a>&lt;<span class="kw">ContentPage.ToolbarItems</span>&gt;</span>
+<span id="cb5-2"><a aria-label="2"></a>    &lt;<span class="kw">ToolbarItem</span> <span class="ot">Text=</span><span class="st">"Settings"</span> <span class="ot">Clicked=</span><span class="st">"Settings_Clicked"</span> /&gt;</span>
+<span id="cb5-3"><a aria-label="3"></a>&lt;/<span class="kw">ContentPage.ToolbarItems</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the code-behind:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb6-1"><a aria-label="1"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Settings_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb6-3"><a aria-label="3"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">"settings"</span><span class="op">);</span></span>
+<span id="cb6-4"><a aria-label="4"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Register the route in <code>AppShell.xaml.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb7-1"><a aria-label="1"></a>Routing<span class="op">.</span><span class="fu">RegisterRoute</span><span class="op">(</span><span class="st">"settings"</span><span class="op">,</span> <span class="kw">typeof</span><span class="op">(</span>SettingsPage<span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tabs" class="slide level2">
+<h2>Tabs</h2>
+<p>When users switch regularly between a few major sections, use a <code>TabBar</code> in <code>AppShell.xaml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb8-1"><a aria-label="1"></a>&lt;<span class="kw">TabBar</span>&gt;</span>
+<span id="cb8-2"><a aria-label="2"></a>    &lt;<span class="kw">Tab</span> <span class="ot">Title=</span><span class="st">"Home"</span>&gt;</span>
+<span id="cb8-3"><a aria-label="3"></a>        &lt;<span class="kw">ShellContent</span> <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:MainPage}"</span> /&gt;</span>
+<span id="cb8-4"><a aria-label="4"></a>    &lt;/<span class="kw">Tab</span>&gt;</span>
+<span id="cb8-5"><a aria-label="5"></a>    &lt;<span class="kw">Tab</span> <span class="ot">Title=</span><span class="st">"Notes"</span>&gt;</span>
+<span id="cb8-6"><a aria-label="6"></a>        &lt;<span class="kw">ShellContent</span> <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:NotesPage}"</span> /&gt;</span>
+<span id="cb8-7"><a aria-label="7"></a>    &lt;/<span class="kw">Tab</span>&gt;</span>
+<span id="cb8-8"><a aria-label="8"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On Android the tabs appear at the bottom. On Windows they look more like browser tabs.</p>
+<p>Pages with a route, such as <code>details</code>, can still be opened from any tab.</p>
+</section>
+<section id="flyout-menu" class="slide level2">
+<h2>Flyout menu</h2>
+<p>A flyout is a menu (the “hamburger” menu) for reaching several areas of the app:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb9-1"><a aria-label="1"></a>&lt;<span class="kw">FlyoutItem</span> <span class="ot">Title=</span><span class="st">"Home"</span>&gt;</span>
+<span id="cb9-2"><a aria-label="2"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:MainPage}"</span> /&gt;</span>
+<span id="cb9-3"><a aria-label="3"></a>&lt;/<span class="kw">FlyoutItem</span>&gt;</span>
+<span id="cb9-4"><a aria-label="4"></a>&lt;<span class="kw">FlyoutItem</span> <span class="ot">Title=</span><span class="st">"Notes"</span>&gt;</span>
+<span id="cb9-5"><a aria-label="5"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:NotesPage}"</span> /&gt;</span>
+<span id="cb9-6"><a aria-label="6"></a>&lt;/<span class="kw">FlyoutItem</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use a flyout when there are more areas than a tab bar can hold.</p>
+<p>Tabs can be placed inside a <code>FlyoutItem</code> to combine them, but not the other way around.</p>
+</section>
+<section id="choosing-a-navigation-approach" class="slide level2">
+<h2>Choosing a navigation approach</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Need</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Open a details or settings page</td>
+<td>A route and <code>GoToAsync</code></td>
+</tr>
+<tr class="even">
+<td>Switch between a few main sections</td>
+<td><code>TabBar</code></td>
+</tr>
+<tr class="odd">
+<td>Several main areas in a menu</td>
+<td><code>FlyoutItem</code></td>
+</tr>
+<tr class="even">
+<td>Return to the previous page</td>
+<td><code>GoToAsync("..")</code></td>
+</tr>
+</tbody>
+</table>
+<p>Most of your projects need only routes, and perhaps tabs.</p>
+<!-- END OF LECTURE 1 -->
+</section></section>
+<section>
+<section id="passing-data-between-pages" class="title-slide slide level1 center">
+<h1>Passing data between pages</h1>
+
+</section>
+<section id="opening-a-page-is-only-part-of-the-problem" class="slide level2">
+<h2>Opening a page is only part of the problem</h2>
+<p>Suppose <code>MainPage</code> shows a list of planets, and the user selects one.</p>
+<p><code>DetailsPage</code> opens, but it needs to know <strong>which planet was selected</strong>.</p>
+<p>There are three situations we will look at:</p>
+<ul>
+<li>Passing a simple value when navigating.</li>
+<li>Giving that value to the page’s ViewModel.</li>
+<li>Sharing an object that many pages use.</li>
+</ul>
+</section>
+<section id="passing-a-simple-value" class="slide level2">
+<h2>Passing a simple value</h2>
+<p>Shell can pass a value as part of the route, just like a web address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb10-1"><a aria-label="1"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span>$<span class="st">"details?name={planetName}"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The part after the <code>?</code> is called the query. The key (<code>name</code>) is chosen by us.</p>
+<p>This suits values that can be written as text, such as a name or an ID.</p>
+<p>If the text may contain spaces or special characters, escape it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb11-1"><a aria-label="1"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span>$<span class="st">"details?name={Uri.EscapeDataString(planetName)}"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="receiving-the-value" class="slide level2">
+<h2>Receiving the value</h2>
+<p>The destination page declares a <code>[QueryProperty]</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb12-1"><a aria-label="1"></a><span class="op">[</span><span class="fu">QueryProperty</span><span class="op">(</span><span class="fu">nameof</span><span class="op">(</span>PlanetName<span class="op">),</span> <span class="st">"name"</span><span class="op">)]</span></span>
+<span id="cb12-2"><a aria-label="2"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> DetailsPage <span class="op">:</span> ContentPage</span>
+<span id="cb12-3"><a aria-label="3"></a><span class="op">{</span></span>
+<span id="cb12-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">string</span> PlanetName <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb12-5"><a aria-label="5"></a></span>
+<span id="cb12-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="fu">DetailsPage</span><span class="op">()</span></span>
+<span id="cb12-7"><a aria-label="7"></a>    <span class="op">{</span></span>
+<span id="cb12-8"><a aria-label="8"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb12-9"><a aria-label="9"></a>    <span class="op">}</span></span>
+<span id="cb12-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The first part names the property that receives the value.</li>
+<li>The second part (<code>"name"</code>) must match the key used in the route.</li>
+</ul>
+</section>
+<section id="when-is-the-value-available" class="slide level2">
+<h2>When is the value available?</h2>
+<p>The property is set <strong>after</strong> the constructor has run, so we cannot use it there.</p>
+<p>It is set before the page appears, so <code>OnAppearing</code> works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb13-1"><a aria-label="1"></a><span class="kw">protected</span> <span class="kw">override</span> <span class="dt">void</span> <span class="fu">OnAppearing</span><span class="op">()</span></span>
+<span id="cb13-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb13-3"><a aria-label="3"></a>    <span class="kw">base</span><span class="op">.</span><span class="fu">OnAppearing</span><span class="op">();</span></span>
+<span id="cb13-4"><a aria-label="4"></a>    NameLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> PlanetName<span class="op">;</span></span>
+<span id="cb13-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="giving-the-value-to-the-viewmodel" class="slide level2">
+<h2>Giving the value to the ViewModel</h2>
+<p>If the page uses a ViewModel, <code>OnAppearing</code> is where we pass the value on:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb14-1"><a aria-label="1"></a><span class="kw">private</span> DetailsViewModel _viewmodel <span class="op">=</span> <span class="kw">new</span><span class="op">();</span></span>
+<span id="cb14-2"><a aria-label="2"></a><span class="kw">private</span> <span class="dt">bool</span> _loaded<span class="op">;</span></span>
+<span id="cb14-3"><a aria-label="3"></a></span>
+<span id="cb14-4"><a aria-label="4"></a><span class="kw">protected</span> <span class="kw">override</span> <span class="dt">void</span> <span class="fu">OnAppearing</span><span class="op">()</span></span>
+<span id="cb14-5"><a aria-label="5"></a><span class="op">{</span></span>
+<span id="cb14-6"><a aria-label="6"></a>    <span class="kw">base</span><span class="op">.</span><span class="fu">OnAppearing</span><span class="op">();</span></span>
+<span id="cb14-7"><a aria-label="7"></a>    <span class="kw">if</span> <span class="op">(</span>_loaded<span class="op">)</span> <span class="kw">return</span><span class="op">;</span></span>
+<span id="cb14-8"><a aria-label="8"></a>    _viewmodel<span class="op">.</span><span class="fu">LoadPlanet</span><span class="op">(</span>PlanetName<span class="op">);</span></span>
+<span id="cb14-9"><a aria-label="9"></a>    _loaded <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb14-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>LoadPlanet</code> sets the ViewModel’s bound properties, and the screen updates through data binding as normal.</p>
+<p><code>OnAppearing</code> runs <strong>every time</strong> the page appears, including when the user comes back to it from another page. The <code>_loaded</code> flag stops us repeating the work.</p>
+</section>
+<section id="more-than-one-value" class="slide level2">
+<h2>More than one value</h2>
+<p>Separate the values with <code>&amp;</code>, and add one <code>[QueryProperty]</code> for each:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb15-1"><a aria-label="1"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span>$<span class="st">"details?name={planetName}&amp;moons={moonCount}"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb16-1"><a aria-label="1"></a><span class="op">[</span><span class="fu">QueryProperty</span><span class="op">(</span><span class="fu">nameof</span><span class="op">(</span>PlanetName<span class="op">),</span> <span class="st">"name"</span><span class="op">)]</span></span>
+<span id="cb16-2"><a aria-label="2"></a><span class="op">[</span><span class="fu">QueryProperty</span><span class="op">(</span><span class="fu">nameof</span><span class="op">(</span>MoonCount<span class="op">),</span> <span class="st">"moons"</span><span class="op">)]</span></span>
+<span id="cb16-3"><a aria-label="3"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> DetailsPage <span class="op">:</span> ContentPage</span>
+<span id="cb16-4"><a aria-label="4"></a><span class="op">{</span></span>
+<span id="cb16-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="dt">string</span> PlanetName <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb16-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="dt">string</span> MoonCount <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb16-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Query values arrive as text. Convert them yourself if you need a number.</p>
+</section></section>
+<section>
+<section id="objects-references-and-copies" class="title-slide slide level1 center">
+<h1>Objects: references and copies</h1>
+
+</section>
+<section id="two-names-for-one-object" class="slide level2">
+<h2>Two names for one object</h2>
+<p>Before we share objects between pages, we need to be clear about what happens when we “copy” an object.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> Person</span>
+<span id="cb17-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb17-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb17-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">int</span> Age <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb17-5"><a aria-label="5"></a></span>
+<span id="cb17-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="fu">Person</span><span class="op">(</span><span class="dt">string</span> name<span class="op">,</span> <span class="dt">int</span> age<span class="op">)</span></span>
+<span id="cb17-7"><a aria-label="7"></a>    <span class="op">{</span></span>
+<span id="cb17-8"><a aria-label="8"></a>        Name <span class="op">=</span> name<span class="op">;</span></span>
+<span id="cb17-9"><a aria-label="9"></a>        Age <span class="op">=</span> age<span class="op">;</span></span>
+<span id="cb17-10"><a aria-label="10"></a>    <span class="op">}</span></span>
+<span id="cb17-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-does-this-print" class="slide level2">
+<h2>What does this print?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a aria-label="1"></a>Person person1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Person</span><span class="op">(</span><span class="st">"John"</span><span class="op">,</span> <span class="dv">34</span><span class="op">);</span></span>
+<span id="cb18-2"><a aria-label="2"></a>Person person2 <span class="op">=</span> person1<span class="op">;</span></span>
+<span id="cb18-3"><a aria-label="3"></a></span>
+<span id="cb18-4"><a aria-label="4"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb18-5"><a aria-label="5"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person2<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb18-6"><a aria-label="6"></a></span>
+<span id="cb18-7"><a aria-label="7"></a>person1<span class="op">.</span><span class="fu">Name</span> <span class="op">=</span> <span class="st">"Mary"</span><span class="op">;</span></span>
+<span id="cb18-8"><a aria-label="8"></a></span>
+<span id="cb18-9"><a aria-label="9"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb18-10"><a aria-label="10"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person2<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Think about it before moving on.</p>
+</section>
+<section id="the-answer" class="slide level2">
+<h2>The answer</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a aria-label="1"></a>John</span>
+<span id="cb19-2"><a aria-label="2"></a>John</span>
+<span id="cb19-3"><a aria-label="3"></a>Mary</span>
+<span id="cb19-4"><a aria-label="4"></a>Mary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We changed <code>person1</code>, but <code>person2</code> changed too.</p>
+</section>
+<section id="assignment-copies-the-reference-not-the-object" class="slide level2">
+<h2>Assignment copies the reference, not the object</h2>
+<p><code>new Person(...)</code> creates <strong>one</strong> object. A variable holds a reference to it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb20-1"><a aria-label="1"></a>person1 ──┐</span>
+<span id="cb20-2"><a aria-label="2"></a>          ├──&gt; Person { Name = "Mary", Age = 34 }</span>
+<span id="cb20-3"><a aria-label="3"></a>person2 ──┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>Person person2 = person1;</code> makes a second reference to the <strong>same</strong> object.</p>
+<p>This is how every class works. Passing an object to a method or a page does the same thing: nothing is copied.</p>
+</section>
+<section id="making-a-real-copy" class="slide level2">
+<h2>Making a real copy</h2>
+<p>To get a separate object, create a new one and copy the values across:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a aria-label="1"></a>Person person3 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Person</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">,</span> person1<span class="op">.</span><span class="fu">Age</span><span class="op">);</span></span>
+<span id="cb21-2"><a aria-label="2"></a></span>
+<span id="cb21-3"><a aria-label="3"></a>person1<span class="op">.</span><span class="fu">Name</span> <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
+<span id="cb21-4"><a aria-label="4"></a></span>
+<span id="cb21-5"><a aria-label="5"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb21-6"><a aria-label="6"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person3<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a aria-label="1"></a>Alice</span>
+<span id="cb22-2"><a aria-label="2"></a>Mary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>person3</code> is a different object, so changing <code>person1</code> does not affect it.</p>
+<p>(A <code>struct</code> is copied when assigned. A <code>class</code> is not.)</p>
+</section>
+<section id="why-this-matters-for-pages" class="slide level2">
+<h2>Why this matters for pages</h2>
+<p>When several pages use the same object, they are all looking at the <strong>same</strong> object.</p>
+<ul>
+<li>That is what we want for sharing data.</li>
+<li>It means a change made on one page is seen everywhere, immediately.</li>
+<li>If we want to edit something and be able to <strong>cancel</strong>, we must edit a <strong>copy</strong>.</li>
+</ul>
+<p>We will use both ideas with application settings.</p>
+</section></section>
+<section>
+<section id="sharing-objects-between-pages" class="title-slide slide level1 center">
+<h1>Sharing objects between pages</h1>
+
+</section>
+<section id="when-passing-a-value-is-not-enough" class="slide level2">
+<h2>When passing a value is not enough</h2>
+<p>Consider application settings. The <code>SettingsPage</code> lets the user change:</p>
+<ul>
+<li>Whether sound is enabled.</li>
+<li>The font size.</li>
+<li>The background colour.</li>
+</ul>
+<p><code>MainPage</code> and other pages need to use these settings.</p>
+<p>Passing them from page to page would become awkward. Instead, the application can hold <strong>one</strong> shared settings object.</p>
+</section>
+<section id="a-shared-settings-class" class="slide level2">
+<h2>A shared settings class</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> AppSettings</span>
+<span id="cb23-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb23-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">bool</span> SoundEnabled <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb23-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">double</span> FontSize <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="dv">16</span><span class="op">;</span></span>
+<span id="cb23-5"><a aria-label="5"></a>    <span class="kw">public</span> Color BackgroundColour <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> Colors<span class="op">.</span><span class="fu">White</span><span class="op">;</span></span>
+<span id="cb23-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is an ordinary C# class. It knows nothing about pages or navigation.</p>
+</section>
+<section id="making-it-available-everywhere" class="slide level2">
+<h2>Making it available everywhere</h2>
+<p>Add a static property to <code>App.xaml.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> App <span class="op">:</span> Application</span>
+<span id="cb24-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb24-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="kw">static</span> AppSettings Settings <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">AppSettings</span><span class="op">();</span></span>
+<span id="cb24-4"><a aria-label="4"></a></span>
+<span id="cb24-5"><a aria-label="5"></a>    <span class="co">// the rest of App is unchanged</span></span>
+<span id="cb24-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A <code>static</code> property belongs to the class, not to an object, so there is exactly one.</p>
+<p>Any page can now use <code>App.Settings</code>. The property has no <code>set</code>, so the object itself is never replaced.</p>
+</section>
+<section id="using-the-settings-in-mainpage" class="slide level2">
+<h2>Using the settings in MainPage</h2>
+<p><code>MainPage</code> applies the settings in <code>OnAppearing</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a aria-label="1"></a><span class="kw">protected</span> <span class="kw">override</span> <span class="dt">void</span> <span class="fu">OnAppearing</span><span class="op">()</span></span>
+<span id="cb25-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb25-3"><a aria-label="3"></a>    <span class="kw">base</span><span class="op">.</span><span class="fu">OnAppearing</span><span class="op">();</span></span>
+<span id="cb25-4"><a aria-label="4"></a>    BackgroundColor <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">BackgroundColour</span><span class="op">;</span></span>
+<span id="cb25-5"><a aria-label="5"></a>    MessageLabel<span class="op">.</span><span class="fu">FontSize</span> <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">FontSize</span><span class="op">;</span></span>
+<span id="cb25-6"><a aria-label="6"></a>    SoundLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">SoundEnabled</span> <span class="op">?</span> <span class="st">"Sound on"</span> <span class="op">:</span> <span class="st">"Sound off"</span><span class="op">;</span></span>
+<span id="cb25-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>OnAppearing</code> runs when the page first appears <strong>and</strong> each time the user returns to it, for example after closing the settings page. So the page always shows the current settings.</p>
+</section>
+<section id="editing-the-settings-directly" class="slide level2">
+<h2>Editing the settings directly?</h2>
+<p>The simplest <code>SettingsPage</code> would change <code>App.Settings</code> as the user moves each control.</p>
+<ul>
+<li>The changes take effect immediately.</li>
+<li>The user presses back, but the changes are already made.</li>
+<li>There is no way to <strong>cancel</strong>.</li>
+</ul>
+<p>We want the user to choose <strong>Save</strong> or <strong>Cancel</strong>.</p>
+<p>So the <code>SettingsPage</code> will edit a <strong>copy</strong>, and only copy the values back if the user presses Save.</p>
+</section>
+<section id="copying-a-settings-object" class="slide level2">
+<h2>Copying a settings object</h2>
+<p>Add two methods to <code>AppSettings</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a aria-label="1"></a><span class="kw">public</span> AppSettings <span class="fu">Clone</span><span class="op">()</span></span>
+<span id="cb26-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb26-3"><a aria-label="3"></a>    <span class="kw">return</span> <span class="kw">new</span> AppSettings</span>
+<span id="cb26-4"><a aria-label="4"></a>    <span class="op">{</span></span>
+<span id="cb26-5"><a aria-label="5"></a>        SoundEnabled <span class="op">=</span> SoundEnabled<span class="op">,</span></span>
+<span id="cb26-6"><a aria-label="6"></a>        FontSize <span class="op">=</span> FontSize<span class="op">,</span></span>
+<span id="cb26-7"><a aria-label="7"></a>        BackgroundColour <span class="op">=</span> BackgroundColour</span>
+<span id="cb26-8"><a aria-label="8"></a>    <span class="op">};</span></span>
+<span id="cb26-9"><a aria-label="9"></a><span class="op">}</span></span>
+<span id="cb26-10"><a aria-label="10"></a></span>
+<span id="cb26-11"><a aria-label="11"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">CopyFrom</span><span class="op">(</span>AppSettings other<span class="op">)</span></span>
+<span id="cb26-12"><a aria-label="12"></a><span class="op">{</span></span>
+<span id="cb26-13"><a aria-label="13"></a>    SoundEnabled <span class="op">=</span> other<span class="op">.</span><span class="fu">SoundEnabled</span><span class="op">;</span></span>
+<span id="cb26-14"><a aria-label="14"></a>    FontSize <span class="op">=</span> other<span class="op">.</span><span class="fu">FontSize</span><span class="op">;</span></span>
+<span id="cb26-15"><a aria-label="15"></a>    BackgroundColour <span class="op">=</span> other<span class="op">.</span><span class="fu">BackgroundColour</span><span class="op">;</span></span>
+<span id="cb26-16"><a aria-label="16"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>Clone</code> makes a new object. <code>CopyFrom</code> copies values into an object that already exists.</p>
+</section>
+<section id="the-settingspage-editing-a-copy" class="slide level2">
+<h2>The SettingsPage: editing a copy</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> SettingsPage <span class="op">:</span> ContentPage</span>
+<span id="cb27-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb27-3"><a aria-label="3"></a>    <span class="kw">private</span> AppSettings _copy <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">Clone</span><span class="op">();</span></span>
+<span id="cb27-4"><a aria-label="4"></a></span>
+<span id="cb27-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="fu">SettingsPage</span><span class="op">()</span></span>
+<span id="cb27-6"><a aria-label="6"></a>    <span class="op">{</span></span>
+<span id="cb27-7"><a aria-label="7"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb27-8"><a aria-label="8"></a>        BindingContext <span class="op">=</span> _copy<span class="op">;</span></span>
+<span id="cb27-9"><a aria-label="9"></a>    <span class="op">}</span></span>
+<span id="cb27-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The controls are bound to <code>_copy</code>, <strong>not</strong> to <code>App.Settings</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb28-1"><a aria-label="1"></a>&lt;<span class="kw">Switch</span> <span class="ot">IsToggled=</span><span class="st">"{Binding SoundEnabled}"</span> /&gt;</span>
+<span id="cb28-2"><a aria-label="2"></a>&lt;<span class="kw">Slider</span> <span class="ot">Minimum=</span><span class="st">"10"</span> <span class="ot">Maximum=</span><span class="st">"40"</span> <span class="ot">Value=</span><span class="st">"{Binding FontSize}"</span> /&gt;</span>
+<span id="cb28-3"><a aria-label="3"></a>&lt;<span class="kw">Button</span> <span class="ot">BackgroundColor=</span><span class="st">"White"</span> <span class="ot">Clicked=</span><span class="st">"Colour_Clicked"</span> /&gt;</span>
+<span id="cb28-4"><a aria-label="4"></a>&lt;<span class="kw">Button</span> <span class="ot">BackgroundColor=</span><span class="st">"LightYellow"</span> <span class="ot">Clicked=</span><span class="st">"Colour_Clicked"</span> /&gt;</span>
+<span id="cb28-5"><a aria-label="5"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Save"</span> <span class="ot">Clicked=</span><span class="st">"Save_Clicked"</span> /&gt;</span>
+<span id="cb28-6"><a aria-label="6"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Cancel"</span> <span class="ot">Clicked=</span><span class="st">"Cancel_Clicked"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="save-and-cancel" class="slide level2">
+<h2>Save and Cancel</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">Colour_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb29-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb29-3"><a aria-label="3"></a>    Button button <span class="op">=</span> <span class="op">(</span>Button<span class="op">)</span>sender<span class="op">;</span></span>
+<span id="cb29-4"><a aria-label="4"></a>    _copy<span class="op">.</span><span class="fu">BackgroundColour</span> <span class="op">=</span> button<span class="op">.</span><span class="fu">BackgroundColor</span> <span class="op">??</span> Colors<span class="op">.</span><span class="fu">White</span><span class="op">;</span></span>
+<span id="cb29-5"><a aria-label="5"></a><span class="op">}</span></span>
+<span id="cb29-6"><a aria-label="6"></a></span>
+<span id="cb29-7"><a aria-label="7"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Save_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb29-8"><a aria-label="8"></a><span class="op">{</span></span>
+<span id="cb29-9"><a aria-label="9"></a>    App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">CopyFrom</span><span class="op">(</span>_copy<span class="op">);</span></span>
+<span id="cb29-10"><a aria-label="10"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
+<span id="cb29-11"><a aria-label="11"></a><span class="op">}</span></span>
+<span id="cb29-12"><a aria-label="12"></a></span>
+<span id="cb29-13"><a aria-label="13"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Cancel_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb29-14"><a aria-label="14"></a><span class="op">{</span></span>
+<span id="cb29-15"><a aria-label="15"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
+<span id="cb29-16"><a aria-label="16"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Only <strong>Save</strong> changes <code>App.Settings</code>. We use <code>CopyFrom</code> rather than <code>App.Settings = _copy</code>, because we want everyone to keep using the <strong>same</strong> settings object.</p>
+</section>
+<section id="what-about-the-back-button" class="slide level2">
+<h2>What about the back button?</h2>
+<p>The navigation bar arrow, the Android back button and our Cancel button all just leave the page.</p>
+<p>Nothing was changed in <code>App.Settings</code>, because we were editing a copy. So going back <strong>is</strong> cancelling.</p>
+<p>Only the Save button changes the real settings.</p>
+<p>We do not need to handle the different ways of going back.</p>
+</section>
+<section id="why-does-mainpage-use-onappearing" class="slide level2">
+<h2>Why does MainPage use OnAppearing?</h2>
+<p><code>MainPage</code> does not know when the settings change. It simply applies the current settings each time it appears.</p>
+<ul>
+<li>Sharing an object makes the data available everywhere.</li>
+<li>Telling a screen to refresh when data changes is a separate problem.</li>
+<li>Here, <code>OnAppearing</code> solves it. Data binding with <code>INotifyPropertyChanged</code>, as in MVVM, is the other way.</li>
+</ul>
+</section></section>
+<section>
+<section id="sharing-httpclient" class="title-slide slide level1 center">
+<h1>Sharing HttpClient</h1>
+
+</section>
+<section id="one-httpclient-many-users" class="slide level2">
+<h2>One HttpClient, many users</h2>
+<p><code>HttpClient</code> makes HTTP requests, such as calling a web API or downloading an image.</p>
+<p>Last week, in the trivia MVVM, we made it a <code>static</code> in the <code>TriviaViewModel</code>. This week’s labs do the same in the ViewModel.</p>
+<p>But what if <strong>multiple types of ViewModel</strong> need an <code>HttpClient</code>? What if <strong>multiple pages</strong> need one?</p>
+<p>Our app should only have <strong>one</strong> <code>HttpClient</code>, so we need a better way of sharing it.</p>
+</section>
+<section id="httpclient-on-app" class="slide level2">
+<h2>HttpClient on App</h2>
+<p>The same approach we used for the settings. In <code>App.xaml.cs</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">static</span> HttpClient Http <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpClient</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use it from any page or ViewModel:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">GetStringAsync</span><span class="op">(</span>url<span class="op">);</span></span>
+<span id="cb31-2"><a aria-label="2"></a><span class="dt">byte</span><span class="op">[]</span> data <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">GetByteArrayAsync</span><span class="op">(</span>imageUrl<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We call it <code>Http</code> rather than <code>HttpClient</code>, so that it is clear whether we mean the property or the class.</p>
+</section>
+<section id="why-reuse-httpclient" class="slide level2">
+<h2>Why reuse HttpClient?</h2>
+<p>Creating a new <code>HttpClient</code> for every request is not recommended. Reusing one:</p>
+<ul>
+<li>Avoids repeatedly creating the underlying connection resources.</li>
+<li>Allows connections to be reused.</li>
+<li>Gives one place to configure HTTP settings.</li>
+</ul>
+</section>
+<section id="keeping-app-out-of-the-rest-of-the-class" class="slide level2">
+<h2>Keeping App out of the rest of the class</h2>
+<p>Writing <code>App.Settings</code> and <code>App.Http</code> throughout a class gets repetitive. Store them in fields once:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> TriviaViewModel</span>
+<span id="cb32-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb32-3"><a aria-label="3"></a>    <span class="kw">private</span> <span class="kw">readonly</span> HttpClient _http <span class="op">=</span> App<span class="op">.</span><span class="fu">Http</span><span class="op">;</span></span>
+<span id="cb32-4"><a aria-label="4"></a>    <span class="kw">private</span> <span class="kw">readonly</span> AppSettings _settings <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">;</span></span>
+<span id="cb32-5"><a aria-label="5"></a></span>
+<span id="cb32-6"><a aria-label="6"></a>    <span class="co">// use _http and _settings from here on</span></span>
+<span id="cb32-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Both fields refer to the <strong>same</strong> objects as everywhere else, because assigning an object copies the reference.</p>
+<p>This is also why <code>Save</code> uses <code>CopyFrom</code>. If the settings object were replaced, a class that had already stored <code>_settings</code> would still hold the old one.</p>
+</section>
+<section id="what-should-be-shared" class="slide level2">
+<h2>What should be shared?</h2>
+<p>Share things the whole application genuinely needs:</p>
+<ul>
+<li>Application settings.</li>
+<li>The <code>HttpClient</code>.</li>
+<li>A current user or session.</li>
+</ul>
+<p>Do not put everything on <code>App</code>. If only one page uses an object, keep it in that page.</p>
+</section></section>
+<section>
+<section id="bringing-the-ideas-together" class="title-slide slide level1 center">
+<h1>Bringing the ideas together</h1>
+
+</section>
+<section id="a-useful-way-to-think-about-it" class="slide level2">
+<h2>A useful way to think about it</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Requirement</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Open another page</td>
+<td>Route and <code>GoToAsync</code></td>
+</tr>
+<tr class="even">
+<td>Pass a simple value to that page</td>
+<td>Query string and <code>[QueryProperty]</code></td>
+</tr>
+<tr class="odd">
+<td>Give that value to a ViewModel</td>
+<td>Pass it on in <code>OnAppearing</code></td>
+</tr>
+<tr class="even">
+<td>Let several pages use the same object</td>
+<td>Static property on <code>App</code></td>
+</tr>
+<tr class="odd">
+<td>Edit an object and be able to cancel</td>
+<td>Edit a copy, then <code>CopyFrom</code></td>
+</tr>
+<tr class="even">
+<td>Make requests from several places</td>
+<td>Shared <code>HttpClient</code></td>
+</tr>
+<tr class="odd">
+<td>Show current data when returning to a page</td>
+<td><code>OnAppearing</code></td>
+</tr>
+</tbody>
+</table>
+<p>These are related, but they are not interchangeable.</p>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>Shell is the navigation structure used by the project template.</li>
+<li>Register a route for pages outside the main layout, and navigate with <code>GoToAsync</code>.</li>
+<li><code>GoToAsync("..")</code> returns to the previous page.</li>
+<li>Simple values can be passed in the query and received with <code>[QueryProperty]</code>.</li>
+<li>Assigning an object copies the <strong>reference</strong>. Two variables, one object.</li>
+<li>To get a separate object, make a real copy.</li>
+<li>A static property on <code>App</code> shares one object, such as settings or <code>HttpClient</code>, across pages.</li>
+<li>Edit a copy of shared settings so that Cancel and the back button do nothing.</li>
+</ul>
+</section></section>
+<section>
+<section id="extra-if-time" class="title-slide slide level1 center">
+<h1>Extra (if time)</h1>
+
+</section>
+<section id="setting-up-a-page-differently-in-each-tab" class="slide level2">
+<h2>Setting up a page differently in each tab</h2>
+<p>Sometimes we want one page class reused for several tabs, each set up differently.</p>
+<p>Imagine <code>NotesPage</code> used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">NotesPage</span><span class="op">(</span><span class="dt">string</span> category<span class="op">)</span></span>
+<span id="cb33-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb33-3"><a aria-label="3"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb33-4"><a aria-label="4"></a>    CategoryLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> category<span class="op">;</span></span>
+<span id="cb33-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="passing-constructor-values-from-xaml" class="slide level2">
+<h2>Passing constructor values from XAML</h2>
+<p>In <code>AppShell.xaml</code>, <code>x:Arguments</code> supplies the constructor values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb34-1"><a aria-label="1"></a>&lt;<span class="kw">TabBar</span>&gt;</span>
+<span id="cb34-2"><a aria-label="2"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Work"</span> <span class="ot">Route=</span><span class="st">"work"</span>&gt;</span>
+<span id="cb34-3"><a aria-label="3"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb34-4"><a aria-label="4"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb34-5"><a aria-label="5"></a>                &lt;<span class="kw">x:String</span>&gt;Work&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb34-6"><a aria-label="6"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb34-7"><a aria-label="7"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb34-8"><a aria-label="8"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
+<span id="cb34-9"><a aria-label="9"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Personal"</span> <span class="ot">Route=</span><span class="st">"personal"</span>&gt;</span>
+<span id="cb34-10"><a aria-label="10"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb34-11"><a aria-label="11"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb34-12"><a aria-label="12"></a>                &lt;<span class="kw">x:String</span>&gt;Personal&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb34-13"><a aria-label="13"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb34-14"><a aria-label="14"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb34-15"><a aria-label="15"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
+<span id="cb34-16"><a aria-label="16"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The arguments are matched to the constructor <strong>by type and order</strong>.</li>
+<li>A mismatch is <strong>not</strong> a compile error. The app fails when it runs.</li>
+</ul>
+</section>
+<section id="adding-a-user-agent-header" class="slide level2">
+<h2>Adding a User-Agent header</h2>
+<p>Some websites require requests to identify the application making them. Add the header to an individual request:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a><span class="kw">using</span> <span class="dt">var</span> request <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpRequestMessage</span><span class="op">(</span>HttpMethod<span class="op">.</span><span class="fu">Get</span><span class="op">,</span> imageUrl<span class="op">);</span></span>
+<span id="cb35-2"><a aria-label="2"></a>request<span class="op">.</span><span class="fu">Headers</span><span class="op">.</span><span class="fu">UserAgent</span><span class="op">.</span><span class="fu">ParseAdd</span><span class="op">(</span><span class="st">"ExampleMauiApp/1.0"</span><span class="op">);</span></span>
+<span id="cb35-3"><a aria-label="3"></a><span class="kw">using</span> HttpResponseMessage response <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">SendAsync</span><span class="op">(</span>request<span class="op">);</span></span>
+<span id="cb35-4"><a aria-label="4"></a>response<span class="op">.</span><span class="fu">EnsureSuccessStatusCode</span><span class="op">();</span></span>
+<span id="cb35-5"><a aria-label="5"></a><span class="dt">byte</span><span class="op">[]</span> imageData <span class="op">=</span> await response<span class="op">.</span><span class="fu">Content</span><span class="op">.</span><span class="fu">ReadAsByteArrayAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use a meaningful application name and version, and follow the website’s rules.</p>
+</section>
+<section id="displaying-downloaded-image-data" class="slide level2">
+<h2>Displaying downloaded image data</h2>
+<p>Once the image data has been downloaded, turn it into an <code>ImageSource</code> for an <code>Image</code> control:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a>ImageSource photo <span class="op">=</span> ImageSource<span class="op">.</span><span class="fu">FromStream</span><span class="op">(()</span> <span class="op">=&gt;</span> <span class="kw">new</span> <span class="fu">MemoryStream</span><span class="op">(</span>imageData<span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The lambda supplies a new stream each time the image is read.</p>
+<p>This is why we sometimes download image data ourselves instead of binding a URL directly.</p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
