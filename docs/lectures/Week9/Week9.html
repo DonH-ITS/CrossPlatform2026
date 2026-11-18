@@ -447,7 +447,28 @@
 <span id="cb16-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="dt">string</span> PlanetName <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
 <span id="cb16-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="dt">string</span> MoonCount <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
 <span id="cb16-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Query values arrive as text. Convert them yourself if you need a number.</p>
+<p>Query values arrive as text. Convert them yourself if you need a number or we could do</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a aria-label="1"></a><span class="op">[</span><span class="fu">QueryProperty</span><span class="op">(</span><span class="fu">nameof</span><span class="op">(</span>PlanetName<span class="op">),</span> <span class="st">"name"</span><span class="op">)]</span></span>
+<span id="cb17-2"><a aria-label="2"></a><span class="op">[</span><span class="fu">QueryProperty</span><span class="op">(</span><span class="fu">nameof</span><span class="op">(</span>MoonCount<span class="op">),</span> <span class="st">"moons"</span><span class="op">)]</span></span>
+<span id="cb17-3"><a aria-label="3"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> DetailsPage <span class="op">:</span> ContentPage</span>
+<span id="cb17-4"><a aria-label="4"></a><span class="op">{</span></span>
+<span id="cb17-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="dt">string</span> PlanetName <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb17-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="dt">int</span> MoonCount <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb17-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>But we have to make sure that <code>moons</code> is never anything but an int, otherwise there will be a runtime error.</p>
+<ul>
+<li>If user data is involved, don’t assume number</li>
+<li>If you control the Uris always, it will be fine.</li>
+</ul>
+</section>
+<section id="queryproperty" class="slide level2">
+<h2>QueryProperty</h2>
+<p>If you call GotoAsync with</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a aria-label="1"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span>$<span class="st">"details?name={Uri.EscapeDataString(planetName)}"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>when it also has <code>moons</code> what happens?</p>
+<p>Well nothing really, it just won’t get assigned. Even</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb19-1"><a aria-label="1"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">"details"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Is fine. It just won’t assign those properties, no crashes</p>
 </section></section>
 <section>
 <section id="objects-references-and-copies" class="title-slide slide level1 center">
@@ -457,60 +478,60 @@
 <section id="two-names-for-one-object" class="slide level2">
 <h2>Two names for one object</h2>
 <p>Before we share objects between pages, we need to be clear about what happens when we “copy” an object.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb17-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> Person</span>
-<span id="cb17-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb17-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
-<span id="cb17-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">int</span> Age <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
-<span id="cb17-5"><a aria-label="5"></a></span>
-<span id="cb17-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="fu">Person</span><span class="op">(</span><span class="dt">string</span> name<span class="op">,</span> <span class="dt">int</span> age<span class="op">)</span></span>
-<span id="cb17-7"><a aria-label="7"></a>    <span class="op">{</span></span>
-<span id="cb17-8"><a aria-label="8"></a>        Name <span class="op">=</span> name<span class="op">;</span></span>
-<span id="cb17-9"><a aria-label="9"></a>        Age <span class="op">=</span> age<span class="op">;</span></span>
-<span id="cb17-10"><a aria-label="10"></a>    <span class="op">}</span></span>
-<span id="cb17-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb20-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> Person</span>
+<span id="cb20-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb20-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">string</span> Name <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb20-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">int</span> Age <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb20-5"><a aria-label="5"></a></span>
+<span id="cb20-6"><a aria-label="6"></a>    <span class="kw">public</span> <span class="fu">Person</span><span class="op">(</span><span class="dt">string</span> name<span class="op">,</span> <span class="dt">int</span> age<span class="op">)</span></span>
+<span id="cb20-7"><a aria-label="7"></a>    <span class="op">{</span></span>
+<span id="cb20-8"><a aria-label="8"></a>        Name <span class="op">=</span> name<span class="op">;</span></span>
+<span id="cb20-9"><a aria-label="9"></a>        Age <span class="op">=</span> age<span class="op">;</span></span>
+<span id="cb20-10"><a aria-label="10"></a>    <span class="op">}</span></span>
+<span id="cb20-11"><a aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="what-does-this-print" class="slide level2">
 <h2>What does this print?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb18-1"><a aria-label="1"></a>Person person1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Person</span><span class="op">(</span><span class="st">"John"</span><span class="op">,</span> <span class="dv">34</span><span class="op">);</span></span>
-<span id="cb18-2"><a aria-label="2"></a>Person person2 <span class="op">=</span> person1<span class="op">;</span></span>
-<span id="cb18-3"><a aria-label="3"></a></span>
-<span id="cb18-4"><a aria-label="4"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb18-5"><a aria-label="5"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person2<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb18-6"><a aria-label="6"></a></span>
-<span id="cb18-7"><a aria-label="7"></a>person1<span class="op">.</span><span class="fu">Name</span> <span class="op">=</span> <span class="st">"Mary"</span><span class="op">;</span></span>
-<span id="cb18-8"><a aria-label="8"></a></span>
-<span id="cb18-9"><a aria-label="9"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb18-10"><a aria-label="10"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person2<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a aria-label="1"></a>Person person1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Person</span><span class="op">(</span><span class="st">"John"</span><span class="op">,</span> <span class="dv">34</span><span class="op">);</span></span>
+<span id="cb21-2"><a aria-label="2"></a>Person person2 <span class="op">=</span> person1<span class="op">;</span></span>
+<span id="cb21-3"><a aria-label="3"></a></span>
+<span id="cb21-4"><a aria-label="4"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb21-5"><a aria-label="5"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person2<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb21-6"><a aria-label="6"></a></span>
+<span id="cb21-7"><a aria-label="7"></a>person1<span class="op">.</span><span class="fu">Name</span> <span class="op">=</span> <span class="st">"Mary"</span><span class="op">;</span></span>
+<span id="cb21-8"><a aria-label="8"></a></span>
+<span id="cb21-9"><a aria-label="9"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb21-10"><a aria-label="10"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person2<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Think about it before moving on.</p>
 </section>
 <section id="the-answer" class="slide level2">
 <h2>The answer</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a aria-label="1"></a>John</span>
-<span id="cb19-2"><a aria-label="2"></a>John</span>
-<span id="cb19-3"><a aria-label="3"></a>Mary</span>
-<span id="cb19-4"><a aria-label="4"></a>Mary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a aria-label="1"></a>John</span>
+<span id="cb22-2"><a aria-label="2"></a>John</span>
+<span id="cb22-3"><a aria-label="3"></a>Mary</span>
+<span id="cb22-4"><a aria-label="4"></a>Mary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We changed <code>person1</code>, but <code>person2</code> changed too.</p>
 </section>
 <section id="assignment-copies-the-reference-not-the-object" class="slide level2">
 <h2>Assignment copies the reference, not the object</h2>
 <p><code>new Person(...)</code> creates <strong>one</strong> object. A variable holds a reference to it.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb20-1"><a aria-label="1"></a>person1 ──┐</span>
-<span id="cb20-2"><a aria-label="2"></a>          ├──&gt; Person { Name = "Mary", Age = 34 }</span>
-<span id="cb20-3"><a aria-label="3"></a>person2 ──┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb23-1"><a aria-label="1"></a>person1 ──┐</span>
+<span id="cb23-2"><a aria-label="2"></a>          ├──&gt; Person { Name = "Mary", Age = 34 }</span>
+<span id="cb23-3"><a aria-label="3"></a>person2 ──┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>Person person2 = person1;</code> makes a second reference to the <strong>same</strong> object.</p>
 <p>This is how every class works. Passing an object to a method or a page does the same thing: nothing is copied.</p>
 </section>
 <section id="making-a-real-copy" class="slide level2">
 <h2>Making a real copy</h2>
 <p>To get a separate object, create a new one and copy the values across:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb21-1"><a aria-label="1"></a>Person person3 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Person</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">,</span> person1<span class="op">.</span><span class="fu">Age</span><span class="op">);</span></span>
-<span id="cb21-2"><a aria-label="2"></a></span>
-<span id="cb21-3"><a aria-label="3"></a>person1<span class="op">.</span><span class="fu">Name</span> <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
-<span id="cb21-4"><a aria-label="4"></a></span>
-<span id="cb21-5"><a aria-label="5"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
-<span id="cb21-6"><a aria-label="6"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person3<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a aria-label="1"></a>Alice</span>
-<span id="cb22-2"><a aria-label="2"></a>Mary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a aria-label="1"></a>Person person3 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Person</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">,</span> person1<span class="op">.</span><span class="fu">Age</span><span class="op">);</span></span>
+<span id="cb24-2"><a aria-label="2"></a></span>
+<span id="cb24-3"><a aria-label="3"></a>person1<span class="op">.</span><span class="fu">Name</span> <span class="op">=</span> <span class="st">"Alice"</span><span class="op">;</span></span>
+<span id="cb24-4"><a aria-label="4"></a></span>
+<span id="cb24-5"><a aria-label="5"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person1<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span>
+<span id="cb24-6"><a aria-label="6"></a>Console<span class="op">.</span><span class="fu">WriteLine</span><span class="op">(</span>person3<span class="op">.</span><span class="fu">Name</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb25-1"><a aria-label="1"></a>Alice</span>
+<span id="cb25-2"><a aria-label="2"></a>Mary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>person3</code> is a different object, so changing <code>person1</code> does not affect it.</p>
 <p>(A <code>struct</code> is copied when assigned. A <code>class</code> is not.)</p>
 </section>
@@ -542,36 +563,36 @@
 </section>
 <section id="a-shared-settings-class" class="slide level2">
 <h2>A shared settings class</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb23-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> AppSettings</span>
-<span id="cb23-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb23-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">bool</span> SoundEnabled <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb23-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">double</span> FontSize <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="dv">16</span><span class="op">;</span></span>
-<span id="cb23-5"><a aria-label="5"></a>    <span class="kw">public</span> Color BackgroundColour <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> Colors<span class="op">.</span><span class="fu">White</span><span class="op">;</span></span>
-<span id="cb23-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> AppSettings</span>
+<span id="cb26-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb26-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="dt">bool</span> SoundEnabled <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb26-4"><a aria-label="4"></a>    <span class="kw">public</span> <span class="dt">double</span> FontSize <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="dv">16</span><span class="op">;</span></span>
+<span id="cb26-5"><a aria-label="5"></a>    <span class="kw">public</span> Color BackgroundColour <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="kw">set</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> Colors<span class="op">.</span><span class="fu">White</span><span class="op">;</span></span>
+<span id="cb26-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is an ordinary C# class. It knows nothing about pages or navigation.</p>
 </section>
 <section id="making-it-available-everywhere" class="slide level2">
 <h2>Making it available everywhere</h2>
 <p>Add a static property to <code>App.xaml.cs</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb24-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> App <span class="op">:</span> Application</span>
-<span id="cb24-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb24-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="kw">static</span> AppSettings Settings <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">AppSettings</span><span class="op">();</span></span>
-<span id="cb24-4"><a aria-label="4"></a></span>
-<span id="cb24-5"><a aria-label="5"></a>    <span class="co">// the rest of App is unchanged</span></span>
-<span id="cb24-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> App <span class="op">:</span> Application</span>
+<span id="cb27-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb27-3"><a aria-label="3"></a>    <span class="kw">public</span> <span class="kw">static</span> AppSettings Settings <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">AppSettings</span><span class="op">();</span></span>
+<span id="cb27-4"><a aria-label="4"></a></span>
+<span id="cb27-5"><a aria-label="5"></a>    <span class="co">// the rest of App is unchanged</span></span>
+<span id="cb27-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A <code>static</code> property belongs to the class, not to an object, so there is exactly one.</p>
 <p>Any page can now use <code>App.Settings</code>. The property has no <code>set</code>, so the object itself is never replaced.</p>
 </section>
 <section id="using-the-settings-in-mainpage" class="slide level2">
 <h2>Using the settings in MainPage</h2>
 <p><code>MainPage</code> applies the settings in <code>OnAppearing</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb25-1"><a aria-label="1"></a><span class="kw">protected</span> <span class="kw">override</span> <span class="dt">void</span> <span class="fu">OnAppearing</span><span class="op">()</span></span>
-<span id="cb25-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb25-3"><a aria-label="3"></a>    <span class="kw">base</span><span class="op">.</span><span class="fu">OnAppearing</span><span class="op">();</span></span>
-<span id="cb25-4"><a aria-label="4"></a>    BackgroundColor <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">BackgroundColour</span><span class="op">;</span></span>
-<span id="cb25-5"><a aria-label="5"></a>    MessageLabel<span class="op">.</span><span class="fu">FontSize</span> <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">FontSize</span><span class="op">;</span></span>
-<span id="cb25-6"><a aria-label="6"></a>    SoundLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">SoundEnabled</span> <span class="op">?</span> <span class="st">"Sound on"</span> <span class="op">:</span> <span class="st">"Sound off"</span><span class="op">;</span></span>
-<span id="cb25-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb28-1"><a aria-label="1"></a><span class="kw">protected</span> <span class="kw">override</span> <span class="dt">void</span> <span class="fu">OnAppearing</span><span class="op">()</span></span>
+<span id="cb28-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb28-3"><a aria-label="3"></a>    <span class="kw">base</span><span class="op">.</span><span class="fu">OnAppearing</span><span class="op">();</span></span>
+<span id="cb28-4"><a aria-label="4"></a>    BackgroundColor <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">BackgroundColour</span><span class="op">;</span></span>
+<span id="cb28-5"><a aria-label="5"></a>    MessageLabel<span class="op">.</span><span class="fu">FontSize</span> <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">FontSize</span><span class="op">;</span></span>
+<span id="cb28-6"><a aria-label="6"></a>    SoundLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">SoundEnabled</span> <span class="op">?</span> <span class="st">"Sound on"</span> <span class="op">:</span> <span class="st">"Sound off"</span><span class="op">;</span></span>
+<span id="cb28-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>OnAppearing</code> runs when the page first appears <strong>and</strong> each time the user returns to it, for example after closing the settings page. So the page always shows the current settings.</p>
 </section>
 <section id="editing-the-settings-directly" class="slide level2">
@@ -588,62 +609,62 @@
 <section id="copying-a-settings-object" class="slide level2">
 <h2>Copying a settings object</h2>
 <p>Add two methods to <code>AppSettings</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb26-1"><a aria-label="1"></a><span class="kw">public</span> AppSettings <span class="fu">Clone</span><span class="op">()</span></span>
-<span id="cb26-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb26-3"><a aria-label="3"></a>    <span class="kw">return</span> <span class="kw">new</span> AppSettings</span>
-<span id="cb26-4"><a aria-label="4"></a>    <span class="op">{</span></span>
-<span id="cb26-5"><a aria-label="5"></a>        SoundEnabled <span class="op">=</span> SoundEnabled<span class="op">,</span></span>
-<span id="cb26-6"><a aria-label="6"></a>        FontSize <span class="op">=</span> FontSize<span class="op">,</span></span>
-<span id="cb26-7"><a aria-label="7"></a>        BackgroundColour <span class="op">=</span> BackgroundColour</span>
-<span id="cb26-8"><a aria-label="8"></a>    <span class="op">};</span></span>
-<span id="cb26-9"><a aria-label="9"></a><span class="op">}</span></span>
-<span id="cb26-10"><a aria-label="10"></a></span>
-<span id="cb26-11"><a aria-label="11"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">CopyFrom</span><span class="op">(</span>AppSettings other<span class="op">)</span></span>
-<span id="cb26-12"><a aria-label="12"></a><span class="op">{</span></span>
-<span id="cb26-13"><a aria-label="13"></a>    SoundEnabled <span class="op">=</span> other<span class="op">.</span><span class="fu">SoundEnabled</span><span class="op">;</span></span>
-<span id="cb26-14"><a aria-label="14"></a>    FontSize <span class="op">=</span> other<span class="op">.</span><span class="fu">FontSize</span><span class="op">;</span></span>
-<span id="cb26-15"><a aria-label="15"></a>    BackgroundColour <span class="op">=</span> other<span class="op">.</span><span class="fu">BackgroundColour</span><span class="op">;</span></span>
-<span id="cb26-16"><a aria-label="16"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a aria-label="1"></a><span class="kw">public</span> AppSettings <span class="fu">Clone</span><span class="op">()</span></span>
+<span id="cb29-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb29-3"><a aria-label="3"></a>    <span class="kw">return</span> <span class="kw">new</span> AppSettings</span>
+<span id="cb29-4"><a aria-label="4"></a>    <span class="op">{</span></span>
+<span id="cb29-5"><a aria-label="5"></a>        SoundEnabled <span class="op">=</span> SoundEnabled<span class="op">,</span></span>
+<span id="cb29-6"><a aria-label="6"></a>        FontSize <span class="op">=</span> FontSize<span class="op">,</span></span>
+<span id="cb29-7"><a aria-label="7"></a>        BackgroundColour <span class="op">=</span> BackgroundColour</span>
+<span id="cb29-8"><a aria-label="8"></a>    <span class="op">};</span></span>
+<span id="cb29-9"><a aria-label="9"></a><span class="op">}</span></span>
+<span id="cb29-10"><a aria-label="10"></a></span>
+<span id="cb29-11"><a aria-label="11"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">CopyFrom</span><span class="op">(</span>AppSettings other<span class="op">)</span></span>
+<span id="cb29-12"><a aria-label="12"></a><span class="op">{</span></span>
+<span id="cb29-13"><a aria-label="13"></a>    SoundEnabled <span class="op">=</span> other<span class="op">.</span><span class="fu">SoundEnabled</span><span class="op">;</span></span>
+<span id="cb29-14"><a aria-label="14"></a>    FontSize <span class="op">=</span> other<span class="op">.</span><span class="fu">FontSize</span><span class="op">;</span></span>
+<span id="cb29-15"><a aria-label="15"></a>    BackgroundColour <span class="op">=</span> other<span class="op">.</span><span class="fu">BackgroundColour</span><span class="op">;</span></span>
+<span id="cb29-16"><a aria-label="16"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>Clone</code> makes a new object. <code>CopyFrom</code> copies values into an object that already exists.</p>
 </section>
 <section id="the-settingspage-editing-a-copy" class="slide level2">
 <h2>The SettingsPage: editing a copy</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb27-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> SettingsPage <span class="op">:</span> ContentPage</span>
-<span id="cb27-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb27-3"><a aria-label="3"></a>    <span class="kw">private</span> AppSettings _copy <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">Clone</span><span class="op">();</span></span>
-<span id="cb27-4"><a aria-label="4"></a></span>
-<span id="cb27-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="fu">SettingsPage</span><span class="op">()</span></span>
-<span id="cb27-6"><a aria-label="6"></a>    <span class="op">{</span></span>
-<span id="cb27-7"><a aria-label="7"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
-<span id="cb27-8"><a aria-label="8"></a>        BindingContext <span class="op">=</span> _copy<span class="op">;</span></span>
-<span id="cb27-9"><a aria-label="9"></a>    <span class="op">}</span></span>
-<span id="cb27-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">partial</span> <span class="kw">class</span> SettingsPage <span class="op">:</span> ContentPage</span>
+<span id="cb30-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb30-3"><a aria-label="3"></a>    <span class="kw">private</span> AppSettings _copy <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">Clone</span><span class="op">();</span></span>
+<span id="cb30-4"><a aria-label="4"></a></span>
+<span id="cb30-5"><a aria-label="5"></a>    <span class="kw">public</span> <span class="fu">SettingsPage</span><span class="op">()</span></span>
+<span id="cb30-6"><a aria-label="6"></a>    <span class="op">{</span></span>
+<span id="cb30-7"><a aria-label="7"></a>        <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb30-8"><a aria-label="8"></a>        BindingContext <span class="op">=</span> _copy<span class="op">;</span></span>
+<span id="cb30-9"><a aria-label="9"></a>    <span class="op">}</span></span>
+<span id="cb30-10"><a aria-label="10"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The controls are bound to <code>_copy</code>, <strong>not</strong> to <code>App.Settings</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb28-1"><a aria-label="1"></a>&lt;<span class="kw">Switch</span> <span class="ot">IsToggled=</span><span class="st">"{Binding SoundEnabled}"</span> /&gt;</span>
-<span id="cb28-2"><a aria-label="2"></a>&lt;<span class="kw">Slider</span> <span class="ot">Minimum=</span><span class="st">"10"</span> <span class="ot">Maximum=</span><span class="st">"40"</span> <span class="ot">Value=</span><span class="st">"{Binding FontSize}"</span> /&gt;</span>
-<span id="cb28-3"><a aria-label="3"></a>&lt;<span class="kw">Button</span> <span class="ot">BackgroundColor=</span><span class="st">"White"</span> <span class="ot">Clicked=</span><span class="st">"Colour_Clicked"</span> /&gt;</span>
-<span id="cb28-4"><a aria-label="4"></a>&lt;<span class="kw">Button</span> <span class="ot">BackgroundColor=</span><span class="st">"LightYellow"</span> <span class="ot">Clicked=</span><span class="st">"Colour_Clicked"</span> /&gt;</span>
-<span id="cb28-5"><a aria-label="5"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Save"</span> <span class="ot">Clicked=</span><span class="st">"Save_Clicked"</span> /&gt;</span>
-<span id="cb28-6"><a aria-label="6"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Cancel"</span> <span class="ot">Clicked=</span><span class="st">"Cancel_Clicked"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb31-1"><a aria-label="1"></a>&lt;<span class="kw">Switch</span> <span class="ot">IsToggled=</span><span class="st">"{Binding SoundEnabled}"</span> /&gt;</span>
+<span id="cb31-2"><a aria-label="2"></a>&lt;<span class="kw">Slider</span> <span class="ot">Minimum=</span><span class="st">"10"</span> <span class="ot">Maximum=</span><span class="st">"40"</span> <span class="ot">Value=</span><span class="st">"{Binding FontSize}"</span> /&gt;</span>
+<span id="cb31-3"><a aria-label="3"></a>&lt;<span class="kw">Button</span> <span class="ot">BackgroundColor=</span><span class="st">"White"</span> <span class="ot">Clicked=</span><span class="st">"Colour_Clicked"</span> /&gt;</span>
+<span id="cb31-4"><a aria-label="4"></a>&lt;<span class="kw">Button</span> <span class="ot">BackgroundColor=</span><span class="st">"LightYellow"</span> <span class="ot">Clicked=</span><span class="st">"Colour_Clicked"</span> /&gt;</span>
+<span id="cb31-5"><a aria-label="5"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Save"</span> <span class="ot">Clicked=</span><span class="st">"Save_Clicked"</span> /&gt;</span>
+<span id="cb31-6"><a aria-label="6"></a>&lt;<span class="kw">Button</span> <span class="ot">Text=</span><span class="st">"Cancel"</span> <span class="ot">Clicked=</span><span class="st">"Cancel_Clicked"</span> /&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="save-and-cancel" class="slide level2">
 <h2>Save and Cancel</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb29-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">Colour_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
-<span id="cb29-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb29-3"><a aria-label="3"></a>    Button button <span class="op">=</span> <span class="op">(</span>Button<span class="op">)</span>sender<span class="op">;</span></span>
-<span id="cb29-4"><a aria-label="4"></a>    _copy<span class="op">.</span><span class="fu">BackgroundColour</span> <span class="op">=</span> button<span class="op">.</span><span class="fu">BackgroundColor</span> <span class="op">??</span> Colors<span class="op">.</span><span class="fu">White</span><span class="op">;</span></span>
-<span id="cb29-5"><a aria-label="5"></a><span class="op">}</span></span>
-<span id="cb29-6"><a aria-label="6"></a></span>
-<span id="cb29-7"><a aria-label="7"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Save_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
-<span id="cb29-8"><a aria-label="8"></a><span class="op">{</span></span>
-<span id="cb29-9"><a aria-label="9"></a>    App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">CopyFrom</span><span class="op">(</span>_copy<span class="op">);</span></span>
-<span id="cb29-10"><a aria-label="10"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
-<span id="cb29-11"><a aria-label="11"></a><span class="op">}</span></span>
-<span id="cb29-12"><a aria-label="12"></a></span>
-<span id="cb29-13"><a aria-label="13"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Cancel_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
-<span id="cb29-14"><a aria-label="14"></a><span class="op">{</span></span>
-<span id="cb29-15"><a aria-label="15"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
-<span id="cb29-16"><a aria-label="16"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a aria-label="1"></a><span class="kw">private</span> <span class="dt">void</span> <span class="fu">Colour_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb32-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb32-3"><a aria-label="3"></a>    Button button <span class="op">=</span> <span class="op">(</span>Button<span class="op">)</span>sender<span class="op">;</span></span>
+<span id="cb32-4"><a aria-label="4"></a>    _copy<span class="op">.</span><span class="fu">BackgroundColour</span> <span class="op">=</span> button<span class="op">.</span><span class="fu">BackgroundColor</span> <span class="op">??</span> Colors<span class="op">.</span><span class="fu">White</span><span class="op">;</span></span>
+<span id="cb32-5"><a aria-label="5"></a><span class="op">}</span></span>
+<span id="cb32-6"><a aria-label="6"></a></span>
+<span id="cb32-7"><a aria-label="7"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Save_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb32-8"><a aria-label="8"></a><span class="op">{</span></span>
+<span id="cb32-9"><a aria-label="9"></a>    App<span class="op">.</span><span class="fu">Settings</span><span class="op">.</span><span class="fu">CopyFrom</span><span class="op">(</span>_copy<span class="op">);</span></span>
+<span id="cb32-10"><a aria-label="10"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
+<span id="cb32-11"><a aria-label="11"></a><span class="op">}</span></span>
+<span id="cb32-12"><a aria-label="12"></a></span>
+<span id="cb32-13"><a aria-label="13"></a><span class="kw">private</span> async <span class="dt">void</span> <span class="fu">Cancel_Clicked</span><span class="op">(</span><span class="dt">object</span> sender<span class="op">,</span> EventArgs e<span class="op">)</span></span>
+<span id="cb32-14"><a aria-label="14"></a><span class="op">{</span></span>
+<span id="cb32-15"><a aria-label="15"></a>    await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">".."</span><span class="op">);</span></span>
+<span id="cb32-16"><a aria-label="16"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Only <strong>Save</strong> changes <code>App.Settings</code>. We use <code>CopyFrom</code> rather than <code>App.Settings = _copy</code>, because we want everyone to keep using the <strong>same</strong> settings object.</p>
 </section>
 <section id="what-about-the-back-button" class="slide level2">
@@ -677,10 +698,10 @@
 <section id="httpclient-on-app" class="slide level2">
 <h2>HttpClient on App</h2>
 <p>The same approach we used for the settings. In <code>App.xaml.cs</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb30-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">static</span> HttpClient Http <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpClient</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">static</span> HttpClient Http <span class="op">{</span> <span class="kw">get</span><span class="op">;</span> <span class="op">}</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpClient</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Use it from any page or ViewModel:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb31-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">GetStringAsync</span><span class="op">(</span>url<span class="op">);</span></span>
-<span id="cb31-2"><a aria-label="2"></a><span class="dt">byte</span><span class="op">[]</span> data <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">GetByteArrayAsync</span><span class="op">(</span>imageUrl<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb34-1"><a aria-label="1"></a><span class="dt">string</span> json <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">GetStringAsync</span><span class="op">(</span>url<span class="op">);</span></span>
+<span id="cb34-2"><a aria-label="2"></a><span class="dt">byte</span><span class="op">[]</span> data <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">GetByteArrayAsync</span><span class="op">(</span>imageUrl<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We call it <code>Http</code> rather than <code>HttpClient</code>, so that it is clear whether we mean the property or the class.</p>
 </section>
 <section id="why-reuse-httpclient" class="slide level2">
@@ -695,13 +716,13 @@
 <section id="keeping-app-out-of-the-rest-of-the-class" class="slide level2">
 <h2>Keeping App out of the rest of the class</h2>
 <p>Writing <code>App.Settings</code> and <code>App.Http</code> throughout a class gets repetitive. Store them in fields once:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb32-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> TriviaViewModel</span>
-<span id="cb32-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb32-3"><a aria-label="3"></a>    <span class="kw">private</span> <span class="kw">readonly</span> HttpClient _http <span class="op">=</span> App<span class="op">.</span><span class="fu">Http</span><span class="op">;</span></span>
-<span id="cb32-4"><a aria-label="4"></a>    <span class="kw">private</span> <span class="kw">readonly</span> AppSettings _settings <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">;</span></span>
-<span id="cb32-5"><a aria-label="5"></a></span>
-<span id="cb32-6"><a aria-label="6"></a>    <span class="co">// use _http and _settings from here on</span></span>
-<span id="cb32-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a><span class="kw">public</span> <span class="kw">class</span> TriviaViewModel</span>
+<span id="cb35-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb35-3"><a aria-label="3"></a>    <span class="kw">private</span> <span class="kw">readonly</span> HttpClient _http <span class="op">=</span> App<span class="op">.</span><span class="fu">Http</span><span class="op">;</span></span>
+<span id="cb35-4"><a aria-label="4"></a>    <span class="kw">private</span> <span class="kw">readonly</span> AppSettings _settings <span class="op">=</span> App<span class="op">.</span><span class="fu">Settings</span><span class="op">;</span></span>
+<span id="cb35-5"><a aria-label="5"></a></span>
+<span id="cb35-6"><a aria-label="6"></a>    <span class="co">// use _http and _settings from here on</span></span>
+<span id="cb35-7"><a aria-label="7"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Both fields refer to the <strong>same</strong> objects as everywhere else, because assigning an object copies the reference.</p>
 <p>This is also why <code>Save</code> uses <code>CopyFrom</code>. If the settings object were replaced, a class that had already stored <code>_settings</code> would still hold the old one.</p>
 </section>
@@ -788,31 +809,31 @@
 <h2>Setting up a page differently in each tab</h2>
 <p>Sometimes we want one page class reused for several tabs, each set up differently.</p>
 <p>Imagine <code>NotesPage</code> used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb33-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">NotesPage</span><span class="op">(</span><span class="dt">string</span> category<span class="op">)</span></span>
-<span id="cb33-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb33-3"><a aria-label="3"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
-<span id="cb33-4"><a aria-label="4"></a>    CategoryLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> category<span class="op">;</span></span>
-<span id="cb33-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">NotesPage</span><span class="op">(</span><span class="dt">string</span> category<span class="op">)</span></span>
+<span id="cb36-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb36-3"><a aria-label="3"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb36-4"><a aria-label="4"></a>    CategoryLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> category<span class="op">;</span></span>
+<span id="cb36-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="passing-constructor-values-from-xaml" class="slide level2">
 <h2>Passing constructor values from XAML</h2>
 <p>In <code>AppShell.xaml</code>, <code>x:Arguments</code> supplies the constructor values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb34-1"><a aria-label="1"></a>&lt;<span class="kw">TabBar</span>&gt;</span>
-<span id="cb34-2"><a aria-label="2"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Work"</span> <span class="ot">Route=</span><span class="st">"work"</span>&gt;</span>
-<span id="cb34-3"><a aria-label="3"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb34-4"><a aria-label="4"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb34-5"><a aria-label="5"></a>                &lt;<span class="kw">x:String</span>&gt;Work&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb34-6"><a aria-label="6"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb34-7"><a aria-label="7"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb34-8"><a aria-label="8"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
-<span id="cb34-9"><a aria-label="9"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Personal"</span> <span class="ot">Route=</span><span class="st">"personal"</span>&gt;</span>
-<span id="cb34-10"><a aria-label="10"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb34-11"><a aria-label="11"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb34-12"><a aria-label="12"></a>                &lt;<span class="kw">x:String</span>&gt;Personal&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb34-13"><a aria-label="13"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb34-14"><a aria-label="14"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb34-15"><a aria-label="15"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
-<span id="cb34-16"><a aria-label="16"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb37-1"><a aria-label="1"></a>&lt;<span class="kw">TabBar</span>&gt;</span>
+<span id="cb37-2"><a aria-label="2"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Work"</span> <span class="ot">Route=</span><span class="st">"work"</span>&gt;</span>
+<span id="cb37-3"><a aria-label="3"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-4"><a aria-label="4"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-5"><a aria-label="5"></a>                &lt;<span class="kw">x:String</span>&gt;Work&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb37-6"><a aria-label="6"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-7"><a aria-label="7"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-8"><a aria-label="8"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
+<span id="cb37-9"><a aria-label="9"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Personal"</span> <span class="ot">Route=</span><span class="st">"personal"</span>&gt;</span>
+<span id="cb37-10"><a aria-label="10"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-11"><a aria-label="11"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-12"><a aria-label="12"></a>                &lt;<span class="kw">x:String</span>&gt;Personal&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb37-13"><a aria-label="13"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-14"><a aria-label="14"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-15"><a aria-label="15"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
+<span id="cb37-16"><a aria-label="16"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>The arguments are matched to the constructor <strong>by type and order</strong>.</li>
 <li>A mismatch is <strong>not</strong> a compile error. The app fails when it runs.</li>
@@ -821,17 +842,17 @@
 <section id="adding-a-user-agent-header" class="slide level2">
 <h2>Adding a User-Agent header</h2>
 <p>Some websites require requests to identify the application making them. Add the header to an individual request:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb35-1"><a aria-label="1"></a><span class="kw">using</span> <span class="dt">var</span> request <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpRequestMessage</span><span class="op">(</span>HttpMethod<span class="op">.</span><span class="fu">Get</span><span class="op">,</span> imageUrl<span class="op">);</span></span>
-<span id="cb35-2"><a aria-label="2"></a>request<span class="op">.</span><span class="fu">Headers</span><span class="op">.</span><span class="fu">UserAgent</span><span class="op">.</span><span class="fu">ParseAdd</span><span class="op">(</span><span class="st">"ExampleMauiApp/1.0"</span><span class="op">);</span></span>
-<span id="cb35-3"><a aria-label="3"></a><span class="kw">using</span> HttpResponseMessage response <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">SendAsync</span><span class="op">(</span>request<span class="op">);</span></span>
-<span id="cb35-4"><a aria-label="4"></a>response<span class="op">.</span><span class="fu">EnsureSuccessStatusCode</span><span class="op">();</span></span>
-<span id="cb35-5"><a aria-label="5"></a><span class="dt">byte</span><span class="op">[]</span> imageData <span class="op">=</span> await response<span class="op">.</span><span class="fu">Content</span><span class="op">.</span><span class="fu">ReadAsByteArrayAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb38-1"><a aria-label="1"></a><span class="kw">using</span> <span class="dt">var</span> request <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpRequestMessage</span><span class="op">(</span>HttpMethod<span class="op">.</span><span class="fu">Get</span><span class="op">,</span> imageUrl<span class="op">);</span></span>
+<span id="cb38-2"><a aria-label="2"></a>request<span class="op">.</span><span class="fu">Headers</span><span class="op">.</span><span class="fu">UserAgent</span><span class="op">.</span><span class="fu">ParseAdd</span><span class="op">(</span><span class="st">"ExampleMauiApp/1.0"</span><span class="op">);</span></span>
+<span id="cb38-3"><a aria-label="3"></a><span class="kw">using</span> HttpResponseMessage response <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">SendAsync</span><span class="op">(</span>request<span class="op">);</span></span>
+<span id="cb38-4"><a aria-label="4"></a>response<span class="op">.</span><span class="fu">EnsureSuccessStatusCode</span><span class="op">();</span></span>
+<span id="cb38-5"><a aria-label="5"></a><span class="dt">byte</span><span class="op">[]</span> imageData <span class="op">=</span> await response<span class="op">.</span><span class="fu">Content</span><span class="op">.</span><span class="fu">ReadAsByteArrayAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Use a meaningful application name and version, and follow the website’s rules.</p>
 </section>
 <section id="displaying-downloaded-image-data" class="slide level2">
 <h2>Displaying downloaded image data</h2>
 <p>Once the image data has been downloaded, turn it into an <code>ImageSource</code> for an <code>Image</code> control:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a>ImageSource photo <span class="op">=</span> ImageSource<span class="op">.</span><span class="fu">FromStream</span><span class="op">(()</span> <span class="op">=&gt;</span> <span class="kw">new</span> <span class="fu">MemoryStream</span><span class="op">(</span>imageData<span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a aria-label="1"></a>ImageSource photo <span class="op">=</span> ImageSource<span class="op">.</span><span class="fu">FromStream</span><span class="op">(()</span> <span class="op">=&gt;</span> <span class="kw">new</span> <span class="fu">MemoryStream</span><span class="op">(</span>imageData<span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The lambda supplies a new stream each time the image is read.</p>
 <p>This is why we sometimes download image data ourselves instead of binding a URL directly.</p>
 

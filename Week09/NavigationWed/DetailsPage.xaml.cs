@@ -1,10 +1,12 @@
 namespace Week9Demo;
 
 [QueryProperty(nameof(PlanetName), "name")]
+[QueryProperty(nameof(MoonCount), "moons")]
 public partial class DetailsPage : ContentPage
 {
     public string PlanetName { get; set; } = "Not Set Yet";
-	public DetailsPage()
+    public int MoonCount { get; set; } = -1;
+    public DetailsPage()
 	{
 		InitializeComponent();
         // Not Set in Constructor

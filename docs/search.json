@@ -4337,7 +4337,7 @@
     "href": "lectures/Week9/Week9.html#more-than-one-value",
     "title": "Week 9 Multi-page Applications and Navigation",
     "section": "More than one value",
-    "text": "More than one value\nSeparate the values with &, and add one [QueryProperty] for each:\nawait Shell.Current.GoToAsync($\"details?name={planetName}&moons={moonCount}\");\n[QueryProperty(nameof(PlanetName), \"name\")]\n[QueryProperty(nameof(MoonCount), \"moons\")]\npublic partial class DetailsPage : ContentPage\n{\n    public string PlanetName { get; set; } = \"\";\n    public string MoonCount { get; set; } = \"\";\n}\nQuery values arrive as text. Convert them yourself if you need a number."
+    "text": "More than one value\nSeparate the values with &, and add one [QueryProperty] for each:\nawait Shell.Current.GoToAsync($\"details?name={planetName}&moons={moonCount}\");\n[QueryProperty(nameof(PlanetName), \"name\")]\n[QueryProperty(nameof(MoonCount), \"moons\")]\npublic partial class DetailsPage : ContentPage\n{\n    public string PlanetName { get; set; } = \"\";\n    public string MoonCount { get; set; } = \"\";\n}\nQuery values arrive as text. Convert them yourself if you need a number or we could do\n[QueryProperty(nameof(PlanetName), \"name\")]\n[QueryProperty(nameof(MoonCount), \"moons\")]\npublic partial class DetailsPage : ContentPage\n{\n    public string PlanetName { get; set; } = \"\";\n    public int MoonCount { get; set; }\n}\nBut we have to make sure that moons is never anything but an int, otherwise there will be a runtime error.\n\nIf user data is involved, don’t assume number\nIf you control the Uris always, it will be fine."
   },
   {
     "objectID": "lectures/Week9/Week9.html#giving-a-page-its-own-setup-value",
@@ -4527,5 +4527,12 @@
     "title": "Week 9 Multi-page Applications and Navigation",
     "section": "Setting up a page differently in each tab",
     "text": "Setting up a page differently in each tab\nSometimes we want one page class reused for several tabs, each set up differently.\nImagine NotesPage used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:\npublic NotesPage(string category)\n{\n    InitializeComponent();\n    CategoryLabel.Text = category;\n}"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#queryproperty",
+    "href": "lectures/Week9/Week9.html#queryproperty",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "QueryProperty",
+    "text": "QueryProperty\nIf you call GotoAsync with\nawait Shell.Current.GoToAsync($\"details?name={Uri.EscapeDataString(planetName)}\");\nwhen it also has moons what happens?\nWell nothing really, it just won’t get assigned. Even\nawait Shell.Current.GoToAsync(\"details\");\nIs fine. It just won’t assign those properties, no crashes"
   }
 ]
