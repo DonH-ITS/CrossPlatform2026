@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Week9Demo.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Week9Demo"
+    Title="Week9Demo"
+    >
+
+    <!-- Main application -->
+    <TabBar Route="main">
+        <ShellContent
+            Title="Home"
+            Route="MainPage"
+            ContentTemplate="{DataTemplate local:MainPage}" />
+
+        <ShellContent
+            Title="Other"
+            Route="MainPage2"
+            ContentTemplate="{DataTemplate local:MainPage}" />
+    </TabBar>
+
+
+
+</Shell>
