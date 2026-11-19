@@ -4,7 +4,7 @@
     "href": "lectures.html",
     "title": "Lecture Slides",
     "section": "",
-    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\n\n\n\n\nWeek 7 GitHub Resources and Data Binding\n\n\nGitHub with Visual Studio, shared resources and styles in .NET MAUI, and introductory data binding\n\n\n\n\n\n\n\n\n\nWeek 8 MVVM, Web APIs and Custom Events\n\n\nInterfaces, the MVVM pattern, Commands, ObservableCollection, and retrieving data from a web API, custom Events\n\n\n\n\n\nNo matching items"
+    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\n\n\n\n\nWeek 7 GitHub Resources and Data Binding\n\n\nGitHub with Visual Studio, shared resources and styles in .NET MAUI, and introductory data binding\n\n\n\n\n\n\n\n\n\nWeek 8 MVVM, Web APIs and Custom Events\n\n\nInterfaces, the MVVM pattern, Commands, ObservableCollection, and retrieving data from a web API, custom Events\n\n\n\n\n\n\n\n\n\nWeek 9 Multi-page Applications and Navigation\n\n\nCreating multiple pages, navigating with Shell, passing data between pages, copying objects, and sharing application objects\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/Week6/Week6.html#why-collections",
@@ -4534,5 +4534,75 @@
     "title": "Week 9 Multi-page Applications and Navigation",
     "section": "QueryProperty",
     "text": "QueryProperty\nIf you call GotoAsync with\nawait Shell.Current.GoToAsync($\"details?name={Uri.EscapeDataString(planetName)}\");\nwhen it also has moons what happens?\nWell nothing really, it just won’t get assigned. Even\nawait Shell.Current.GoToAsync(\"details\");\nIs fine. It just won’t assign those properties, no crashes"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#the-scenario",
+    "href": "lectures/Week9/Week9.html#the-scenario",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "The Scenario",
+    "text": "The Scenario\n\nUser opens the app and sees the LoginPage\nUser clicks Login\nUser lands on MainPage\n\n\nNo flyout menu anywhere\nNo back button to login after signing in\n\nQuestion: how do we set this up in AppShell.xaml?"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#appshell.xaml-login-then-tabs",
+    "href": "lectures/Week9/Week9.html#appshell.xaml-login-then-tabs",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "AppShell.xaml: Login then Tabs",
+    "text": "AppShell.xaml: Login then Tabs\n&lt;ShellContent Route=\"login\"\n    ContentTemplate=\"{DataTemplate local:LoginPage}\" /&gt;\n\n&lt;TabBar Route=\"main\"&gt;\n    &lt;ShellContent Title=\"Home\"\n        Icon=\"home.png\"\n        Route=\"tab1\"\n        ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n\n    &lt;ShellContent Title=\"Other\"\n        Icon=\"other.png\"\n        Route=\"tab2\"\n        ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n&lt;/TabBar&gt;\n\nThe &lt;Shell&gt; element is unchanged (keep FlyoutBehavior=\"Disabled\")\nTabBar with 2+ ShellContent children shows the tab bar\nlogin is a single page, so it gets no tabs"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#navigating-from-login-to-main",
+    "href": "lectures/Week9/Week9.html#navigating-from-login-to-main",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Navigating from Login to Main",
+    "text": "Navigating from Login to Main\n// In LoginPage.xaml.cs, when the login button is clicked\nawait Shell.Current.GoToAsync(\"//main\");\n\n// is an absolute route: it starts from the Shell hierarchy\nmain is the Route set on the ShellContent\nThe navigation stack is replaced, so there is no back button to login\nLogging out is the same idea: await Shell.Current.GoToAsync(\"//login\");"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#things-to-watch",
+    "href": "lectures/Week9/Week9.html#things-to-watch",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Things to Watch",
+    "text": "Things to Watch\n\nEach tab gets its own MainPage instance (ContentTemplate creates one per ShellContent)\nRoutes must be unique: tab1 and tab2 can’t both be main\nA TabBar never appears in the flyout\nPages registered only with Routing.RegisterRoute can’t be reached with //"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#appshell.xaml",
+    "href": "lectures/Week9/Week9.html#appshell.xaml",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "AppShell.xaml",
+    "text": "AppShell.xaml\n&lt;Shell\n    x:Class=\"MyApp.AppShell\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    xmlns:local=\"clr-namespace:MyApp\"\n    Title=\"MyApp\"\n    FlyoutBehavior=\"Disabled\"&gt;\n\n    &lt;ShellContent\n        Route=\"login\"\n        ContentTemplate=\"{DataTemplate local:LoginPage}\" /&gt;\n\n    &lt;ShellContent\n        Route=\"main\"\n        ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n\n&lt;/Shell&gt;\n\nBoth pages are ShellContent items, so both are in the Shell hierarchy\nThe first item is the startup page (login)\nFlyoutBehavior=\"Disabled\" stops the flyout (hamburger icon and menu) appearing"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#about-shell.flyoutbehaviordisabled",
+    "href": "lectures/Week9/Week9.html#about-shell.flyoutbehaviordisabled",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "About Shell.FlyoutBehavior=“Disabled”",
+    "text": "About Shell.FlyoutBehavior=“Disabled”\nThree places you can control the flyout:\n\n\n\n\n\n\n\nWhere\nEffect\n\n\n\n\n&lt;Shell FlyoutBehavior=\"Disabled\"&gt;\nFlyout off for the whole app\n\n\n&lt;ContentPage Shell.FlyoutBehavior=\"Disabled\"&gt;\nFlyout off for that page only\n\n\n&lt;ShellContent FlyoutItemIsVisible=\"False\"&gt;\nHides that item from the flyout menu\n\n\n\n\nShell.FlyoutBehavior on a page is an attached property, so it goes on the root ContentPage in the page’s XAML\nIf it is already set on &lt;Shell&gt;, you don’t need it on the page\nUse the page-level version when you want a flyout on some pages but not on login"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#page-level-example-loginpage.xaml",
+    "href": "lectures/Week9/Week9.html#page-level-example-loginpage.xaml",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Page-level Example (LoginPage.xaml)",
+    "text": "Page-level Example (LoginPage.xaml)\n&lt;ContentPage\n    x:Class=\"MyApp.LoginPage\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    Shell.FlyoutBehavior=\"Disabled\"&gt;\nOr in code:\nShell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#the-scenario-1",
+    "href": "lectures/Week9/Week9.html#the-scenario-1",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "The Scenario",
+    "text": "The Scenario\n\nUser opens the app and sees the LoginPage\nUser clicks Login\nUser lands on a tab bar with two tabs, both using MainPage\n\n\nNo tab bar or flyout on the login page\nNo back button to login after signing in\n\nQuestion: what changes in AppShell.xaml?"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#navigating-from-login-to-tabs",
+    "href": "lectures/Week9/Week9.html#navigating-from-login-to-tabs",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Navigating from Login to Tabs",
+    "text": "Navigating from Login to Tabs\n// Lands on the first tab\nawait Shell.Current.GoToAsync(\"//main\");\n\n// Or jump straight to a specific tab\nawait Shell.Current.GoToAsync(\"//main/tab2\");\n\nmain is the Route on the TabBar\ntab2 is the Route on the second ShellContent"
+  },
+  {
+    "objectID": "lectures/Week9/Week9.html#setting-up-a-page-differently-in-each-tab-1",
+    "href": "lectures/Week9/Week9.html#setting-up-a-page-differently-in-each-tab-1",
+    "title": "Week 9 Multi-page Applications and Navigation",
+    "section": "Setting up a page differently in each tab",
+    "text": "Setting up a page differently in each tab\nSometimes we want one page class reused for several tabs, each set up differently.\nImagine NotesPage used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:\npublic NotesPage(string category)\n{\n    InitializeComponent();\n    CategoryLabel.Text = category;\n}"
   }
 ]
