@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlbumList.MainPage"
+             xmlns:local="clr-namespace:AlbumList"
+             x:DataType="local:AlbumViewModel"
+             Title="Album List">
+
+    <Grid Padding="20"
+          RowDefinitions="Auto,Auto,Auto,Auto,*"
+          RowSpacing="10">
+
+        <Label Grid.Row="0"
+               Text="{Binding LibraryName}"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
+
+        <HorizontalStackLayout Grid.Row="1"
+                               Spacing="10"
+                               HorizontalOptions="Center">
+            <Button Text="Library 1" Command="{Binding LoadLibrary1Command}"/>
+            <Button Text="Library 2" Command="{Binding LoadLibrary2Command}"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="2"
+                               Spacing="10"
+                               HorizontalOptions="Center">
+            <Button Text="Title"
+        Command="{Binding SortCommand}"
+        CommandParameter="Title"/>
+
+            <Button Text="Artist"
+        Command="{Binding SortCommand}"
+        CommandParameter="Artist"/>
+
+            <Button Text="Year"
+        Command="{Binding SortCommand}"
+        CommandParameter="Year"/>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="3"
+                             Spacing="4">
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                   IsVisible="{Binding IsLoading}"/>
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <!-- Temporary display of the downloaded JSON -->
+        <CollectionView Grid.Row="4"
+                ItemsSource="{Binding Albums}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:Album">
+                    <VerticalStackLayout Padding="10">
+                        <Label Text="{Binding Title}"
+                       FontSize="Medium"
+                       FontAttributes="Bold"/>
+
+                        <Label Text="{Binding Artist}"
+                       FontSize="Small"/>
+
+                        <Label Text="{Binding Year}"
+                       FontSize="Small"/>
+
+                        <Label Text="{Binding Genre}"
+                       FontSize="Small"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
