@@ -1,3 +1,4 @@
+
 namespace Week9Demo;
 
 [QueryProperty(nameof(PlanetName), "name")]
@@ -13,6 +14,7 @@ public partial class DetailsPage : ContentPage
     }
 
     private async void Back_Clicked(object sender, EventArgs e) {
+        await DisplayAlertAsync("Back Clicked", $"PlanetName: {PlanetName}, MoonCount: {MoonCount}", "OK");
         await Shell.Current.GoToAsync("..");
     }
 
@@ -24,7 +26,10 @@ public partial class DetailsPage : ContentPage
     }
 
     protected override void OnAppearing() {
-        DisplayAlertAsync("OnAppe message", $"PlanetName: {PlanetName}", "OK");
+        //("OnAppe message", $"PlanetName: {PlanetName}", "OK");
+        BackgroundColor = App.Settings.BackgroundColour;
+       // MessageLabel.FontSize = App.Settings.FontSize;
+       // SoundLabel.Text = App.Settings.SoundEnabled ? "Sound on" : "Sound off";
         base.OnAppearing();
     }
 

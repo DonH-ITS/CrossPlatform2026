@@ -6,16 +6,21 @@
     xmlns:local="clr-namespace:Week9Demo"
     Title="Week9Demo"
     >
-
     <!-- Main application -->
     <TabBar Route="main">
         <ShellContent
-            Title="Home"
+            Title="Library 1"
             Route="MainPage"
-            ContentTemplate="{DataTemplate local:MainPage}" />
+             >
+            <local:MainPage>
+                <x:Arguments>
+                    <x:Int32>1</x:Int32>
+                </x:Arguments>
+            </local:MainPage>
+        </ShellContent>
 
         <ShellContent
-            Title="Other"
+            Title="Library 2"
             Route="MainPage2"
             ContentTemplate="{DataTemplate local:MainPage}" />
     </TabBar>
