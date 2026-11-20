@@ -800,171 +800,6 @@
 <li>Edit a copy of shared settings so that Cancel and the back button do nothing.</li>
 </ul>
 </section></section>
-<section id="extra-if-time" class="title-slide slide level1 center">
-<h1>Extra (if time)</h1>
-
-</section>
-
-<section>
-<section id="part-1-login-to-mainpage" class="title-slide slide level1 center">
-<h1>Part 1: Login to MainPage</h1>
-
-</section>
-<section id="the-scenario" class="slide level2">
-<h2>The Scenario</h2>
-<ol type="1">
-<li>User opens the app and sees the <strong>LoginPage</strong></li>
-<li>User clicks <strong>Login</strong></li>
-<li>User lands on <strong>MainPage</strong></li>
-</ol>
-<ul>
-<li>No flyout menu anywhere</li>
-<li>No back button to login after signing in</li>
-</ul>
-<p><strong>Question:</strong> how do we set this up in <code>AppShell.xaml</code>?</p>
-</section>
-<section id="appshell.xaml" class="slide level2">
-<h2>AppShell.xaml</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb36-1"><a aria-label="1"></a>&lt;<span class="kw">Shell</span></span>
-<span id="cb36-2"><a aria-label="2"></a>    <span class="ot">x:Class=</span><span class="st">"MyApp.AppShell"</span></span>
-<span id="cb36-3"><a aria-label="3"></a>    <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
-<span id="cb36-4"><a aria-label="4"></a>    <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
-<span id="cb36-5"><a aria-label="5"></a>    <span class="ot">xmlns:local=</span><span class="st">"clr-namespace:MyApp"</span></span>
-<span id="cb36-6"><a aria-label="6"></a>    <span class="ot">Title=</span><span class="st">"MyApp"</span></span>
-<span id="cb36-7"><a aria-label="7"></a>    <span class="ot">FlyoutBehavior=</span><span class="st">"Disabled"</span>&gt;</span>
-<span id="cb36-8"><a aria-label="8"></a></span>
-<span id="cb36-9"><a aria-label="9"></a>    &lt;<span class="kw">ShellContent</span></span>
-<span id="cb36-10"><a aria-label="10"></a>        <span class="ot">Route=</span><span class="st">"login"</span></span>
-<span id="cb36-11"><a aria-label="11"></a>        <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:LoginPage}"</span> /&gt;</span>
-<span id="cb36-12"><a aria-label="12"></a></span>
-<span id="cb36-13"><a aria-label="13"></a>    &lt;<span class="kw">ShellContent</span></span>
-<span id="cb36-14"><a aria-label="14"></a>        <span class="ot">Route=</span><span class="st">"main"</span></span>
-<span id="cb36-15"><a aria-label="15"></a>        <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:MainPage}"</span> /&gt;</span>
-<span id="cb36-16"><a aria-label="16"></a></span>
-<span id="cb36-17"><a aria-label="17"></a>&lt;/<span class="kw">Shell</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li>Both pages are <code>ShellContent</code> items, so both are in the Shell hierarchy</li>
-<li>The <strong>first</strong> item is the startup page (<code>login</code>)</li>
-<li><code>FlyoutBehavior="Disabled"</code> stops the flyout (hamburger icon and menu) appearing</li>
-</ul>
-</section>
-<section id="navigating-from-login-to-main" class="slide level2">
-<h2>Navigating from Login to Main</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb37-1"><a aria-label="1"></a><span class="co">// In LoginPage.xaml.cs, when the login button is clicked</span></span>
-<span id="cb37-2"><a aria-label="2"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">"//main"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li><code>//</code> is an <strong>absolute</strong> route: it starts from the Shell hierarchy</li>
-<li><code>main</code> is the <code>Route</code> set on the <code>ShellContent</code></li>
-<li>The navigation stack is replaced, so there is no back button to login</li>
-<li>Logging out is the same idea: <code>await Shell.Current.GoToAsync("//login");</code></li>
-</ul>
-</section>
-<section id="about-shell.flyoutbehaviordisabled" class="slide level2">
-<h2>About Shell.FlyoutBehavior=“Disabled”</h2>
-<p>Three places you can control the flyout:</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Where</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>&lt;Shell FlyoutBehavior="Disabled"&gt;</code></td>
-<td>Flyout off for the whole app</td>
-</tr>
-<tr class="even">
-<td><code>&lt;ContentPage Shell.FlyoutBehavior="Disabled"&gt;</code></td>
-<td>Flyout off for that page only</td>
-</tr>
-<tr class="odd">
-<td><code>&lt;ShellContent FlyoutItemIsVisible="False"&gt;</code></td>
-<td>Hides that item from the flyout menu</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><code>Shell.FlyoutBehavior</code> on a page is an <strong>attached property</strong>, so it goes on the root <code>ContentPage</code> in the page’s XAML</li>
-<li>If it is already set on <code>&lt;Shell&gt;</code>, you don’t need it on the page</li>
-<li>Use the page-level version when you want a flyout on some pages but not on login</li>
-</ul>
-</section>
-<section id="page-level-example-loginpage.xaml" class="slide level2">
-<h2>Page-level Example (LoginPage.xaml)</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb38-1"><a aria-label="1"></a>&lt;<span class="kw">ContentPage</span></span>
-<span id="cb38-2"><a aria-label="2"></a>    <span class="ot">x:Class=</span><span class="st">"MyApp.LoginPage"</span></span>
-<span id="cb38-3"><a aria-label="3"></a>    <span class="ot">xmlns=</span><span class="st">"http://schemas.microsoft.com/dotnet/2021/maui"</span></span>
-<span id="cb38-4"><a aria-label="4"></a>    <span class="ot">xmlns:x=</span><span class="st">"http://schemas.microsoft.com/winfx/2009/xaml"</span></span>
-<span id="cb38-5"><a aria-label="5"></a>    <span class="ot">Shell.FlyoutBehavior=</span><span class="st">"Disabled"</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or in code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb39-1"><a aria-label="1"></a>Shell<span class="op">.</span><span class="fu">SetFlyoutBehavior</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> FlyoutBehavior<span class="op">.</span><span class="fu">Disabled</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section></section>
-<section>
-<section id="part-2-login-to-tabs" class="title-slide slide level1 center">
-<h1>Part 2: Login to Tabs</h1>
-
-</section>
-<section id="the-scenario-1" class="slide level2">
-<h2>The Scenario</h2>
-<ol type="1">
-<li>User opens the app and sees the <strong>LoginPage</strong></li>
-<li>User clicks <strong>Login</strong></li>
-<li>User lands on a <strong>tab bar</strong> with two tabs, both using <code>MainPage</code></li>
-</ol>
-<ul>
-<li>No tab bar or flyout on the login page</li>
-<li>No back button to login after signing in</li>
-</ul>
-<p><strong>Question:</strong> what changes in <code>AppShell.xaml</code>?</p>
-</section>
-<section id="appshell.xaml-login-then-tabs" class="slide level2">
-<h2>AppShell.xaml: Login then Tabs</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb40-1"><a aria-label="1"></a>&lt;<span class="kw">ShellContent</span> <span class="ot">Route=</span><span class="st">"login"</span></span>
-<span id="cb40-2"><a aria-label="2"></a>    <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:LoginPage}"</span> /&gt;</span>
-<span id="cb40-3"><a aria-label="3"></a></span>
-<span id="cb40-4"><a aria-label="4"></a>&lt;<span class="kw">TabBar</span> <span class="ot">Route=</span><span class="st">"main"</span>&gt;</span>
-<span id="cb40-5"><a aria-label="5"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Home"</span></span>
-<span id="cb40-6"><a aria-label="6"></a>        <span class="ot">Icon=</span><span class="st">"home.png"</span></span>
-<span id="cb40-7"><a aria-label="7"></a>        <span class="ot">Route=</span><span class="st">"tab1"</span></span>
-<span id="cb40-8"><a aria-label="8"></a>        <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:MainPage}"</span> /&gt;</span>
-<span id="cb40-9"><a aria-label="9"></a></span>
-<span id="cb40-10"><a aria-label="10"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Other"</span></span>
-<span id="cb40-11"><a aria-label="11"></a>        <span class="ot">Icon=</span><span class="st">"other.png"</span></span>
-<span id="cb40-12"><a aria-label="12"></a>        <span class="ot">Route=</span><span class="st">"tab2"</span></span>
-<span id="cb40-13"><a aria-label="13"></a>        <span class="ot">ContentTemplate=</span><span class="st">"{DataTemplate local:MainPage}"</span> /&gt;</span>
-<span id="cb40-14"><a aria-label="14"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li>The <code>&lt;Shell&gt;</code> element is unchanged (keep <code>FlyoutBehavior="Disabled"</code>)</li>
-<li><code>TabBar</code> with 2+ <code>ShellContent</code> children shows the tab bar</li>
-<li><code>login</code> is a single page, so it gets no tabs</li>
-</ul>
-</section>
-<section id="navigating-from-login-to-tabs" class="slide level2">
-<h2>Navigating from Login to Tabs</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb41-1"><a aria-label="1"></a><span class="co">// Lands on the first tab</span></span>
-<span id="cb41-2"><a aria-label="2"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">"//main"</span><span class="op">);</span></span>
-<span id="cb41-3"><a aria-label="3"></a></span>
-<span id="cb41-4"><a aria-label="4"></a><span class="co">// Or jump straight to a specific tab</span></span>
-<span id="cb41-5"><a aria-label="5"></a>await Shell<span class="op">.</span><span class="fu">Current</span><span class="op">.</span><span class="fu">GoToAsync</span><span class="op">(</span><span class="st">"//main/tab2"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li><code>main</code> is the <code>Route</code> on the <code>TabBar</code></li>
-<li><code>tab2</code> is the <code>Route</code> on the second <code>ShellContent</code></li>
-</ul>
-</section>
-<section id="things-to-watch" class="slide level2">
-<h2>Things to Watch</h2>
-<ul>
-<li>Each tab gets <strong>its own</strong> <code>MainPage</code> instance (<code>ContentTemplate</code> creates one per <code>ShellContent</code>)</li>
-<li>Routes must be unique: <code>tab1</code> and <code>tab2</code> can’t both be <code>main</code></li>
-<li>A <code>TabBar</code> never appears in the flyout</li>
-<li>Pages registered only with <code>Routing.RegisterRoute</code> can’t be reached with <code>//</code></li>
-</ul>
-</section></section>
 <section>
 <section id="setting-up-a-page-differently-in-each-tab" class="title-slide slide level1 center">
 <h1>Setting up a page differently in each tab</h1>
@@ -974,52 +809,35 @@
 <h2>Setting up a page differently in each tab</h2>
 <p>Sometimes we want one page class reused for several tabs, each set up differently.</p>
 <p>Imagine <code>NotesPage</code> used for a “Work” tab and a “Personal” tab. The page takes a value in its constructor:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb42-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">NotesPage</span><span class="op">(</span><span class="dt">string</span> category<span class="op">)</span></span>
-<span id="cb42-2"><a aria-label="2"></a><span class="op">{</span></span>
-<span id="cb42-3"><a aria-label="3"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
-<span id="cb42-4"><a aria-label="4"></a>    CategoryLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> category<span class="op">;</span></span>
-<span id="cb42-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a><span class="kw">public</span> <span class="fu">NotesPage</span><span class="op">(</span><span class="dt">string</span> category<span class="op">)</span></span>
+<span id="cb36-2"><a aria-label="2"></a><span class="op">{</span></span>
+<span id="cb36-3"><a aria-label="3"></a>    <span class="fu">InitializeComponent</span><span class="op">();</span></span>
+<span id="cb36-4"><a aria-label="4"></a>    CategoryLabel<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> category<span class="op">;</span></span>
+<span id="cb36-5"><a aria-label="5"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="passing-constructor-values-from-xaml" class="slide level2">
 <h2>Passing constructor values from XAML</h2>
 <p>In <code>AppShell.xaml</code>, <code>x:Arguments</code> supplies the constructor values:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb43-1"><a aria-label="1"></a>&lt;<span class="kw">TabBar</span>&gt;</span>
-<span id="cb43-2"><a aria-label="2"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Work"</span> <span class="ot">Route=</span><span class="st">"work"</span>&gt;</span>
-<span id="cb43-3"><a aria-label="3"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb43-4"><a aria-label="4"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb43-5"><a aria-label="5"></a>                &lt;<span class="kw">x:String</span>&gt;Work&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb43-6"><a aria-label="6"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb43-7"><a aria-label="7"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb43-8"><a aria-label="8"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
-<span id="cb43-9"><a aria-label="9"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Personal"</span> <span class="ot">Route=</span><span class="st">"personal"</span>&gt;</span>
-<span id="cb43-10"><a aria-label="10"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb43-11"><a aria-label="11"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb43-12"><a aria-label="12"></a>                &lt;<span class="kw">x:String</span>&gt;Personal&lt;/<span class="kw">x:String</span>&gt;</span>
-<span id="cb43-13"><a aria-label="13"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
-<span id="cb43-14"><a aria-label="14"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
-<span id="cb43-15"><a aria-label="15"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
-<span id="cb43-16"><a aria-label="16"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb37-1"><a aria-label="1"></a>&lt;<span class="kw">TabBar</span>&gt;</span>
+<span id="cb37-2"><a aria-label="2"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Work"</span> <span class="ot">Route=</span><span class="st">"work"</span>&gt;</span>
+<span id="cb37-3"><a aria-label="3"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-4"><a aria-label="4"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-5"><a aria-label="5"></a>                &lt;<span class="kw">x:String</span>&gt;Work&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb37-6"><a aria-label="6"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-7"><a aria-label="7"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-8"><a aria-label="8"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
+<span id="cb37-9"><a aria-label="9"></a>    &lt;<span class="kw">ShellContent</span> <span class="ot">Title=</span><span class="st">"Personal"</span> <span class="ot">Route=</span><span class="st">"personal"</span>&gt;</span>
+<span id="cb37-10"><a aria-label="10"></a>        &lt;<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-11"><a aria-label="11"></a>            &lt;<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-12"><a aria-label="12"></a>                &lt;<span class="kw">x:String</span>&gt;Personal&lt;/<span class="kw">x:String</span>&gt;</span>
+<span id="cb37-13"><a aria-label="13"></a>            &lt;/<span class="kw">x:Arguments</span>&gt;</span>
+<span id="cb37-14"><a aria-label="14"></a>        &lt;/<span class="kw">local:NotesPage</span>&gt;</span>
+<span id="cb37-15"><a aria-label="15"></a>    &lt;/<span class="kw">ShellContent</span>&gt;</span>
+<span id="cb37-16"><a aria-label="16"></a>&lt;/<span class="kw">TabBar</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>The arguments are matched to the constructor <strong>by type and order</strong>.</li>
 <li>A mismatch is <strong>not</strong> a compile error. The app fails when it runs.</li>
 </ul>
-</section>
-<section id="adding-a-user-agent-header" class="slide level2">
-<h2>Adding a User-Agent header</h2>
-<p>Some websites require requests to identify the application making them. Add the header to an individual request:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb44-1"><a aria-label="1"></a><span class="kw">using</span> <span class="dt">var</span> request <span class="op">=</span> <span class="kw">new</span> <span class="fu">HttpRequestMessage</span><span class="op">(</span>HttpMethod<span class="op">.</span><span class="fu">Get</span><span class="op">,</span> imageUrl<span class="op">);</span></span>
-<span id="cb44-2"><a aria-label="2"></a>request<span class="op">.</span><span class="fu">Headers</span><span class="op">.</span><span class="fu">UserAgent</span><span class="op">.</span><span class="fu">ParseAdd</span><span class="op">(</span><span class="st">"ExampleMauiApp/1.0"</span><span class="op">);</span></span>
-<span id="cb44-3"><a aria-label="3"></a><span class="kw">using</span> HttpResponseMessage response <span class="op">=</span> await App<span class="op">.</span><span class="fu">Http</span><span class="op">.</span><span class="fu">SendAsync</span><span class="op">(</span>request<span class="op">);</span></span>
-<span id="cb44-4"><a aria-label="4"></a>response<span class="op">.</span><span class="fu">EnsureSuccessStatusCode</span><span class="op">();</span></span>
-<span id="cb44-5"><a aria-label="5"></a><span class="dt">byte</span><span class="op">[]</span> imageData <span class="op">=</span> await response<span class="op">.</span><span class="fu">Content</span><span class="op">.</span><span class="fu">ReadAsByteArrayAsync</span><span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Use a meaningful application name and version, and follow the website’s rules.</p>
-</section>
-<section id="displaying-downloaded-image-data" class="slide level2">
-<h2>Displaying downloaded image data</h2>
-<p>Once the image data has been downloaded, turn it into an <code>ImageSource</code> for an <code>Image</code> control:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb45-1"><a aria-label="1"></a>ImageSource photo <span class="op">=</span> ImageSource<span class="op">.</span><span class="fu">FromStream</span><span class="op">(()</span> <span class="op">=&gt;</span> <span class="kw">new</span> <span class="fu">MemoryStream</span><span class="op">(</span>imageData<span class="op">));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The lambda supplies a new stream each time the image is read.</p>
-<p>This is why we sometimes download image data ourselves instead of binding a URL directly.</p>
 
 
 </section></section>
