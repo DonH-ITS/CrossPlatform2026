@@ -792,109 +792,114 @@
 <p>Depending on the platform and event context, you may need to dispatch UI updates onto the UI thread.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb36-1"><a aria-label="1"></a>audioPlayer<span class="op">.</span><span class="fu">PlaybackEnded</span> <span class="op">+=</span> <span class="op">(</span>sender<span class="op">,</span> e<span class="op">)</span> <span class="op">=&gt;</span> Dispatcher<span class="op">.</span><span class="fu">Dispatch</span><span class="op">(()</span> <span class="op">=&gt;</span> AudioState<span class="op">.</span><span class="fu">Text</span> <span class="op">=</span> <span class="st">"Stopped"</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is similar to what we have encountered with timers and UI updates.</p>
-</section></section>
-<section>
-<section id="debugging" class="title-slide slide level1 center">
-<h1>Debugging</h1>
+<!--
 
-</section>
-<section id="what-is-debugging" class="slide level2">
-<h2>What Is Debugging?</h2>
-<p>Debugging is the process of identifying and fixing problems in our code.</p>
-<p>Not all problems are compilation errors.</p>
-<ul>
-<li>Syntax/compilation errors: code cannot compile.</li>
-<li>Runtime errors: something goes wrong while the program executes.</li>
-<li>Logic errors: the program runs, but does not do what we intended.</li>
-</ul>
-<p>The debugger is particularly useful for understanding runtime and logic errors.</p>
-</section>
-<section id="breakpoints" class="slide level2">
-<h2>Breakpoints</h2>
-<p>A breakpoint allows us to pause the program’s execution at a particular line of code.</p>
-<p>In Visual Studio:</p>
-<ul>
-<li>Click in the left margin beside the line of code.</li>
-<li>A breakpoint marker appears.</li>
-<li>Run the app in Debug mode.</li>
-<li>When execution reaches that line, the program pauses.</li>
-</ul>
-<p>Let’s look at this in a live demonstration.</p>
-</section>
-<section id="inspecting-variables" class="slide level2">
-<h2>Inspecting Variables</h2>
-<p>When the program pauses:</p>
-<ul>
-<li>Hover over a variable to inspect its current value.</li>
-<li>Look at the <strong>Locals</strong> window to see variables available in the current scope.</li>
-<li>Use the <strong>Watch</strong> window to monitor specific expressions.</li>
-<li>Look at the call stack if you need to understand how execution reached this point.</li>
-</ul>
-</section>
-<section id="stepping-through-code" class="slide level2">
-<h2>Stepping Through Code</h2>
-<p>While paused, we can control how execution proceeds:</p>
-<ul>
-<li><strong>Step Over (F10):</strong> execute the current line, without stepping into a called method.</li>
-<li><strong>Step Into (F11):</strong> enter the method being called.</li>
-<li><strong>Step Out:</strong> finish the current method and return to its caller.</li>
-<li><strong>Continue (F5):</strong> resume execution until the next breakpoint or other pause.</li>
-</ul>
-</section>
-<section id="example-a-loop" class="slide level2">
-<h2>Example: A Loop</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb37-1"><a aria-label="1"></a><span class="dt">int</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb37-2"><a aria-label="2"></a></span>
-<span id="cb37-3"><a aria-label="3"></a><span class="kw">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb37-4"><a aria-label="4"></a><span class="op">{</span></span>
-<span id="cb37-5"><a aria-label="5"></a>    result <span class="op">+=</span> i<span class="op">;</span></span>
-<span id="cb37-6"><a aria-label="6"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Set a breakpoint inside the loop.</p>
-<ul>
-<li>What is <code>i</code> on the first iteration?</li>
-<li>What is <code>result</code> before and after the addition?</li>
-<li>How many times does the loop execute?</li>
-<li>When does the loop stop?</li>
-</ul>
-<p>Step through it rather than guessing!</p>
-</section>
-<section id="conditional-breakpoints" class="slide level2">
-<h2>Conditional Breakpoints</h2>
-<p>A conditional breakpoint only pauses when a condition is true.</p>
-<p>For example, we could set a breakpoint inside a loop and only pause when:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource csharp number-lines code-with-copy"><code class="sourceCode cs"><span id="cb38-1"><a aria-label="1"></a>i <span class="op">==</span> <span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This is useful when:</p>
-<ul>
-<li>A loop runs many times.</li>
-<li>A problem only occurs for a particular value.</li>
-<li>We do not want to pause on every iteration.</li>
-</ul>
-</section>
-<section id="debugging-demonstration" class="slide level2">
-<h2>Debugging Demonstration</h2>
-<p>Let’s deliberately introduce a logic error into a small piece of code.</p>
-<ol type="1">
-<li>Predict what the code will do.</li>
-<li>Set a breakpoint.</li>
-<li>Run the code.</li>
-<li>Inspect the variables.</li>
-<li>Step through the code.</li>
-<li>Find and correct the problem.</li>
-</ol>
-<p>The debugger is a tool for investigating what the program is actually doing, not just what we think it should do.</p>
-</section>
-<section id="summary" class="slide level2">
-<h2>Summary</h2>
-<ul>
-<li>Shell routes can move between login pages and the main part of an app.</li>
-<li>A <code>TabBar</code> can group the main destinations in an app.</li>
-<li>Events allow one object to notify other objects that something has happened.</li>
-<li>Events use a publisher–subscriber model: the publisher calls <code>Invoke()</code> and subscribers register with <code>+=</code>.</li>
-<li>A ViewModel can raise an event (such as <code>ShowAlert</code>) and leave it to the page to display it.</li>
-<li><code>FilePicker</code> allows a user to select a file.</li>
-<li><code>Plugin.Maui.Audio</code> provides a way to play audio in a MAUI app.</li>
-<li>Breakpoints and the debugger help us investigate logic and runtime problems.</li>
-</ul>
+# Debugging
+
+## What Is Debugging?
+
+Debugging is the process of identifying and fixing problems in our code.
+
+Not all problems are compilation errors.
+
+- Syntax/compilation errors: code cannot compile.
+- Runtime errors: something goes wrong while the program executes.
+- Logic errors: the program runs, but does not do what we intended.
+
+The debugger is particularly useful for understanding runtime and logic errors.
+
+## Breakpoints
+
+A breakpoint allows us to pause the program's execution at a particular line of code.
+
+In Visual Studio:
+
+- Click in the left margin beside the line of code.
+- A breakpoint marker appears.
+- Run the app in Debug mode.
+- When execution reaches that line, the program pauses.
+
+Let's look at this in a live demonstration.
+
+## Inspecting Variables
+
+When the program pauses:
+
+- Hover over a variable to inspect its current value.
+- Look at the **Locals** window to see variables available in the current scope.
+- Use the **Watch** window to monitor specific expressions.
+- Look at the call stack if you need to understand how execution reached this point.
+
+## Stepping Through Code
+
+While paused, we can control how execution proceeds:
+
+- **Step Over (F10):** execute the current line, without stepping into a called method.
+- **Step Into (F11):** enter the method being called.
+- **Step Out:** finish the current method and return to its caller.
+- **Continue (F5):** resume execution until the next breakpoint or other pause.
+
+## Example: A Loop
+
+```csharp
+int result = 0;
+
+for (int i = 0; i < 10; i++)
+{
+    result += i;
+}
+```
+
+Set a breakpoint inside the loop.
+
+- What is `i` on the first iteration?
+- What is `result` before and after the addition?
+- How many times does the loop execute?
+- When does the loop stop?
+
+Step through it rather than guessing!
+
+## Conditional Breakpoints
+
+A conditional breakpoint only pauses when a condition is true.
+
+For example, we could set a breakpoint inside a loop and only pause when:
+
+```csharp
+i == 5
+```
+
+This is useful when:
+
+- A loop runs many times.
+- A problem only occurs for a particular value.
+- We do not want to pause on every iteration.
+
+## Debugging Demonstration
+
+Let's deliberately introduce a logic error into a small piece of code.
+
+1. Predict what the code will do.
+2. Set a breakpoint.
+3. Run the code.
+4. Inspect the variables.
+5. Step through the code.
+6. Find and correct the problem.
+
+The debugger is a tool for investigating what the program is actually doing, not just what we think it should do.
+
+## Summary
+
+- Shell routes can move between login pages and the main part of an app.
+- A `TabBar` can group the main destinations in an app.
+- Events allow one object to notify other objects that something has happened.
+- Events use a publisher–subscriber model: the publisher calls `Invoke()` and subscribers register with `+=`.
+- A ViewModel can raise an event (such as `ShowAlert`) and leave it to the page to display it.
+- `FilePicker` allows a user to select a file.
+- `Plugin.Maui.Audio` provides a way to play audio in a MAUI app.
+- Breakpoints and the debugger help us investigate logic and runtime problems.
+
+-->
 
 
 </section></section>
