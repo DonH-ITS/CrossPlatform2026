@@ -4,7 +4,7 @@
     "href": "lectures.html",
     "title": "Lecture Slides",
     "section": "",
-    "text": "Week 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\n\n\n\n\nWeek 7 GitHub Resources and Data Binding\n\n\nGitHub with Visual Studio, shared resources and styles in .NET MAUI, and introductory data binding\n\n\n\n\n\n\n\n\n\nWeek 8 MVVM, Web APIs and Custom Events\n\n\nInterfaces, the MVVM pattern, Commands, ObservableCollection, and retrieving data from a web API, custom Events\n\n\n\n\n\n\n\n\n\nWeek 9 Multi-page Applications and Navigation\n\n\nCreating multiple pages, navigating with Shell, passing data between pages, copying objects, and sharing application objects\n\n\n\n\n\nNo matching items"
+    "text": "Navigation, Events, File Picker, Audio and Debugging\n\n\nShell navigation, custom events, FilePicker, audio and debugging in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 1 Introduction\n\n\nIntroduction to Module and C# Crash Course\n\n\n\n\n\n\n\n\n\nWeek 2 .NET MAUI and XAML\n\n\nNET MAUI and XAML for NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 3 Event-Driven Programming\n\n\nEvent-Driven Programming in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 4 Threads, Async/Await and Animations\n\n\nThreads, asynchronous programming and animations in .NET MAUI\n\n\n\n\n\n\n\n\n\nWeek 5 Persistence and Resources\n\n\nPersistence (Preferences), Resources (Images)\n\n\n\n\n\n\n\n\n\nWeek 6 Lists Files Lifecycle JSON\n\n\nC# Lists, File Reading/Writing, Net Maui Page Lifecycle, JSON\n\n\n\n\n\n\n\n\n\nWeek 7 GitHub Resources and Data Binding\n\n\nGitHub with Visual Studio, shared resources and styles in .NET MAUI, and introductory data binding\n\n\n\n\n\n\n\n\n\nWeek 8 MVVM, Web APIs and Custom Events\n\n\nInterfaces, the MVVM pattern, Commands, ObservableCollection, and retrieving data from a web API, custom Events\n\n\n\n\n\n\n\n\n\nWeek 9 Multi-page Applications and Navigation\n\n\nCreating multiple pages, navigating with Shell, passing data between pages, copying objects, and sharing application objects\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "lectures/Week6/Week6.html#why-collections",
@@ -4688,5 +4688,705 @@
     "title": "Lab 8: Album List 2 - Navigation, Images and Tabs",
     "section": "",
     "text": "Most steps in this lab are tasks for you to do, not code to copy. A task says what to achieve. Underneath there are collapsed Hint and Solution boxes: click on one to open it.\nTry each task yourself first. Open a hint only when you are stuck, and the solution only after you have tried. If you open the solution, make sure you understand why it works before you move on, because the later steps build on it."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#logging-in-to-an-app",
+    "href": "lectures/Week10/Week10v1.html#logging-in-to-an-app",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Logging in to an App",
+    "text": "Logging in to an App\nConsider a simple app that has a login page and a main page.\n\nThe user opens the app and sees the LoginPage.\nThe user clicks Login.\nThe user lands on MainPage.\nThere is no flyout menu.\nThe user cannot use the normal back button to return to LoginPage.\n\nHow could we set this up using Shell?"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#appshell.xaml",
+    "href": "lectures/Week10/Week10v1.html#appshell.xaml",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "AppShell.xaml",
+    "text": "AppShell.xaml\n&lt;Shell\n    x:Class=\"MyApp.AppShell\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    xmlns:local=\"clr-namespace:MyApp\"\n    Title=\"MyApp\"\n    FlyoutBehavior=\"Disabled\"&gt;\n\n    &lt;ShellContent\n        Route=\"login\"\n        ContentTemplate=\"{DataTemplate local:LoginPage}\" /&gt;\n\n    &lt;ShellContent\n        Route=\"main\"\n        ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n\n&lt;/Shell&gt;\n\nBoth pages are ShellContent items.\nThe first item is the startup page (login).\nFlyoutBehavior=\"Disabled\" disables the flyout for the Shell."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#navigating-from-login-to-main",
+    "href": "lectures/Week10/Week10v1.html#navigating-from-login-to-main",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Navigating from Login to Main",
+    "text": "Navigating from Login to Main\nIn LoginPage.xaml.cs, when the login button is clicked:\nprivate async void Login_Clicked(object sender, EventArgs e)\n{\n    // In a real app, authenticate the user first.\n    await Shell.Current.GoToAsync(\"//main\");\n}\n\n// indicates absolute Shell navigation.\nmain is the route assigned to the ShellContent.\nIn this scenario, navigating to //main takes the user to the main part of the app without a normal back route to the login page."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#logging-out",
+    "href": "lectures/Week10/Week10v1.html#logging-out",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Logging Out",
+    "text": "Logging Out\nThe same approach can return the user to the login page:\nprivate async void Logout_Clicked(object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"//login\");\n}\nThis is only a simplified navigation example. A real login system also needs to manage authentication state and credentials appropriately."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#controlling-the-flyout",
+    "href": "lectures/Week10/Week10v1.html#controlling-the-flyout",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Controlling the Flyout",
+    "text": "Controlling the Flyout\nThere are a few ways to control the Shell flyout:\n\n\n\n\n\n\n\nSetting\nEffect\n\n\n\n\nShell FlyoutBehavior=\"Disabled\"\nDisables the flyout throughout the Shell\n\n\nContentPage Shell.FlyoutBehavior=\"Disabled\"\nDisables the flyout for that page\n\n\nShellContent FlyoutItemIsVisible=\"False\"\nHides that item from the flyout menu\n\n\n\nShell.FlyoutBehavior on a page is an attached property. It can be set in the page’s XAML:\n&lt;ContentPage\n    x:Class=\"MyApp.LoginPage\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    Shell.FlyoutBehavior=\"Disabled\"&gt;\nOr in code:\nShell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);\nIf the flyout is already disabled at Shell level, you do not need to set it again on the page."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#login-to-a-tabbar",
+    "href": "lectures/Week10/Week10v1.html#login-to-a-tabbar",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Login to a TabBar",
+    "text": "Login to a TabBar\nWhat if the main part of the app has a tab bar, with two tabs?\n\nLogin page: no tabs.\nAfter login: a tab bar with two destinations.\nNo back button to the login page.\n\nWhat changes in AppShell.xaml?"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#appshell.xaml-login-then-tabs",
+    "href": "lectures/Week10/Week10v1.html#appshell.xaml-login-then-tabs",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "AppShell.xaml: Login then Tabs",
+    "text": "AppShell.xaml: Login then Tabs\n&lt;Shell\n    x:Class=\"MyApp.AppShell\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    xmlns:local=\"clr-namespace:MyApp\"\n    FlyoutBehavior=\"Disabled\"&gt;\n\n    &lt;ShellContent Route=\"login\"\n        ContentTemplate=\"{DataTemplate local:LoginPage}\" /&gt;\n\n    &lt;TabBar Route=\"main\"&gt;\n        &lt;ShellContent Title=\"Home\"\n            Icon=\"home.png\"\n            Route=\"tab1\"\n            ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n\n        &lt;ShellContent Title=\"Other\"\n            Icon=\"other.png\"\n            Route=\"tab2\"\n            ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n    &lt;/TabBar&gt;\n&lt;/Shell&gt;\n\nTabBar groups the tab destinations.\nlogin is outside the tab bar, so it does not show tabs.\nEach ShellContent has its own page instance when its ContentTemplate is used."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#navigating-to-the-tabs",
+    "href": "lectures/Week10/Week10v1.html#navigating-to-the-tabs",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Navigating to the Tabs",
+    "text": "Navigating to the Tabs\n// Navigate to the first tab\nawait Shell.Current.GoToAsync(\"//main\");\n\n// Or navigate directly to the second tab\nawait Shell.Current.GoToAsync(\"//main/tab2\");\n\nmain is the route on the TabBar.\ntab2 is the route on the second ShellContent.\nRoutes within the Shell hierarchy need to be unique.\nA TabBar is not displayed as a flyout menu item."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#things-to-watch-with-shell-routes",
+    "href": "lectures/Week10/Week10v1.html#things-to-watch-with-shell-routes",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Things to Watch with Shell Routes",
+    "text": "Things to Watch with Shell Routes\n\nCheck the route names you have assigned in your Shell hierarchy.\nAbsolute routes such as //main navigate to a destination in the Shell hierarchy.\nPages registered using Routing.RegisterRoute are generally navigated to using relative routes, rather than as a Shell hierarchy root using //.\nBe deliberate about whether a page should be part of the tab hierarchy, the flyout, or a separate route."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#events-weve-already-used-them",
+    "href": "lectures/Week10/Week10v1.html#events-weve-already-used-them",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Events: We’ve Already Used Them",
+    "text": "Events: We’ve Already Used Them\nWe have already used many event handlers:\n\nClicking a button.\nTapping a control.\nA timer tick.\nAn audio player finishing playback.\n\nBut what if we want to create and raise our own events?\nBefore looking at that, let’s revisit something we have used with data binding."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#inotifypropertychanged",
+    "href": "lectures/Week10/Week10v1.html#inotifypropertychanged",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "INotifyPropertyChanged",
+    "text": "INotifyPropertyChanged\nWhen using INotifyPropertyChanged, we raise an event whenever a property changes:\npublic event PropertyChangedEventHandler? PropertyChanged;\n\nprivate void OnPropertyChanged(string propertyName)\n{\n    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n}\n\nPropertyChanged is an event.\nInvoke() calls the methods subscribed to the event.\nThe UI listens for property changes and updates the relevant controls.\n\nWe’ve been using events without necessarily looking at how they work!"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#what-does-invoke-do",
+    "href": "lectures/Week10/Week10v1.html#what-does-invoke-do",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "What Does Invoke() Do?",
+    "text": "What Does Invoke() Do?\nAn event is a way for one object to notify other objects that something has happened.\nWhen we call:\nPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n\nthis identifies the object raising the event.\nPropertyChangedEventArgs contains information about which property changed.\n?. means we only invoke the event if there are subscribers.\nEvery registered subscriber is notified."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#publisher-and-subscriber",
+    "href": "lectures/Week10/Week10v1.html#publisher-and-subscriber",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Publisher and Subscriber",
+    "text": "Publisher and Subscriber\nEvents use a publisher–subscriber model.\n\nPublisher: the object that raises the event.\nSubscriber: an object that registers to receive the event.\n\nThe publisher does not need to know who is listening. It simply raises the event when something happens.\nThe subscriber decides how to respond."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#the-eventhandler-delegate",
+    "href": "lectures/Week10/Week10v1.html#the-eventhandler-delegate",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "The EventHandler Delegate",
+    "text": "The EventHandler Delegate\nEvents in C# use delegates to describe the method signature that subscribers must provide.\nThe standard EventHandler delegate has the signature:\nvoid Handler(object? sender, EventArgs e)\n\nsender identifies the object raising the event.\ne contains additional event information (if any)."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#creating-an-event",
+    "href": "lectures/Week10/Week10v1.html#creating-an-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Creating an Event",
+    "text": "Creating an Event\nLet’s create a simple class that raises an event when a game starts.\npublic class Game\n{\n    public event EventHandler? GameStarted;\n\n    public void Start()\n    {\n        GameStarted?.Invoke(this, EventArgs.Empty);\n    }\n}\n\nWe declare an event using event.\nEventHandler describes the handler signature.\nEventArgs.Empty is used when there is no additional event data.\nWe raise the event using Invoke()."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#subscribing-to-the-event",
+    "href": "lectures/Week10/Week10v1.html#subscribing-to-the-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Subscribing to the Event",
+    "text": "Subscribing to the Event\nIn our page, we can subscribe to the event:\nGame game = new();\n\ngame.GameStarted += Game_GameStarted;\n\ngame.Start();\n\nprivate void Game_GameStarted(object? sender, EventArgs e)\n{\n    DisplayAlertAsync(\"Game\", \"Game started!\", \"OK\");\n}\nThe subscriber registers using +=.\nWhen Start() raises the event, the handler is called."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#using-a-lambda-to-subscribe",
+    "href": "lectures/Week10/Week10v1.html#using-a-lambda-to-subscribe",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Using a Lambda to Subscribe",
+    "text": "Using a Lambda to Subscribe\nWe can also subscribe using a lambda expression:\ngame.GameStarted += (sender, e) =&gt; DisplayAlertAsync(\"Game\", \"Game started!\", \"OK\");\nThis is the same idea as the event handlers we’ve already used with buttons and other controls."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#events-with-additional-data",
+    "href": "lectures/Week10/Week10v1.html#events-with-additional-data",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Events with Additional Data",
+    "text": "Events with Additional Data\nThe standard EventHandler has no data of its own: e is just an empty EventArgs.\nWe can send data through e using EventHandler&lt;T&gt; and our own data class, but an easier option is the Action delegate, where we simply list the parameters we want.\npublic event Action&lt;string, string, string&gt;? ShowAlert;\nWe can raise the event:\nShowAlert?.Invoke(\"Warning\", \"Are you sure?\", \"Cancel\");\nAnd subscribe:\nShowAlert += (title, message, cancel) =&gt;\n{\n    // Respond to the event\n};"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#raising-an-event-with-data",
+    "href": "lectures/Week10/Week10v1.html#raising-an-event-with-data",
+    "title": "Navigation, Events, Files, Audio and Debugging",
+    "section": "Raising an Event with Data",
+    "text": "Raising an Event with Data\npublic class Game\n{\n    public event EventHandler&lt;MessageEventArgs&gt;? GameMessage;\n\n    public void SendMessage(string message)\n    {\n        GameMessage?.Invoke(this,\n            new MessageEventArgs(message));\n    }\n}\nThe event now passes an object containing the message to its subscribers."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#subscribing-to-an-event-with-data",
+    "href": "lectures/Week10/Week10v1.html#subscribing-to-an-event-with-data",
+    "title": "Navigation, Events, Files, Audio and Debugging",
+    "section": "Subscribing to an Event with Data",
+    "text": "Subscribing to an Event with Data\nGame game = new();\n\ngame.GameMessage += (sender, e) =&gt;\n{\n    DisplayAlert(\"Game\", e.Message, \"OK\");\n};\n\ngame.SendMessage(\"Processing complete!\");\n\ne contains the event data.\nThe publisher still does not need to know who is listening.\nSubscribers can respond in different ways."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#using-action-for-events",
+    "href": "lectures/Week10/Week10v1.html#using-action-for-events",
+    "title": "Navigation, Events, Files, Audio and Debugging",
+    "section": "Using Action for Events",
+    "text": "Using Action for Events\nWe do not always need to use EventHandler when defining an event.\nC# also provides the Action delegate, which allows us to specify our own parameters.\npublic event Action&lt;string, string, string&gt;? ShowAlert;\nWe can raise the event:\nShowAlert?.Invoke(\"Warning\", \"Are you sure?\", \"Cancel\");\nAnd subscribe:\nShowAlert += (title, message, cancel) =&gt;\n{\n    // Respond to the event\n};"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#eventhandler-or-action",
+    "href": "lectures/Week10/Week10v1.html#eventhandler-or-action",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "EventHandler or Action?",
+    "text": "EventHandler or Action?\n\nEventHandler follows the standard .NET event pattern and includes the sender. With EventHandler&lt;T&gt; it can also carry data in e.\nAction lets us choose our own parameters, which is useful when we need to pass data.\nBoth support multiple subscribers and can be unsubscribed using -=.\n\nUse the approach that makes sense for the code you’re writing. For our own events, what matters is that you can declare the event, raise it with Invoke(), and subscribe with +=."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#filepicker",
+    "href": "lectures/Week10/Week10v1.html#filepicker",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "FilePicker",
+    "text": "FilePicker\nSometimes we want an app to allow the user to select a file.\nExamples:\n\nSelect a picture.\nChoose a document.\nSelect an audio file.\n\nMAUI provides FilePicker for this."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#selecting-a-file",
+    "href": "lectures/Week10/Week10v1.html#selecting-a-file",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Selecting a File",
+    "text": "Selecting a File\nFileResult? fileResult = await FilePicker.Default.PickAsync();\nThis opens the platform’s file selection interface.\n\nThe user can select a file.\nThe user can cancel.\nIf the user cancels, fileResult will be null."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#checking-the-result",
+    "href": "lectures/Week10/Week10v1.html#checking-the-result",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Checking the Result",
+    "text": "Checking the Result\nFileResult? fileResult = await FilePicker.Default.PickAsync();\n\nif (fileResult != null)\n{\n    // The user selected a file\n}\nWe can inspect the filename:\nfileResult.FileName\nFor example, we might check the extension:\nif (fileResult.FileName.EndsWith(\".jpg\", StringComparison.OrdinalIgnoreCase))\n{\n    // Looks like a JPG filename\n}\nThis is only a filename check, not proof of the file’s actual contents.\nRemember, you should never trust data from a user, so some care is usually needed here."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#reading-the-selected-file",
+    "href": "lectures/Week10/Week10v1.html#reading-the-selected-file",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Reading the Selected File",
+    "text": "Reading the Selected File\nWe can open a stream from the selected file:\nusing Stream stream = await fileResult.OpenReadAsync();\nWe can then use the stream to read the file.\n\nPrefer working with the stream when possible.\nDo not assume a selected file’s path is available or behaves identically across platforms.\nAlways consider what could happen if the file is invalid or cannot be read."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#pickoptions",
+    "href": "lectures/Week10/Week10v1.html#pickoptions",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "PickOptions",
+    "text": "PickOptions\nWe can customise the picker:\nPickOptions options = new()\n{\n    PickerTitle = \"Please select an image file\",\n    FileTypes = FilePickerFileType.Images\n};\n\nFileResult? fileResult = await FilePicker.Default.PickAsync(options);\nFilePickerFileType provides some predefined types, such as images and other common file categories."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#custom-file-types",
+    "href": "lectures/Week10/Week10v1.html#custom-file-types",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Custom File Types",
+    "text": "Custom File Types\nIf we want to select a particular type of file, we can define our own file types.\nFor example, for audio files on Windows and Android:\nvar customFileType = new FilePickerFileType(new Dictionary&lt;DevicePlatform, IEnumerable&lt;string&gt;&gt;\n{\n    { DevicePlatform.WinUI, new[] { \".mp3\", \".ogg\", \".flac\" } },\n    { DevicePlatform.Android, new[] { \"audio/mpeg\", \"audio/ogg\", \"audio/flac\" } }\n});\nThen use it in the picker options:\nPickOptions options = new()\n{\n    PickerTitle = \"Please select an audio file\",\n    FileTypes = customFileType\n};\n\nFileResult? fileResult = await FilePicker.Default.PickAsync(options);\nFile type filters are useful, but they do not guarantee that a file is valid or safe to process."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#filepicker-things-to-remember",
+    "href": "lectures/Week10/Week10v1.html#filepicker-things-to-remember",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "FilePicker: Things to Remember",
+    "text": "FilePicker: Things to Remember\n\nThe user may cancel.\nA selected file may not contain what you expect.\nThe filename and extension are not proof of the file’s contents.\nUse OpenReadAsync() to access the selected file’s contents.\nPlatform-specific file type definitions may be needed for custom types.\n\nFor more details, see the MAUI FilePicker documentation."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#playing-audio-in-maui",
+    "href": "lectures/Week10/Week10v1.html#playing-audio-in-maui",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Playing Audio in MAUI",
+    "text": "Playing Audio in MAUI\nThere are different ways to play audio in MAUI.\nOne option is the Plugin.Maui.Audio library.\nThis is also useful for the audio functionality in your project.\nFirst, install the package through NuGet."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#creating-an-audio-player",
+    "href": "lectures/Week10/Week10v1.html#creating-an-audio-player",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Creating an Audio Player",
+    "text": "Creating an Audio Player\nAdd the using statement:\nusing Plugin.Maui.Audio;\nDeclare an IAudioPlayer field:\nprivate IAudioPlayer? audioPlayer;\nCreate a player from an audio file stored in the app package:\naudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(\"dicerolling.mp3\"));\nThe file must be included in the app package and configured appropriately as an asset."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#playing-audio",
+    "href": "lectures/Week10/Week10v1.html#playing-audio",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Playing Audio",
+    "text": "Playing Audio\nOnce we have created the player, we can call:\naudioPlayer?.Play();\nEach time Play() is called, playback begins or resumes according to the player state.\nOther methods include:\n\nPause() – pause playback.\nPlay() – begin playback or resume.\nSeek(double position) – change the playback position (seconds).\nStop() – stop playback and reset to the beginning."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#audio-player-properties",
+    "href": "lectures/Week10/Week10v1.html#audio-player-properties",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Audio Player Properties",
+    "text": "Audio Player Properties\nThe player also provides useful properties.\n\nIsPlaying – indicates whether audio is playing.\nLoop – whether playback repeats.\nSpeed – playback speed.\nBalance – adjusts left/right balance.\n\nInspect the library documentation for other properties and methods."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#when-playback-ends",
+    "href": "lectures/Week10/Week10v1.html#when-playback-ends",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "When Playback Ends",
+    "text": "When Playback Ends\nThe audio player also provides an event when playback finishes:\naudioPlayer.PlaybackEnded += AudioPlayer_PlaybackEnded;\n\nprivate void AudioPlayer_PlaybackEnded(object? sender, EventArgs e)\n{\n    // Playback has ended\n}\nThis is another example of the publisher–subscriber pattern.\nThe audio player raises the event; our code subscribes and responds."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#updating-the-ui-from-the-playback-event",
+    "href": "lectures/Week10/Week10v1.html#updating-the-ui-from-the-playback-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Updating the UI from the Playback Event",
+    "text": "Updating the UI from the Playback Event\nDepending on the platform and event context, you may need to dispatch UI updates onto the UI thread.\naudioPlayer.PlaybackEnded += (sender, e) =&gt; Dispatcher.Dispatch(() =&gt; AudioState.Text = \"Stopped\");\nThis is similar to what we have encountered with timers and UI updates."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#debugging",
+    "href": "lectures/Week10/Week10v1.html#debugging",
+    "title": "Navigation, Events, Files, Audio and Debugging",
+    "section": "Debugging",
+    "text": "Debugging\nDebugging is the process of identifying and fixing problems in our code.\nNot all problems are compilation errors.\n\nSyntax/compilation errors: code cannot compile.\nRuntime errors: something goes wrong while the program executes.\nLogic errors: the program runs, but does not do what we intended.\n\nThe debugger is particularly useful for understanding runtime and logic errors."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#breakpoints",
+    "href": "lectures/Week10/Week10v1.html#breakpoints",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Breakpoints",
+    "text": "Breakpoints\nA breakpoint allows us to pause the program’s execution at a particular line of code.\nIn Visual Studio:\n\nClick in the left margin beside the line of code.\nA breakpoint marker appears.\nRun the app in Debug mode.\nWhen execution reaches that line, the program pauses.\n\nLet’s look at this in a live demonstration."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#inspecting-variables",
+    "href": "lectures/Week10/Week10v1.html#inspecting-variables",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Inspecting Variables",
+    "text": "Inspecting Variables\nWhen the program pauses:\n\nHover over a variable to inspect its current value.\nLook at the Locals window to see variables available in the current scope.\nUse the Watch window to monitor specific expressions.\nLook at the call stack if you need to understand how execution reached this point."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#stepping-through-code",
+    "href": "lectures/Week10/Week10v1.html#stepping-through-code",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Stepping Through Code",
+    "text": "Stepping Through Code\nWhile paused, we can control how execution proceeds:\n\nStep Over (F10): execute the current line, without stepping into a called method.\nStep Into (F11): enter the method being called.\nStep Out: finish the current method and return to its caller.\nContinue (F5): resume execution until the next breakpoint or other pause."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#example-a-loop",
+    "href": "lectures/Week10/Week10v1.html#example-a-loop",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: A Loop",
+    "text": "Example: A Loop\nint result = 0;\n\nfor (int i = 0; i &lt; 10; i++)\n{\n    result += i;\n}\nSet a breakpoint inside the loop.\n\nWhat is i on the first iteration?\nWhat is result before and after the addition?\nHow many times does the loop execute?\nWhen does the loop stop?\n\nStep through it rather than guessing!"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#conditional-breakpoints",
+    "href": "lectures/Week10/Week10v1.html#conditional-breakpoints",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Conditional Breakpoints",
+    "text": "Conditional Breakpoints\nA conditional breakpoint only pauses when a condition is true.\nFor example, we could set a breakpoint inside a loop and only pause when:\ni == 5\nThis is useful when:\n\nA loop runs many times.\nA problem only occurs for a particular value.\nWe do not want to pause on every iteration."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#debugging-demonstration",
+    "href": "lectures/Week10/Week10v1.html#debugging-demonstration",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Debugging Demonstration",
+    "text": "Debugging Demonstration\nLet’s deliberately introduce a logic error into a small piece of code.\n\nPredict what the code will do.\nSet a breakpoint.\nRun the code.\nInspect the variables.\nStep through the code.\nFind and correct the problem.\n\nThe debugger is a tool for investigating what the program is actually doing, not just what we think it should do."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#summary",
+    "href": "lectures/Week10/Week10v1.html#summary",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Summary",
+    "text": "Summary\n\nShell routes can move between login pages and the main part of an app.\nA TabBar can group the main destinations in an app.\nEvents allow one object to notify other objects that something has happened.\nEvents use a publisher–subscriber model: the publisher calls Invoke() and subscribers register with +=.\nA ViewModel can raise an event (such as ShowAlert) and leave it to the page to display it.\nFilePicker allows a user to select a file.\nPlugin.Maui.Audio provides a way to play audio in a MAUI app.\nBreakpoints and the debugger help us investigate logic and runtime problems."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#example-a-viewmodel-needs-an-alert",
+    "href": "lectures/Week10/Week10v1.html#example-a-viewmodel-needs-an-alert",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: A ViewModel Needs an Alert",
+    "text": "Example: A ViewModel Needs an Alert\nSuppose the ViewModel decides that the game is over and the user should be told.\n\nDisplayAlertAsync is a method of the page. The ViewModel does not have access to it.\nA ViewModel should not know about the UI, so it should never display the alert itself.\nInstead, the ViewModel raises an event and the page decides how to respond.\n\nThis is the publisher–subscriber model again: the ViewModel is the publisher and the page is the subscriber."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#the-viewmodel-raises-the-event",
+    "href": "lectures/Week10/Week10v1.html#the-viewmodel-raises-the-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "The ViewModel Raises the Event",
+    "text": "The ViewModel Raises the Event\npublic class GameViewModel\n{\n    public event Action&lt;string, string, string&gt;? ShowAlert;\n\n    public void EndGame(int score)\n    {\n        ShowAlert?.Invoke(\"Game Over\", $\"You scored {score}\", \"OK\");\n    }\n}\nThe ViewModel does not know who is listening, or even if anyone is.\nAs a reminder, the ? is there to check for null.\n\nIf nobody has subscribed, the event is null.\nWithout the ?, calling Invoke() would cause a runtime error.\nThe ? avoids it."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#the-page-subscribes-and-displays-the-alert",
+    "href": "lectures/Week10/Week10v1.html#the-page-subscribes-and-displays-the-alert",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "The Page Subscribes and Displays the Alert",
+    "text": "The Page Subscribes and Displays the Alert\nprivate readonly GameViewModel _viewmodel = new();\n\npublic MainPage()\n{\n    InitializeComponent();\n    BindingContext = _viewmodel;\n    _viewmodel.ShowAlert += ViewModel_ShowAlert;\n}\n\nprivate async void ViewModel_ShowAlert(string title, string message, string cancel)\n{\n    await DisplayAlertAsync(title, message, cancel);\n}\n\nThe page subscribes in its constructor using +=.\nWhen the ViewModel calls Invoke(), the handler runs and the page displays the alert.\nAnother page could subscribe to the same event and respond differently."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#changing-the-audio-file",
+    "href": "lectures/Week10/Week10v1.html#changing-the-audio-file",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Changing the Audio File",
+    "text": "Changing the Audio File\nTo play a different file with the same field, dispose of the old player first:\naudioPlayer?.Dispose();\naudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(\"explosion.mp3\"));\n\nOne player plays one sound at a time.\nIf sounds need to overlap (for example, several effects in a game), use more than one IAudioPlayer field."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#what-is-debugging",
+    "href": "lectures/Week10/Week10v1.html#what-is-debugging",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "What Is Debugging?",
+    "text": "What Is Debugging?\nDebugging is the process of identifying and fixing problems in our code.\nNot all problems are compilation errors.\n\nSyntax/compilation errors: code cannot compile.\nRuntime errors: something goes wrong while the program executes.\nLogic errors: the program runs, but does not do what we intended.\n\nThe debugger is particularly useful for understanding runtime and logic errors."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#example-showing-a-picked-image",
+    "href": "lectures/Week10/Week10v1.html#example-showing-a-picked-image",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: Showing a Picked Image",
+    "text": "Example: Showing a Picked Image\nprivate async void PickImage_Clicked(object sender, EventArgs e)\n{\n    try\n    {\n        PickOptions options = new()\n        {\n            PickerTitle = \"Please select an image file\",\n            FileTypes = FilePickerFileType.Images\n        };\n\n        FileResult? result = await FilePicker.Default.PickAsync(options);\n\n        if (result == null) return;\n\n        string name = result.FileName.ToLower();\n\n        if (name.EndsWith(\".jpg\") || name.EndsWith(\".png\"))\n        {\n            using Stream stream = await result.OpenReadAsync();\n            using MemoryStream memory = new();\n            await stream.CopyToAsync(memory);\n            byte[] data = memory.ToArray();\n\n            ImageDisplay.Source = ImageSource.FromStream(() =&gt; new MemoryStream(data));\n        }\n    }\n    catch (Exception)\n    {\n        await DisplayAlertAsync(\"Error\", \"Could not load the image.\", \"OK\");\n    }\n}"
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#showing-a-picked-image-notes",
+    "href": "lectures/Week10/Week10v1.html#showing-a-picked-image-notes",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Showing a Picked Image: Notes",
+    "text": "Showing a Picked Image: Notes\n\nWe check for null (the user cancelled) and check the extension before using the file.\nThe stream is disposed when the method ends, so we copy the data into a byte array first.\nImageSource.FromStream takes a method that returns a stream, so we create a new MemoryStream from the data each time.\nresult.FullPath is tempting, but the path is platform dependent. Working with the stream avoids relying on it.\nThe try/catch handles files that cannot be read.\n\nThis is enough if we only want to display the image while the app is running."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#example-remembering-the-image",
+    "href": "lectures/Week10/Week10v1.html#example-remembering-the-image",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: Remembering the Image",
+    "text": "Example: Remembering the Image\nWhat if the app should show the same image the next time it runs?\nCopy the file into the app’s own storage:\nstring fileName = \"profile\" + Path.GetExtension(result.FileName);\nstring path = Path.Combine(FileSystem.AppDataDirectory, fileName);\n\nusing Stream input = await result.OpenReadAsync();\nusing FileStream output = File.Create(path);\nawait input.CopyToAsync(output);\n\nPreferences.Default.Set(\"ProfileImage\", fileName);\nThen store only the filename in your settings (here using Preferences, but your settings JSON would also work)."
+  },
+  {
+    "objectID": "lectures/Week10/Week10v1.html#loading-the-remembered-image",
+    "href": "lectures/Week10/Week10v1.html#loading-the-remembered-image",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Loading the Remembered Image",
+    "text": "Loading the Remembered Image\nWhen the page starts:\nstring fileName = Preferences.Default.Get(\"ProfileImage\", \"\");\nstring path = Path.Combine(FileSystem.AppDataDirectory, fileName);\n\nif (fileName != \"\" && File.Exists(path)) ImageDisplay.Source = ImageSource.FromStream(() =&gt; File.OpenRead(path));\n\nStore the filename and rebuild the path with Path.Combine, rather than storing a full path.\nCheck that the file still exists before using it.\nThe image is now a copy in the app’s own storage, so it does not depend on the original file."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#logging-in-to-an-app",
+    "href": "lectures/Week10/Week10.html#logging-in-to-an-app",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Logging in to an App",
+    "text": "Logging in to an App\nConsider a simple app that has a login page and a main page.\n\nThe user opens the app and sees the LoginPage.\nThe user clicks Login.\nThe user lands on MainPage.\nThere is no flyout menu.\nThe user cannot use the normal back button to return to LoginPage.\n\nHow could we set this up using Shell?"
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#appshell.xaml",
+    "href": "lectures/Week10/Week10.html#appshell.xaml",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "AppShell.xaml",
+    "text": "AppShell.xaml\n&lt;Shell\n    x:Class=\"MyApp.AppShell\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    xmlns:local=\"clr-namespace:MyApp\"\n    Title=\"MyApp\"\n    FlyoutBehavior=\"Disabled\"&gt;\n\n    &lt;ShellContent\n        Route=\"login\"\n        ContentTemplate=\"{DataTemplate local:LoginPage}\" /&gt;\n\n    &lt;ShellContent\n        Route=\"main\"\n        ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n\n&lt;/Shell&gt;\n\nBoth pages are ShellContent items.\nThe first item is the startup page (login).\nFlyoutBehavior=\"Disabled\" disables the flyout for the Shell."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#navigating-from-login-to-main",
+    "href": "lectures/Week10/Week10.html#navigating-from-login-to-main",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Navigating from Login to Main",
+    "text": "Navigating from Login to Main\nIn LoginPage.xaml.cs, when the login button is clicked:\nprivate async void Login_Clicked(object sender, EventArgs e)\n{\n    // In a real app, authenticate the user first.\n    await Shell.Current.GoToAsync(\"//main\");\n}\n\n// indicates absolute Shell navigation.\nmain is the route assigned to the ShellContent.\nIn this scenario, navigating to //main takes the user to the main part of the app without a normal back route to the login page."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#logging-out",
+    "href": "lectures/Week10/Week10.html#logging-out",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Logging Out",
+    "text": "Logging Out\nThe same approach can return the user to the login page:\nprivate async void Logout_Clicked(object sender, EventArgs e)\n{\n    await Shell.Current.GoToAsync(\"//login\");\n}\nThis is only a simplified navigation example. A real login system also needs to manage authentication state and credentials appropriately."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#controlling-the-flyout",
+    "href": "lectures/Week10/Week10.html#controlling-the-flyout",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Controlling the Flyout",
+    "text": "Controlling the Flyout\nThere are a few ways to control the Shell flyout:\n\n\n\n\n\n\n\nSetting\nEffect\n\n\n\n\nShell FlyoutBehavior=\"Disabled\"\nDisables the flyout throughout the Shell\n\n\nContentPage Shell.FlyoutBehavior=\"Disabled\"\nDisables the flyout for that page\n\n\nShellContent FlyoutItemIsVisible=\"False\"\nHides that item from the flyout menu\n\n\n\nShell.FlyoutBehavior on a page is an attached property. It can be set in the page’s XAML:\n&lt;ContentPage\n    x:Class=\"MyApp.LoginPage\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    Shell.FlyoutBehavior=\"Disabled\"&gt;\nOr in code:\nShell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);\nIf the flyout is already disabled at Shell level, you do not need to set it again on the page."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#login-to-a-tabbar",
+    "href": "lectures/Week10/Week10.html#login-to-a-tabbar",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Login to a TabBar",
+    "text": "Login to a TabBar\nWhat if the main part of the app has a tab bar, with two tabs?\n\nLogin page: no tabs.\nAfter login: a tab bar with two destinations.\nNo back button to the login page.\n\nWhat changes in AppShell.xaml?"
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#appshell.xaml-login-then-tabs",
+    "href": "lectures/Week10/Week10.html#appshell.xaml-login-then-tabs",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "AppShell.xaml: Login then Tabs",
+    "text": "AppShell.xaml: Login then Tabs\n&lt;Shell\n    x:Class=\"MyApp.AppShell\"\n    xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n    xmlns:local=\"clr-namespace:MyApp\"\n    FlyoutBehavior=\"Disabled\"&gt;\n\n    &lt;ShellContent Route=\"login\"\n        ContentTemplate=\"{DataTemplate local:LoginPage}\" /&gt;\n\n    &lt;TabBar Route=\"main\"&gt;\n        &lt;ShellContent Title=\"Home\"\n            Icon=\"home.png\"\n            Route=\"tab1\"\n            ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n\n        &lt;ShellContent Title=\"Other\"\n            Icon=\"other.png\"\n            Route=\"tab2\"\n            ContentTemplate=\"{DataTemplate local:MainPage}\" /&gt;\n    &lt;/TabBar&gt;\n&lt;/Shell&gt;\n\nTabBar groups the tab destinations.\nlogin is outside the tab bar, so it does not show tabs.\nEach ShellContent has its own page instance when its ContentTemplate is used."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#navigating-to-the-tabs",
+    "href": "lectures/Week10/Week10.html#navigating-to-the-tabs",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Navigating to the Tabs",
+    "text": "Navigating to the Tabs\n// Navigate to the first tab\nawait Shell.Current.GoToAsync(\"//main\");\n\n// Or navigate directly to the second tab\nawait Shell.Current.GoToAsync(\"//main/tab2\");\n\nmain is the route on the TabBar.\ntab2 is the route on the second ShellContent.\nRoutes within the Shell hierarchy need to be unique.\nA TabBar is not displayed as a flyout menu item."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#things-to-watch-with-shell-routes",
+    "href": "lectures/Week10/Week10.html#things-to-watch-with-shell-routes",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Things to Watch with Shell Routes",
+    "text": "Things to Watch with Shell Routes\n\nCheck the route names you have assigned in your Shell hierarchy.\nAbsolute routes such as //main navigate to a destination in the Shell hierarchy.\nPages registered using Routing.RegisterRoute are generally navigated to using relative routes, rather than as a Shell hierarchy root using //.\nBe deliberate about whether a page should be part of the tab hierarchy, the flyout, or a separate route."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#events-weve-already-used-them",
+    "href": "lectures/Week10/Week10.html#events-weve-already-used-them",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Events: We’ve Already Used Them",
+    "text": "Events: We’ve Already Used Them\nWe have already used many event handlers:\n\nClicking a button.\nTapping a control.\nA timer tick.\nAn audio player finishing playback.\n\nBut what if we want to create and raise our own events?\nBefore looking at that, let’s revisit something we have used with data binding."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#inotifypropertychanged",
+    "href": "lectures/Week10/Week10.html#inotifypropertychanged",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "INotifyPropertyChanged",
+    "text": "INotifyPropertyChanged\nWhen using INotifyPropertyChanged, we raise an event whenever a property changes:\npublic event PropertyChangedEventHandler? PropertyChanged;\n\nprivate void OnPropertyChanged(string propertyName)\n{\n    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n}\n\nPropertyChanged is an event.\nInvoke() calls the methods subscribed to the event.\nThe UI listens for property changes and updates the relevant controls.\n\nWe’ve been using events without necessarily looking at how they work!"
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#what-does-invoke-do",
+    "href": "lectures/Week10/Week10.html#what-does-invoke-do",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "What Does Invoke() Do?",
+    "text": "What Does Invoke() Do?\nAn event is a way for one object to notify other objects that something has happened.\nWhen we call:\nPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n\nthis identifies the object raising the event.\nPropertyChangedEventArgs contains information about which property changed.\n?. means we only invoke the event if there are subscribers.\nEvery registered subscriber is notified."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#publisher-and-subscriber",
+    "href": "lectures/Week10/Week10.html#publisher-and-subscriber",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Publisher and Subscriber",
+    "text": "Publisher and Subscriber\nEvents use a publisher–subscriber model.\n\nPublisher: the object that raises the event.\nSubscriber: an object that registers to receive the event.\n\nThe publisher does not need to know who is listening. It simply raises the event when something happens.\nThe subscriber decides how to respond."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#the-eventhandler-delegate",
+    "href": "lectures/Week10/Week10.html#the-eventhandler-delegate",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "The EventHandler Delegate",
+    "text": "The EventHandler Delegate\nEvents in C# use delegates to describe the method signature that subscribers must provide.\nThe standard EventHandler delegate has the signature:\nvoid Handler(object? sender, EventArgs e)\n\nsender identifies the object raising the event.\ne contains additional event information (if any)."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#creating-an-event",
+    "href": "lectures/Week10/Week10.html#creating-an-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Creating an Event",
+    "text": "Creating an Event\nLet’s create a simple class that raises an event when a game starts.\npublic class Game\n{\n    public event EventHandler? GameStarted;\n\n    public void Start()\n    {\n        GameStarted?.Invoke(this, EventArgs.Empty);\n    }\n}\n\nWe declare an event using event.\nEventHandler describes the handler signature.\nEventArgs.Empty is used when there is no additional event data.\nWe raise the event using Invoke()."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#subscribing-to-the-event",
+    "href": "lectures/Week10/Week10.html#subscribing-to-the-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Subscribing to the Event",
+    "text": "Subscribing to the Event\nIn our page, we can subscribe to the event:\nGame game = new();\n\ngame.GameStarted += Game_GameStarted;\n\ngame.Start();\n\nprivate void Game_GameStarted(object? sender, EventArgs e)\n{\n    DisplayAlertAsync(\"Game\", \"Game started!\", \"OK\");\n}\nThe subscriber registers using +=.\nWhen Start() raises the event, the handler is called."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#using-a-lambda-to-subscribe",
+    "href": "lectures/Week10/Week10.html#using-a-lambda-to-subscribe",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Using a Lambda to Subscribe",
+    "text": "Using a Lambda to Subscribe\nWe can also subscribe using a lambda expression:\ngame.GameStarted += (sender, e) =&gt; DisplayAlertAsync(\"Game\", \"Game started!\", \"OK\");\nThis is the same idea as the event handlers we’ve already used with buttons and other controls."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#events-with-additional-data",
+    "href": "lectures/Week10/Week10.html#events-with-additional-data",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Events with Additional Data",
+    "text": "Events with Additional Data\nThe standard EventHandler has no data of its own: e is just an empty EventArgs.\nWe can send data through e using EventHandler&lt;T&gt; and our own data class, but an easier option is the Action delegate, where we simply list the parameters we want.\npublic event Action&lt;string, string, string&gt;? ShowAlert;\nWe can raise the event:\nShowAlert?.Invoke(\"Warning\", \"Are you sure?\", \"Cancel\");\nAnd subscribe:\nShowAlert += (title, message, cancel) =&gt;\n{\n    // Respond to the event\n};"
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#example-a-viewmodel-needs-an-alert",
+    "href": "lectures/Week10/Week10.html#example-a-viewmodel-needs-an-alert",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: A ViewModel Needs an Alert",
+    "text": "Example: A ViewModel Needs an Alert\nSuppose the ViewModel decides that the game is over and the user should be told.\n\nDisplayAlertAsync is a method of the page. The ViewModel does not have access to it.\nA ViewModel should not know about the UI, so it should never display the alert itself.\nInstead, the ViewModel raises an event and the page decides how to respond.\n\nThis is the publisher–subscriber model again: the ViewModel is the publisher and the page is the subscriber."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#the-viewmodel-raises-the-event",
+    "href": "lectures/Week10/Week10.html#the-viewmodel-raises-the-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "The ViewModel Raises the Event",
+    "text": "The ViewModel Raises the Event\npublic class GameViewModel\n{\n    public event Action&lt;string, string, string&gt;? ShowAlert;\n\n    public void EndGame(int score)\n    {\n        ShowAlert?.Invoke(\"Game Over\", $\"You scored {score}\", \"OK\");\n    }\n}\nThe ViewModel does not know who is listening, or even if anyone is.\nAs a reminder, the ? is there to check for null.\n\nIf nobody has subscribed, the event is null.\nWithout the ?, calling Invoke() would cause a runtime error.\nThe ? avoids it."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#the-page-subscribes-and-displays-the-alert",
+    "href": "lectures/Week10/Week10.html#the-page-subscribes-and-displays-the-alert",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "The Page Subscribes and Displays the Alert",
+    "text": "The Page Subscribes and Displays the Alert\nprivate readonly GameViewModel _viewmodel = new();\n\npublic MainPage()\n{\n    InitializeComponent();\n    BindingContext = _viewmodel;\n    _viewmodel.ShowAlert += ViewModel_ShowAlert;\n}\n\nprivate async void ViewModel_ShowAlert(string title, string message, string cancel)\n{\n    await DisplayAlertAsync(title, message, cancel);\n}\n\nThe page subscribes in its constructor using +=.\nWhen the ViewModel calls Invoke(), the handler runs and the page displays the alert.\nAnother page could subscribe to the same event and respond differently."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#eventhandler-or-action",
+    "href": "lectures/Week10/Week10.html#eventhandler-or-action",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "EventHandler or Action?",
+    "text": "EventHandler or Action?\n\nEventHandler follows the standard .NET event pattern and includes the sender. With EventHandler&lt;T&gt; it can also carry data in e.\nAction lets us choose our own parameters, which is useful when we need to pass data.\nBoth support multiple subscribers and can be unsubscribed using -=.\n\nUse the approach that makes sense for the code you’re writing. For our own events, what matters is that you can declare the event, raise it with Invoke(), and subscribe with +=."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#filepicker",
+    "href": "lectures/Week10/Week10.html#filepicker",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "FilePicker",
+    "text": "FilePicker\nSometimes we want an app to allow the user to select a file.\nExamples:\n\nSelect a picture.\nChoose a document.\nSelect an audio file.\n\nMAUI provides FilePicker for this."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#selecting-a-file",
+    "href": "lectures/Week10/Week10.html#selecting-a-file",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Selecting a File",
+    "text": "Selecting a File\nFileResult? fileResult = await FilePicker.Default.PickAsync();\nThis opens the platform’s file selection interface.\n\nThe user can select a file.\nThe user can cancel.\nIf the user cancels, fileResult will be null."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#checking-the-result",
+    "href": "lectures/Week10/Week10.html#checking-the-result",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Checking the Result",
+    "text": "Checking the Result\nFileResult? fileResult = await FilePicker.Default.PickAsync();\n\nif (fileResult != null)\n{\n    // The user selected a file\n}\nWe can inspect the filename:\nfileResult.FileName\nFor example, we might check the extension:\nif (fileResult.FileName.EndsWith(\".jpg\", StringComparison.OrdinalIgnoreCase))\n{\n    // Looks like a JPG filename\n}\nThis is only a filename check, not proof of the file’s actual contents.\nRemember, you should never trust data from a user, so some care is usually needed here."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#reading-the-selected-file",
+    "href": "lectures/Week10/Week10.html#reading-the-selected-file",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Reading the Selected File",
+    "text": "Reading the Selected File\nWe can open a stream from the selected file:\nusing Stream stream = await fileResult.OpenReadAsync();\nWe can then use the stream to read the file.\n\nPrefer working with the stream when possible.\nDo not assume a selected file’s path is available or behaves identically across platforms.\nAlways consider what could happen if the file is invalid or cannot be read."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#pickoptions",
+    "href": "lectures/Week10/Week10.html#pickoptions",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "PickOptions",
+    "text": "PickOptions\nWe can customise the picker:\nPickOptions options = new()\n{\n    PickerTitle = \"Please select an image file\",\n    FileTypes = FilePickerFileType.Images\n};\n\nFileResult? fileResult = await FilePicker.Default.PickAsync(options);\nFilePickerFileType provides some predefined types, such as images and other common file categories."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#custom-file-types",
+    "href": "lectures/Week10/Week10.html#custom-file-types",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Custom File Types",
+    "text": "Custom File Types\nIf we want to select a particular type of file, we can define our own file types.\nFor example, for audio files on Windows and Android:\nvar customFileType = new FilePickerFileType(new Dictionary&lt;DevicePlatform, IEnumerable&lt;string&gt;&gt;\n{\n    { DevicePlatform.WinUI, new[] { \".mp3\", \".ogg\", \".flac\" } },\n    { DevicePlatform.Android, new[] { \"audio/mpeg\", \"audio/ogg\", \"audio/flac\" } }\n});\nThen use it in the picker options:\nPickOptions options = new()\n{\n    PickerTitle = \"Please select an audio file\",\n    FileTypes = customFileType\n};\n\nFileResult? fileResult = await FilePicker.Default.PickAsync(options);\nFile type filters are useful, but they do not guarantee that a file is valid or safe to process."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#example-showing-a-picked-image",
+    "href": "lectures/Week10/Week10.html#example-showing-a-picked-image",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: Showing a Picked Image",
+    "text": "Example: Showing a Picked Image\nprivate async void PickImage_Clicked(object sender, EventArgs e)\n{\n    try\n    {\n        PickOptions options = new()\n        {\n            PickerTitle = \"Please select an image file\",\n            FileTypes = FilePickerFileType.Images\n        };\n\n        FileResult? result = await FilePicker.Default.PickAsync(options);\n\n        if (result == null) return;\n\n        string name = result.FileName.ToLower();\n\n        if (name.EndsWith(\".jpg\") || name.EndsWith(\".png\"))\n        {\n            using Stream stream = await result.OpenReadAsync();\n            using MemoryStream memory = new();\n            await stream.CopyToAsync(memory);\n            byte[] data = memory.ToArray();\n\n            ImageDisplay.Source = ImageSource.FromStream(() =&gt; new MemoryStream(data));\n        }\n    }\n    catch (Exception)\n    {\n        await DisplayAlertAsync(\"Error\", \"Could not load the image.\", \"OK\");\n    }\n}"
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#showing-a-picked-image-notes",
+    "href": "lectures/Week10/Week10.html#showing-a-picked-image-notes",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Showing a Picked Image: Notes",
+    "text": "Showing a Picked Image: Notes\n\nWe check for null (the user cancelled) and check the extension before using the file.\nThe stream is disposed when the method ends, so we copy the data into a byte array first.\nImageSource.FromStream takes a method that returns a stream, so we create a new MemoryStream from the data each time.\nresult.FullPath is tempting, but the path is platform dependent. Working with the stream avoids relying on it.\nThe try/catch handles files that cannot be read.\n\nThis is enough if we only want to display the image while the app is running."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#example-remembering-the-image",
+    "href": "lectures/Week10/Week10.html#example-remembering-the-image",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: Remembering the Image",
+    "text": "Example: Remembering the Image\nWhat if the app should show the same image the next time it runs?\nCopy the file into the app’s own storage:\nstring fileName = \"profile\" + Path.GetExtension(result.FileName);\nstring path = Path.Combine(FileSystem.AppDataDirectory, fileName);\n\nusing Stream input = await result.OpenReadAsync();\nusing FileStream output = File.Create(path);\nawait input.CopyToAsync(output);\n\nPreferences.Default.Set(\"ProfileImage\", fileName);\nThen store only the filename in your settings (here using Preferences, but your settings JSON would also work)."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#loading-the-remembered-image",
+    "href": "lectures/Week10/Week10.html#loading-the-remembered-image",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Loading the Remembered Image",
+    "text": "Loading the Remembered Image\nWhen the page starts:\nstring fileName = Preferences.Default.Get(\"ProfileImage\", \"\");\nstring path = Path.Combine(FileSystem.AppDataDirectory, fileName);\n\nif (fileName != \"\" && File.Exists(path)) ImageDisplay.Source = ImageSource.FromStream(() =&gt; File.OpenRead(path));\n\nStore the filename and rebuild the path with Path.Combine, rather than storing a full path.\nCheck that the file still exists before using it.\nThe image is now a copy in the app’s own storage, so it does not depend on the original file."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#filepicker-things-to-remember",
+    "href": "lectures/Week10/Week10.html#filepicker-things-to-remember",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "FilePicker: Things to Remember",
+    "text": "FilePicker: Things to Remember\n\nThe user may cancel.\nA selected file may not contain what you expect.\nThe filename and extension are not proof of the file’s contents.\nUse OpenReadAsync() to access the selected file’s contents.\nPlatform-specific file type definitions may be needed for custom types.\n\nFor more details, see the MAUI FilePicker documentation."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#playing-audio-in-maui",
+    "href": "lectures/Week10/Week10.html#playing-audio-in-maui",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Playing Audio in MAUI",
+    "text": "Playing Audio in MAUI\nThere are different ways to play audio in MAUI.\nOne option is the Plugin.Maui.Audio library.\nThis is also useful for the audio functionality in your project.\nFirst, install the package through NuGet."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#creating-an-audio-player",
+    "href": "lectures/Week10/Week10.html#creating-an-audio-player",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Creating an Audio Player",
+    "text": "Creating an Audio Player\nAdd the using statement:\nusing Plugin.Maui.Audio;\nDeclare an IAudioPlayer field:\nprivate IAudioPlayer? audioPlayer;\nCreate a player from an audio file stored in the app package:\naudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(\"dicerolling.mp3\"));\nThe file must be included in the app package and configured appropriately as an asset."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#changing-the-audio-file",
+    "href": "lectures/Week10/Week10.html#changing-the-audio-file",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Changing the Audio File",
+    "text": "Changing the Audio File\nTo play a different file with the same field, dispose of the old player first:\naudioPlayer?.Dispose();\naudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(\"explosion.mp3\"));\n\nOne player plays one sound at a time.\nIf sounds need to overlap (for example, several effects in a game), use more than one IAudioPlayer field."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#playing-audio",
+    "href": "lectures/Week10/Week10.html#playing-audio",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Playing Audio",
+    "text": "Playing Audio\nOnce we have created the player, we can call:\naudioPlayer?.Play();\nEach time Play() is called, playback begins or resumes according to the player state.\nOther methods include:\n\nPause() – pause playback.\nPlay() – begin playback or resume.\nSeek(double position) – change the playback position (seconds).\nStop() – stop playback and reset to the beginning."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#audio-player-properties",
+    "href": "lectures/Week10/Week10.html#audio-player-properties",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Audio Player Properties",
+    "text": "Audio Player Properties\nThe player also provides useful properties.\n\nIsPlaying – indicates whether audio is playing.\nLoop – whether playback repeats.\nSpeed – playback speed.\nBalance – adjusts left/right balance.\n\nInspect the library documentation for other properties and methods."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#when-playback-ends",
+    "href": "lectures/Week10/Week10.html#when-playback-ends",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "When Playback Ends",
+    "text": "When Playback Ends\nThe audio player also provides an event when playback finishes:\naudioPlayer.PlaybackEnded += AudioPlayer_PlaybackEnded;\n\nprivate void AudioPlayer_PlaybackEnded(object? sender, EventArgs e)\n{\n    // Playback has ended\n}\nThis is another example of the publisher–subscriber pattern.\nThe audio player raises the event; our code subscribes and responds."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#updating-the-ui-from-the-playback-event",
+    "href": "lectures/Week10/Week10.html#updating-the-ui-from-the-playback-event",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Updating the UI from the Playback Event",
+    "text": "Updating the UI from the Playback Event\nDepending on the platform and event context, you may need to dispatch UI updates onto the UI thread.\naudioPlayer.PlaybackEnded += (sender, e) =&gt; Dispatcher.Dispatch(() =&gt; AudioState.Text = \"Stopped\");\nThis is similar to what we have encountered with timers and UI updates."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#what-is-debugging",
+    "href": "lectures/Week10/Week10.html#what-is-debugging",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "What Is Debugging?",
+    "text": "What Is Debugging?\nDebugging is the process of identifying and fixing problems in our code.\nNot all problems are compilation errors.\n\nSyntax/compilation errors: code cannot compile.\nRuntime errors: something goes wrong while the program executes.\nLogic errors: the program runs, but does not do what we intended.\n\nThe debugger is particularly useful for understanding runtime and logic errors."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#breakpoints",
+    "href": "lectures/Week10/Week10.html#breakpoints",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Breakpoints",
+    "text": "Breakpoints\nA breakpoint allows us to pause the program’s execution at a particular line of code.\nIn Visual Studio:\n\nClick in the left margin beside the line of code.\nA breakpoint marker appears.\nRun the app in Debug mode.\nWhen execution reaches that line, the program pauses.\n\nLet’s look at this in a live demonstration."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#inspecting-variables",
+    "href": "lectures/Week10/Week10.html#inspecting-variables",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Inspecting Variables",
+    "text": "Inspecting Variables\nWhen the program pauses:\n\nHover over a variable to inspect its current value.\nLook at the Locals window to see variables available in the current scope.\nUse the Watch window to monitor specific expressions.\nLook at the call stack if you need to understand how execution reached this point."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#stepping-through-code",
+    "href": "lectures/Week10/Week10.html#stepping-through-code",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Stepping Through Code",
+    "text": "Stepping Through Code\nWhile paused, we can control how execution proceeds:\n\nStep Over (F10): execute the current line, without stepping into a called method.\nStep Into (F11): enter the method being called.\nStep Out: finish the current method and return to its caller.\nContinue (F5): resume execution until the next breakpoint or other pause."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#example-a-loop",
+    "href": "lectures/Week10/Week10.html#example-a-loop",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Example: A Loop",
+    "text": "Example: A Loop\nint result = 0;\n\nfor (int i = 0; i &lt; 10; i++)\n{\n    result += i;\n}\nSet a breakpoint inside the loop.\n\nWhat is i on the first iteration?\nWhat is result before and after the addition?\nHow many times does the loop execute?\nWhen does the loop stop?\n\nStep through it rather than guessing!"
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#conditional-breakpoints",
+    "href": "lectures/Week10/Week10.html#conditional-breakpoints",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Conditional Breakpoints",
+    "text": "Conditional Breakpoints\nA conditional breakpoint only pauses when a condition is true.\nFor example, we could set a breakpoint inside a loop and only pause when:\ni == 5\nThis is useful when:\n\nA loop runs many times.\nA problem only occurs for a particular value.\nWe do not want to pause on every iteration."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#debugging-demonstration",
+    "href": "lectures/Week10/Week10.html#debugging-demonstration",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Debugging Demonstration",
+    "text": "Debugging Demonstration\nLet’s deliberately introduce a logic error into a small piece of code.\n\nPredict what the code will do.\nSet a breakpoint.\nRun the code.\nInspect the variables.\nStep through the code.\nFind and correct the problem.\n\nThe debugger is a tool for investigating what the program is actually doing, not just what we think it should do."
+  },
+  {
+    "objectID": "lectures/Week10/Week10.html#summary",
+    "href": "lectures/Week10/Week10.html#summary",
+    "title": "Navigation, Events, File Picker, Audio and Debugging",
+    "section": "Summary",
+    "text": "Summary\n\nShell routes can move between login pages and the main part of an app.\nA TabBar can group the main destinations in an app.\nEvents allow one object to notify other objects that something has happened.\nEvents use a publisher–subscriber model: the publisher calls Invoke() and subscribers register with +=.\nA ViewModel can raise an event (such as ShowAlert) and leave it to the page to display it.\nFilePicker allows a user to select a file.\nPlugin.Maui.Audio provides a way to play audio in a MAUI app.\nBreakpoints and the debugger help us investigate logic and runtime problems."
   }
 ]
