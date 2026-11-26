@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AlbumList.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AlbumList"
+    Title="AlbumList">
+
+    <TabBar>
+        <ShellContent
+        Title="Library 1"
+        x:Name="Library1Tab"
+        Route="MainPage1">
+            <local:MainPage>
+                <x:Arguments>
+                    <x:String>https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library1.json</x:String>
+                    <x:Int32>1</x:Int32>
+                </x:Arguments>
+            </local:MainPage>
+        </ShellContent>
+        <ShellContent
+         Title="Library 2"
+        x:Name="Library2Tab"
+         Route="MainPage2"> 
+            <local:MainPage>
+                <x:Arguments>
+                    <x:String>https://raw.githubusercontent.com/DonH-ITS/jsonfiles/refs/heads/main/library2.json</x:String>
+                    <x:Int32>2</x:Int32>
+                </x:Arguments>
+            </local:MainPage>
+        </ShellContent>
+    </TabBar>
+
+</Shell>

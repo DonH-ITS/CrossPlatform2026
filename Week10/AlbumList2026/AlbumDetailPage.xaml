@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AlbumList"
+             x:Class="AlbumList.AlbumDetailPage"
+             x:DataType="local:Album"
+             x:Name="AlbDetail">
+
+    <ContentPage.Title>
+        <MultiBinding StringFormat="{}{0} - {1}">
+            <Binding Path="Artist" />
+            <Binding Path="Title" />
+        </MultiBinding>
+    </ContentPage.Title>
+
+    <Grid x:Name="MainGrid"
+          Padding="15"
+          RowSpacing="10"
+          ColumnSpacing="10"
+          RowDefinitions="Auto,*,55">
+
+        <VerticalStackLayout x:Name="DetailsStack"
+                             Grid.Row="0"
+                             Spacing="10">
+            <ActivityIndicator IsVisible="{Binding IsDownloading, Source={x:Reference AlbDetail}}"
+                               IsRunning="{Binding IsDownloading, Source={x:Reference AlbDetail}}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               HeightRequest="180"
+                               WidthRequest="180" />
+            <Image x:Name="ImageDisplay"
+                   IsVisible="{Binding IsNotDownloading, Source={x:Reference AlbDetail}}"
+                   HeightRequest="180"
+                   WidthRequest="180"
+                   Aspect="AspectFit" />
+            <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Large" />
+            <Label Text="{Binding Artist}" />
+            <Label Text="{Binding Year}" />
+            <Label Text="{Binding Genre}" />
+            <Button Text="Back" Clicked="Button_Clicked" Margin="0,10,0,0" />
+        </VerticalStackLayout>
+
+        <Grid x:Name="TracksGrid"
+              Grid.Row="1"
+              RowDefinitions="Auto,*"
+              RowSpacing="10">
+            <Label Grid.Row="0" Text="Track Listing" FontSize="Large" FontAttributes="Bold" />
+            <CollectionView Grid.Row="1" ItemsSource="{Binding NumberedTracks}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Label Text="{Binding}" FontSize="Medium" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+    </Grid>
+</ContentPage>
+ 

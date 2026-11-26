@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlbumList.AlbumEditPage"
+             Title="AlbumEditPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="Title" FontAttributes="Bold"/>
+            <Entry x:Name="TitleEntry"/>
+            <Label Text="Artist" FontAttributes="Bold"/>
+            <Entry x:Name="ArtistEntry"/>
+            <Label Text="Year" FontAttributes="Bold"/>
+            <Entry x:Name="YearEntry" Keyboard="Numeric"/>
+            <Label Text="Genre" FontAttributes="Bold"/>
+            <Entry x:Name="GenreEntry"/>
+            <Label Text="Cover URL" FontAttributes="Bold"/>
+            <Entry x:Name="CoverEntry"/>
+            <Label Text="Tracks (one per line)" FontAttributes="Bold"/>
+            <Editor x:Name="TracksEditor" HeightRequest="150"/>
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Save" Clicked="Save_Clicked"/>
+                <Button Text="Cancel" Clicked="Cancel_Clicked"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
